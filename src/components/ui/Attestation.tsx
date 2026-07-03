@@ -47,8 +47,8 @@ export function Specimen({
   standing,
 }: SpecimenProps) {
   return (
-    <aside className="specimen" aria-label="Attestation specimen">
-      <span className="specimen__tab">Specimen</span>
+    <aside className="specimen" aria-label="Attestation record specimen">
+      <span className="specimen__tab">Record specimen</span>
       <p className="type-title specimen__statement">{statement}</p>
       {transliteration && (
         <p className="type-body specimen__transliteration">{transliteration}</p>
@@ -56,19 +56,19 @@ export function Specimen({
       <hr className="hairline" />
       <dl className="specimen__dl">
         <div>
-          <dt className="type-micro specimen__dt">Grade</dt>
+          <dt className="type-micro specimen__dt">Hadith grade</dt>
           <dd className="type-body specimen__dd">
             <span className="specimen__grade-dot" aria-hidden="true" />
             {grade}
           </dd>
         </div>
         <div>
-          <dt className="type-micro specimen__dt">Source</dt>
+          <dt className="type-micro specimen__dt">Primary source</dt>
           <dd className="type-body specimen__dd">{source}</dd>
         </div>
         {standing && (
           <div>
-            <dt className="type-micro specimen__dt">Standing</dt>
+            <dt className="type-micro specimen__dt">Scholarly standing</dt>
             <dd className="type-body specimen__dd">{standing}</dd>
           </div>
         )}

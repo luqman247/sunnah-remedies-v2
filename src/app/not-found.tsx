@@ -9,10 +9,11 @@ export default function NotFound() {
         <PageIntro
           section="Utility"
           folio="—"
-          title="This leaf is not in the institution"
+          title="No record at this address"
         />
         <p className="type-body-l" style={{ marginBottom: "var(--s5)" }}>
-          Return to the threshold, or search the Register.
+          The path does not correspond to a page in the institution. Return to
+          the Threshold, or consult the Register.
         </p>
         <nav style={{ display: "flex", justifyContent: "center", gap: "var(--s5)", flexWrap: "wrap" }}>
           <QuietLink href="/">The Threshold</QuietLink>

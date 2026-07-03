@@ -39,19 +39,23 @@ export function ThresholdHero() {
         </h1>
 
         <p className="type-lede threshold__declaration">
-          Scholarship, clinical care, and natural therapeutics — one house,
-          three departments. Measured in trust, built to be inherited.
+          A house for scholarship, clinical practice, and natural therapeutics
+          across four departments. Built for careful study, patient service, and
+          long stewardship.
         </p>
 
-        <nav className="threshold__nav" aria-label="Threshold directions">
+        <nav className="threshold__nav" aria-label="Department navigation">
           <Link href="/the-academy" className="quiet-link quiet-link--dark">
-            Begin in the Academy
+            Visit the Academy
           </Link>
           <Link href="/the-apothecary" className="quiet-link quiet-link--dark">
-            Enter the Apothecary
+            Visit the Apothecary
           </Link>
           <Link href="/sacred-journeys" className="quiet-link quiet-link--dark">
-            Sacred Journeys
+            Visit Sacred Journeys
+          </Link>
+          <Link href="/knowledge-library" className="quiet-link quiet-link--dark">
+            Visit the Knowledge Library
           </Link>
         </nav>
       </ThresholdSequence>

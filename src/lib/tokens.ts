@@ -42,6 +42,6 @@ export const measure = {
   wide: "78rem",
 } as const;
 
-export const tagline = "Authentic Prophetic Medicine";
+export const tagline = "Institute of Prophetic Medicine";
 
 export const edition = "Edition I · MMXXV";

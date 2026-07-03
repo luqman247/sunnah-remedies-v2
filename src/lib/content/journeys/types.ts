@@ -30,6 +30,12 @@ export interface ReadingItem {
   note: string;
 }
 
+export interface EducationalSession {
+  title: string;
+  format: string;
+  description: string;
+}
+
 export interface SacredJourney {
   slug: string;
   name: string;
@@ -49,16 +55,21 @@ export interface SacredJourney {
   whatItAsks: string[];
 
   preparation: string[];
+  flightGuidance: string[];
+  accommodationPhilosophy: string[];
   learning: string[];
+  educationalSessions: EducationalSession[];
   companionship: string[];
   guidance: string[];
   spiritualGrowth: string[];
+  reflection: string[];
+  reflectionJournals: string[];
+  healthGuidance: string[];
   safety: string[];
   organisation: string[];
 
   itinerary: ItineraryDay[];
   scholars: JourneyScholar[];
-  reflection: string[];
   reading: ReadingItem[];
   packing: string[];
 

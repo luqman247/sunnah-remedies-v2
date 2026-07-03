@@ -23,13 +23,13 @@ export default function ClinicalEthicsPage() {
             section="The Academy"
             folio="v"
             title="Clinical Practice & Ethics"
-            lede="The responsibilities of the practitioner — limits, consent, and clinical adab."
+            lede="Practitioner responsibilities in limits, consent, and clinical adab."
           >
             <p>
-              By application · licensed practitioners and Hijāma graduates. Case-based
-              seminars on referral, documentation, consent, and the institution's clinical
-              conduct policy. Required for independent clinic privileges under the
-              institution's name.
+              By application for licensed practitioners and Hijāma graduates.
+              Case-based seminars cover referral, documentation, consent, and
+              institutional conduct standards. Required for independent clinic
+              privileges under the institution&apos;s name.
             </p>
           </PageIntro>
         </div>
@@ -39,7 +39,7 @@ export default function ClinicalEthicsPage() {
         <article className="measure" style={{ margin: "0 auto" }}>
           <SectionLabel>Seminar series</SectionLabel>
           <ul className="monograph-list">
-            <li>The patient received as a guest — adab in clinical encounter</li>
+            <li>The patient is received as a guest: adab in clinical encounter</li>
             <li>Informed consent beyond the form</li>
             <li>Referral pathways and the duty to defer</li>
             <li>Documentation and audit — amāna in the record</li>
@@ -47,7 +47,7 @@ export default function ClinicalEthicsPage() {
             <li>Speaking within the evidence — what may and may not be said</li>
           </ul>
           <p className="type-body" style={{ marginTop: "var(--s5)" }}>
-            <GoLink href="/the-academy/hijama">The Hijāma Programme</GoLink>
+            <GoLink href="/the-academy/hijama-diploma">The Hijāma Programme</GoLink>
           </p>
           <p className="type-body" style={{ marginTop: "var(--s3)" }}>
             <GoLink href="/consultations">Request a consultation</GoLink>

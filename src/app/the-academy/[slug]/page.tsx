@@ -8,13 +8,15 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return getAllProgrammeSlugs().map((slug) => ({ slug }));
+  return getAllProgrammeSlugs()
+    .filter((slug) => slug !== "hijama")
+    .map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const programme = getProgrammeBySlug(slug);
-  if (!programme) return { title: "Programme" };
+  if (!programme) return { title: "Academy programme" };
   return {
     title: programme.name,
     description: programme.subtitle,

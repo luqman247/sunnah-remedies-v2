@@ -14,6 +14,7 @@ export interface CurriculumModule {
   hours: number;
   description: string;
   sources: string[];
+  practical?: string;
 }
 
 export interface LearningOutcome {
@@ -44,6 +45,33 @@ export interface PolicyItem {
   body: string[];
 }
 
+export interface PracticalSession {
+  title: string;
+  schedule: string;
+  hours: number;
+  description: string;
+  supervision: string;
+}
+
+export interface EquipmentItem {
+  item: string;
+  specification: string;
+  supplied: "Academy" | "Student" | "Shared";
+}
+
+export interface EnrolmentStep {
+  step: string;
+  title: string;
+  description: string;
+  duration?: string;
+}
+
+export interface GraduatePathway {
+  title: string;
+  body: string[];
+  href?: string;
+}
+
 export interface AcademyProgramme {
   slug: string;
   name: string;
@@ -68,12 +96,19 @@ export interface AcademyProgramme {
   entryRequirements: string[];
   assessment: string[];
   clinicalPractice: string[];
+  clinicalStandards: PolicyItem[];
+
+  courseHandbook: PolicyItem[];
+  studentGuide: PolicyItem[];
+  practicalSessions: PracticalSession[];
+  equipmentList: EquipmentItem[];
+  graduatePathways: GraduatePathway[];
+  enrolmentJourney: EnrolmentStep[];
 
   faq: FaqItem[];
   testimonials: Testimonial[];
   facilities: Facility[];
   gallery: GalleryItem[];
-
   policies: PolicyItem[];
 
   pathways: { label: string; href: string }[];

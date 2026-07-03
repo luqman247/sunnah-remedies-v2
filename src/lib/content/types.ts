@@ -26,7 +26,18 @@ export interface ReadingItem {
 export interface PathwayLink {
   label: string;
   href: string;
-  department: "Academy" | "Sacred Journeys";
+  department: "Academy" | "Sacred Journeys" | "Knowledge Library";
+}
+
+export interface RemedyProvenance {
+  origin: string[];
+  cultivation: string[];
+  harvesting: string[];
+}
+
+export interface RemedyEvidence {
+  established: string[];
+  emerging: string[];
 }
 
 export interface Remedy {
@@ -34,24 +45,38 @@ export interface Remedy {
   name: string;
   transliteration: string;
   botanicalName: string;
+  /** Short catalogue line */
   nature: string;
+  /** Museum-label summary — institutional voice */
+  institutionalSummary: string;
   folio: string;
   figure: "black-seed" | "honey" | "senna" | "olive";
   figureAlt: string;
 
   historicalContext: string[];
   propheticReferences: PropheticReference[];
+  traditionalScholarship: string[];
   traditionalUsage: string[];
-  evidenceInformed: string[];
-  sourcing: string[];
+  evidence: RemedyEvidence;
+
+  provenance: RemedyProvenance;
+  laboratoryVerification: string[];
   qualityAssurance: string[];
   storage: string[];
   preparation: string[];
-  honestLimits: string[];
-  faq: FaqItem[];
+  suggestedUse: string[];
+  contraindications: string[];
 
+  photographyDirection: string[];
+  packaging: string[];
+  shipping: string[];
+  returns: string[];
+  customerSupport: string[];
+
+  faq: FaqItem[];
   relatedRemedies: string[];
-  suggestedReading: ReadingItem[];
+  academyLessons: ReadingItem[];
+  knowledgeLibrary: ReadingItem[];
   pathways: PathwayLink[];
 
   volume: string;

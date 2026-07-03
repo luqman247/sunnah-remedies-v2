@@ -1,8 +1,9 @@
 import type { SacredJourney } from "./types";
 import { oliveGrove } from "./olive-grove";
 import { desertWay } from "./desert-way";
+import { umrah } from "./umrah";
 
-export const journeys: SacredJourney[] = [oliveGrove, desertWay];
+export const journeys: SacredJourney[] = [umrah, oliveGrove, desertWay];
 
 export const journeyCatalogue = journeys.map((j) => ({
   slug: j.slug,
@@ -21,3 +22,6 @@ export function getJourneyBySlug(slug: string): SacredJourney | undefined {
 export function getAllJourneySlugs(): string[] {
   return journeys.map((j) => j.slug);
 }
+
+export { journeyInstitution } from "./institution";
+export type { JourneyInstitution, RegistrationStep } from "./institution";

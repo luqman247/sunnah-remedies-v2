@@ -16,11 +16,11 @@ export default function CorrespondencePage() {
             section="Correspondence"
             folio="i"
             title="Write to us"
-            lede="The institution answers considered, and in time."
+            lede="The institution responds with care and in due course."
           >
             <p>
-              For clinical matters, use Consultations. For scholarship, the Academy.
-              For all else, write below.
+              For clinical matters, use Consultations. For programme questions,
+              use the Academy. For all other matters, write below.
             </p>
           </PageIntro>
         </div>
@@ -35,7 +35,7 @@ export default function CorrespondencePage() {
           </p>
 
           <section id="practitioners" className="charter-section">
-            <h2 className="type-title charter-section__title">For Practitioners</h2>
+            <h2 className="type-title charter-section__title">Practitioner correspondence</h2>
             <p className="type-body">
               Licensed practitioners seeking collaboration or referral may write to{" "}
               <QuietLink href="mailto:practitioners@sunnahremedies.org">

@@ -2,13 +2,13 @@ import type { SacredJourney } from "./types";
 
 export const oliveGrove: SacredJourney = {
   slug: "olive-grove",
-  name: "The Olive Grove Retreat",
-  subtitle: "Contemplative days among the groves — Prophetic nourishment, stone, and stillness",
+  name: "Olive Grove Study Retreat",
+  subtitle: "Contemplative field study among working groves, with sourced teaching and measured practice",
   folio: "ii",
   meaning: [
-    "The olive is named in revelation as a blessed tree. This retreat is not tourism — it is a structured pilgrimage of learning and practice among working groves in the Mediterranean tradition.",
-    "Meaning precedes logistics. You come to read, walk, eat simply, and sit with the texts that name zayt — olive oil — as nourishment of the Prophetic household. The itinerary is educational first; comfort is honest, not luxurious.",
-    "A journey, not a holiday. Days begin with recitation and end in silence. There is no itinerary shopping, no optional zip-line, no performance of spirituality for photographs.",
+    "The olive is named in revelation as a blessed tree. This retreat is structured as educational pilgrimage, combining study and practice in working groves.",
+    "Participants come to read, walk, and reflect in a simple environment shaped by texts on zayt (olive oil) and Prophetic nourishment.",
+    "The itinerary is disciplined and educational. Days open with recitation and close with structured quiet.",
   ],
 
   season: "Spring · after the first press",
@@ -20,75 +20,124 @@ export const oliveGrove: SacredJourney = {
   nextDeparture: "April MMXXVI · registration closes six weeks before departure",
 
   forWhom: [
-    "Adults who have completed Foundations of Prophetic Medicine or who can demonstrate equivalent study.",
-    "Those able to walk uneven paths for up to two hours daily and to observe silence for appointed hours.",
-    "Travellers willing to live simply — shared rooms, early rising, no alcohol on the retreat grounds.",
+    "Adults who have completed Foundations of Prophetic Medicine or can demonstrate equivalent study.",
+    "Those able to walk uneven paths for up to two hours daily and observe appointed silence periods.",
+    "Travellers prepared for simple living conditions: shared rooms, early starts, and no alcohol on retreat grounds.",
   ],
 
   whatItAsks: [
-    "Complete the pre-retreat reading list before departure. Sessions assume familiarity with the texts.",
-    "Observe the retreat adab — silence at meals until the fifth day; phones surrendered at orientation (returned for emergencies).",
-    "Participate in all scheduled sessions. Optional tourism is not offered.",
-    "Honest disclosure of health conditions on registration. The institution may decline travel for safety.",
+    "Complete the pre-retreat reading list before departure; sessions assume text familiarity.",
+    "Observe retreat adab, including meal silence until Day V and phone restrictions set at orientation.",
+    "Participate in all scheduled sessions.",
+    "Provide accurate health disclosure at registration; placement may be declined for safety reasons.",
   ],
 
   preparation: [
     "Eight weeks before departure: confirm passport validity (minimum six months) and visa requirements for your nationality.",
-    "Six weeks: complete Modules I–III of the pre-retreat reading (see Reading). Written reflection due two weeks before travel.",
-    "Four weeks: medical check for fitness to walk; disclose medications to the retreat physician.",
-    "Two weeks: packing list review with the guide; travel insurance certificate submitted.",
-    "One week: final correspondence with logistics — meeting point, emergency contacts, dietary requirements.",
+    "Six weeks: complete Modules I-III of pre-retreat reading and prepare written reflection due two weeks before travel.",
+    "Four weeks: complete medical check for walking fitness and disclose medications to the retreat physician.",
+    "Two weeks: review packing list with the guide and submit travel insurance certificate.",
+    "One week: confirm meeting point, emergency contacts, and dietary requirements by correspondence.",
+  ],
+
+  flightGuidance: [
+    "International travel is to Ben Gurion (Tel Aviv) or Queen Alia (Amman), followed by overland transfer to the Nablus meeting point stated in correspondence.",
+    "Flights are arranged by travellers; share itinerary with the coordinator by four weeks.",
+    "Meeting point is a designated location in Nablus within the stated arrival window.",
+    "Departure from Nablus is traveller-scheduled on the final day; institution transfer is provided to the meeting point only.",
+  ],
+
+  accommodationPhilosophy: [
+    "Accommodation is in an institution-hosted lodge with simple rooms; shared bathrooms on some floors are declared in advance.",
+    "Selection is based on proximity to groves and teaching rooms.",
+    "Meals are communal, with silence at meals until Day V; declared dietary needs are accommodated within practical limits.",
+    "Private upgrades are not offered.",
   ],
 
   learning: [
-    "Daily seminar on the olive in revelation and Prophetic report — graded, sourced, with time for questions.",
-    "Field study in the groves with the estate forester — cultivation, harvest, pressing; linked to Apothecary monograph on olive oil.",
-    "Practical session on the etiquette of food in the Sunnah — not cooking entertainment, but attentive preparation and gratitude.",
-    "Evening readings from Ibn al-Qayyim on simples, with assigned reflection overnight.",
+    "Daily seminar on the olive in revelation and Prophetic report, taught with references and question time.",
+    "Field study in the groves with the estate forester on cultivation, harvest, and pressing, linked to the olive oil monograph.",
+    "Practical session on etiquette of food in the Sunnah, focused on attentive preparation and gratitude.",
+    "Evening readings from Ibn al-Qayyim on simples with assigned overnight reflection.",
+  ],
+
+  educationalSessions: [
+    {
+      title: "Seminar on the olive in revelation",
+      format: "Scholar-led · sourced",
+      description: "Graded Prophetic reports on zayt with room for questions within session limits.",
+    },
+    {
+      title: "Field study in the groves",
+      format: "Forester-led · on site",
+      description: "Cultivation, harvest, and pressing linked to the Apothecary olive oil monograph.",
+    },
+    {
+      title: "Etiquette of food in the Sunnah",
+      format: "Practical instruction",
+      description: "Attentive preparation and gratitude as practice.",
+    },
+    {
+      title: "Evening reading circle",
+      format: "Moderated · silent blocks",
+      description: "Readings from Ibn al-Qayyim on simples with assigned overnight reflection.",
+    },
+    {
+      title: "Apothecary session",
+      format: "Seminar · Day V",
+      description: "Olive oil monograph review with careful distinction between means and claims.",
+    },
   ],
 
   companionship: [
-    "Groups are capped at twelve to preserve conversation quality and safety on paths.",
-    "Room assignments mix backgrounds deliberately — the retreat is not segregated by nationality except where local law requires.",
-    "Travellers eat together, walk together, and observe silence together. Companionship is part of the discipline.",
-    "A traveller who disrupts the retreat may be asked to leave without refund — conduct policy applies.",
+    "Groups are capped at twelve to preserve teaching quality and path safety.",
+    "Room assignments may mix backgrounds; nationality-based separation is applied only where local law requires.",
+    "Travellers eat, walk, and observe scheduled silence together.",
+    "Persistent disruption may lead to removal without refund under conduct policy.",
   ],
 
   guidance: [
-    "Two scholars travel with the group for all teaching. A local guide handles paths, language, and estate access.",
-    "A retreat physician is on call; the nearest hospital is identified in orientation.",
-    "The institution does not leave travellers unaccompanied on free days — there are no free days.",
+    "Two scholars accompany the group for all teaching, and a local guide manages routes, language, and estate access.",
+    "A retreat physician is on call, and the nearest hospital is identified at orientation.",
+    "The programme is fully scheduled and does not include unaccompanied free days.",
   ],
 
   spiritualGrowth: [
-    "Growth is not promised — it is pursued. The retreat offers structure: recitation, reflection, silence, and honest conversation about limits.",
-    "Morning and evening adkār are led but not coerced. The institution serves Muslims and respectful guests of other faiths who accept the retreat's character.",
-    "Journaling is assigned, not graded. Private reflection is part of the design.",
+    "Growth is pursued through structure: recitation, reflection, silence, and informed conversation about limits.",
+    "Morning and evening adhkar are led without compulsion. The retreat serves Muslims and respectful guests of other faiths who accept its character.",
+    "Journaling is assigned but not graded, with private reflection built into the programme.",
   ],
 
   safety: [
-    "Risk assessment updated annually for the estate and paths. Alternate routes exist for poor weather.",
-    "Emergency evacuation plan to Nablus hospital; medevac insurance required of all travellers.",
-    "Political and travel advisories monitored; the institution may postpone departure with full refund if FCDO advises against travel.",
-    "Food allergies and medical diets declared in advance — the kitchen accommodates within honest limits.",
+    "Risk assessment is updated annually for estate and path conditions, with alternate routes for poor weather.",
+    "Emergency evacuation planning to Nablus hospital is in place; medevac insurance is mandatory.",
+    "Political and travel advisories are monitored; departure may be postponed with full refund when FCDO advises against travel.",
+    "Food allergies and medical diets are declared in advance and accommodated within practical limits.",
+  ],
+
+  healthGuidance: [
+    "Walking may reach two hours daily on uneven paths; medical check is required at four weeks.",
+    "Retreat physician is on call, with nearest hospital details provided at orientation.",
+    "Medevac insurance is mandatory, with certificate submission at four weeks.",
+    "Alternate shorter routes are available for poor weather or limited mobility; disclose needs before registering.",
   ],
 
   organisation: [
-    "Lodging in the institution's lodge — simple rooms, shared bathrooms on some floors, stated in advance.",
-    "Meals: two full meals and a light third; water and herbal tea; no alcohol.",
-    "Local transport by minibus with seatbelts; walking days clearly marked in itinerary.",
-    "One coordinator reachable at all hours; contact details issued at orientation.",
+    "Lodging is in the institution lodge, with room and bathroom arrangements stated in advance.",
+    "Meals include two full services and a light third, with water and herbal tea; alcohol is not permitted.",
+    "Local transport uses seatbelt-equipped minibuses, and walking days are clearly marked in the itinerary.",
+    "A coordinator is reachable throughout the retreat; contact details are issued at orientation.",
   ],
 
   itinerary: [
     {
       day: "I",
       title: "Arrival & orientation",
-      focus: "Adab of travel · settling · surrender of phones",
+      focus: "Travel adab · settling · phone protocol",
       activities: [
-        "Meet at agreed point in Nablus · transfer to lodge",
-        "Orientation: safety, silence rule, schedule",
-        "Evening seminar: the blessed tree in Sūrat al-Nūn",
+        "Meet at the agreed point in Nablus and transfer to the lodge.",
+        "Orientation on safety, silence protocol, and schedule.",
+        "Evening seminar on the blessed tree in revelation.",
       ],
     },
     {
@@ -96,10 +145,10 @@ export const oliveGrove: SacredJourney = {
       title: "The grove I — cultivation",
       focus: "Field study · link to materia medica",
       activities: [
-        "Dawn recitation · simple breakfast",
-        "Walk to lower grove with forester — pruning, soil, water",
-        "Seminar: Prophetic reports on zayt",
-        "Silent evening · journaling assignment",
+        "Dawn recitation and simple breakfast.",
+        "Walk to the lower grove with the forester to study pruning, soil, and water.",
+        "Seminar on Prophetic reports concerning zayt.",
+        "Silent evening with journaling assignment.",
       ],
     },
     {
@@ -107,10 +156,10 @@ export const oliveGrove: SacredJourney = {
       title: "The press",
       focus: "Witness pressing · ethics of food",
       activities: [
-        "Estate pressing house — observe first cold press",
-        "Tasting protocol — means, not miracle; honest speech",
-        "Reading: Ibn al-Qayyim on olive oil",
-        "Group reflection — not photographed for social use",
+        "Visit estate pressing house and observe first cold press.",
+        "Guided tasting protocol with careful language about means and claims.",
+        "Reading session from Ibn al-Qayyim on olive oil.",
+        "Group reflection without social media photography.",
       ],
     },
     {
@@ -118,10 +167,10 @@ export const oliveGrove: SacredJourney = {
       title: "Stone & scripture",
       focus: "Landscape as ayāt · walking meditation",
       activities: [
-        "Long walk to ridge — two hours, moderate",
-        "Seminar outdoors: patience and provision",
-        "Letters from the classical travellers — read aloud",
-        "Early night",
+        "Moderate two-hour walk to the ridge.",
+        "Outdoor seminar on patience and provision.",
+        "Readings from classical travellers.",
+        "Early rest.",
       ],
     },
     {
@@ -129,10 +178,10 @@ export const oliveGrove: SacredJourney = {
       title: "Conversation permitted",
       focus: "Companionship · questions answered",
       activities: [
-        "Silence lifted at breakfast — structured discussion",
-        "Apothecary session: olive oil monograph review",
-        "Free conversation walk in pairs — assigned prompts",
-        "Evening: traveller reflections (voluntary)",
+        "Silence lifted at breakfast with structured discussion.",
+        "Apothecary session reviewing the olive oil monograph.",
+        "Paired conversation walk using assigned prompts.",
+        "Evening voluntary traveller reflections.",
       ],
     },
     {
@@ -140,9 +189,9 @@ export const oliveGrove: SacredJourney = {
       title: "Service",
       focus: "Khidma · work in the grove",
       activities: [
-        "Morning service — mulching or harvest prep as estate needs",
-        "Seminar: stewardship and amāna",
-        "Preparation for return — integration reading assigned",
+        "Morning service in the grove according to estate needs.",
+        "Seminar on stewardship and amana.",
+        "Preparation for return with integration reading assigned.",
       ],
     },
     {
@@ -150,9 +199,9 @@ export const oliveGrove: SacredJourney = {
       title: "Departure",
       focus: "Closing · correspondence channel open",
       activities: [
-        "Final recitation · simple meal",
-        "Transfer to Nablus · departure at own schedule",
-        "Follow-up correspondence within two weeks",
+        "Final recitation and simple meal.",
+        "Transfer to Nablus and traveller-scheduled departure.",
+        "Follow-up correspondence within two weeks.",
       ],
     },
   ],
@@ -163,8 +212,8 @@ export const oliveGrove: SacredJourney = {
       role: "Retreat Scholar · Text & isnād",
       grounding: "Academy faculty · ijāza in ḥadīth sciences",
       biography: [
-        "Leads all sourced seminars. Does not lead walks — teaching only.",
-        "Assigned readings are from his syllabus; questions are welcomed within session bounds.",
+        "Leads all sourced seminars and focuses on teaching responsibilities.",
+        "Assigned readings follow his syllabus; questions are addressed within session limits.",
       ],
     },
     {
@@ -172,95 +221,102 @@ export const oliveGrove: SacredJourney = {
       role: "Retreat Guide · Place & practice",
       grounding: "PhD Mediterranean agricultural history · estate liaison",
       biography: [
-        "Born in Nablus; coordinates field study and local relationships.",
-        "Responsible for path safety and cultural introduction — not religious instruction.",
+        "Coordinates field study and local estate relationships.",
+        "Responsible for path safety and cultural orientation rather than religious instruction.",
       ],
     },
   ],
 
   reflection: [
-    "Each traveller receives a plain notebook at orientation. Entries are private unless you choose to share on Day V.",
-    "Three assigned prompts: the tree as sign; provision and trust; what you will change at home — honestly, without grandiosity.",
-    "One hour of seated reflection daily, site chosen by the guide — silent, without devices.",
+    "Each traveller receives a plain notebook at orientation; entries remain private unless shared voluntarily on Day V.",
+    "Assigned prompts cover the tree as sign, provision and trust, and practical change at home.",
+    "One hour of seated reflection is scheduled daily in silence and without devices.",
+  ],
+
+  reflectionJournals: [
+    "Plain notebook issued at orientation, with entries private unless shared on Day V.",
+    "Three assigned prompts: tree as sign, provision and trust, and practical change at home.",
+    "One hour of seated reflection daily in silence without devices.",
+    "Final integration reading is assigned on Day VI and required though not graded.",
   ],
 
   reading: [
-    { title: "Foundations of Prophetic Medicine — Modules I–III", note: "Required before travel" },
-    { title: "Apothecary monograph — Olive Oil", note: "Read before Day III" },
-    { title: "Ibn al-Qayyim — selected passages on zayt (provided)", note: "Distributed eight weeks before" },
-    { title: "Institution retreat reader — Olive & stone (provided)", note: "Physical copy at orientation" },
+    { title: "Foundations of Prophetic Medicine — Modules I-III", note: "Required before travel." },
+    { title: "Apothecary monograph — Olive Oil", note: "Read before Day III." },
+    { title: "Ibn al-Qayyim — selected passages on zayt (provided)", note: "Distributed eight weeks before departure." },
+    { title: "Institution retreat reader — Olive & stone (provided)", note: "Physical copy issued at orientation." },
   ],
 
   packing: [
-    "Walking boots, broken in — required. Sandals for lodge only.",
-    "Modest clothing for heat and cool evenings — layers.",
-    "Sun protection: hat, long sleeves; the institution does not provide SPF.",
-    "Personal medications in original containers; copy of prescription.",
-    "Notebook and pen — phones stored at orientation.",
+    "Broken-in walking boots are required; sandals are for lodge use only.",
+    "Modest layered clothing for warm days and cooler evenings.",
+    "Sun protection (hat and long sleeves); SPF should be brought by the traveller.",
+    "Personal medications in original containers with prescription copy.",
+    "Notebook and pen; phone policy is applied at orientation.",
     "Reusable water bottle.",
-    "No drones, no portable speakers, no alcohol.",
+    "Drones, portable speakers, and alcohol are not permitted.",
   ],
 
   faq: [
     {
       question: "Is this safe given regional instability?",
       answer:
-        "The institution monitors advisories and postpones with full refund when official guidance advises against travel. We do not send travellers against such guidance. Your safety is not traded for revenue.",
+        "The institution monitors advisories and postpones with full refund when official guidance advises against travel.",
     },
     {
       question: "Can I come as a tourist and skip sessions?",
-      answer: "No. This is a retreat with a fixed educational itinerary. Partial attendance is not offered.",
+      answer: "No. This retreat follows a fixed educational itinerary, and partial attendance is not offered.",
     },
     {
       question: "Are women and men housed separately?",
-      answer: "Rooms are assigned by the institution's lodging policy; shared areas are communal. Specific arrangements are stated in pre-departure correspondence.",
+      answer: "Rooms are assigned according to institution lodging policy, and specific arrangements are provided in pre-departure correspondence.",
     },
     {
       question: "Is photography permitted?",
       answer:
-        "Private note-taking yes. Social media photography of fellow travellers or during silence — no. The estate permits limited photography of landscape without people.",
+        "Personal note-taking is permitted. Photography of fellow travellers or during silence periods is not permitted, and landscape photography is limited by estate rules.",
     },
     {
       question: "What if I cannot complete a walk?",
       answer:
-        "Alternate shorter routes exist. If mobility is severely limited, this retreat may not be suitable — enquire honestly before registering.",
+        "Shorter alternative routes are available. If mobility is significantly limited, please enquire before registering to assess suitability.",
     },
   ],
 
   gallery: [
-    { id: "grove-path", caption: "Path between groves — dawn walk", alt: "Line study of olive trees on terraced hills with a narrow path." },
-    { id: "lodge", caption: "Retreat lodge — reading room", alt: "Line study of a simple stone lodge with arched reading room." },
-    { id: "press", caption: "Pressing house — field study", alt: "Line study of traditional olive press stones and basin." },
-    { id: "ridge", caption: "Ridge seminar — outdoor teaching", alt: "Line study of seated figures on a hill overlooking groves." },
+    { id: "grove-path", caption: "Dawn path between groves", alt: "Line drawing of olive terraces with a narrow footpath." },
+    { id: "lodge", caption: "Retreat lodge reading room", alt: "Line drawing of a simple stone lodge reading room." },
+    { id: "press", caption: "Pressing house field session", alt: "Line drawing of traditional olive press equipment." },
+    { id: "ridge", caption: "Ridge seminar outdoors", alt: "Line drawing of a small seminar group on a hillside above groves." },
   ],
 
   policies: [
     {
       title: "Registration & postponement",
       body: [
-        "Register your interest via the form below. The institution confirms placement after reading review and interview.",
-        "Deposit £400 on confirmation; balance due eight weeks before departure. Postponement to the next cohort permitted once.",
+        "Register your interest through the form below. Placement is confirmed after reading review and interview.",
+        "Deposit £400 is due on confirmation, with balance due eight weeks before departure. One postponement to the next cohort is permitted.",
       ],
     },
     {
       title: "Cancellation",
       body: [
         "More than twelve weeks before departure: deposit refunded minus £75 administration.",
-        "Within twelve weeks: deposit retained. Balance refunded only if a replacement traveller is found.",
+        "Within twelve weeks: deposit is retained; balance is refunded only if a replacement traveller is found.",
       ],
     },
     {
       title: "Conduct",
       body: [
         "Alcohol, recreational drugs, and harassment result in immediate removal without refund.",
-        "The retreat observes local law and custom. Travellers represent the institution.",
+        "The retreat follows local law and custom, and travellers are expected to represent the institution responsibly.",
       ],
     },
     {
       title: "Insurance & liability",
       body: [
         "Comprehensive travel and medical insurance with medevac cover is mandatory.",
-        "The institution carries liability for organised activities only; personal property is the traveller's responsibility.",
+        "Institution liability applies to organised activities only; personal property remains the traveller's responsibility.",
       ],
     },
   ],
@@ -268,6 +324,6 @@ export const oliveGrove: SacredJourney = {
   pathways: [
     { label: "Foundations of Prophetic Medicine", href: "/the-academy/foundations" },
     { label: "Olive Oil — Apothecary monograph", href: "/the-apothecary/olive-oil" },
-    { label: "The Hijāma Programme", href: "/the-academy/hijama" },
+    { label: "Hijama Diploma Programme", href: "/the-academy/hijama-diploma" },
   ],
 };

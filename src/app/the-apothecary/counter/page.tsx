@@ -12,10 +12,10 @@ import type { AcquisitionDetails } from "@/lib/content/types";
 type Step = "selection" | "details" | "delivery" | "confirm" | "complete";
 
 const steps: { key: Step; label: string }[] = [
-  { key: "selection", label: "I · Selection" },
+  { key: "selection", label: "I · Counter" },
   { key: "details", label: "II · Details" },
   { key: "delivery", label: "III · Delivery" },
-  { key: "confirm", label: "IV · Confirm" },
+  { key: "confirm", label: "IV · Proceed" },
 ];
 
 export default function CounterPage() {
@@ -33,9 +33,9 @@ export default function CounterPage() {
 
   function validateDetails() {
     const next: Record<string, string> = {};
-    if (!details.name.trim()) next.name = "We'll need your name to reply.";
+    if (!details.name.trim()) next.name = "Name is required.";
     if (!details.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(details.email)) {
-      next.email = "We'll need a way to reach you — an address like name@example.com.";
+      next.email = "A valid email address is required.";
     }
     setErrors(next);
     return Object.keys(next).length === 0;
@@ -43,9 +43,9 @@ export default function CounterPage() {
 
   function validateDelivery() {
     const next: Record<string, string> = {};
-    if (!details.address.trim()) next.address = "We'll need an address for delivery.";
-    if (!details.city.trim()) next.city = "We'll need a city for delivery.";
-    if (!details.postcode.trim()) next.postcode = "We'll need a postcode for delivery.";
+    if (!details.address.trim()) next.address = "Address is required.";
+    if (!details.city.trim()) next.city = "City is required.";
+    if (!details.postcode.trim()) next.postcode = "Postcode is required.";
     setErrors(next);
     return Object.keys(next).length === 0;
   }
@@ -61,8 +61,8 @@ export default function CounterPage() {
         <div className="measure" style={{ margin: "0 auto" }}>
           <PageIntro section="The Counter" folio="—" title="Dispensation received" />
           <p className="type-body-l">
-            Your dispensation is received. We will write to you at {details.email} with
-            confirmation and dispatch details — considered, and in time.
+            Your dispensation has been received. We will write to {details.email}
+            with confirmation and dispatch details.
           </p>
           <p className="type-body" style={{ marginTop: "var(--s5)" }}>
             <QuietLink href="/the-apothecary">Return to the cabinet</QuietLink>
@@ -80,11 +80,11 @@ export default function CounterPage() {
             section="The Counter"
             folio="i"
             title="The counter"
-            lede="Your selection — reviewed before dispensation."
+            lede="Your selection is reviewed before dispensation."
           >
             <p>
-              Remedies are dispensed, not sold. Each line carries its grade and source.
-              Delivery and fees are stated plainly; nothing is added without disclosure.
+              Remedies are dispensed with grade and source. Delivery terms and
+              fees are stated plainly; nothing is added without disclosure.
             </p>
           </PageIntro>
         </div>
@@ -111,14 +111,14 @@ export default function CounterPage() {
             <>
               {items.length === 0 ? (
                 <>
-                  <p className="type-body-l">The counter is empty. The cabinet is here.</p>
+                  <p className="type-body-l">The counter is empty. Return to the cabinet.</p>
                   <p style={{ marginTop: "var(--s5)" }}>
-                    <QuietLink href="/the-apothecary">Enter the Apothecary</QuietLink>
+                    <QuietLink href="/the-apothecary">Return to the Apothecary</QuietLink>
                   </p>
                 </>
               ) : (
                 <>
-                  <SectionLabel>Your selection</SectionLabel>
+                  <SectionLabel>Counter selection</SectionLabel>
                   {items.map(({ slug, quantity, remedy }) => (
                     <div key={slug} className="counter-line">
                       <div>
@@ -140,7 +140,7 @@ export default function CounterPage() {
                           <button type="button" onClick={() => updateQuantity(slug, quantity + 1)} aria-label={`Increase ${remedy.name}`}>+</button>
                         </div>
                         <button type="button" className="quiet-link" style={{ marginTop: "var(--s2)" }} onClick={() => removeItem(slug)}>
-                          Remove
+                          Remove line
                         </button>
                       </div>
                     </div>
@@ -157,7 +157,7 @@ export default function CounterPage() {
                   </div>
                   <p style={{ marginTop: "var(--s5)" }}>
                     <SolidAction type="button" onClick={() => setStep("details")}>
-                      Continue
+                      Proceed
                     </SolidAction>
                   </p>
                 </>
@@ -174,7 +174,7 @@ export default function CounterPage() {
               }}
             >
               <div className={`form-field ${errors.name ? "form-field--error" : ""}`}>
-                <label htmlFor="counter-name">Your name</label>
+                <label htmlFor="counter-name">Name</label>
                 <input
                   id="counter-name"
                   value={details.name}
@@ -184,7 +184,7 @@ export default function CounterPage() {
                 {errors.name && <span className="form-error" role="alert">{errors.name}</span>}
               </div>
               <div className={`form-field ${errors.email ? "form-field--error" : ""}`}>
-                <label htmlFor="counter-email">Correspondence address</label>
+                <label htmlFor="counter-email">Email address</label>
                 <input
                   id="counter-email"
                   type="email"
@@ -194,7 +194,7 @@ export default function CounterPage() {
                 />
                 {errors.email && <span className="form-error" role="alert">{errors.email}</span>}
               </div>
-              <SolidAction type="submit">Continue</SolidAction>
+              <SolidAction type="submit">Proceed</SolidAction>
             </form>
           )}
 
@@ -245,13 +245,13 @@ export default function CounterPage() {
                   rows={3}
                 />
               </div>
-              <SolidAction type="submit">Continue</SolidAction>
+              <SolidAction type="submit">Proceed</SolidAction>
             </form>
           )}
 
           {step === "confirm" && (
             <>
-              <SectionLabel>Summary</SectionLabel>
+              <SectionLabel>Dispensation summary</SectionLabel>
               {items.map(({ slug, quantity, remedy }) => (
                 <div key={slug} className="counter-line">
                   <span className="type-body">{remedy.name} × {quantity}</span>
@@ -265,9 +265,9 @@ export default function CounterPage() {
                 </div>
               </div>
               <p className="type-body" style={{ margin: "var(--s5) 0" }}>
-                Payment is completed through our secure payment provider. Card and
-                credential entry is performed in their interface — the institution
-                never captures raw payment credentials.
+                Payment is completed through a secure payment provider. Card and
+                credential entry occurs in that provider interface; the
+                institution does not capture raw payment credentials.
               </p>
               <SolidAction type="button" onClick={handleComplete}>
                 Confirm dispensation

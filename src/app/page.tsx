@@ -27,20 +27,20 @@ export default function ThresholdPage() {
         <div className="measure-wide">
           <SectionLabel>The house · Est. MMXXV</SectionLabel>
           <p className="type-display-l threshold-house__title">
-            One institution — not a shop, a course platform, or a travel agency
+            One institution for scholarship, care, and practice
           </p>
           <div className="measure threshold-house__body">
             <p className="type-body-l">
-              Sunnah Remedies is the Institute of Prophetic Medicine. We exist
-              to revive, preserve, and advance <em>Tibb al-Nabawī</em> through
-              scholarship that cites its sources, therapeutics traced to their
-              provenance, and journeys that embody what the texts teach.
+              Sunnah Remedies is the Institute of Prophetic Medicine. We work to
+              preserve and transmit <em>Tibb al-Nabawī</em> through scholarship
+              with clear citation, therapeutics with traceable provenance, and
+              journeys ordered by study.
             </p>
             <p className="type-body">
-              The institution is measured not in revenue but in trust — built on
-              the <em>waqf</em> model to be inherited whole. Nothing is
-              attributed that cannot be traced. We offer means, and never sell a
-              miracle.
+              The institution is measured in trust, not revenue, and is shaped
+              on the <em>waqf</em> model for continuity. Nothing is attributed
+              without a traceable source. We offer means and state limits
+              plainly.
             </p>
           </div>
         </div>
@@ -51,9 +51,9 @@ export default function ThresholdPage() {
           <div className="measure-wide threshold-specimen">
             <SectionLabel>How the institution speaks</SectionLabel>
             <p className="type-body measure" style={{ marginBottom: "var(--s5)" }}>
-              Every claim carries a grade and a source before it enters the
-              institution&apos;s name. This is the apparatus — the same discipline
-              applied in the Academy, the Apothecary, and on every journey.
+              Each claim carries a grade and a source before it is published in
+              the institution&apos;s name. The same discipline governs the
+              Academy, the Apothecary, and Sacred Journeys.
             </p>
             <Specimen
               statement={specimen.statement}
@@ -68,21 +68,21 @@ export default function ThresholdPage() {
 
       <Leaf>
         <div className="measure-wide">
-          <SectionLabel>Three departments · one house</SectionLabel>
+          <SectionLabel>Four departments · one house</SectionLabel>
           <p className="type-body measure threshold-pathway__intro">
-            The mission moves in one direction: knowledge in the Academy, means in
-            the Apothecary, embodiment on Sacred Journeys. Each department opens
-            here — with a sentence of purpose and a glimpse of what awaits inside.
+            The institution works as one house: study in the Academy and
+            Library, dispensation in the Apothecary, and embodied learning on
+            Sacred Journeys. Each department opens below.
           </p>
 
           <DepartmentGateway
             numeral="I"
             name="The Apothecary"
             role="Provision · Hand"
-            story="The material arm of the institution — a cabinet of simples and preparations, each with a monograph. You are expected to read before you request dispensation."
+            story="The material arm of the institution: a cabinet of simples and preparations, each documented in a monograph. Reading precedes dispensation."
             catalogueLabel="From the cabinet"
             href="/the-apothecary"
-            linkLabel="Enter the Apothecary"
+            linkLabel="Visit the Apothecary"
             entries={remedies.slice(0, 3).map((r) => ({
               title: r.name,
               subtitle: `${r.transliteration} · ${r.botanicalName}`,
@@ -95,10 +95,10 @@ export default function ThresholdPage() {
             numeral="II"
             name="The Academy"
             role="Transmission · Mind"
-            story="The reading room of the tradition — programmes named by teacher, chain, and assessment standard before enrolment. Held to scholarship, never the standard of the marketplace."
+            story="The reading room of the tradition, with programmes named by teacher, chain, and assessment standard before enrolment."
             catalogueLabel="Programmes & subjects"
             href="/the-academy"
-            linkLabel="Begin in the Academy"
+            linkLabel="Visit the Academy"
             entries={academyCatalogue.slice(0, 3).map((p) => ({
               title: p.name,
               subtitle: p.description,
@@ -111,16 +111,46 @@ export default function ThresholdPage() {
             numeral="III"
             name="Sacred Journeys"
             role="Embodiment · Soul"
-            story="Educational pilgrimage — meaning before logistics, scholars before schedule, honest difficulty before registration. A journey, not a holiday."
+            story="Educational pilgrimage with meaning before logistics, scholars before schedule, and clear disclosure of difficulty before registration."
             catalogueLabel="Considered departures"
             href="/sacred-journeys"
-            linkLabel="Read on Sacred Journeys"
-            entries={journeyCatalogue.map((j) => ({
+            linkLabel="Visit Sacred Journeys"
+            entries={journeyCatalogue.slice(0, 3).map((j) => ({
               title: j.name,
               subtitle: j.description,
               provenance: `${j.season} · ${j.duration}`,
               href: j.href,
             }))}
+          />
+
+          <DepartmentGateway
+            numeral="IV"
+            name="Knowledge Library"
+            role="Open scholarship · Community"
+            story="The open shelf for Prophetic Medicine, materia medica, research notes, and patient guides, published with citation and clear boundaries."
+            catalogueLabel="Topics on the shelf"
+            href="/knowledge-library"
+            linkLabel="Visit the Knowledge Library"
+            entries={[
+              {
+                title: "Prophetic Medicine",
+                subtitle: "Terms, grades, and method",
+                provenance: "Essential",
+                href: "/knowledge-library/prophetic-medicine",
+              },
+              {
+                title: "Black Seed",
+                subtitle: "Nigella sativa in report and use",
+                provenance: "Materia medica",
+                href: "/knowledge-library/black-seed",
+              },
+              {
+                title: "Patient Guides",
+                subtitle: "Plain guidance before requesting means",
+                provenance: "Clinical",
+                href: "/knowledge-library/patient-guides",
+              },
+            ]}
           />
         </div>
       </Leaf>
@@ -129,8 +159,8 @@ export default function ThresholdPage() {
         <div className="grave-block">
           <p className="grave-block__line">Knowledge before commerce</p>
           <p className="grave-block__qualifier">
-            Healing is from Allah; the remedy is a means. We do not trade in fear.
-            Beauty is an obligation. The person precedes the protocol. Built to be
+            Healing is from Allah; the remedy is a means. The person precedes
+            protocol. Beauty is an obligation. The institution is built to be
             inherited.
           </p>
         </div>
@@ -138,13 +168,12 @@ export default function ThresholdPage() {
 
       <Leaf variant="inset">
         <div className="measure-wide">
-          <SectionLabel>Beyond the three departments</SectionLabel>
+          <SectionLabel>Beyond the departments</SectionLabel>
           <div className="measure threshold-beyond">
             <p className="type-body-l">
-              Consultations are a cross-cutting clinical relationship — the patient
-              received as a guest, with limits stated up front. The Founding Charter
-              is the constitution, readable by anyone who wishes to know how the
-              institution holds itself.
+              Consultations are a cross-cutting clinical relationship in which
+              the patient is received as a guest and limits are stated plainly.
+              The Founding Charter sets out how the institution holds itself.
             </p>
             <p className="type-body">
               <QuietLink href="/consultations">Request a consultation</QuietLink>

@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Seal } from "./Seal";
+import { departments as siteDepartments } from "@/lib/navigation/site-structure";
 
-const departments = [
-  { href: "/the-apothecary", label: "The Apothecary" },
-  { href: "/the-academy", label: "The Academy" },
-  { href: "/sacred-journeys", label: "Sacred Journeys" },
-];
+const departments = siteDepartments.map((d) => ({
+  href: d.href,
+  label: d.label,
+}));
 
 export function Masthead() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -57,7 +57,7 @@ export function Masthead() {
             ))}
             <span className="masthead-nav__divider" aria-hidden="true" />
             <Link href="/consultations" className="nav-link nav-link--accent">
-              Consultations
+              Clinical consultations
             </Link>
           </nav>
 
@@ -69,7 +69,7 @@ export function Masthead() {
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
           >
-            Menu
+            Navigation
           </button>
         </div>
       </header>
@@ -80,7 +80,7 @@ export function Masthead() {
         className={`mobile-nav-panel ${menuOpen ? "is-open" : ""}`}
         role="dialog"
         aria-modal="true"
-        aria-label="Navigation"
+        aria-label="Site navigation"
         hidden={!menuOpen}
       >
         <button
@@ -91,8 +91,15 @@ export function Masthead() {
             menuButtonRef.current?.focus();
           }}
         >
-          Close
+          Close navigation
         </button>
+        <Link
+          href="/"
+          className="quiet-link quiet-link--dark"
+          onClick={() => setMenuOpen(false)}
+        >
+          Home
+        </Link>
         {departments.map((dept) => (
           <Link
             key={dept.href}
@@ -109,7 +116,7 @@ export function Masthead() {
           onClick={() => setMenuOpen(false)}
           style={{ color: "var(--gilt-soft)" }}
         >
-          Consultations
+          Clinical consultations
         </Link>
       </div>
     </>

@@ -14,7 +14,7 @@ export function RelatedRemedies({ remedies }: RelatedRemediesProps) {
     <section id="related-remedies" className="monograph-section" aria-labelledby="related-remedies-heading">
       <SectionLabel>Related remedies</SectionLabel>
       <h2 id="related-remedies-heading" className="sr-only">
-        Related remedies
+        Related remedy monographs
       </h2>
       {remedies.map((r) => (
         <Link key={r.slug} href={`/the-apothecary/${r.slug}`} className="ruled-row">

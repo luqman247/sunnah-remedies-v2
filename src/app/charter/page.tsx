@@ -15,7 +15,7 @@ export default function CharterPage() {
             section="The Institution"
             folio="i"
             title="The Founding Charter"
-            lede="The constitution, readable."
+            lede="The constitutional text of the institution."
           />
         </div>
       </Leaf>
@@ -23,16 +23,16 @@ export default function CharterPage() {
       <Leaf variant="inset">
         <article className="measure" style={{ margin: "0 auto" }}>
           <p className="type-body-l" style={{ marginBottom: "var(--s5)" }}>
-            Sunnah Remedies exists to revive, preserve and advance the authentic
-            tradition of Prophetic Medicine through scholarship, clinical excellence,
-            education and carefully curated natural therapeutics, serving humanity
-            with integrity, compassion and evidence-informed practice.
+            Sunnah Remedies exists to preserve and transmit the tradition of
+            Prophetic Medicine through scholarship, clinical care, education, and
+            carefully selected natural therapeutics, with integrity and
+            evidence-informed practice.
           </p>
 
           <hr className="hairline" style={{ margin: "var(--s6) 0" }} />
 
           <section id="covenant" className="charter-section">
-            <h2 className="type-title charter-section__title">Our Covenant</h2>
+            <h2 className="type-title charter-section__title">The covenant</h2>
             <ul className="type-body charter-list">
               <li>Knowledge before products, service before profit, trust before growth.</li>
               <li>Healing is from Allah; the remedy is a means.</li>
@@ -40,7 +40,7 @@ export default function CharterPage() {
               <li>We do not trade in fear.</li>
               <li>Beauty is an obligation, not an ornament.</li>
               <li>The person precedes the protocol; the human precedes the sale.</li>
-              <li>Permanence is built by refusal.</li>
+              <li>Permanence is protected by restraint.</li>
             </ul>
           </section>
 

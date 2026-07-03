@@ -675,7 +675,7 @@ Photography is the *only* sanctioned difference between departments (§7.3). It 
 
 §33.4 **Never:** lifestyle vitality or wellness performance; stock smiles; hands-holding-product; travel-brochure saturation; sterile white-background e-commerce shots (unless a deliberate archival treatment); auto-playing video; motion for its own sake; any image implying a benefit the copy may not claim (§10.3).
 
-§33.5 **The photography brief template** (used to commission every shoot): subject; department & subject-world; ratio; light (time of day, direction); mood (one word, from the grammar); margin (how much space around subject); what it must *not* imply. No shoot proceeds without a brief passing the Standard (§4).
+§33.5 **The photography brief template** (used to commission every shoot): subject; department & subject-world; ratio; light (time of day, direction); mood (one word, from the grammar); margin (how much space around subject); what it must *not* imply. No shoot proceeds without a brief passing the Standard (§4). **Full art direction:** see `Photography-Art-Direction-Manual.md` (Edition I).
 
 ## Chapter 34 — Illustration & Ornament
 

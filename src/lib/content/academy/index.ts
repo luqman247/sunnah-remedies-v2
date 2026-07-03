@@ -1,24 +1,30 @@
 import type { AcademyProgramme } from "./types";
-import { hijamaProgramme } from "./hijama";
+import { hijamaDiploma } from "./hijama-diploma";
 
-export const programmes: AcademyProgramme[] = [hijamaProgramme];
+export const hijamaProgramme: AcademyProgramme = hijamaDiploma;
+
+export const programmes: AcademyProgramme[] = [hijamaDiploma];
+
+export function getHijamaDiploma(): AcademyProgramme {
+  return hijamaDiploma;
+}
 
 export const academyCatalogue = [
   {
     slug: "foundations",
     name: "Foundations of Prophetic Medicine",
     tier: "Essential" as const,
-    fee: "Free · a right of the community",
+    fee: "Free · provided as a community right",
     href: "/the-academy/foundations",
-    description: "Terms, grades, and method — the essential introduction to Tibb al-Nabawī.",
+    description: "Terms, grades, and method for an essential introduction to Tibb al-Nabawī.",
   },
   {
     slug: "hijama",
     name: "The Hijāma Programme",
     tier: "Professional" as const,
     fee: "£2,400 · twelve weeks",
-    href: "/the-academy/hijama",
-    description: "Professional training in Prophetic cupping — clinical, sourced, and supervised.",
+    href: "/the-academy/hijama-diploma",
+    description: "Professional training in Prophetic cupping, taught with clinical supervision and clear sourcing.",
   },
   {
     slug: "materia-medica",
@@ -26,7 +32,7 @@ export const academyCatalogue = [
     tier: "Advanced" as const,
     fee: "£480 · eight weeks",
     href: "/the-academy/materia-medica",
-    description: "The remedies of the tradition, graded and traced to their sources.",
+    description: "Study of remedies in the tradition, with grading and source tracing.",
   },
   {
     slug: "clinical-ethics",
@@ -34,7 +40,7 @@ export const academyCatalogue = [
     tier: "Licensed" as const,
     fee: "By application",
     href: "/the-academy/clinical-ethics",
-    description: "The responsibilities of the practitioner — limits, consent, and clinical adab.",
+    description: "Responsibilities of practice, including limits, consent, and clinical adab.",
   },
 ];
 

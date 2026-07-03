@@ -13,7 +13,7 @@ const faq = [
   {
     question: "Is this programme truly free?",
     answer:
-      "The essential foundations are a right of the community. There is no fee, no account wall, and no upsell within the material. Optional donation is neither requested nor expected.",
+      "The essential foundations are offered as a right of the community. There is no fee, no account wall, and no marketing path within the material. Optional donation is neither requested nor expected.",
   },
   {
     question: "Does completion qualify me for the Hijāma Programme?",
@@ -37,12 +37,13 @@ export default function FoundationsPage() {
             section="The Academy"
             folio="iii"
             title="Foundations of Prophetic Medicine"
-            lede="Terms, grades, and method — the essential introduction to Tibb al-Nabawī."
+            lede="Terms, grades, and method: an essential introduction to Tibb al-Nabawī."
           >
             <p>
-              A free, structured introduction offered as a right of the community. Eight
-              modules covering terminology, the three grades of evidence, isnād discipline,
-              and the editorial standard of the institution.
+              A free, structured introduction offered as a right of the
+              community. Eight modules cover terminology, the three grades of
+              evidence, isnād discipline, and the institution&apos;s editorial
+              standard.
             </p>
           </PageIntro>
         </div>
@@ -68,7 +69,7 @@ export default function FoundationsPage() {
           ))}
 
           <p className="type-body" style={{ marginTop: "var(--s6)" }}>
-            <GoLink href="/the-academy/foundations/enrol">Begin in the Academy</GoLink>
+            <GoLink href="/the-academy/foundations/enrol">Enrol in Foundations</GoLink>
           </p>
         </article>
       </Leaf>

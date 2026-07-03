@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { Remedy } from "@/lib/content/types";
 import { formatPrice } from "@/lib/content/remedies";
 import { AddToCounter } from "./AddToCounter";
@@ -14,9 +13,9 @@ export function DispensationBlock({ remedy }: DispensationBlockProps) {
         Dispensation
       </h2>
       <p className="type-body dispensation-block__intro">
-        This remedy is dispensed from the cabinet — not sold as a commodity. The
-        measure below covers preparation and delivery; it is stated after the
-        monograph so that you may read first and decide in time.
+        This remedy is dispensed from the cabinet and not presented as a retail
+        commodity. The amount below covers preparation, packaging, and delivery,
+        and is provided after the monograph so the evidence may be read first.
       </p>
       <dl className="dispensation-block__details">
         <div>
@@ -36,15 +35,13 @@ export function DispensationBlock({ remedy }: DispensationBlockProps) {
         <AddToCounter slug={remedy.slug} name={remedy.name} />
       ) : (
         <p className="type-body">
-          This remedy is not in stock at present.{" "}
-          <Link href="/correspondence" className="quiet-link">
-            Write to us
-          </Link>{" "}
-          to be told when it returns.
+          This remedy is currently unavailable. Write to us to receive a return
+          notice when stock is restored.
         </p>
       )}
       <p className="type-small dispensation-block__note">
-        There is no need to decide today. Read the monograph; the cabinet keeps.
+        There is no need to decide immediately. Read the full monograph before
+        requesting dispensation.
       </p>
     </section>
   );

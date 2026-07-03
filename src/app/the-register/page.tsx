@@ -20,13 +20,13 @@ const corpus = [
     title: "Foundations of Prophetic Medicine",
     provenance: "Academy · Essential",
     href: "/the-academy/foundations",
-    subtitle: "The essential texts and terms of Tibb al-Nabawī.",
+    subtitle: "Essential terms and texts in Tibb al-Nabawī.",
   },
   {
     title: "Ṣaḥīḥ al-Bukhārī — Kitāb al-Ṭibb",
     provenance: "Source · Canonical",
     href: "/the-academy/materia-medica",
-    subtitle: "The book of medicine in the canonical collection.",
+    subtitle: "The medicine chapter in the canonical collection.",
   },
 ];
 
@@ -49,11 +49,11 @@ export default function RegisterPage() {
             section="The Register"
             folio="i"
             title="Search the institution"
-            lede="Texts, remedies, and sources — indexed with grade and department."
+            lede="Texts, remedies, and sources indexed by grade and department."
           >
             <p>
-              A reading room for the institution&apos;s corpus. Results carry
-              provenance and department, as the cabinet and the Academy do.
+              A reading room for the institution&apos;s corpus. Results list
+              provenance and department for consistent reference.
             </p>
           </PageIntro>
         </div>
@@ -79,8 +79,8 @@ export default function RegisterPage() {
 
           {searched && results.length === 0 && (
             <p className="type-body" style={{ marginTop: "var(--s5)" }}>
-              The Register holds no entry under that term. Try a broader one, search
-              within a single department, or write to us and we will look ourselves.
+              No entry was found for that term. Try a broader term, search
+              within one department, or write to us for assistance.
             </p>
           )}
 

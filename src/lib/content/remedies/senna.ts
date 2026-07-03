@@ -1,4 +1,10 @@
 import type { Remedy } from "../types";
+import {
+  photographyGrammar,
+  standardCustomerSupport,
+  standardReturns,
+  standardShipping,
+} from "./defaults";
 
 export const senna: Remedy = {
   slug: "senna",
@@ -6,24 +12,24 @@ export const senna: Remedy = {
   transliteration: "al-sanā makkī",
   botanicalName: "Senna alexandrina",
   nature:
-    "Whole dried pods of Senna alexandrina — a botanical named in Prophetic report and recorded across the classical materia medica, offered with explicit bounds on use.",
+    "Whole dried pods of Senna alexandrina, a botanical named in transmitted report and classical materia medica, offered with explicit bounds.",
+  institutionalSummary:
+    "Whole dried pods of Senna alexandrina, identified to species, shade-dried, and traced from Wadi Hadramawt. The Prophetic reference is graded as Reported, pharmacology is acknowledged, and duration of use is clearly limited. This is not a daily food and no detox claim is made.",
   folio: "iv",
   figure: "senna",
   figureAlt:
-    "Dried senna pods in a linen pouch, composed still-life with warm natural light.",
+    "Dried senna pods in a linen pouch, arranged as a restrained still life.",
 
   historicalContext: [
-    "Senna entered the Mediterranean pharmacopoeia before Islam and was integrated into Arabic medicine under names that the Prophetic literature later associated with sanā makkī — Meccan senna — distinguished by the commentators from related species.",
-    "Ibn al-Qayyim lists senna among the laxative simples, with warnings about excess that the institution repeats without softening. A strong simple demands strong honesty.",
-    "The hospitals of the Islamic world used senna in decoction, often with tamarind or other moderating agents. This dispensation is the pod alone, so the person prepares deliberately rather than receiving an opaque compound.",
+    "Senna appears in pre-Islamic Mediterranean pharmacopoeia and was later integrated into Arabic medical writing under related names.",
+    "Ibn al-Qayyim lists senna among laxative simples and records caution regarding excess use.",
+    "Historical institutions used senna in decoction, often with moderating agents. This dispensation is provided as pod only for deliberate preparation.",
   ],
 
   propheticReferences: [
     {
-      statement:
-        "If anything is good for this, it is senna.",
-      transliteration:
-        "wa-hal min shayʾin khayrun min al-sanā makkī",
+      statement: "If anything is good for this, it is senna.",
+      transliteration: "wa-hal min shayʾin khayrun min al-sanā makkī",
       grade: "Reported",
       source: "Sunan Abī Dāwūd · Kitāb al-Ṭibb",
       standing: "Reported narration · graded ḥasan by the scholars of ḥadīth",
@@ -32,98 +38,150 @@ export const senna: Remedy = {
     },
   ],
 
+  traditionalScholarship: [
+    "Commentators distinguish sanā makkī from related species, and botanical identity remains central to safe practice.",
+    "Ibn al-Qayyim and later writers classify senna among purgative simples for occasional support rather than routine daily use.",
+    "Where isnād discipline requires, the grade is stated as Reported and not elevated beyond that grade.",
+  ],
+
   traditionalUsage: [
-    "Prepared as a decoction from crushed or whole pods, steeped in hot water, strained, and taken in modest measure — typically for short periods when the body needs gentle support.",
-    "Classical authors class senna among the purgatives. The tradition speaks of cleansing the stomach; the institution states plainly that this is occasional support, not daily habit.",
-    "Often combined in historical texts with other simples to moderate effect. We advise reading the preparation section before use and consulting a practitioner if symptoms persist.",
+    "Traditionally prepared as a decoction from whole or lightly crushed pods, then strained and taken in modest measure.",
+    "Classical authors discuss cleansing actions; this monograph frames use as occasional support rather than daily habit.",
+    "Some historical texts combine senna with moderating simples.",
   ],
 
-  evidenceInformed: [
-    "Senna is recognised in pharmacopoeias as a source of anthraquinone glycosides with laxative action. Effect and onset are documented; so are limits on duration of use.",
-    "Prolonged use without supervision may cause dependence on laxatives and electrolyte disturbance. The institution advises occasional use only.",
-    "Not appropriate during pregnancy, lactation, or for children under twelve except under direct medical supervision.",
-  ],
+  evidence: {
+    established: [
+      "Senna contains anthraquinone glycosides with established laxative action documented in pharmacopoeias.",
+      "Prolonged unsupervised use can lead to dependence and electrolyte disturbance.",
+      "Not appropriate during pregnancy, lactation, or for children under twelve except under direct medical supervision.",
+    ],
+    emerging: [
+      "Research on gut motility and short-term use continues; duration limits remain institutional policy.",
+    ],
+  },
 
-  sourcing: [
-    "Cultivated in the Wadi Hadramawt, Yemen — harvest traced to field and drying batch.",
-    "Whole pods, hand-sorted to remove stem fragments and foreign matter.",
-    "Dried under shade cloth to preserve colour and constituent profile; not oven-dried.",
+  provenance: {
+    origin: [
+      "Cultivated in Wadi Hadramawt, Yemen, with field and drying batch traceability.",
+    ],
+    cultivation: [
+      "Senna alexandrina is grown as a field crop with rotation records that reduce adulterant risk.",
+    ],
+    harvesting: [
+      "Whole pods are hand-sorted to remove stem fragments and foreign matter.",
+      "Pods are shade-dried rather than oven-dried to preserve colour and constituent profile.",
+    ],
+  },
+
+  laboratoryVerification: [
+    "Botanical identity is verified as Senna alexandrina against pharmacopoeial description.",
+    "Moisture content is controlled to reduce mould risk in storage and transit.",
+    "Release lots undergo microbiological screening.",
   ],
 
   qualityAssurance: [
-    "Botanical identity verified as Senna alexandrina against pharmacopoeial description.",
-    "Moisture content controlled to prevent mould in transit.",
-    "Light-protective packaging with desiccant sachet where humidity risk warrants.",
-    "Decoction instructions and limits printed on the inner label — not merely on a website.",
+    "Light-protective packaging is used, with desiccant where humidity risk warrants.",
+    "Decoction instructions and limits are printed on the inner label.",
+    "Species name appears on each vessel rather than generic labelling.",
   ],
 
   storage: [
-    "Store in the sealed pouch in a cool, dry place.",
-    "Reseal after opening. Use within three months of opening.",
-    "Discard if mould, must, or unexpected odour appears.",
+    "Store in sealed pouch in a cool, dry place.",
+    "Reseal after opening and use within three months.",
+    "Discard if mould, mustiness, or unexpected odour develops.",
   ],
 
   preparation: [
-    "Crush one to two pods lightly. Steep in approximately 200ml freshly boiled water for ten to fifteen minutes. Strain before taking.",
-    "Begin with the lower measure. Take in the evening if using for the first time.",
-    "Use for a short period only — typically not more than several consecutive days without professional guidance.",
-    "Full instructions enclosed with dispensation. Do not exceed the measure on the label.",
+    "Lightly crush one to two pods, steep in approximately 200ml freshly boiled water for ten to fifteen minutes, then strain.",
+    "Begin with the lower measure; first use in the evening is often practical.",
+    "Use for short periods only, typically not more than several consecutive days without professional guidance.",
   ],
 
-  honestLimits: [
-    "It is a means, not a cure. Healing is from Allah.",
-    "For occasional use only. Not a daily food.",
-    "Not suitable during pregnancy, while nursing, or for children under twelve.",
-    "Persistent change in bowel habit requires medical assessment — do not self-treat indefinitely.",
-    "A remedy is not a substitute for a physician.",
+  suggestedUse: [
+    "Use as an occasional decoction with modest measure and bounded duration.",
+    "Read enclosed instructions before first use.",
+    "Do not combine with other purgatives without competent advice.",
   ],
+
+  contraindications: [
+    "Healing is from Allah; this remedy is a means.",
+    "For occasional use only and not as a daily food; no detox claim is made.",
+    "Not during pregnancy, while nursing, or for children under twelve.",
+    "Persistent change in bowel habit requires medical assessment.",
+    "Not a substitute for medical care.",
+  ],
+
+  photographyDirection: [
+    ...photographyGrammar,
+    "Subject: dried pods in linen pouch with restrained side light and no decorative scatter.",
+    "Mood: herbarium specimen with clear pod texture and material fidelity.",
+  ],
+
+  packaging: [
+    "100g net in light-protective pouch with reseal strip and instruction leaflet.",
+    "Label includes lot, species name, and harvest batch.",
+  ],
+
+  shipping: standardShipping,
+  returns: standardReturns,
+  customerSupport: standardCustomerSupport,
 
   faq: [
     {
       question: "Why is the Prophetic reference graded Reported?",
       answer:
-        "The institution grades every claim. This narration is accepted and cited in Tibb al-Nabawī, but we name its grade as the isnād discipline requires — never dressing Reported as Established.",
+        "Every claim is graded. This narration is cited in Tibb al-Nabawī, and its grade is stated according to isnād discipline.",
     },
     {
       question: "Can senna be taken daily for detox?",
       answer:
-        "The institution does not use the word detox. Daily purgative use is not responsible practice. Senna is offered for occasional, bounded use — not regimen or cleanse.",
+        "No. Daily purgative use is not responsible practice. Senna is intended for occasional and bounded use.",
     },
     {
       question: "Is this the same as leaves sold in shops?",
       answer:
-        "We dispense whole pods of Senna alexandrina identified to species. Generic 'senna tea' may differ in species, leaf-to-pod ratio, and age. Traceability is the difference.",
+        "This dispensation provides whole pods of Senna alexandrina identified to species. Generic senna tea may differ by species and age.",
     },
     {
       question: "Should I combine senna with other remedies?",
       answer:
-        "Classical texts sometimes combine it with moderating agents. If you use other means from this cabinet, read both monographs and consider consultation — interaction is your responsibility to judge with competent advice.",
+        "Read all relevant monographs and consider consultation. Combination decisions should be made with competent advice.",
     },
   ],
 
   relatedRemedies: ["honey"],
-  suggestedReading: [
+  academyLessons: [
     {
-      title: "The Materia Medica — Purgative Simples",
+      title: "The Materia Medica",
       href: "/the-academy/materia-medica",
-      note: "Classical bounds on senna and related botanicals.",
+      note: "Purgative simples and their classical limits.",
     },
     {
-      title: "Clinical Practice & Ethics",
-      href: "/the-academy/clinical-ethics",
-      note: "When to refer — the practitioner's duty of limits.",
+      title: "Clinical Standards",
+      href: "/the-academy/clinical-standards",
+      note: "Referral thresholds and limits of practice.",
+    },
+  ],
+  knowledgeLibrary: [
+    {
+      title: "Prophetic Medicine",
+      href: "/knowledge-library/prophetic-medicine",
+      note: "Grades of transmission and method.",
+    },
+    {
+      title: "Patient Guides",
+      href: "/knowledge-library/patient-guides",
+      note: "Guidance before requesting a remedy.",
     },
   ],
   pathways: [
-    {
-      label: "The Materia Medica",
-      href: "/the-academy/materia-medica",
-      department: "Academy",
-    },
+    { label: "The Materia Medica", href: "/the-academy/materia-medica", department: "Academy" },
+    { label: "Clinical Standards", href: "/the-academy/clinical-standards", department: "Academy" },
   ],
 
   volume: "100g",
   price: 12,
-  priceNote: "incl. delivery within the United Kingdom",
+  priceNote: "includes delivery within the United Kingdom",
   inStock: true,
 };

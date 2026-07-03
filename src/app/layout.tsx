@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     template: "%s · Sunnah Remedies",
   },
   description:
-    "The world's leading institute of Prophetic Medicine — scholarship, clinical care, and natural therapeutics under one house.",
+    "An institute of Prophetic Medicine for scholarship, clinical care, and natural therapeutics under one house.",
   icons: {
     icon: "/brand/favicon.png",
   },

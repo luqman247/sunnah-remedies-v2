@@ -16,9 +16,9 @@ export function AddToCounter({ slug, name }: AddToCounterProps) {
   if (confirmed) {
     return (
       <p className="counter-confirmation" role="status">
-        {name} has been placed on the counter.{" "}
+        {name} has been added to the counter.{" "}
         <Link href="/the-apothecary/counter" className="quiet-link">
-          Review before dispensation
+          Review item details
         </Link>
       </p>
     );
@@ -33,7 +33,7 @@ export function AddToCounter({ slug, name }: AddToCounterProps) {
         setConfirmed(true);
       }}
     >
-      Add to the counter
+      Add to counter
     </button>
   );
 }

@@ -605,6 +605,16 @@ a {
   .footer__columns {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .footer__columns--wide {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer__columns--wide {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
 
 .footer__column-label {
@@ -879,6 +889,65 @@ a {
   display: flex;
   flex-direction: column;
   gap: var(--s4);
+}
+
+/* —— Department section nav —— */
+
+.dept-nav {
+  margin-bottom: var(--s5);
+}
+
+.dept-nav__label {
+  color: var(--gilt);
+  margin-bottom: var(--s3);
+}
+
+.dept-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.dept-nav__link {
+  display: block;
+  padding: var(--s2) 0;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-body), Georgia, serif;
+  font-size: 0.95rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.dept-nav__link:hover {
+  color: var(--gilt);
+}
+
+.dept-nav__link--current {
+  color: var(--gilt);
+  font-weight: 500;
+}
+
+.section-page__layout {
+  display: grid;
+  gap: var(--s5);
+  margin-top: var(--s4);
+}
+
+@media (min-width: 900px) {
+  .section-page__layout {
+    grid-template-columns: 12rem 1fr;
+    align-items: start;
+  }
+
+  .section-page__nav {
+    position: sticky;
+    top: var(--s6);
+  }
+}
+
+.section-page__body {
+  padding-bottom: var(--s6);
 }
 
 /* —— Listing rows —— */
@@ -1275,9 +1344,193 @@ a {
     align-items: start;
   }
 
+  .monograph-layout--ledger {
+    grid-template-columns: 11rem 1fr minmax(220px, 260px);
+  }
+
   .monograph-layout__nav {
     position: sticky;
     top: 5rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .monograph-layout--ledger {
+    grid-template-columns: 12rem 1fr minmax(240px, 280px);
+  }
+}
+
+/* Museum header */
+
+.monograph-header--museum {
+  padding-bottom: var(--s2);
+}
+
+.monograph-header__folio {
+  color: var(--gilt);
+  margin: 0 0 var(--s2);
+}
+
+.monograph-header__nature {
+  margin: var(--s4) 0 0;
+  max-width: var(--measure-reading);
+}
+
+.monograph-header__figure {
+  margin: 0;
+}
+
+.monograph-header__caption {
+  color: var(--muted);
+  margin-top: var(--s3);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.monograph-plaque {
+  padding: var(--s5) 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: var(--s6);
+}
+
+.monograph-plaque__text {
+  margin: var(--s3) 0 0;
+  max-width: var(--measure-reading);
+}
+
+/* Evidence blocks */
+
+.evidence-section__intro {
+  color: var(--muted);
+  margin-bottom: var(--s5);
+}
+
+.evidence-block {
+  padding: var(--s4) 0;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: var(--s4);
+}
+
+.evidence-block:last-child {
+  border-bottom: none;
+}
+
+.evidence-block__label {
+  color: var(--gilt);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: var(--s3);
+}
+
+/* Dispensation ledger — calm, luxury, not shop */
+
+.monograph-ledger {
+  margin-top: var(--s6);
+}
+
+@media (min-width: 1024px) {
+  .monograph-ledger {
+    margin-top: 0;
+    position: sticky;
+    top: 5rem;
+    align-self: start;
+  }
+}
+
+.monograph-ledger__inner {
+  padding: var(--s5);
+  border: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.monograph-ledger__label {
+  color: var(--gilt);
+  margin-bottom: var(--s3);
+}
+
+.monograph-ledger__name {
+  margin: 0 0 var(--s1);
+}
+
+.monograph-ledger__measure {
+  color: var(--muted);
+  margin: 0 0 var(--s4);
+}
+
+.monograph-ledger__fee {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 300;
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+  margin: 0 0 var(--s2);
+  line-height: 1.1;
+}
+
+.monograph-ledger__delivery {
+  color: var(--muted);
+  margin: 0 0 var(--s5);
+}
+
+.monograph-ledger__note {
+  color: var(--muted);
+  margin: var(--s4) 0 0;
+}
+
+@media (max-width: 1023px) {
+  .monograph-ledger {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    margin: 0 calc(-1 * var(--s4));
+    padding: 0 var(--s4);
+    background: linear-gradient(to top, var(--paper) 85%, transparent);
+  }
+
+  .monograph-ledger__inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: var(--s2) var(--s4);
+    align-items: center;
+    box-shadow: 0 -1px 0 var(--rule);
+  }
+
+  .monograph-ledger__label,
+  .monograph-ledger__note {
+    display: none;
+  }
+
+  .monograph-ledger__name {
+    grid-column: 1;
+    font-size: 1rem;
+  }
+
+  .monograph-ledger__measure {
+    grid-column: 1;
+    margin: 0;
+  }
+
+  .monograph-ledger__fee {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    font-size: 1.5rem;
+    margin: 0;
+    align-self: center;
+  }
+
+  .monograph-ledger__delivery {
+    display: none;
+  }
+
+  .monograph-ledger__inner .solid-action {
+    grid-column: 1 / -1;
+    width: 100%;
+    text-align: center;
+  }
+
+  .monograph-ledger__inner .counter-confirmation {
+    grid-column: 1 / -1;
   }
 }
 
@@ -1479,6 +1732,73 @@ a {
 .programme-feature__desc {
   margin: 0 0 var(--s3);
   max-width: var(--measure-reading);
+}
+
+.programme-header--executive .programme-header__tier {
+  color: var(--gilt);
+}
+
+/* Equipment table */
+
+.equipment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--s4) 0;
+}
+
+.equipment-table th,
+.equipment-table td {
+  text-align: left;
+  padding: var(--s3) var(--s2);
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+
+.equipment-table th {
+  color: var(--gilt);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Enrolment journey */
+
+.enrolment-journey {
+  list-style: none;
+  margin: var(--s5) 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.enrolment-journey__step {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: var(--s3) var(--s4);
+  padding: var(--s5) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.enrolment-journey__numeral {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: var(--gilt);
+  line-height: 1.2;
+}
+
+.enrolment-journey__title {
+  margin: 0 0 var(--s1);
+}
+
+.enrolment-journey__duration {
+  color: var(--muted);
+  margin: 0 0 var(--s2);
+}
+
+.programme-ledger__cta {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  margin-top: var(--s3);
 }
 
 .programme-subheading {

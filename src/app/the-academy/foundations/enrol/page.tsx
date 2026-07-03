@@ -14,10 +14,10 @@ export default function FoundationsEnrolPage() {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const next: Record<string, string> = {};
-    if (!data.get("name")) next.name = "We'll need your name to reply.";
+    if (!data.get("name")) next.name = "Name is required.";
     const email = data.get("email") as string;
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      next.email = "We'll need a way to reach you — an address like name@example.com.";
+      next.email = "A valid email address is required.";
     }
     if (Object.keys(next).length > 0) {
       setErrors(next);
@@ -33,33 +33,33 @@ export default function FoundationsEnrolPage() {
           items={[
             { label: "The Academy", href: "/the-academy" },
             { label: "Foundations", href: "/the-academy/foundations" },
-            { label: "Enrol" },
+            { label: "Registration" },
           ]}
         />
         <PageIntro
           section="The Academy"
           folio="—"
-          title="Enrol in Foundations"
-          lede="Free · a right of the community."
+          title="Register for Foundations"
+          lede="No fee. Offered as a right of the community."
         />
         {submitted ? (
           <p className="type-body-l">
-            You are enrolled. Materials will arrive at your correspondence address within
-            three days. There is no fee and no further step required.
+            Registration is complete. Materials will be sent to your email
+            address within three days. No fee or further step is required.
           </p>
         ) : (
           <form onSubmit={handleSubmit} className="form-stack">
             <div className={`form-field ${errors.name ? "form-field--error" : ""}`}>
-              <label htmlFor="found-name">Your name</label>
+              <label htmlFor="found-name">Name</label>
               <input id="found-name" name="name" type="text" autoComplete="name" />
               {errors.name && <span className="form-error" role="alert">{errors.name}</span>}
             </div>
             <div className={`form-field ${errors.email ? "form-field--error" : ""}`}>
-              <label htmlFor="found-email">Correspondence address</label>
+              <label htmlFor="found-email">Email address</label>
               <input id="found-email" name="email" type="email" autoComplete="email" />
               {errors.email && <span className="form-error" role="alert">{errors.email}</span>}
             </div>
-            <SolidAction type="submit">Enrol</SolidAction>
+            <SolidAction type="submit">Register your interest</SolidAction>
           </form>
         )}
       </div>

@@ -8,13 +8,15 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return getAllJourneySlugs().map((slug) => ({ slug }));
+  return getAllJourneySlugs()
+    .filter((slug) => slug !== "umrah")
+    .map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const journey = getJourneyBySlug(slug);
-  if (!journey) return { title: "Journey" };
+  if (!journey) return { title: "Journey programme" };
   return {
     title: journey.name,
     description: journey.subtitle,

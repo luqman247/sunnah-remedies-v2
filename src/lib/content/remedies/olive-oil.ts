@@ -1,4 +1,10 @@
 import type { Remedy } from "../types";
+import {
+  photographyGrammar,
+  standardCustomerSupport,
+  standardReturns,
+  standardShipping,
+} from "./defaults";
 
 export const oliveOil: Remedy = {
   slug: "olive-oil",
@@ -6,22 +12,23 @@ export const oliveOil: Remedy = {
   transliteration: "zayt",
   botanicalName: "Olea europaea",
   nature:
-    "First cold-pressed extra virgin oil from ancient groves — the blessed tree of revelation, a daily nourishment of the Prophetic tradition.",
+    "First cold-pressed extra virgin oil from established groves, presented as nourishment and a traditional means.",
+  institutionalSummary:
+    "First cold-pressed extra virgin oil from Nabali Baladi groves above Nablus, with traceability from tree to vessel. It is named as a blessed tree in revelation and report and is presented first as food. Traditional associations are stated with clear limits and without cure claims.",
   folio: "v",
   figure: "olive",
   figureAlt:
-    "Green olive oil in a dark glass bottle beside fresh olive branches, side-lit with generous margin.",
+    "Olive oil in dark glass beside fresh branches, side-lit with restrained composition.",
 
   historicalContext: [
-    "The olive is named in the Qur'an as a blessed tree — shajarah mubārakah — and its oil was the fat of the Mediterranean Islamic world: lamp, food, anointing, medicine.",
-    "The Prophetic reports on olive oil appear in the chapters of medicine across the collections. The household of the Prophet ﷺ consumed oil and used it on the body — a double use the tradition preserves without collapsing food into pharmacy.",
-    "Andalusian and Levantine groves supplied the hospitals and the kitchens alike. The institution sources from Nablus not for romance but because estate pressing allows a single chain from tree to bottle.",
+    "The olive is named in the Qur'an as a blessed tree, shajarah mubārakah, and its oil has long served as food and daily utility across Muslim societies.",
+    "Prophetic reports place olive oil in both dietary and topical contexts. The tradition preserves both without confusing nourishment with formal treatment.",
+    "Levantine and Andalusian sources document olive oil in household and institutional settings. This lot is sourced from estate pressing in Nablus with a single traceable chain.",
   ],
 
   propheticReferences: [
     {
-      statement:
-        "Eat olive oil and anoint yourselves with it, for it comes from a blessed tree.",
+      statement: "Eat olive oil and anoint yourselves with it, for it comes from a blessed tree.",
       transliteration: "kullū al-zayta wa-dahtanū bihi fa-innahu min shajara mubāraka",
       grade: "Established",
       source: "Sunan al-Tirmidhī · Kitāb al-Ṭibb",
@@ -30,8 +37,7 @@ export const oliveOil: Remedy = {
       attribution: "hadith",
     },
     {
-      statement:
-        "It is blessed tree oil.",
+      statement: "It is blessed tree oil.",
       transliteration: "huwa zaytu shajara mubāraka",
       grade: "Reported",
       source: "Sunan al-Tirmidhī · Kitāb al-Ṭibb",
@@ -41,102 +47,152 @@ export const oliveOil: Remedy = {
     },
   ],
 
+  traditionalScholarship: [
+    "Ibn al-Qayyim discusses olive oil among oils of general support, with diet primary and medicinal association secondary.",
+    "Exegetes describe barakah as blessing and do not treat it as a guaranteed medical outcome for each person.",
+    "Classical pharmacopoeias distinguish press grades; this monograph limits dispensation to first extraction.",
+  ],
+
   traditionalUsage: [
-    "Taken by the spoonful on rising, used in cooking, and applied to the skin and hair in moderate measure — the tradition does not sharply separate nourishment from anointing.",
-    "Ibn al-Qayyim discusses olive oil among the oils of general fortification. It is diet first; any medicinal association is secondary and bounded.",
-    "The institution recommends this oil primarily as food. External use should avoid broken or infected skin unless a practitioner directs otherwise.",
+    "Traditionally taken in small measure, used in food preparation, and applied topically in moderation.",
+    "The tradition records both nourishment and anointing; this oil is recommended primarily as food.",
+    "Topical use should avoid broken or infected skin unless advised by a qualified practitioner.",
   ],
 
-  evidenceInformed: [
-    "Extra virgin olive oil is among the most studied dietary fats — associated in population research with Mediterranean dietary patterns. The institution does not reduce revelation to epidemiology.",
-    "As a fat, it is calorically dense. It is offered as a wholesome food, not a supplement for targeted disease modification.",
-    "Persons with gallbladder disease or fat malabsorption should consult a physician before increasing fat intake.",
-  ],
+  evidence: {
+    established: [
+      "Extra virgin olive oil is a calorically dense dietary fat.",
+      "Those with gallbladder disease or fat-malabsorption conditions should seek medical advice before increasing fat intake.",
+    ],
+    emerging: [
+      "Population research on Mediterranean dietary patterns continues; revelation is not reduced here to epidemiology.",
+      "Sensory and chemical markers of extra virgin grade are applied at release and are not health claims.",
+    ],
+  },
 
-  sourcing: [
-    "Estate groves in the hills above Nablus, Palestine — cultivar Nabali Baladi, hand-harvested.",
-    "Pressed within hours of harvest. First extraction only. Acidity below 0.3%.",
-    "Unfiltered by choice; slight sediment is natural and not a defect.",
+  provenance: {
+    origin: [
+      "Estate groves in the hills above Nablus, Palestine, cultivar Nabali Baladi.",
+    ],
+    cultivation: [
+      "Dry-farmed terraced groves with rainfall-led cultivation, with drought protocol recorded at estate level.",
+      "No pesticide application within six months of harvest for dispensed lots.",
+    ],
+    harvesting: [
+      "Hand-harvested at green-gold maturity for this pressing run.",
+      "Pressed within hours of harvest, first extraction only, with release acidity below 0.3%.",
+      "Unfiltered by design; slight sediment is natural.",
+    ],
+  },
+
+  laboratoryVerification: [
+    "Chemical panel is performed to extra virgin standards, including acidity, peroxide, and UV parameters.",
+    "Sensory evaluation is conducted by certified panel where available.",
+    "Lot records link harvest week and pressing run, with no cross-season blending.",
   ],
 
   qualityAssurance: [
-    "Sensory evaluation and chemical panel per IOC extra virgin standard.",
-    "Storage in dark glass from pressing to dispensation — no plastic contact with oil.",
-    "Lot linked to harvest week and pressing run.",
-    "No blending with oils from other regions or seasons.",
+    "Dark glass is used from pressing to dispensation to minimise light exposure.",
+    "Harvest year is labelled and stock rotation is enforced.",
+    "Lots that fail institutional thresholds are not released.",
   ],
 
   storage: [
-    "Store away from light and heat — a cool pantry, not above the stove.",
-    "Use within eighteen months of pressing; harvest year on label.",
-    "Close cap firmly after use. Oxygen and light are the enemies of quality.",
-    "Refrigeration is unnecessary; clouding at cool temperatures reverses on warming.",
+    "Store away from light and heat in a cool pantry.",
+    "Use within eighteen months of pressing; see harvest year on label.",
+    "Close cap firmly after each use.",
+    "Clouding at cool temperature is reversible on gentle warming.",
   ],
 
   preparation: [
-    "Use raw for fullest character — on bread, salads, and finished dishes.",
-    "May be warmed gently; avoid smoking point if cooking, though the institution prefers raw use for this grade.",
-    "For traditional oral measure, a tablespoon with breakfast is commonly cited in folk practice; adjust to your diet and counsel.",
+    "Use raw for full character, including bread, salads, and finished dishes.",
+    "May be warmed gently; avoid reaching smoking point during cooking.",
   ],
 
-  honestLimits: [
-    "It is a means, not a cure. Healing is from Allah.",
-    "A food first — not a clinical intervention.",
-    "Calorically dense; moderation is part of responsible use.",
-    "A remedy is not a substitute for a physician.",
+  suggestedUse: [
+    "Use as food, with raw use preferred for this grade.",
+    "A small spoonful with breakfast appears in folk practice; adjust to diet and professional counsel.",
+    "Topical food-grade use may be undertaken in modest measure with patch testing.",
   ],
+
+  contraindications: [
+    "Healing is from Allah; this remedy is a means.",
+    "This is presented as a food first and not as a clinical intervention.",
+    "It is calorically dense, so moderation is part of responsible use.",
+    "It is not a substitute for medical care.",
+  ],
+
+  photographyDirection: [
+    ...photographyGrammar,
+    "Subject: dark glass bottle with olive branch and controlled side light.",
+    "Mood: restrained estate still life; colour should remain natural and subdued.",
+  ],
+
+  packaging: [
+    "500ml dark green glass bottle, metal pour cap, tamper band.",
+    "Inner label records harvest year, lot number, and release acidity.",
+  ],
+
+  shipping: standardShipping,
+  returns: standardReturns,
+  customerSupport: standardCustomerSupport,
 
   faq: [
     {
       question: "Why unfiltered?",
       answer:
-        "Filtration clarifies appearance but removes particulate that carries flavour and tradition. Slight sediment is expected and safe.",
+        "Filtration can improve visual clarity but may remove particulate associated with flavour and character. Slight sediment is expected.",
     },
     {
       question: "Can I use this oil on the skin as the ḥadīth mentions?",
       answer:
-        "Food-grade olive oil has long been used topically in modest measure. Avoid open wounds unless directed by a practitioner. Patch-test if you have sensitive skin.",
+        "Food-grade olive oil has a long history of modest topical use. Avoid open wounds unless directed by a practitioner.",
     },
     {
       question: "How does this relate to the blessed tree in the Qur'an?",
       answer:
-        "The revelation and the Prophetic reports use the language of blessing — barakah — which the scholars distinguish from guaranteed medical outcome. We honour the text without exploiting it for sales.",
+        "Revelation and report describe the olive with the language of blessing, barakah. Scholars distinguish this from guaranteed individual medical outcome.",
     },
     {
       question: "Why Nablus?",
       answer:
-        "Estate traceability from a grove with documented cultivar and pressing on site. Origin is disclosed; it is not a marketing story.",
+        "Nablus is used for documented cultivar continuity and estate traceability with on-site pressing.",
     },
   ],
 
   relatedRemedies: ["honey", "black-seed-oil"],
-  suggestedReading: [
+  academyLessons: [
     {
       title: "Foundations of Prophetic Medicine",
       href: "/the-academy/foundations",
-      note: "The olive in revelation and report — an introductory lecture.",
+      note: "The olive in revelation and transmitted report.",
     },
     {
-      title: "The Olive Grove retreat",
-      href: "/sacred-journeys/olive-grove",
-      note: "Sacred Journeys — embodiment among the groves.",
+      title: "The Materia Medica",
+      href: "/the-academy/materia-medica",
+      note: "Oils and simples in classical medical texts.",
+    },
+  ],
+  knowledgeLibrary: [
+    {
+      title: "Olive Oil",
+      href: "/knowledge-library/olive-oil",
+      note: "Institutional note on the blessed tree.",
+    },
+    {
+      title: "Nutrition in the Sunnah",
+      href: "/knowledge-library/nutrition",
+      note: "Food and discipline in the Sunnah.",
     },
   ],
   pathways: [
-    {
-      label: "Foundations of Prophetic Medicine",
-      href: "/the-academy/foundations",
-      department: "Academy",
-    },
-    {
-      label: "The Olive Grove retreat",
-      href: "/sacred-journeys/olive-grove",
-      department: "Sacred Journeys",
-    },
+    { label: "Foundations", href: "/the-academy/foundations", department: "Academy" },
+    { label: "The Olive Grove retreat", href: "/sacred-journeys/olive-grove", department: "Sacred Journeys" },
+    { label: "Olive Oil — Knowledge Library", href: "/knowledge-library/olive-oil", department: "Knowledge Library" },
   ],
 
   volume: "500ml",
   price: 22,
-  priceNote: "incl. delivery within the United Kingdom",
+  priceNote: "includes delivery within the United Kingdom",
   inStock: true,
 };

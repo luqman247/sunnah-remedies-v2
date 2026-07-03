@@ -17,19 +17,19 @@ export function EnrolmentForm({ programmeName }: EnrolmentFormProps) {
     const data = new FormData(form);
     const next: Record<string, string> = {};
 
-    if (!data.get("name")) next.name = "We'll need your name to reply.";
+    if (!data.get("name")) next.name = "Full name is required.";
     const email = data.get("email") as string;
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      next.email = "We'll need a way to reach you — an address like name@example.com.";
+      next.email = "Enter a valid email address, for example name@example.com.";
     }
     if (!data.get("qualification")) {
-      next.qualification = "Please state your healthcare qualification or prerequisite pathway.";
+      next.qualification = "State your healthcare qualification or prerequisite pathway.";
     }
     if (!data.get("statement")) {
-      next.statement = "The application statement is required — approximately 500 words.";
+      next.statement = "Application statement is required (approximately 500 words).";
     }
     if (!data.get("acknowledge")) {
-      next.acknowledge = "Please confirm you have read the entry requirements and policies.";
+      next.acknowledge = "Confirmation is required before submission.";
     }
 
     if (Object.keys(next).length > 0) {
@@ -44,8 +44,8 @@ export function EnrolmentForm({ programmeName }: EnrolmentFormProps) {
   if (submitted) {
     return (
       <p className="type-body-l" role="status">
-        Your application is received. The faculty will review it and write to you within
-        fourteen days. There is no need to follow up — the institution answers in time.
+        Your application has been received. Faculty review is completed within
+        fourteen days, and you will be contacted by email.
       </p>
     );
   }
@@ -59,7 +59,7 @@ export function EnrolmentForm({ programmeName }: EnrolmentFormProps) {
       </div>
 
       <div className={`form-field ${errors.email ? "form-field--error" : ""}`}>
-        <label htmlFor="enrol-email">Correspondence address</label>
+        <label htmlFor="enrol-email">Email address</label>
         <input id="enrol-email" name="email" type="email" autoComplete="email" />
         {errors.email && <span className="form-error" role="alert">{errors.email}</span>}
       </div>
@@ -82,7 +82,8 @@ export function EnrolmentForm({ programmeName }: EnrolmentFormProps) {
         <label className="enrolment-form__checkbox">
           <input id="enrol-acknowledge" name="acknowledge" type="checkbox" value="yes" />
           <span className="type-body">
-            I have read the entry requirements, assessment standard, and policies for{" "}
+            I confirm that I have read the entry requirements, assessment
+            standards, and policies for{" "}
             {programmeName}. I understand that acceptance is not guaranteed.
           </span>
         </label>
@@ -90,11 +91,11 @@ export function EnrolmentForm({ programmeName }: EnrolmentFormProps) {
       </div>
 
       <p className="type-small enrolment-form__note">
-        There is no need to decide today. The tradition keeps. Enrolment confirms interest;
-        the faculty decides admission.
+        Submission records your interest. Admission is determined after academic
+        and clinical review.
       </p>
 
-      <SolidAction type="submit">Submit application</SolidAction>
+      <SolidAction type="submit">Send application</SolidAction>
     </form>
   );
 }

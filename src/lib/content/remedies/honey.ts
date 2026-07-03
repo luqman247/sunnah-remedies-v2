@@ -1,4 +1,10 @@
 import type { Remedy } from "../types";
+import {
+  photographyGrammar,
+  standardCustomerSupport,
+  standardReturns,
+  standardShipping,
+} from "./defaults";
 
 export const honey: Remedy = {
   slug: "honey",
@@ -6,16 +12,18 @@ export const honey: Remedy = {
   transliteration: "al-ʿasal",
   botanicalName: "Apis mellifera",
   nature:
-    "Raw, unprocessed honey from mountain apiaries — named in revelation and repeatedly praised in the Prophetic tradition as nourishment and means.",
+    "Raw, unprocessed honey from mountain apiaries, presented as nourishment and a traditional means.",
+  institutionalSummary:
+    "A monograph record of single-origin mountain honey, minimally processed and traced from apiary to vessel. It is named in revelation and dispensed with documented sourcing and quality controls. It is offered as a means within diet and tradition, with limits stated clearly.",
   folio: "iii",
   figure: "honey",
   figureAlt:
-    "Raw honey in a glass jar beside a wooden dipper, warm side-light and deep margin.",
+    "Raw honey in a glass vessel beside a wooden dipper, lit from one side.",
 
   historicalContext: [
-    "Honey is among the oldest foods of civilisation and among the most clearly named in the Qur'an. Sūrat al-Naḥl links the bee, the hive, and a drink in which the revelation itself places shifāʾ — a word the institution renders with the caution the tafsīr tradition teaches.",
-    "The Prophetic household used honey routinely. Reports describe it at the table, in simple preparations, and in the care of the unwell — always as part of a broader ethic of means and trust in Allah, not as a magical substitute for treatment.",
-    "Islamic medical writers — from al-Rāzī to Ibn Sīnā to the authors of Tibb al-Nabawī — catalogued honey's place in compound remedies and diet. The institution offers it unblended so that the person knows precisely what they receive.",
+    "Honey is one of the oldest human foods and is explicitly named in the Qur'an. Sūrat al-Naḥl links the bee and its drink, using language that scholars discuss with care.",
+    "Reports place honey within daily diet and household use, including periods of illness. These reports are treated as guidance on means, with trust in Allah and without replacing appropriate medical care.",
+    "Classical medical writing records honey in both simple and compound preparations. This dispensation remains unblended so its material identity is clear.",
   ],
 
   propheticReferences: [
@@ -41,102 +49,156 @@ export const honey: Remedy = {
     },
   ],
 
+  traditionalScholarship: [
+    "Ibn al-Qayyim discusses honey as nourishment and as a carrier for other simples. He distinguishes transmitted evidence from exaggeration in popular practice.",
+    "Al-Rāzī, Ibn Sīnā, and later pharmacopoeias include honey in compound formulations and note the importance of authenticity and origin.",
+    "Exegetes caution against treating shifāʾ as a guarantee of individual outcome. The same caution is maintained in this monograph.",
+  ],
+
   traditionalUsage: [
-    "Taken by the spoonful, dissolved in warm water, or combined with other simples — notably black seed and olive oil in combinations the classical texts record.",
-    "The tradition associates honey with soothing the throat, supporting appetite, and restoring strength after illness — associations, not prescriptions.",
-    "Used externally in some classical preparations for the skin; this dispensation is food-grade and intended chiefly for oral use.",
+    "Traditionally taken by spoon, dissolved in warm water, or combined with other simples such as black seed and olive oil.",
+    "Traditional literature associates honey with throat comfort, appetite support, and convalescent nourishment. These are associations rather than prescriptions.",
+    "Some texts mention topical preparation. This dispensation is food-grade and intended primarily for oral use.",
   ],
 
-  evidenceInformed: [
-    "Honey is recognised in modern wound-care literature in specific clinical contexts — not interchangeable with table use. The institution does not transfer hospital evidence to kitchen use.",
-    "As a sweetener, honey affects blood glucose; persons with diabetes or insulin resistance should consult a physician.",
-    "Infants under twelve months must not receive honey, due to the established risk of infant botulism — a limit the institution states plainly.",
-  ],
+  evidence: {
+    established: [
+      "Infants under twelve months must not receive honey due to established risk of infant botulism.",
+      "Honey influences blood glucose; those with diabetes or insulin resistance should seek medical advice before regular use.",
+      "Medical-grade honey used in clinical wound care is not interchangeable with table honey.",
+    ],
+    emerging: [
+      "Nutritional and microbiological study of raw honey continues, including pollen profile and enzyme activity.",
+      "Study design and population vary; findings are noted as emerging and not presented as product claims.",
+    ],
+  },
 
-  sourcing: [
-    "Mountain apiaries in the Rif region, northern Morocco — single-origin, not blended across continents.",
-    "Harvested once annually at the end of the spring flow. No supplemental feeding during the harvest period.",
-    "Extracted by centrifuge without heat beyond ambient hive temperature. Coarse straining only; pollen and enzymatic activity retained.",
+  provenance: {
+    origin: [
+      "Mountain apiaries in the Rif region of northern Morocco, single-origin and not cross-region blended.",
+    ],
+    cultivation: [
+      "Apis mellifera is managed at altitude in traditional and modern hives, with forage from regional wild flora.",
+      "No supplemental feeding is used during harvest flow; only the stated estate harvest is collected.",
+    ],
+    harvesting: [
+      "Harvested annually at the end of spring flow.",
+      "Extracted by centrifuge without heat above ambient hive conditions.",
+      "Coarsely strained to retain natural particulate and enzyme activity.",
+    ],
+  },
+
+  laboratoryVerification: [
+    "Pollen analysis confirms predominant botanical profile for each lot.",
+    "Moisture, HMF, and diastase are monitored as indicators of freshness and heat exposure.",
+    "Lots are screened for syrup or added sugar adulteration.",
+    "Certificates are held on file and linked to lot number.",
   ],
 
   qualityAssurance: [
-    "Pollen analysis confirms predominant botanical origin for each lot.",
-    "Moisture content below 18%. HMF and diastase activity monitored as markers of freshness and heat exposure.",
-    "Adulteration screen for syrups and added sugars — zero tolerance.",
-    "Jarred in glass with tamper-evident seal. Lot number on base.",
+    "Each lot undergoes sensory review for aroma, clarity, and mouthfeel.",
+    "Dispensed in glass with tamper-evident seal and lot traceability.",
+    "Stock rotation follows harvest date and institutional best-before standards.",
   ],
 
   storage: [
-    "Store at room temperature in a dry cupboard, away from direct sun.",
-    "Crystallisation is natural and does not indicate spoilage. Warm gently in a water bath if liquid consistency is preferred.",
-    "Keep the lid sealed to limit moisture uptake.",
-    "Best within twenty-four months of harvest; best-before date on label.",
+    "Store at room temperature in a dry place away from direct light.",
+    "Crystallisation is natural and does not indicate spoilage; warm gently if a liquid texture is preferred.",
+    "Keep tightly sealed to reduce moisture uptake.",
+    "Best used within twenty-four months of harvest; see label date.",
   ],
 
   preparation: [
-    "May be taken alone by the spoonful or stirred into warm — not boiling — water.",
-    "Traditionally combined with black seed oil; add oil to honey, not honey to very hot liquids.",
-    "Do not give to infants under twelve months.",
+    "May be taken by spoon or stirred into warm, not boiling, water.",
+    "Traditionally combined with black seed oil; avoid adding to very hot liquids.",
   ],
 
-  honestLimits: [
-    "It is a means, not a cure. Healing is from Allah.",
-    "Not suitable for infants under twelve months.",
-    "A caloric sweetener — moderation is part of responsible use.",
-    "A remedy is not a substitute for a physician.",
+  suggestedUse: [
+    "Use as a food and traditional simple in moderate measure.",
+    "May serve as a carrier for other simples when both monographs are reviewed.",
+    "Topical food-grade use is recorded in folk practice; patch-test sensitive skin.",
   ],
+
+  contraindications: [
+    "Not suitable for infants under twelve months.",
+    "A caloric sweetener, requiring moderation.",
+    "Healing is from Allah; this remedy is a means and not a substitute for medical care.",
+    "Avoid in severe bee-product allergy.",
+  ],
+
+  photographyDirection: [
+    ...photographyGrammar,
+    "Subject: raw honey in glass vessel with wooden dipper and restrained side light.",
+    "Mood: quiet still life; material qualities should remain natural and unforced.",
+    "Imagery must not imply guaranteed therapeutic outcome.",
+  ],
+
+  packaging: [
+    "340g net in amber glass with metal lid and tamper band.",
+    "Label includes botanical name, origin, harvest year, lot, best-before, and storage guidance.",
+    "Shipped in protective, discreet outer packaging with lot reference.",
+  ],
+
+  shipping: standardShipping,
+  returns: standardReturns,
+  customerSupport: standardCustomerSupport,
 
   faq: [
     {
       question: "Why raw rather than filtered supermarket honey?",
       answer:
-        "Fine filtration removes pollen that helps confirm origin and is part of the natural food. Our standard prioritises traceability and minimal processing over uniform appearance.",
+        "Fine filtration can remove pollen that supports origin verification and alters the natural profile. The standard here prioritises traceability and minimal processing over uniform appearance.",
     },
     {
       question: "Does revelation guarantee healing for every person?",
       answer:
-        "The institution does not interpret revelation as a promise of individual outcome. We present honey as a named means within faith, diet, and tradition — with the limits honest speech requires.",
+        "No. Revelation is not presented here as a guarantee of individual outcome. Honey is presented as a named means within faith, diet, and tradition, with explicit limits.",
     },
     {
       question: "Can honey be used with black seed oil?",
       answer:
-        "The tradition often pairs them. Many take a measure of oil with honey as a carrier. Both monographs should be read before combining means.",
+        "Yes, the tradition records this pairing. Read both monographs before combining remedies and adjust use responsibly.",
     },
     {
       question: "Is this honey pasteurised?",
       answer:
-        "No. It is not heated for shelf stability. Freshness is managed through sourcing, moisture control, and rotation — not sterilisation that alters character.",
+        "No. Freshness is managed through sourcing controls, moisture limits, and stock rotation rather than pasteurisation.",
     },
   ],
 
   relatedRemedies: ["black-seed-oil", "olive-oil"],
-  suggestedReading: [
+  academyLessons: [
     {
-      title: "Sūrat al-Naḥl — the bee in tafsīr",
-      href: "/the-academy/foundations/surat-al-nahl",
-      note: "The Academy lecture on the revelatory context of honey.",
+      title: "Foundations of Prophetic Medicine",
+      href: "/the-academy/foundations",
+      note: "The bee in revelation and report, including terminology and grading.",
     },
     {
-      title: "The Materia Medica — Honey",
+      title: "The Materia Medica",
       href: "/the-academy/materia-medica",
-      note: "Classical compound preparations and simple use.",
+      note: "Classical use of simples and compound preparations.",
+    },
+  ],
+  knowledgeLibrary: [
+    {
+      title: "Honey",
+      href: "/knowledge-library/honey",
+      note: "Institutional note on revelation, transmission, and traditional standing.",
+    },
+    {
+      title: "Nutrition in the Sunnah",
+      href: "/knowledge-library/nutrition",
+      note: "Food, discipline, and moderation in the Sunnah.",
     },
   ],
   pathways: [
-    {
-      label: "The Materia Medica",
-      href: "/the-academy/materia-medica",
-      department: "Academy",
-    },
-    {
-      label: "The Desert Way",
-      href: "/sacred-journeys/desert-way",
-      department: "Sacred Journeys",
-    },
+    { label: "The Materia Medica", href: "/the-academy/materia-medica", department: "Academy" },
+    { label: "The Desert Way", href: "/sacred-journeys/desert-way", department: "Sacred Journeys" },
+    { label: "Honey — Knowledge Library", href: "/knowledge-library/honey", department: "Knowledge Library" },
   ],
 
   volume: "340g",
   price: 18,
-  priceNote: "incl. delivery within the United Kingdom",
+  priceNote: "includes delivery within the United Kingdom",
   inStock: true,
 };
