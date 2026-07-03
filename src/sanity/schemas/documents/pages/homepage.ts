@@ -5,8 +5,11 @@ export const homepage = defineType({
   title: "Homepage",
   type: "document",
   groups: [
+    { name: "threshold", title: "Threshold" },
     { name: "hero", title: "Hero" },
     { name: "institution", title: "Institution" },
+    { name: "tradition", title: "Tradition" },
+    { name: "departments", title: "Departments" },
     { name: "pillars", title: "Three Pillars" },
     { name: "trust", title: "Trust" },
     { name: "apothecary", title: "Featured Remedies" },
@@ -14,10 +17,69 @@ export const homepage = defineType({
     { name: "knowledge", title: "Knowledge Library" },
     { name: "journeys", title: "Sacred Journeys" },
     { name: "founding", title: "Founding Statement" },
+    { name: "correspondence", title: "Correspondence" },
     { name: "invitation", title: "Invitation" },
     { name: "seo", title: "SEO" },
   ],
   fields: [
+    // ── Threshold (v2) ──
+    defineField({
+      name: "eyebrow",
+      title: "Eyebrow",
+      type: "string",
+      group: "threshold",
+      validation: (Rule) => Rule.max(48),
+    }),
+    defineField({
+      name: "foundingYear",
+      title: "Founding Year",
+      type: "number",
+      group: "threshold",
+    }),
+    defineField({
+      name: "arrivalArabic",
+      title: "Arrival Arabic",
+      type: "string",
+      group: "threshold",
+      validation: (Rule) => Rule.max(60),
+    }),
+    defineField({
+      name: "arrivalEnglish",
+      title: "Arrival English",
+      type: "string",
+      group: "threshold",
+      validation: (Rule) => Rule.max(120),
+    }),
+    defineField({
+      name: "arrivalStandfirst",
+      title: "Arrival Standfirst",
+      type: "text",
+      group: "threshold",
+      validation: (Rule) => Rule.max(240),
+    }),
+    defineField({
+      name: "enterLabel",
+      title: "Enter Label",
+      type: "string",
+      group: "threshold",
+      validation: (Rule) => Rule.max(32),
+      initialValue: "Enter the institution",
+    }),
+    defineField({
+      name: "enterHref",
+      title: "Enter Href",
+      type: "string",
+      group: "threshold",
+      initialValue: "#departments",
+    }),
+    defineField({
+      name: "thresholdPlate",
+      title: "Threshold Plate",
+      type: "reference",
+      to: [{ type: "mediaAsset" }],
+      group: "threshold",
+    }),
+
     // ── Hero ──
     defineField({
       name: "hero",
@@ -173,6 +235,91 @@ export const homepage = defineType({
         defineField({ name: "body", title: "Body", type: "array", of: [{ type: "text" }] }),
         defineField({ name: "link", title: "Link", type: "object", fields: [defineField({ name: "label", title: "Label", type: "string" }), defineField({ name: "href", title: "Path", type: "string" })] }),
       ],
+    }),
+
+    // ── Tradition (v2) ──
+    defineField({
+      name: "tradition",
+      title: "Tradition",
+      type: "object",
+      group: "tradition",
+      fields: [
+        defineField({ name: "stamp", title: "Stamp", type: "string" }),
+        defineField({ name: "arabicEpigraph", title: "Arabic Epigraph", type: "string" }),
+        defineField({ name: "standfirst", title: "Standfirst", type: "text" }),
+        defineField({
+          name: "body",
+          title: "Body",
+          type: "array",
+          of: [{ type: "block" }],
+        }),
+        defineField({
+          name: "pullQuote",
+          title: "Pull Quote",
+          type: "object",
+          fields: [
+            defineField({ name: "text", title: "Text", type: "text" }),
+            defineField({ name: "attribution", title: "Attribution", type: "string" }),
+            defineField({ name: "source", title: "Source", type: "string" }),
+          ],
+        }),
+      ],
+    }),
+
+    // ── Departments (v2) ──
+    defineField({
+      name: "departmentCards",
+      title: "Department Cards",
+      type: "array",
+      group: "departments",
+      of: [{ type: "reference", to: [{ type: "departmentCard" }] }],
+      validation: (Rule) => Rule.max(4),
+    }),
+
+    // ── Authority Signals (v2) ──
+    defineField({
+      name: "authoritySignals",
+      title: "Authority Signals",
+      type: "array",
+      group: "trust",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "label", title: "Label", type: "string", validation: (Rule) => Rule.required() }),
+            defineField({ name: "value", title: "Value", type: "string", validation: (Rule) => Rule.required() }),
+            defineField({ name: "note", title: "Note", type: "string" }),
+          ],
+          preview: {
+            select: { title: "label", subtitle: "value" },
+          },
+        },
+      ],
+      validation: (Rule) => Rule.max(4),
+    }),
+
+    // ── Correspondence (v2) ──
+    defineField({
+      name: "correspondence",
+      title: "Correspondence",
+      type: "object",
+      group: "correspondence",
+      fields: [
+        defineField({ name: "heading", title: "Heading", type: "string" }),
+        defineField({ name: "body", title: "Body", type: "text" }),
+        defineField({ name: "placeholder", title: "Placeholder", type: "string" }),
+        defineField({ name: "consentText", title: "Consent Text", type: "string" }),
+        defineField({ name: "successText", title: "Success Text", type: "string" }),
+      ],
+    }),
+
+    // ── Institution Statement (v2) ──
+    defineField({
+      name: "institutionStatement",
+      title: "Institution Statement",
+      type: "text",
+      group: "founding",
+      validation: (Rule) => Rule.max(200),
     }),
 
     // ── Invitation ──

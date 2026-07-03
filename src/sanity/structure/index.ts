@@ -31,6 +31,18 @@ export const structure = (S: StructureBuilder) =>
                   S.documentTypeList("announcement")
                     .title("Announcements")
                 ),
+              S.listItem()
+                .title("Department Cards")
+                .child(
+                  S.documentTypeList("departmentCard")
+                    .title("Department Cards")
+                ),
+              S.listItem()
+                .title("Media Assets")
+                .child(
+                  S.documentTypeList("mediaAsset")
+                    .title("Media Assets")
+                ),
             ])
         ),
 

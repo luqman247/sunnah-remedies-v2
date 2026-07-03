@@ -26,6 +26,8 @@ import { globalSeo } from "./documents/global/global-seo";
 import { announcement } from "./documents/global/announcement";
 import { testimonial } from "./documents/global/testimonial";
 import { faq } from "./documents/global/faq";
+import mediaAsset from "./documents/global/media-asset";
+import departmentCard from "./documents/global/department-card";
 
 // ── Documents: Apothecary ──
 import { product } from "./documents/apothecary/product";
@@ -83,6 +85,8 @@ export const schemaTypes = [
   announcement,
   testimonial,
   faq,
+  mediaAsset,
+  departmentCard,
 
   // Apothecary
   product,

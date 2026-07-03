@@ -6,6 +6,9 @@ import {
   EB_Garamond,
   Inter,
   Amiri,
+  Fraunces,
+  Newsreader,
+  IBM_Plex_Mono,
 } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
@@ -41,6 +44,27 @@ const amiri = Amiri({
   display: "swap",
 });
 
+const fraunces = Fraunces({
+  subsets: ["latin", "latin-ext"],
+  axes: ["opsz", "SOFT", "WONK"],
+  variable: "--font-display-v2",
+  display: "swap",
+});
+
+const newsreader = Newsreader({
+  subsets: ["latin", "latin-ext"],
+  style: ["normal", "italic"],
+  variable: "--font-body-v2",
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-mono",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: {
     default: "Sunnah Remedies",
@@ -66,7 +90,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${ebGaramond.variable} ${inter.variable} ${amiri.variable}`}
+      className={`${cormorant.variable} ${ebGaramond.variable} ${inter.variable} ${amiri.variable} ${fraunces.variable} ${newsreader.variable} ${plexMono.variable}`}
     >
       <body>
         <CounterProvider>

@@ -393,6 +393,33 @@ export interface HomepageData extends SanityDocument {
     actions?: InternalLink[];
   };
   seo?: SeoFields;
+
+  /* V2 Arrival fields (Ch. 12) */
+  eyebrow?: string;
+  foundingYear?: number;
+  arrivalArabic?: string;
+  arrivalEnglish?: string;
+  standfirst?: string;
+  enterLabel?: string;
+  enterHref?: string;
+  thresholdPlate?: { _ref: string };
+  tradition?: {
+    stamp: string;
+    arabicEpigraph?: string;
+    standfirst: string;
+    body: string[];
+    pullQuote: { text: string; attribution?: string; source?: string };
+  };
+  departmentCards?: { _ref: string }[];
+  authoritySignals?: { label: string; value: string | null; note?: string }[];
+  correspondence?: {
+    heading: string;
+    body: string;
+    placeholder: string;
+    consentText: string;
+    successText: string;
+  };
+  institutionStatement?: string;
 }
 
 /* ── Testimonial ────────────────────────────────────────────────── */

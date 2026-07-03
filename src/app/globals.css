@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  /* Legacy tokens (existing pages) */
   --paper: #ece6d6;
   --paper-deep: #e4dcc8;
   --ink: #23201a;
@@ -34,6 +35,41 @@
   --margin-desktop: clamp(3rem, 5vw, 7rem);
   --margin-tablet: 2.5rem;
   --margin-mobile: 1.5rem;
+
+  /* V2 Tokens — Homepage spec (Ch. 5) */
+  --v2-paper: #ECE6D8;
+  --v2-paper-sunk: #E3DBC9;
+  --v2-ink: #201D16;
+  --v2-ink-soft: #4A4638;
+  --v2-sage: #3C4733;
+  --v2-sage-deep: #232A1E;
+  --v2-brass: #9A7B4F;
+  --v2-paper-on-deep: #E8E1D0;
+
+  /* V2 Spacing (8px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-8: 48px;
+  --space-10: 64px;
+  --space-12: 96px;
+  --space-16: 128px;
+  --space-20: 160px;
+
+  /* V2 Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur: 200ms;
+  --dur-reveal: 600ms;
+
+  /* V2 Radii & Lines */
+  --radius: 2px;
+  --hairline: 1px solid color-mix(in srgb, var(--v2-ink) 14%, transparent);
+  --rule-brass: 1px solid var(--v2-brass);
+  --elevation-masthead: 0 1px 0 color-mix(in srgb, var(--v2-ink) 8%, transparent);
 }
 
 *,

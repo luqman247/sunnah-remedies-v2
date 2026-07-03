@@ -1,451 +1,384 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import { Leaf } from "@/components/ui/Leaf";
-import { SectionLabel } from "@/components/ui/PageIntro";
-import { GoLink, QuietLink } from "@/components/ui/Links";
-import { brandContext, brandAlt } from "@/lib/brand";
-import {
-  CinematicHero,
-  EditorialPillar,
-  EditorialPhoto,
-  EditorialFeature,
-  PullQuote,
-  TrustGridItem,
-  SectionNumeral,
-  InstitutionalDivider,
-  EditorialInvitation,
-} from "@/components/editorial/Editorial";
+import Link from "next/link";
 import { getHomepage } from "@/sanity/lib/fetch";
+import { IsnadRule } from "@/components/arrival/IsnadRule";
+import { Plate } from "@/components/arrival/Plate";
+import { SectionStamp } from "@/components/arrival/SectionStamp";
+import { Eyebrow } from "@/components/arrival/Eyebrow";
+import { ArrivalPullQuote } from "@/components/arrival/ArrivalPullQuote";
+import { AuthorityBand } from "@/components/arrival/AuthorityBand";
+import { DepartmentCard, DepartmentDivider } from "@/components/arrival/DepartmentCard";
+import { CorrespondenceForm } from "@/components/arrival/CorrespondenceForm";
+import { Reveal } from "@/components/arrival/Reveal";
+import "@/components/arrival/arrival.css";
 
 export const metadata: Metadata = {
   title: "Sunnah Remedies — Institute of Prophetic Medicine",
   description:
     "The world's leading institute of Prophetic Medicine — scholarship, clinical care, and natural therapeutics under one house.",
+  openGraph: {
+    title: "Sunnah Remedies — Institute of Prophetic Medicine",
+    description: "Scholarship, clinical care, and natural therapeutics under one house.",
+    type: "website",
+    siteName: "Sunnah Remedies",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sunnah Remedies — Institute of Prophetic Medicine",
+    description: "Scholarship, clinical care, and natural therapeutics under one house.",
+  },
+  alternates: {
+    canonical: "/",
+  },
 };
 
-export default async function ThresholdPage() {
-  // Fetch homepage data from Sanity CMS — falls back to inline content below if not yet published
-  const cms = await getHomepage();
+function JsonLd() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": ["Organization", "EducationalOrganization"],
+    name: "Sunnah Remedies",
+    description: "An institute of Prophetic Medicine for scholarship, clinical care, and natural therapeutics.",
+    url: "https://sunnahremedies.com",
+    foundingDate: "2025",
+    areaServed: "Worldwide",
+    knowsAbout: ["Prophetic Medicine", "Tibb al-Nabawi", "Hijama", "Islamic Medicine"],
+  };
+
   return (
-    <>
-      {/* ———————————————————————————————————
-          § 1  CINEMATIC HERO
-          A single powerful photograph. Minimal text.
-          ——————————————————————————————————— */}
-      <CinematicHero
-        src="/photography/institution-hero.jpg"
-        alt="Scholarly hands examining an illuminated manuscript of Prophetic medicine beside glass vessels of amber oil and black seed"
-        statement="The world's leading institute of Prophetic Medicine"
-        qualifier="Scholarship, clinical practice, and natural therapeutics under one house. Built for careful study, patient service, and long stewardship."
-      >
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "var(--s4)" }}>
-          <Image
-            src={brandContext.homepageHero}
-            alt={brandAlt}
-            width={674}
-            height={374}
-            priority
-            style={{
-              width: "clamp(140px, 20vw, 220px)",
-              height: "auto",
-              display: "block",
-              opacity: 0.85,
-            }}
-          />
-        </div>
-      </CinematicHero>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
 
-      {/* ———————————————————————————————————
-          § 2  THE INSTITUTION
-          Who we are. Why we exist.
-          ——————————————————————————————————— */}
-      <Leaf>
-        <div className="measure-wide">
-          <SectionNumeral>I</SectionNumeral>
-          <div className="founding-statement">
-            <h2 className="type-display-l founding-statement__title">
-              An institute, not a brand
-            </h2>
-            <div className="type-body-l founding-statement__body">
-              <p>
-                Sunnah Remedies is an institute for the preservation and
-                responsible transmission of <em>Tibb al-Nabawi</em> — Prophetic
-                Medicine. We do not sell wellness. We practise a discipline:
-                one that insists on primary-source scholarship, laboratory
-                verification, clinical accountability, and institutional
-                transparency.
+const fallback = {
+  eyebrow: "EST. ——— · INSTITUTE OF PROPHETIC MEDICINE",
+  arrivalArabic: "\u0637\u0650\u0628\u0651\u064F \u0671\u0644\u0646\u0651\u064E\u0628\u064E\u0648\u0650\u064A\u0651",
+  arrivalEnglish: "The medicine of the prophetic tradition, kept living.",
+  standfirst: "An institution for the preservation and responsible transmission of prophetic medicine — grounded in primary-source scholarship, laboratory verification, clinical accountability, and plain limits.",
+  enterLabel: "Enter the institution",
+  enterHref: "#departments",
+  tradition: {
+    stamp: "ON THE TRADITION",
+    standfirst: "What is this discipline, and why does it require an institution?",
+    body: [
+      "Prophetic Medicine is not folk remedy, not alternative wellness, not a brand opportunity. It is a received body of knowledge — transmitted through authenticated chains, tested against observable evidence, and constrained by the limits its own sources declare.",
+      "This institution exists because the discipline deserves the same rigour as any established medical tradition: verifiable scholarship, clinical governance, transparent provenance, and patient dignity at every encounter.",
+    ],
+    pullQuote: {
+      text: "Healing is from Allah; the remedy is a means.",
+      attribution: "Prophetic teaching",
+      source: "Ṣaḥīḥ al-Bukhārī",
+    },
+  },
+  departments: [
+    {
+      order: 1,
+      nameEn: "Knowledge Library",
+      nameAr: "\u0645\u0643\u062A\u0628\u0629 \u0627\u0644\u0639\u0644\u0645",
+      standfirst: "The open shelf — monographs, research notes, and patient guides, all graded and cited.",
+      href: "/knowledge-library",
+      size: "standard" as const,
+      plate: { status: "brief" as const, purpose: "Reading room with scholarly texts", composition: "Wide shot, layered depth", lighting: "North window, diffused", mood: "Contemplative" },
+    },
+    {
+      order: 2,
+      nameEn: "The Academy",
+      nameAr: "\u0627\u0644\u0623\u0643\u0627\u062F\u064A\u0645\u064A\u0629",
+      standfirst: "Clinical education in Hijama and Prophetic therapeutics, structured by isnād.",
+      href: "/the-academy",
+      size: "standard" as const,
+      plate: { status: "brief" as const, purpose: "Tutorial room with faculty and students", composition: "Medium shot, eye level", lighting: "Morning light, clinical", mood: "Disciplined" },
+    },
+    {
+      order: 3,
+      nameEn: "The Apothecary",
+      nameAr: "\u0627\u0644\u0635\u064A\u062F\u0644\u064A\u0629",
+      standfirst: "A cabinet of preparations, each documented to source before dispensation.",
+      href: "/the-apothecary",
+      size: "standard" as const,
+      plate: { status: "brief" as const, purpose: "Dispensary shelves with amber vessels", composition: "Detail shot, shallow depth", lighting: "Warm side light", mood: "Craft" },
+    },
+    {
+      order: 4,
+      nameEn: "Sacred Journeys",
+      nameAr: "\u0627\u0644\u0631\u062D\u0644\u0627\u062A \u0627\u0644\u0645\u0642\u062F\u0633\u0629",
+      standfirst: "Educational pilgrimage to the Holy Lands — preparation precedes departure, purpose before itinerary. Every journey carries a reading list, a faculty companion, and a clear statement of difficulty.",
+      href: "/sacred-journeys",
+      size: "feature" as const,
+      plate: { status: "brief" as const, purpose: "Pilgrims approaching a sacred site at dawn", composition: "Wide panoramic, golden hour", lighting: "Dawn light, warm amber", mood: "Reverent" },
+    },
+  ],
+  authoritySignals: [
+    { label: "Years of practice", value: null, note: undefined },
+    { label: "Students trained", value: null, note: undefined },
+    { label: "Countries served", value: null, note: undefined },
+    { label: "Publications", value: null, note: undefined },
+  ],
+  correspondence: {
+    heading: "Receive the institution\u2019s writing",
+    body: "Occasional correspondence on scholarship, new monographs, and programme announcements. No frequency promise; no promotional content.",
+    placeholder: "your@email.address",
+    consentText: "You will receive institutional correspondence by email. Unsubscribe at any time by replying or using the link provided.",
+    successText: "Requested — correspondence will follow.",
+  },
+  institutionStatement: "Knowledge before commerce. Service before profit. Trust before growth. The institution exists for the next generation.",
+};
+
+export default async function ArrivalPage() {
+  const cms = await getHomepage();
+
+  const eyebrow = cms?.eyebrow || fallback.eyebrow;
+  const arrivalArabic = cms?.arrivalArabic || fallback.arrivalArabic;
+  const arrivalEnglish = cms?.arrivalEnglish || fallback.arrivalEnglish;
+  const standfirst = cms?.standfirst || fallback.standfirst;
+  const enterLabel = cms?.enterLabel || fallback.enterLabel;
+  const enterHref = cms?.enterHref || fallback.enterHref;
+  const tradition = cms?.tradition || fallback.tradition;
+  const departments = fallback.departments;
+  const authoritySignals = fallback.authoritySignals;
+  const correspondence = fallback.correspondence;
+  const institutionStatement = cms?.institutionStatement || fallback.institutionStatement;
+
+  return (
+    <div className="arrival-v2">
+      <JsonLd />
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
+
+      {/* ═══ § 1 · ARRIVAL / HERO (Ch. 9.2) ═══ */}
+      <section className="arrival-section" aria-labelledby="arrival-heading" id="main-content">
+        <div className="arrival-container">
+          <div className="arrival-grid">
+            <div className="arrival-rail">
+              <SectionStamp numeral="I" />
+            </div>
+            <div>
+              {/* Inline stamp for mobile */}
+              <div className="section-stamp-mobile" style={{ marginBlockEnd: "var(--space-6)" }}>
+                <SectionStamp numeral="I" />
+              </div>
+
+              <div className="choreo-eyebrow">
+                <Eyebrow>{eyebrow}</Eyebrow>
+              </div>
+
+              <div className="choreo-arabic" style={{ marginBlockStart: "var(--space-8)" }}>
+                <p
+                  className="type-arabic-hero"
+                  lang="ar"
+                  dir="rtl"
+                  style={{ margin: 0 }}
+                >
+                  {arrivalArabic}
+                </p>
+              </div>
+
+              <IsnadRule variant="arrival" nodePosition={0.5} animated />
+
+              <h1
+                id="arrival-heading"
+                className="type-hero choreo-english"
+                style={{ margin: 0 }}
+              >
+                <span className="sr-only">{arrivalEnglish}</span>
+                <span aria-hidden="true">{arrivalEnglish}</span>
+              </h1>
+
+              <p className="type-standfirst choreo-standfirst" style={{ marginBlockStart: "var(--space-6)", maxInlineSize: "60ch" }}>
+                {standfirst}
               </p>
-              <p>
-                Founded on the <em>waqf</em> model for continuity, the
-                institution exists to serve, not to exit. Nothing is
-                attributed without a traceable source. Limits are stated
-                plainly. The person always precedes the protocol.
-              </p>
-            </div>
-          </div>
-        </div>
-      </Leaf>
 
-      <InstitutionalDivider />
-
-      {/* ———————————————————————————————————
-          § 3  ONE INSTITUTION · THREE PILLARS
-          Large photography. Short editorial. One action.
-          ——————————————————————————————————— */}
-      <Leaf>
-        <div className="measure-wide">
-          <SectionNumeral>II</SectionNumeral>
-          <SectionLabel>One institution · Three pillars</SectionLabel>
-
-          <EditorialPillar
-            src="/photography/apothecary-hero.jpg"
-            alt="An apothecary dispensary: amber glass vessels of honey and oils arranged on aged wooden shelving beside dried medicinal herbs"
-            caption="The dispensary — glass vessels, dried herbs, and preparations documented to source"
-          >
-            <p className="type-eyebrow" style={{ color: "var(--gilt)" }}>
-              The Apothecary
-            </p>
-            <h3 className="type-display-l" style={{ margin: 0 }}>
-              Provision by hand
-            </h3>
-            <p className="type-body-l">
-              A cabinet of simples and preparations, each documented in a
-              monograph that states origin, harvest, laboratory verification,
-              and scholarly basis before the remedy is dispensed. Reading
-              precedes purchase. Always.
-            </p>
-            <div>
-              <GoLink href="/the-apothecary">Visit the Apothecary</GoLink>
-            </div>
-          </EditorialPillar>
-        </div>
-      </Leaf>
-
-      <Leaf>
-        <div className="measure-wide">
-          <EditorialPillar
-            src="/photography/academy-learning.jpg"
-            alt="Students in a scholarly classroom studying anatomical charts and medical texts under natural light"
-            caption="The Academy — a tutorial room where transmission follows chain and assessment"
-            reverse
-          >
-            <p className="type-eyebrow" style={{ color: "var(--gilt)" }}>
-              The Academy
-            </p>
-            <h3 className="type-display-l" style={{ margin: 0 }}>
-              Transmission through study
-            </h3>
-            <p className="type-body-l">
-              Clinical education in Hijama and Prophetic therapeutics, structured
-              by <em>isnad</em>, faculty qualification, and independent
-              assessment. Programmes are named by teacher, chain, and outcome
-              standard — before enrolment, never after.
-            </p>
-            <div>
-              <GoLink href="/the-academy">Visit the Academy</GoLink>
-            </div>
-          </EditorialPillar>
-        </div>
-      </Leaf>
-
-      <Leaf>
-        <div className="measure-wide">
-          <EditorialPillar
-            src="/photography/sacred-journeys-hero.jpg"
-            alt="Pilgrims walking across the marble courtyard of the Prophet's Mosque in Madinah at dawn"
-            caption="Sacred Journeys — educational pilgrimage with study before departure"
-          >
-            <p className="type-eyebrow" style={{ color: "var(--gilt)" }}>
-              Sacred Journeys
-            </p>
-            <h3 className="type-display-l" style={{ margin: 0 }}>
-              Embodiment through pilgrimage
-            </h3>
-            <p className="type-body-l">
-              Educational travel ordered by purpose rather than itinerary.
-              Preparation precedes departure. Every journey carries a reading
-              list, a faculty companion, and a clear statement of difficulty
-              before registration opens.
-            </p>
-            <div>
-              <GoLink href="/sacred-journeys">Visit Sacred Journeys</GoLink>
-            </div>
-          </EditorialPillar>
-        </div>
-      </Leaf>
-
-      {/* ———————————————————————————————————
-          § 4  WHY TRUST SUNNAH REMEDIES
-          Clinical standards. Scholarship. Quality.
-          ——————————————————————————————————— */}
-      <Leaf variant="inset">
-        <div className="measure-wide">
-          <SectionNumeral>III</SectionNumeral>
-          <SectionLabel>Why trust Sunnah Remedies</SectionLabel>
-          <h2
-            className="type-display-l"
-            style={{ textAlign: "center", margin: "0 auto var(--s6)", maxWidth: "var(--measure-reading)" }}
-          >
-            Every claim carries a grade and a source before it is published in
-            the institution&apos;s name
-          </h2>
-
-          <div className="trust-grid">
-            <TrustGridItem
-              numeral="01"
-              title="Primary-source scholarship"
-              text="Every prophetic reference is graded, cited, and attributed to its scholarly chain. We publish the source — not a paraphrase."
-            />
-            <TrustGridItem
-              numeral="02"
-              title="Laboratory verification"
-              text="All remedies undergo independent laboratory analysis. Certificates of analysis are available on request before dispensation."
-            />
-            <TrustGridItem
-              numeral="03"
-              title="Clinical governance"
-              text="Practitioners are trained, assessed, and listed on the Register. Clinical protocols follow established safety standards."
-            />
-            <TrustGridItem
-              numeral="04"
-              title="Institutional transparency"
-              text="Fees, limits, and conflicts of interest are stated plainly. The Founding Charter is publicly available for inspection."
-            />
-            <TrustGridItem
-              numeral="05"
-              title="Waqf model"
-              text="The institution is structured for continuity — not exit. Revenue serves the mission. The house exists for the next generation, not this quarter."
-            />
-            <TrustGridItem
-              numeral="06"
-              title="Plain limits"
-              text="We state what we do not know with the same care as what we do. Prophetic Medicine is a means — healing is from Allah alone."
-            />
-          </div>
-        </div>
-      </Leaf>
-
-      {/* ———————————————————————————————————
-          § 5  FEATURED REMEDIES
-          Presented editorially. Not product cards.
-          ——————————————————————————————————— */}
-      <Leaf>
-        <div className="measure-wide">
-          <SectionNumeral>IV</SectionNumeral>
-          <SectionLabel>From the Apothecary</SectionLabel>
-
-          <EditorialFeature
-            src="/photography/honey-editorial.jpg"
-            alt="Golden honey being poured from a wooden dipper into a glass vessel, beside dried thyme and a handwritten provenance label"
-          >
-            <p className="type-eyebrow" style={{ color: "var(--gilt)" }}>
-              Monograph
-            </p>
-            <h3 className="type-title" style={{ margin: 0 }}>
-              Raw Sidr Honey
-            </h3>
-            <p className="type-body">
-              Single-origin <em>Ziziphus spina-christi</em> honey, harvested
-              from the Hadhrami highlands and verified to source. The Prophet
-              ﷺ recommended honey as a remedy. We document origin, harvest
-              season, laboratory analysis, and scholarly basis in every
-              monograph — before dispensation.
-            </p>
-            <div>
-              <GoLink href="/the-apothecary/honey">Read the monograph</GoLink>
-            </div>
-          </EditorialFeature>
-
-          <EditorialFeature
-            src="/photography/black-seed-editorial.jpg"
-            alt="A scholar's research desk with an open botanical journal on Nigella sativa, pressed specimens, black seeds in a ceramic dish, and amber oil"
-            reverse
-          >
-            <p className="type-eyebrow" style={{ color: "var(--gilt)" }}>
-              Monograph
-            </p>
-            <h3 className="type-title" style={{ margin: 0 }}>
-              Cold-Pressed Black Seed Oil
-            </h3>
-            <p className="type-body">
-              <em>Nigella sativa</em> oil, cold-pressed from Ethiopian seeds
-              and independently analysed for thymoquinone content. Described
-              in <em>Sahih al-Bukhari</em> as &ldquo;a cure for everything
-              except death.&rdquo; The monograph states what this means — and
-              what it does not.
-            </p>
-            <div>
-              <GoLink href="/the-apothecary/black-seed-oil">
-                Read the monograph
-              </GoLink>
-            </div>
-          </EditorialFeature>
-        </div>
-      </Leaf>
-
-      {/* ———————————————————————————————————
-          § 6  THE ACADEMY
-          Show learning. Not selling.
-          ——————————————————————————————————— */}
-      <EditorialPhoto
-        src="/photography/clinical-practice.jpg"
-        alt="A clinical practitioner in a professional treatment room carefully preparing sterile cupping equipment"
-        aspect="landscape"
-        fullBleed
-        caption="Clinical practice — a practitioner preparing sterile Hijama equipment in the treatment room"
-      />
-
-      <Leaf>
-        <div className="measure-wide">
-          <SectionNumeral>V</SectionNumeral>
-          <SectionLabel>The Academy</SectionLabel>
-
-          <div className="editorial-two-col">
-            <div>
-              <h2 className="type-display-l" style={{ margin: "0 0 var(--s4)" }}>
-                Clinical education in Hijama and Prophetic therapeutics
-              </h2>
-              <p className="type-body-l">
-                The Academy trains practitioners through structured clinical
-                programmes assessed by independent examination. Faculty are
-                listed by qualification and <em>isnad</em>. Graduates are
-                entered on the Register and held to continuing professional
-                standards.
-              </p>
-            </div>
-            <div>
-              <PullQuote
-                text="The teacher is named before the subject. The chain is stated before the curriculum."
-              />
-              <div style={{ marginTop: "var(--s5)" }}>
-                <GoLink href="/the-academy">Explore the Academy</GoLink>
+              <div className="choreo-standfirst" style={{ marginBlockStart: "var(--space-6)" }}>
+                <Link href={enterHref} className="arrival-enter">
+                  {enterLabel} <span className="arrow" aria-hidden="true">⟶</span>
+                </Link>
               </div>
             </div>
           </div>
         </div>
-      </Leaf>
+      </section>
 
-      {/* ———————————————————————————————————
-          § 7  KNOWLEDGE LIBRARY
-          Featured publications.
-          ——————————————————————————————————— */}
-      <Leaf variant="inset">
-        <div className="measure-wide">
-          <SectionNumeral>VI</SectionNumeral>
-          <SectionLabel>Knowledge Library</SectionLabel>
-          <h2 className="type-display-l" style={{ margin: "0 0 var(--s4)" }}>
-            The open shelf
-          </h2>
-          <p className="type-body-l measure" style={{ marginBottom: "var(--s5)" }}>
-            The Knowledge Library is our publishing programme: monographs,
-            research notes, patient guides, and materia medica — all graded,
-            cited, and freely available. We share what we know, name what we
-            do not, and invite correction.
+      {/* ═══ § 2 · THRESHOLD PLATE (Ch. 9.3) ═══ */}
+      <Reveal>
+        <section className="arrival-section" style={{ paddingBlockStart: 0 }}>
+          <div className="arrival-container">
+            <Plate
+              asset={{
+                status: "brief",
+                purpose: "The threshold — crossing into the institution",
+                composition: "Wide establishing shot, strong architecture, human presence suggested not centred",
+                lens: "35mm, deep focus",
+                lighting: "Late afternoon, directional warmth",
+                mood: "Gravitas",
+              }}
+              aspect="16/7"
+              priority
+            />
+          </div>
+        </section>
+      </Reveal>
+
+      {/* ═══ § 3 · ON THE TRADITION (Ch. 9.4) ═══ */}
+      <Reveal>
+        <section className="arrival-section arrival-band-deep" aria-labelledby="tradition-heading">
+          <div className="arrival-container">
+            <div className="arrival-grid">
+              <div className="arrival-rail">
+                <SectionStamp numeral="II" />
+              </div>
+              <div className="arrival-measure">
+                <div className="section-stamp-mobile" style={{ marginBlockEnd: "var(--space-6)" }}>
+                  <SectionStamp numeral="II" label={tradition.stamp} />
+                </div>
+
+                <h2 id="tradition-heading" className="type-eyebrow-v2" style={{ color: "var(--v2-paper-on-deep)", marginBlockEnd: "var(--space-8)" }}>
+                  {tradition.stamp}
+                </h2>
+
+                <p className="type-standfirst" style={{ marginBlockEnd: "var(--space-8)" }}>
+                  {tradition.standfirst}
+                </p>
+
+                {tradition.body.map((paragraph: string, i: number) => (
+                  <p key={i} className="type-body-v2" style={{ marginBlockEnd: "var(--space-5)" }}>
+                    {paragraph}
+                  </p>
+                ))}
+
+                <div style={{ marginBlockStart: "var(--space-10)" }}>
+                  <ArrivalPullQuote
+                    text={tradition.pullQuote.text}
+                    attribution={tradition.pullQuote.attribution}
+                    source={tradition.pullQuote.source}
+                    dark
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* ═══ § 4 · THE DEPARTMENTS (Ch. 9.5) ═══ */}
+      <Reveal>
+        <section className="arrival-section" aria-labelledby="departments-heading" id="departments">
+          <div className="arrival-container">
+            <div className="arrival-grid">
+              <div className="arrival-rail">
+                <SectionStamp numeral="III" />
+              </div>
+              <div>
+                <div className="section-stamp-mobile" style={{ marginBlockEnd: "var(--space-6)" }}>
+                  <SectionStamp numeral="III" label="THE DEPARTMENTS" />
+                </div>
+
+                <h2 id="departments-heading" className="sr-only">The Departments</h2>
+
+                <div className="dept-grid">
+                  {departments.filter(d => d.size === "standard").map((dept, i) => (
+                    <Reveal key={dept.href} delay={i * 80}>
+                      <DepartmentCard
+                        order={dept.order}
+                        nameEn={dept.nameEn}
+                        nameAr={dept.nameAr}
+                        standfirst={dept.standfirst}
+                        href={dept.href}
+                        plate={dept.plate}
+                        size={dept.size}
+                      />
+                    </Reveal>
+                  ))}
+                </div>
+
+                <DepartmentDivider />
+
+                {departments.filter(d => d.size === "feature").map((dept) => (
+                  <Reveal key={dept.href} delay={240}>
+                    <DepartmentCard
+                      order={dept.order}
+                      nameEn={dept.nameEn}
+                      nameAr={dept.nameAr}
+                      standfirst={dept.standfirst}
+                      href={dept.href}
+                      plate={dept.plate}
+                      size={dept.size}
+                    />
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* ═══ § 5 · AUTHORITY SIGNALS (Ch. 9.6) ═══ */}
+      <AuthorityBand items={authoritySignals} />
+
+      {/* ═══ § 6 · CORRESPONDENCE (Ch. 9.7) ═══ */}
+      <Reveal>
+        <section className="arrival-section" aria-labelledby="correspondence-heading">
+          <div className="arrival-container">
+            <div className="arrival-grid">
+              <div className="arrival-rail">
+                <SectionStamp numeral="V" />
+              </div>
+              <div>
+                <div className="section-stamp-mobile" style={{ marginBlockEnd: "var(--space-6)" }}>
+                  <SectionStamp numeral="V" label="CORRESPONDENCE" />
+                </div>
+                <h2 id="correspondence-heading" className="sr-only">Correspondence</h2>
+                <CorrespondenceForm content={correspondence} />
+              </div>
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* ═══ § 7 · FOOTER ISNĀD (Ch. 9.8) ═══ */}
+      <footer className="arrival-section arrival-band-deep" role="contentinfo">
+        <div className="arrival-container">
+          <IsnadRule variant="footer" nodePosition={0.5} />
+
+          <p className="type-body-v2" style={{ marginBlockStart: "var(--space-8)", maxInlineSize: "60ch", color: "var(--v2-paper-on-deep)" }}>
+            {institutionStatement}
           </p>
-          <div>
-            <GoLink href="/knowledge-library">
-              Enter the Knowledge Library
-            </GoLink>
+
+          <nav style={{ marginBlockStart: "var(--space-10)" }} aria-label="Departments">
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-6)" }}>
+              {departments.map((dept) => (
+                <Link
+                  key={dept.href}
+                  href={dept.href}
+                  className="arrival-link"
+                  style={{ color: "var(--v2-paper-on-deep)" }}
+                >
+                  <span className="type-folio-v2" style={{ color: "var(--v2-brass)", marginInlineEnd: "0.5em" }}>
+                    {["I", "II", "III", "IV"][dept.order - 1]}
+                  </span>
+                  <span className="type-caption" style={{ color: "var(--v2-paper-on-deep)" }}>
+                    {dept.nameEn}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </nav>
+
+          <div style={{ marginBlockStart: "var(--space-10)", display: "flex", flexWrap: "wrap", gap: "var(--space-6)" }}>
+            <Link href="/charter" className="arrival-link type-caption" style={{ color: "var(--v2-paper-on-deep)" }}>About</Link>
+            <Link href="/correspondence" className="arrival-link type-caption" style={{ color: "var(--v2-paper-on-deep)" }}>Contact</Link>
           </div>
-        </div>
-      </Leaf>
 
-      {/* ———————————————————————————————————
-          § 8  SACRED JOURNEYS
-          Beautiful imagery. Reflection. Brotherhood.
-          ——————————————————————————————————— */}
-      <EditorialPhoto
-        src="/photography/sacred-journeys-hero.jpg"
-        alt="Pilgrims approaching the Prophet's Mosque in Madinah at dawn, the green dome visible against an amber sky"
-        aspect="landscape"
-        fullBleed
-        caption="Sacred Journeys — educational pilgrimage to the Holy Lands"
-      />
-
-      <Leaf>
-        <div className="measure-wide">
-          <SectionNumeral>VII</SectionNumeral>
-          <SectionLabel>Sacred Journeys</SectionLabel>
-          <div className="editorial-two-col">
-            <div>
-              <h2 className="type-display-l" style={{ margin: "0 0 var(--s4)" }}>
-                Educational pilgrimage with purpose before itinerary
-              </h2>
-              <p className="type-body-l">
-                Journeys to the Holy Lands, the olive groves of Palestine,
-                and sites of scholarly heritage — each structured around
-                study, reflection, and companionship rather than tourism.
-                Preparation begins weeks before departure. A reading list
-                and faculty companion accompany every group.
-              </p>
-            </div>
-            <div>
-              <PullQuote
-                text="We travel to learn, not to see. The journey is inward before it is outward."
-              />
-              <div style={{ marginTop: "var(--s5)" }}>
-                <GoLink href="/sacred-journeys">View departures</GoLink>
-              </div>
-            </div>
-          </div>
+          <p className="type-folio-v2" style={{ marginBlockStart: "var(--space-10)", color: "var(--v2-brass)" }}>
+            <time dateTime={new Date().toISOString().split("T")[0]}>
+              {new Date().getFullYear()} CE
+            </time>
+            {" · "}Sunnah Remedies · Institute of Prophetic Medicine
+          </p>
         </div>
-      </Leaf>
-
-      {/* ———————————————————————————————————
-          § 9  FOUNDING STATEMENT
-          Mission. Vision. Values.
-          ——————————————————————————————————— */}
-      <Leaf variant="grave">
-        <div className="measure-wide">
-          <SectionNumeral>VIII</SectionNumeral>
-          <div className="founding-statement">
-            <p className="type-eyebrow" style={{ color: "var(--gilt-soft)", marginBottom: "var(--s4)" }}>
-              Founding statement
-            </p>
-            <h2 className="type-display-l founding-statement__title" style={{ color: "var(--paper)" }}>
-              Knowledge before commerce
-            </h2>
-            <div className="type-body-l founding-statement__body" style={{ color: "var(--paper-dim)" }}>
-              <p>
-                Healing is from Allah; the remedy is a means. The person
-                precedes protocol. Beauty is an obligation. The institution
-                exists to serve the next generation.
-              </p>
-              <p>
-                We believe Prophetic Medicine deserves the same institutional
-                rigour as any established medical discipline: verifiable
-                scholarship, clinical accountability, transparent governance,
-                and patient dignity at every encounter.
-              </p>
-            </div>
-            <div style={{ marginTop: "var(--s5)" }}>
-              <QuietLink href="/charter" dark>
-                Read the Founding Charter
-              </QuietLink>
-            </div>
-          </div>
-        </div>
-      </Leaf>
-
-      {/* ———————————————————————————————————
-          § 10  INVITATION
-          ——————————————————————————————————— */}
-      <Leaf>
-        <div className="measure-wide">
-          <SectionNumeral>IX</SectionNumeral>
-          <EditorialInvitation
-            title="Begin where you are"
-            body="Whether you seek a remedy, wish to study, or are preparing for pilgrimage — the institution is open. Enter through any department and read before you act."
-            actions={[
-              { href: "/the-apothecary", label: "The Apothecary", primary: true },
-              { href: "/the-academy", label: "The Academy" },
-              { href: "/sacred-journeys", label: "Sacred Journeys" },
-              { href: "/knowledge-library", label: "Knowledge Library" },
-              { href: "/consultations", label: "Request a consultation" },
-            ]}
-          />
-        </div>
-      </Leaf>
-    </>
+      </footer>
+    </div>
   );
 }
