@@ -80,7 +80,7 @@ const fallback = {
       standfirst: "The open shelf — monographs, research notes, and patient guides, all graded and cited.",
       href: "/knowledge-library",
       size: "standard" as const,
-      plate: { status: "brief" as const, purpose: "Reading room with scholarly texts", composition: "Wide shot, layered depth", lighting: "North window, diffused", mood: "Contemplative" },
+      plate: { status: "final" as const, purpose: "Reading room with scholarly texts", composition: "Wide shot, layered depth", lighting: "North window, diffused", mood: "Contemplative", image: { url: "/photography/reading-room.jpg" }, alt: "A scholarly reading room with open manuscripts and natural light" },
     },
     {
       order: 2,
@@ -89,7 +89,7 @@ const fallback = {
       standfirst: "Clinical education in Hijama and Prophetic therapeutics, structured by isnād.",
       href: "/the-academy",
       size: "standard" as const,
-      plate: { status: "brief" as const, purpose: "Tutorial room with faculty and students", composition: "Medium shot, eye level", lighting: "Morning light, clinical", mood: "Disciplined" },
+      plate: { status: "final" as const, purpose: "Tutorial room with faculty and students", composition: "Medium shot, eye level", lighting: "Morning light, clinical", mood: "Disciplined", image: { url: "/photography/academy-learning.jpg" }, alt: "Students in a scholarly classroom studying anatomical charts and medical texts under natural light" },
     },
     {
       order: 3,
@@ -98,7 +98,7 @@ const fallback = {
       standfirst: "A cabinet of preparations, each documented to source before dispensation.",
       href: "/the-apothecary",
       size: "standard" as const,
-      plate: { status: "brief" as const, purpose: "Dispensary shelves with amber vessels", composition: "Detail shot, shallow depth", lighting: "Warm side light", mood: "Craft" },
+      plate: { status: "final" as const, purpose: "Dispensary shelves with amber vessels", composition: "Detail shot, shallow depth", lighting: "Warm side light", mood: "Craft", image: { url: "/photography/apothecary-hero.jpg" }, alt: "An apothecary dispensary with amber glass vessels of honey and oils arranged on aged wooden shelving" },
     },
     {
       order: 4,
@@ -107,7 +107,7 @@ const fallback = {
       standfirst: "Educational pilgrimage to the Holy Lands — preparation precedes departure, purpose before itinerary. Every journey carries a reading list, a faculty companion, and a clear statement of difficulty.",
       href: "/sacred-journeys",
       size: "feature" as const,
-      plate: { status: "brief" as const, purpose: "Pilgrims approaching a sacred site at dawn", composition: "Wide panoramic, golden hour", lighting: "Dawn light, warm amber", mood: "Reverent" },
+      plate: { status: "final" as const, purpose: "Pilgrims approaching a sacred site at dawn", composition: "Wide panoramic, golden hour", lighting: "Dawn light, warm amber", mood: "Reverent", image: { url: "/photography/sacred-journeys-hero.jpg" }, alt: "Pilgrims approaching the Prophet's Mosque in Madinah at dawn" },
     },
   ],
   authoritySignals: [
@@ -207,12 +207,14 @@ export default async function ArrivalPage() {
           <div className="arrival-container">
             <Plate
               asset={{
-                status: "brief",
+                status: "final",
                 purpose: "The threshold — crossing into the institution",
                 composition: "Wide establishing shot, strong architecture, human presence suggested not centred",
                 lens: "35mm, deep focus",
                 lighting: "Late afternoon, directional warmth",
                 mood: "Gravitas",
+                image: { url: "/photography/institution-hero.jpg" },
+                alt: "Scholarly hands examining an illuminated manuscript of Prophetic medicine beside glass vessels of amber oil and black seed",
               }}
               aspect="16/7"
               priority
