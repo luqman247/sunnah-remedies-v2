@@ -15,6 +15,7 @@ import {
   InstitutionalDivider,
   EditorialInvitation,
 } from "@/components/editorial/Editorial";
+import { getHomepage } from "@/sanity/lib/fetch";
 
 export const metadata: Metadata = {
   title: "Sunnah Remedies — Institute of Prophetic Medicine",
@@ -22,7 +23,9 @@ export const metadata: Metadata = {
     "The world's leading institute of Prophetic Medicine — scholarship, clinical care, and natural therapeutics under one house.",
 };
 
-export default function ThresholdPage() {
+export default async function ThresholdPage() {
+  // Fetch homepage data from Sanity CMS — falls back to inline content below if not yet published
+  const cms = await getHomepage();
   return (
     <>
       {/* ———————————————————————————————————

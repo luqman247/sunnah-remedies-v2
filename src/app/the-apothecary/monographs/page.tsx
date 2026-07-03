@@ -2,15 +2,20 @@ import type { Metadata } from "next";
 import { ListingRow } from "@/components/ui/Attestation";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
-import { apothecary } from "@/lib/navigation/site-structure";
-import { remedies, formatProvenance } from "@/lib/content/remedies";
+import { apothecary } from "@/sanity/lib/fetch";
+import { getAllProducts } from "@/sanity/lib/fetch";
+import { productToRemedy } from "@/sanity/lib/adapters";
+import { formatProvenance } from "@/lib/content/remedies";
 
 export const metadata: Metadata = {
   title: "Product Monographs",
   description: "Scholarly remedy records with source before price and limits before measure.",
 };
 
-export default function MonographsPage() {
+export default async function MonographsPage() {
+  const products = await getAllProducts();
+  const remedies = products.map(productToRemedy);
+
   return (
     <SectionPage
       department={apothecary}

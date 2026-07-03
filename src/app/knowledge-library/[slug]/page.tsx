@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
-import { knowledgeLibrary } from "@/lib/navigation/site-structure";
+import { knowledgeLibrary } from "@/sanity/lib/fetch";
 import { EditorialPhoto, PullQuote } from "@/components/editorial/Editorial";
-import { getAllKnowledgeSlugs, getKnowledgeTopic } from "@/lib/content/sections/knowledge-library";
+import { getAllKnowledgeSlugs, getKnowledgeTopic } from "@/sanity/lib/fetch";
 
 interface PageProps {
   params: Promise<{ slug: string }>;

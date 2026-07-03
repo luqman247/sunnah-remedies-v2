@@ -2,14 +2,28 @@ import type { Metadata } from "next";
 import { ListingRow } from "@/components/ui/Attestation";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
-import { journeyCatalogue } from "@/lib/content/journeys";
+import { getAllJourneys } from "@/sanity/lib/fetch";
+import { journeyToSacredJourney } from "@/sanity/lib/adapters";
 
 export const metadata: Metadata = {
   title: "Itineraries",
   description: "Day-by-day educational itineraries published before departure.",
 };
 
-export default function ItinerariesPage() {
+export default async function ItinerariesPage() {
+  const sanityJourneys = await getAllJourneys();
+  const journeyCatalogue = sanityJourneys.map((j) => {
+    const adapted = journeyToSacredJourney(j);
+    return {
+      slug: adapted.slug,
+      name: adapted.name,
+      href: `/sacred-journeys/${adapted.slug}`,
+      season: adapted.season,
+      duration: adapted.duration,
+      description: adapted.subtitle,
+    };
+  });
+
   return (
     <JourneySectionPage
       folio="iii"

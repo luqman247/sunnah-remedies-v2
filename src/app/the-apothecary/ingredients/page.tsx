@@ -1,8 +1,9 @@
+// TODO: Migrate to Sanity when section content is published
 import type { Metadata } from "next";
 import { ListingRow } from "@/components/ui/Attestation";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
-import { apothecary } from "@/lib/navigation/site-structure";
+import { apothecary } from "@/sanity/lib/fetch";
 import { ingredients, ingredientLibraryIntro } from "@/lib/content/sections/apothecary";
 
 export const metadata: Metadata = {

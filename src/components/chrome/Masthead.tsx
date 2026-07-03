@@ -4,14 +4,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { brandContext, brandAlt } from "@/lib/brand";
-import { departments as siteDepartments } from "@/lib/navigation/site-structure";
 
-const departments = siteDepartments.map((d) => ({
-  href: d.href,
-  label: d.label,
-}));
+interface NavItem {
+  label: string;
+  href: string;
+  highlighted?: boolean;
+}
 
-export function Masthead() {
+interface MastheadProps {
+  navItems?: NavItem[];
+}
+
+export function Masthead({ navItems }: MastheadProps) {
+  const departments = (navItems || []).filter(i => !i.highlighted);
+  const highlighted = (navItems || []).find(i => i.highlighted);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -60,8 +66,8 @@ export function Masthead() {
               </Link>
             ))}
             <span className="masthead-nav__divider" aria-hidden="true" />
-            <Link href="/consultations" className="nav-link nav-link--accent">
-              Clinical consultations
+            <Link href={highlighted?.href || "/consultations"} className="nav-link nav-link--accent">
+              {highlighted?.label || "Clinical consultations"}
             </Link>
           </nav>
 
@@ -115,12 +121,12 @@ export function Masthead() {
           </Link>
         ))}
         <Link
-          href="/consultations"
+          href={highlighted?.href || "/consultations"}
           className="quiet-link quiet-link--dark"
           onClick={() => setMenuOpen(false)}
           style={{ color: "var(--gilt-soft)" }}
         >
-          Clinical consultations
+          {highlighted?.label || "Clinical consultations"}
         </Link>
       </div>
     </>

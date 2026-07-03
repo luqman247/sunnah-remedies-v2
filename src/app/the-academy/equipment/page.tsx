@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 import { AcademySectionPage } from "@/components/academy/AcademySectionPage";
 import { getHijamaDiploma } from "@/lib/content/academy";
-
-const p = getHijamaDiploma();
+import { getProgrammeBySlug } from "@/sanity/lib/fetch";
+import { programmeToAcademyProgramme } from "@/sanity/lib/adapters";
 
 export const metadata: Metadata = {
   title: "Equipment list",
   description: "Equipment responsibilities for students and Academy supply.",
 };
 
-export default function EquipmentPage() {
+export default async function EquipmentPage() {
+  const programme = await getProgrammeBySlug("hijama-diploma");
+  const p = programme ? programmeToAcademyProgramme(programme) : getHijamaDiploma();
   return (
     <AcademySectionPage
       folio="x"

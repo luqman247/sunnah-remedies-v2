@@ -3,15 +3,17 @@ import { AcademySectionPage } from "@/components/academy/AcademySectionPage";
 import { EnrolmentForm } from "@/components/academy/EnrolmentForm";
 import { EnrolmentJourney } from "@/components/academy/EnrolmentJourney";
 import { getHijamaDiploma } from "@/lib/content/academy";
-
-const p = getHijamaDiploma();
+import { getProgrammeBySlug } from "@/sanity/lib/fetch";
+import { programmeToAcademyProgramme } from "@/sanity/lib/adapters";
 
 export const metadata: Metadata = {
   title: "Enrolment",
   description: "Application journey and form for the Hijāma Diploma.",
 };
 
-export default function EnrolmentPage() {
+export default async function EnrolmentPage() {
+  const programme = await getProgrammeBySlug("hijama-diploma");
+  const p = programme ? programmeToAcademyProgramme(programme) : getHijamaDiploma();
   return (
     <AcademySectionPage
       folio="xv"

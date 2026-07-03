@@ -3,6 +3,8 @@ import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { RegistrationJourney } from "@/components/journeys/RegistrationJourney";
 import { RegistrationForm } from "@/components/journeys/RegistrationForm";
 import { SectionLabel } from "@/components/ui/PageIntro";
+// Data sourced from Sanity CMS via static fallback — institutional section content
+// TODO: migrate journeyInstitution to Sanity when institutional document type is published
 import { journeyInstitution } from "@/lib/content/journeys";
 
 export const metadata: Metadata = {

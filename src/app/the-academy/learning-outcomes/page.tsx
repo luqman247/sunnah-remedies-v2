@@ -2,15 +2,17 @@ import type { Metadata } from "next";
 import { AcademySectionPage } from "@/components/academy/AcademySectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
 import { getHijamaDiploma } from "@/lib/content/academy";
-
-const p = getHijamaDiploma();
+import { getProgrammeBySlug } from "@/sanity/lib/fetch";
+import { programmeToAcademyProgramme } from "@/sanity/lib/adapters";
 
 export const metadata: Metadata = {
   title: "Learning outcomes",
   description: "Assessed competencies for the Hijāma Diploma.",
 };
 
-export default function LearningOutcomesPage() {
+export default async function LearningOutcomesPage() {
+  const programme = await getProgrammeBySlug("hijama-diploma");
+  const p = programme ? programmeToAcademyProgramme(programme) : getHijamaDiploma();
   return (
     <AcademySectionPage
       folio="iii"

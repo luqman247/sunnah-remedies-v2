@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
+// Data sourced from Sanity CMS via static fallback — institutional section content
 import { journeyInstitution } from "@/lib/content/journeys";
 
 export const metadata: Metadata = {

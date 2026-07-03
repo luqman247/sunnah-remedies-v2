@@ -2,15 +2,17 @@ import type { Metadata } from "next";
 import { AcademySectionPage } from "@/components/academy/AcademySectionPage";
 import { FacilityGallery } from "@/components/academy/FacilityGallery";
 import { getHijamaDiploma } from "@/lib/content/academy";
-
-const p = getHijamaDiploma();
+import { getProgrammeBySlug } from "@/sanity/lib/fetch";
+import { programmeToAcademyProgramme } from "@/sanity/lib/adapters";
 
 export const metadata: Metadata = {
   title: "Gallery",
   description: "Photography of teaching, clinical, and scholarly spaces.",
 };
 
-export default function AcademyGalleryPage() {
+export default async function AcademyGalleryPage() {
+  const programme = await getProgrammeBySlug("hijama-diploma");
+  const p = programme ? programmeToAcademyProgramme(programme) : getHijamaDiploma();
   return (
     <AcademySectionPage
       folio="vi"

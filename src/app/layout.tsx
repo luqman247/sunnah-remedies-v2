@@ -1,6 +1,6 @@
 import { CounterProvider } from "@/context/CounterContext";
-import { Masthead } from "@/components/chrome/Masthead";
-import { PreFooter, Footer } from "@/components/chrome/Footer";
+import { MastheadServer } from "@/components/chrome/MastheadServer";
+import { FooterServer } from "@/components/chrome/FooterServer";
 import {
   Cormorant_Garamond,
   EB_Garamond,
@@ -70,10 +70,9 @@ export default function RootLayout({
     >
       <body>
         <CounterProvider>
-          <Masthead />
+          <MastheadServer />
           <main>{children}</main>
-          <PreFooter />
-          <Footer />
+          <FooterServer />
         </CounterProvider>
       </body>
     </html>

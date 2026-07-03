@@ -4,7 +4,7 @@ import { DepartmentNav } from "@/components/ui/DepartmentNav";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
 import { SectionLabel } from "@/components/ui/PageIntro";
-import { knowledgeLibrary } from "@/lib/navigation/site-structure";
+import { knowledgeLibrary } from "@/sanity/lib/fetch";
 import {
   CinematicHero,
   EditorialFeature,

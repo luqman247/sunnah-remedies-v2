@@ -3,15 +3,20 @@ import { ListingRow } from "@/components/ui/Attestation";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { QuietLink } from "@/components/ui/Links";
 import { SectionLabel } from "@/components/ui/PageIntro";
-import { apothecary } from "@/lib/navigation/site-structure";
-import { remedies, formatProvenance } from "@/lib/content/remedies";
+import { apothecary } from "@/sanity/lib/fetch";
+import { getAllProducts } from "@/sanity/lib/fetch";
+import { productToRemedy } from "@/sanity/lib/adapters";
+import { formatProvenance } from "@/lib/content/remedies";
 
 export const metadata: Metadata = {
   title: "Product Catalogue",
   description: "The ordered cabinet with remedies traced to source.",
 };
 
-export default function CataloguePage() {
+export default async function CataloguePage() {
+  const products = await getAllProducts();
+  const remedies = products.map(productToRemedy);
+
   return (
     <SectionPage
       department={apothecary}

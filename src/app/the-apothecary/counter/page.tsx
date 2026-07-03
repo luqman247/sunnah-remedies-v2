@@ -1,3 +1,4 @@
+// Data sourced from Sanity CMS — utility functions retained from legacy module
 "use client";
 
 import { useState } from "react";

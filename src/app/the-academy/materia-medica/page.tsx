@@ -4,13 +4,17 @@ import { PageIntro, SectionLabel } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
 import { Breadcrumb } from "@/components/apothecary/Breadcrumb";
 import { ListingRow } from "@/components/ui/Attestation";
-import { remedies } from "@/lib/content/remedies";
+import { remedies as staticRemedies } from "@/lib/content/remedies";
+import { getAllProducts } from "@/sanity/lib/fetch";
+import { productToRemedy } from "@/sanity/lib/adapters";
 
 export const metadata: Metadata = {
   title: "The Materia Medica",
 };
 
-export default function MateriaMedicaPage() {
+export default async function MateriaMedicaPage() {
+  const products = await getAllProducts();
+  const remedies = products.length ? products.map(productToRemedy) : staticRemedies;
   return (
     <>
       <Leaf>

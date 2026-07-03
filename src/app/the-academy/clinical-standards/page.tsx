@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 import { AcademySectionPage } from "@/components/academy/AcademySectionPage";
 import { getHijamaDiploma } from "@/lib/content/academy";
-
-const p = getHijamaDiploma();
+import { getProgrammeBySlug } from "@/sanity/lib/fetch";
+import { programmeToAcademyProgramme } from "@/sanity/lib/adapters";
 
 export const metadata: Metadata = {
   title: "Clinical standards",
   description: "Contraindications, technique standards, and infection control.",
 };
 
-export default function ClinicalStandardsPage() {
+export default async function ClinicalStandardsPage() {
+  const programme = await getProgrammeBySlug("hijama-diploma");
+  const p = programme ? programmeToAcademyProgramme(programme) : getHijamaDiploma();
   return (
     <AcademySectionPage
       folio="iv"

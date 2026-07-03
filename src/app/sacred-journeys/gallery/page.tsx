@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
 import { JourneyGallery } from "@/components/journeys/JourneyGallery";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
-import { journeys } from "@/lib/content/journeys";
+import { getAllJourneys } from "@/sanity/lib/fetch";
+import { journeyToSacredJourney } from "@/sanity/lib/adapters";
 
 export const metadata: Metadata = {
   title: "Gallery",
   description: "Photography of places, paths, and architecture encountered on programme.",
 };
 
-export default function JourneysGalleryPage() {
+export default async function JourneysGalleryPage() {
+  const sanityJourneys = await getAllJourneys();
+  const journeys = sanityJourneys.map(journeyToSacredJourney);
+
   const galleryItems = journeys.flatMap((j) =>
     j.gallery.map((item) => ({
       ...item,

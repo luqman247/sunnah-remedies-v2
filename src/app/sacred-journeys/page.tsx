@@ -1,10 +1,11 @@
+// TODO: migrate inline editorial content to Sanity CMS when the Sacred Journeys homepage document type is populated
 import type { Metadata } from "next";
 import { Leaf } from "@/components/ui/Leaf";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
 import { SectionLabel } from "@/components/ui/PageIntro";
-import { sacredJourneys } from "@/lib/navigation/site-structure";
+import { sacredJourneys } from "@/sanity/lib/fetch";
 import {
   CinematicHero,
   EditorialPillar,

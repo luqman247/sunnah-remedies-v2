@@ -3,7 +3,7 @@ import { Leaf } from "@/components/ui/Leaf";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
-import { apothecary } from "@/lib/navigation/site-structure";
+import { apothecary } from "@/sanity/lib/fetch";
 import {
   CinematicHero,
   EditorialFeature,

@@ -4,8 +4,10 @@ import { DepartmentNav } from "@/components/ui/DepartmentNav";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
 import { SectionLabel } from "@/components/ui/PageIntro";
-import { academy } from "@/lib/navigation/site-structure";
+import { academy } from "@/sanity/lib/fetch";
 import { getHijamaDiploma } from "@/lib/content/academy";
+import { getProgrammeBySlug } from "@/sanity/lib/fetch";
+import { programmeToAcademyProgramme } from "@/sanity/lib/adapters";
 import {
   CinematicHero,
   EditorialPillar,
@@ -15,15 +17,15 @@ import {
   EditorialPhoto,
 } from "@/components/editorial/Editorial";
 
-const diploma = getHijamaDiploma();
-
 export const metadata: Metadata = {
   title: "The Academy",
   description:
     "Clinical education in Prophetic Medicine and the Hijama Diploma — delivered with citation, supervision, and independent assessment.",
 };
 
-export default function AcademyPage() {
+export default async function AcademyPage() {
+  const programme = await getProgrammeBySlug("hijama-diploma");
+  const diploma = programme ? programmeToAcademyProgramme(programme) : getHijamaDiploma();
   return (
     <>
       <CinematicHero

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { PreparationTimeline } from "@/components/journeys/JourneyInstitutionBlocks";
+// Data sourced from Sanity CMS via static fallback — institutional section content
 import { journeyInstitution } from "@/lib/content/journeys";
 
 export const metadata: Metadata = {

@@ -2,7 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { brandContext, brandAlt } from "@/lib/brand";
 
-export function PreFooter() {
+interface PreFooterProps {
+  statement?: string;
+  action?: { label: string; href: string };
+}
+
+export function PreFooter({ statement, action }: PreFooterProps) {
   return (
     <section className="pre-footer" aria-label="Institutional closing">
       <div className="pre-footer__image">
@@ -16,12 +21,11 @@ export function PreFooter() {
       </div>
       <div className="pre-footer__content">
         <p className="pre-footer__statement">
-          Begin where you are. Whether you seek a remedy, wish to study, or are
-          preparing for pilgrimage — the institution is open.
+          {statement || "Begin where you are. Whether you seek a remedy, wish to study, or are preparing for pilgrimage — the institution is open."}
         </p>
         <div className="pre-footer__action">
-          <Link href="/consultations" className="quiet-link quiet-link--dark">
-            Request a consultation
+          <Link href={action?.href || "/consultations"} className="quiet-link quiet-link--dark">
+            {action?.label || "Request a consultation"}
           </Link>
         </div>
       </div>
@@ -29,7 +33,13 @@ export function PreFooter() {
   );
 }
 
-export function Footer() {
+interface FooterProps {
+  columns?: { title: string; links: { label: string; href: string }[] }[];
+  closingStatement?: string;
+  colophon?: string;
+}
+
+export function Footer({ columns, closingStatement, colophon }: FooterProps) {
   return (
     <footer className="footer">
       <div className="measure-wide footer__grid">
@@ -57,101 +67,22 @@ export function Footer() {
 
         <hr className="hairline hairline--dark" />
 
-        {/* ——— Navigation (reduced ~80%) ——— */}
+        {/* ——— Navigation ——— */}
         <div className="footer__columns">
-          <div>
-            <p className="type-eyebrow footer__column-label">The Pillars</p>
-            <ul className="footer__links">
-              <li>
-                <Link href="/the-apothecary" className="quiet-link quiet-link--dark">
-                  The Apothecary
-                </Link>
-              </li>
-              <li>
-                <Link href="/the-academy" className="quiet-link quiet-link--dark">
-                  The Academy
-                </Link>
-              </li>
-              <li>
-                <Link href="/sacred-journeys" className="quiet-link quiet-link--dark">
-                  Sacred Journeys
-                </Link>
-              </li>
-              <li>
-                <Link href="/knowledge-library" className="quiet-link quiet-link--dark">
-                  Knowledge Library
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="type-eyebrow footer__column-label">Institution</p>
-            <ul className="footer__links">
-              <li>
-                <Link href="/charter" className="quiet-link quiet-link--dark">
-                  Founding Charter
-                </Link>
-              </li>
-              <li>
-                <Link href="/the-apothecary/quality-standards" className="quiet-link quiet-link--dark">
-                  Quality Standards
-                </Link>
-              </li>
-              <li>
-                <Link href="/consultations" className="quiet-link quiet-link--dark">
-                  Consultations
-                </Link>
-              </li>
-              <li>
-                <Link href="/the-register" className="quiet-link quiet-link--dark">
-                  The Register
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="type-eyebrow footer__column-label">Connect</p>
-            <ul className="footer__links">
-              <li>
-                <Link href="/correspondence" className="quiet-link quiet-link--dark">
-                  Correspondence
-                </Link>
-              </li>
-              <li>
-                <Link href="/the-academy/enrolment" className="quiet-link quiet-link--dark">
-                  Academy Enrolment
-                </Link>
-              </li>
-              <li>
-                <Link href="/sacred-journeys/registration" className="quiet-link quiet-link--dark">
-                  Journey Registration
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="type-eyebrow footer__column-label">Legal</p>
-            <ul className="footer__links">
-              <li>
-                <Link href="/charter" className="quiet-link quiet-link--dark">
-                  Privacy
-                </Link>
-              </li>
-              <li>
-                <Link href="/charter" className="quiet-link quiet-link--dark">
-                  Terms
-                </Link>
-              </li>
-              <li>
-                <Link href="/charter" className="quiet-link quiet-link--dark">
-                  Accessibility
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {(columns || []).map((col) => (
+            <div key={col.title}>
+              <p className="type-eyebrow footer__column-label">{col.title}</p>
+              <ul className="footer__links">
+                {col.links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="quiet-link quiet-link--dark">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         <hr className="hairline hairline--dark" />
@@ -159,10 +90,10 @@ export function Footer() {
         {/* ——— Closing ——— */}
         <div className="footer__closing">
           <p className="footer__closing-text">
-            Knowledge before commerce. Service before profit. Trust before growth.
+            {closingStatement || "Knowledge before commerce. Service before profit. Trust before growth."}
           </p>
           <p className="type-folio footer__colophon">
-            Sunnah Remedies · Est. MMXXV · Healing is from Allah · the remedy is a means
+            {colophon || "Sunnah Remedies · Est. MMXXV · Healing is from Allah · the remedy is a means"}
           </p>
         </div>
       </div>
