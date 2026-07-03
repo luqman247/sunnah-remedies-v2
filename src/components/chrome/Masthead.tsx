@@ -26,93 +26,37 @@ export function Masthead() {
     };
 
     document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+
     const firstLink = panelRef.current?.querySelector("a") as HTMLElement | null;
     firstLink?.focus();
 
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
   }, [menuOpen]);
 
   return (
     <>
-      <header
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 50,
-          background: "var(--paper)",
-          borderBottom: "1px solid var(--rule)",
-        }}
-      >
-        <div
-          className="measure-wide"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "var(--s4)",
-            padding: "var(--s3) var(--margin-mobile)",
-            flexWrap: "wrap",
-          }}
-        >
-          <Link
-            href="/"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "var(--s2)",
-              textDecoration: "none",
-              color: "inherit",
-            }}
-          >
+      <header className="masthead">
+        <div className="masthead__inner measure-wide">
+          <Link href="/" className="masthead__brand">
             <Seal size="small" linked={false} />
             <span>
-              <span
-                style={{
-                  fontFamily: "var(--font-display), Georgia, serif",
-                  fontSize: "1.1rem",
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  display: "block",
-                }}
-              >
-                Sunnah Remedies
-              </span>
-              <span
-                className="type-arabic"
-                style={{
-                  fontSize: "0.85rem",
-                  color: "var(--muted)",
-                  display: "block",
-                }}
-              >
-                الطب النبوي
-              </span>
+              <span className="masthead__wordmark">Sunnah Remedies</span>
+              <span className="masthead__arabic type-arabic">الطب النبوي</span>
             </span>
           </Link>
 
-          <nav className="type-nav masthead-nav" aria-label="Primary">
+          <nav className="masthead-nav" aria-label="Primary">
             {departments.map((dept) => (
-              <Link
-                key={dept.href}
-                href={dept.href}
-                className="quiet-link"
-                style={{ backgroundImage: "none", paddingBottom: 0 }}
-              >
+              <Link key={dept.href} href={dept.href} className="nav-link">
                 {dept.label}
               </Link>
             ))}
-            <span
-              style={{
-                width: "1px",
-                height: "1rem",
-                background: "var(--rule)",
-              }}
-              aria-hidden="true"
-            />
-            <Link
-              href="/consultations"
-              style={{ color: "var(--gilt)", textDecoration: "none" }}
-            >
+            <span className="masthead-nav__divider" aria-hidden="true" />
+            <Link href="/consultations" className="nav-link nav-link--accent">
               Consultations
             </Link>
           </nav>
@@ -120,16 +64,8 @@ export function Masthead() {
           <button
             ref={menuButtonRef}
             type="button"
-            className="type-nav masthead-menu-btn"
+            className="masthead-menu-btn"
             onClick={() => setMenuOpen(true)}
-            style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              color: "var(--ink)",
-              minHeight: "44px",
-              minWidth: "44px",
-            }}
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
           >
@@ -149,18 +85,10 @@ export function Masthead() {
       >
         <button
           type="button"
-          className="type-nav quiet-link--dark"
+          className="mobile-nav-panel__close"
           onClick={() => {
             setMenuOpen(false);
             menuButtonRef.current?.focus();
-          }}
-          style={{
-            alignSelf: "flex-end",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            color: "var(--paper)",
-            minHeight: "44px",
           }}
         >
           Close
@@ -184,19 +112,6 @@ export function Masthead() {
           Consultations
         </Link>
       </div>
-
-      {menuOpen && (
-        <div
-          role="presentation"
-          onClick={() => setMenuOpen(false)}
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 99,
-            background: "rgba(30, 42, 34, 0.4)",
-          }}
-        />
-      )}
     </>
   );
 }

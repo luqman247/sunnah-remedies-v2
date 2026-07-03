@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
+import { CounterProvider } from "@/context/CounterContext";
+import { Masthead } from "@/components/chrome/Masthead";
+import { Footer } from "@/components/chrome/Footer";
 import {
   Cormorant_Garamond,
   EB_Garamond,
   Inter,
   Amiri,
 } from "next/font/google";
-import { Masthead } from "@/components/chrome/Masthead";
-import { Footer } from "@/components/chrome/Footer";
+import type { Metadata } from "next";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -46,7 +47,7 @@ export const metadata: Metadata = {
     template: "%s · Sunnah Remedies",
   },
   description:
-    "An institution for the revival of Prophetic Medicine — scholarship, clinical excellence, and carefully curated natural therapeutics.",
+    "The world's leading institute of Prophetic Medicine — scholarship, clinical care, and natural therapeutics under one house.",
   icons: {
     icon: "/brand/favicon.png",
   },
@@ -63,9 +64,11 @@ export default function RootLayout({
       className={`${cormorant.variable} ${ebGaramond.variable} ${inter.variable} ${amiri.variable}`}
     >
       <body>
-        <Masthead />
-        <main>{children}</main>
-        <Footer />
+        <CounterProvider>
+          <Masthead />
+          <main>{children}</main>
+          <Footer />
+        </CounterProvider>
       </body>
     </html>
   );

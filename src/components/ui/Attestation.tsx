@@ -1,52 +1,33 @@
-interface DepartmentCardProps {
-  numeral: string;
-  name: string;
-  role: string;
-  description: string;
-  href: string;
-  linkLabel: string;
+"use client";
+
+import { useId, useState } from "react";
+
+interface SourceMarkProps {
+  siglum: string;
+  source: string;
 }
 
-export function DepartmentCard({
-  numeral,
-  name,
-  role,
-  description,
-  href,
-  linkLabel,
-}: DepartmentCardProps) {
+export function SourceMark({ siglum, source }: SourceMarkProps) {
+  const [open, setOpen] = useState(false);
+  const noteId = useId();
+
   return (
-    <article className="dept-card">
-      <span className="dept-card__numeral">{numeral}</span>
-      <h3 className="type-title">{name}</h3>
-      <p className="type-micro" style={{ color: "var(--muted)" }}>
-        {role}
-      </p>
-      <p className="type-body" style={{ flex: 1 }}>
-        {description}
-      </p>
-      <a href={href} className="go-link">
-        {linkLabel}
-        <span aria-hidden="true">→</span>
-      </a>
-    </article>
-  );
-}
-
-interface ListingRowProps {
-  title: string;
-  provenance: string;
-  href: string;
-}
-
-export function ListingRow({ title, provenance, href }: ListingRowProps) {
-  return (
-    <a href={href} className="ruled-row">
-      <span className="type-title ruled-row__title">{title}</span>
-      <span className="type-micro" style={{ color: "var(--muted)", textAlign: "right" }}>
-        {provenance}
-      </span>
-    </a>
+    <span className="source-mark">
+      <button
+        type="button"
+        className="source-mark__siglum type-micro"
+        aria-expanded={open}
+        aria-controls={noteId}
+        onClick={() => setOpen((v) => !v)}
+      >
+        {siglum}
+      </button>
+      {open && (
+        <span id={noteId} className="source-mark__note" role="note">
+          {source}
+        </span>
+      )}
+    </span>
   );
 }
 
@@ -68,31 +49,27 @@ export function Specimen({
   return (
     <aside className="specimen" aria-label="Attestation specimen">
       <span className="specimen__tab">Specimen</span>
-      <p className="type-title" style={{ marginTop: "var(--s3)" }}>
-        {statement}
-      </p>
+      <p className="type-title specimen__statement">{statement}</p>
       {transliteration && (
-        <p className="type-body" style={{ fontStyle: "italic", color: "var(--muted)" }}>
-          {transliteration}
-        </p>
+        <p className="type-body specimen__transliteration">{transliteration}</p>
       )}
-      <hr className="hairline" style={{ margin: "var(--s4) 0" }} />
-      <dl style={{ margin: 0, display: "grid", gap: "var(--s2)" }}>
+      <hr className="hairline" />
+      <dl className="specimen__dl">
         <div>
-          <dt className="type-micro" style={{ color: "var(--muted)" }}>Grade</dt>
-          <dd className="type-body" style={{ margin: "var(--s1) 0 0" }}>
+          <dt className="type-micro specimen__dt">Grade</dt>
+          <dd className="type-body specimen__dd">
             <span className="specimen__grade-dot" aria-hidden="true" />
             {grade}
           </dd>
         </div>
         <div>
-          <dt className="type-micro" style={{ color: "var(--muted)" }}>Source</dt>
-          <dd className="type-body" style={{ margin: "var(--s1) 0 0" }}>{source}</dd>
+          <dt className="type-micro specimen__dt">Source</dt>
+          <dd className="type-body specimen__dd">{source}</dd>
         </div>
         {standing && (
           <div>
-            <dt className="type-micro" style={{ color: "var(--muted)" }}>Standing</dt>
-            <dd className="type-body" style={{ margin: "var(--s1) 0 0" }}>{standing}</dd>
+            <dt className="type-micro specimen__dt">Standing</dt>
+            <dd className="type-body specimen__dd">{standing}</dd>
           </div>
         )}
       </dl>
@@ -100,22 +77,58 @@ export function Specimen({
   );
 }
 
-interface SourceMarkProps {
-  siglum: string;
-  source: string;
+interface ListingRowProps {
+  title: string;
+  provenance: string;
+  href: string;
+  subtitle?: string;
 }
 
-export function SourceMark({ siglum, source }: SourceMarkProps) {
+export function ListingRow({ title, provenance, href, subtitle }: ListingRowProps) {
   return (
-    <sup
-      className="type-micro"
-      style={{ color: "var(--gilt)", cursor: "help" }}
-      title={source}
-      tabIndex={0}
-      role="note"
-      aria-label={`Source: ${source}`}
-    >
-      {siglum}
-    </sup>
+    <a href={href} className="ruled-row">
+      <span>
+        <span className="type-title ruled-row__title">{title}</span>
+        {subtitle && (
+          <span className="type-small" style={{ display: "block", color: "var(--muted)", marginTop: "var(--s1)" }}>
+            {subtitle}
+          </span>
+        )}
+      </span>
+      <span className="type-micro ruled-row__provenance">{provenance}</span>
+    </a>
+  );
+}
+
+interface DepartmentRowProps {
+  numeral: string;
+  name: string;
+  role: string;
+  description: string;
+  href: string;
+  linkLabel: string;
+}
+
+export function DepartmentRow({
+  numeral,
+  name,
+  role,
+  description,
+  href,
+  linkLabel,
+}: DepartmentRowProps) {
+  return (
+    <article className="dept-row">
+      <span className="dept-row__numeral">{numeral}</span>
+      <div className="dept-row__content">
+        <h2 className="type-title">{name}</h2>
+        <p className="type-micro dept-row__role">{role}</p>
+        <p className="type-body">{description}</p>
+        <a href={href} className="go-link dept-row__link">
+          {linkLabel}
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </article>
   );
 }

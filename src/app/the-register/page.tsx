@@ -2,25 +2,31 @@
 
 import { useState } from "react";
 import { Leaf } from "@/components/ui/Leaf";
-import { RunningHead } from "@/components/ui/Links";
 import { ListingRow } from "@/components/ui/Attestation";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { PageIntro } from "@/components/ui/PageIntro";
+import { remedies } from "@/lib/content/remedies";
 
 const corpus = [
-  {
-    title: "Black Seed — al-ḥabba al-sawdāʾ",
-    provenance: "Apothecary · Established",
-    href: "/the-apothecary/black-seed-oil",
-  },
+  ...remedies.map((r) => {
+    const ref = r.propheticReferences[0];
+    return {
+      title: `${r.name} — ${r.transliteration}`,
+      provenance: `Apothecary · ${ref?.grade ?? "Classical"}`,
+      href: `/the-apothecary/${r.slug}`,
+      subtitle: r.nature,
+    };
+  }),
   {
     title: "Foundations of Prophetic Medicine",
     provenance: "Academy · Essential",
     href: "/the-academy/foundations",
+    subtitle: "The essential texts and terms of Tibb al-Nabawī.",
   },
   {
     title: "Ṣaḥīḥ al-Bukhārī — Kitāb al-Ṭibb",
     provenance: "Source · Canonical",
     href: "/the-academy/materia-medica",
+    subtitle: "The book of medicine in the canonical collection.",
   },
 ];
 
@@ -30,7 +36,8 @@ export default function RegisterPage() {
 
   const results = searched
     ? corpus.filter((item) =>
-        item.title.toLowerCase().includes(query.toLowerCase())
+        item.title.toLowerCase().includes(query.toLowerCase()) ||
+        (item.subtitle?.toLowerCase().includes(query.toLowerCase()) ?? false)
       )
     : [];
 
@@ -38,15 +45,17 @@ export default function RegisterPage() {
     <>
       <Leaf>
         <div className="measure-wide">
-          <RunningHead section="The Register" folio="i" />
-          <ScrollReveal>
-            <h1 className="type-display-l" style={{ margin: "0 0 var(--s4)" }}>
-              Search the institution
-            </h1>
-            <p className="type-body-l measure" style={{ marginBottom: "var(--s6)" }}>
-              A reading room for the institution&apos;s texts, remedies, and sources.
+          <PageIntro
+            section="The Register"
+            folio="i"
+            title="Search the institution"
+            lede="Texts, remedies, and sources — indexed with grade and department."
+          >
+            <p>
+              A reading room for the institution&apos;s corpus. Results carry
+              provenance and department, as the cabinet and the Academy do.
             </p>
-          </ScrollReveal>
+          </PageIntro>
         </div>
       </Leaf>
 
@@ -57,18 +66,14 @@ export default function RegisterPage() {
               e.preventDefault();
               setSearched(true);
             }}
-            className="form-field"
+            className="form-field register-search"
           >
-            <label htmlFor="register-search" className="sr-only">
-              Search the institution
-            </label>
+            <label htmlFor="register-search">Search term</label>
             <input
               id="register-search"
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search the institution's texts, remedies, and sources."
-              style={{ fontSize: "1.2rem", padding: "var(--s3) var(--s4)" }}
             />
           </form>
 

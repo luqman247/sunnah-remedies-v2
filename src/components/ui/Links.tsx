@@ -7,22 +7,9 @@ interface RunningHeadProps {
 
 export function RunningHead({ section, folio }: RunningHeadProps) {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingBottom: "var(--s3)",
-        borderBottom: "1px solid var(--rule)",
-        marginBottom: "var(--s5)",
-      }}
-    >
-      <span className="type-eyebrow" style={{ color: "var(--muted)" }}>
-        {section}
-      </span>
-      <span className="type-folio" style={{ color: "var(--muted-light)" }}>
-        {folio}
-      </span>
+    <div className="running-head">
+      <span className="type-eyebrow">{section}</span>
+      <span className="type-folio running-head__folio">{folio}</span>
     </div>
   );
 }

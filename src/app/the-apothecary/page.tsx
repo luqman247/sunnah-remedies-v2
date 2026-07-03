@@ -1,66 +1,84 @@
 import type { Metadata } from "next";
 import { Leaf } from "@/components/ui/Leaf";
-import { RunningHead } from "@/components/ui/Links";
 import { ListingRow } from "@/components/ui/Attestation";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { PageIntro, SectionLabel } from "@/components/ui/PageIntro";
+import { QuietLink } from "@/components/ui/Links";
+import { remedies, formatProvenance } from "@/lib/content/remedies";
 
 export const metadata: Metadata = {
   title: "The Apothecary",
+  description:
+    "The ordered cabinet of Prophetic Medicine — remedies traced to their source, dispensed with scholarship before measure.",
 };
-
-const remedies = [
-  {
-    title: "Black Seed Oil",
-    provenance: "Established · Ṣaḥīḥ al-Bukhārī · Kitāb al-Ṭibb",
-    href: "/the-apothecary/black-seed-oil",
-  },
-  {
-    title: "Senna",
-    provenance: "Reported · Sunan Abī Dāwūd · Kitāb al-Ṭibb",
-    href: "/the-apothecary/senna",
-  },
-  {
-    title: "Honey",
-    provenance: "Established · Qurʾan · Sūrat al-Naḥl",
-    href: "/the-apothecary/honey",
-  },
-  {
-    title: "Olive Oil",
-    provenance: "Established · Ṣaḥīḥ al-Bukhārī · Kitāb al-Ṭibb",
-    href: "/the-apothecary/olive-oil",
-  },
-];
 
 export default function ApothecaryPage() {
   return (
     <>
       <Leaf>
         <div className="measure-wide">
-          <RunningHead section="The Apothecary" folio="i" />
-          <ScrollReveal>
-            <h1 className="type-display-l" style={{ margin: "0 0 var(--s4)" }}>
-              The ordered cabinet
-            </h1>
-            <p className="type-lede measure" style={{ color: "var(--muted)", fontStyle: "italic", margin: "0 0 var(--s6)" }}>
-              Remedies, traced to their source. Sourced, graded, and offered in trust.
+          <PageIntro
+            section="The Apothecary"
+            folio="i"
+            title="The ordered cabinet"
+            lede="A historic dispensary — remedies curated, traced, and dispensed in trust."
+          >
+            <p>
+              This is not a shop. It is the material arm of the institution: a cabinet
+              of simples and preparations, each with a monograph — historical context,
+              Prophetic reference where sound, traditional usage, honest limits, and
+              provenance. You are expected to read before you request dispensation.
             </p>
-            <p className="type-body-l measure" style={{ marginBottom: "var(--s6)" }}>
-              Each remedy in this cabinet carries its provenance before you open it.
-              We describe what the tradition associates with each means, state honest
-              limits, and offer nothing that cannot be traced.
-            </p>
-          </ScrollReveal>
+          </PageIntro>
+        </div>
+      </Leaf>
+
+      <Leaf variant="grave">
+        <div className="measure grave-block">
+          <p className="grave-block__qualifier" style={{ color: "var(--paper-dim)" }}>
+            Knowledge before the measure. The person reaches the fee only after
+            tradition, benefit, honest limits, and sourcing. We dispense means — we
+            do not sell miracles.
+          </p>
         </div>
       </Leaf>
 
       <Leaf variant="inset">
         <div className="measure-wide">
-          <p className="type-eyebrow" style={{ color: "var(--muted)", marginBottom: "var(--s4)" }}>
-            The cabinet
-          </p>
+          <SectionLabel>The cabinet · {remedies.length} remedies</SectionLabel>
           {remedies.map((remedy) => (
-            <ListingRow key={remedy.href} {...remedy} />
+            <ListingRow
+              key={remedy.slug}
+              title={remedy.name}
+              subtitle={`${remedy.transliteration} · ${remedy.botanicalName}`}
+              provenance={formatProvenance(remedy)}
+              href={`/the-apothecary/${remedy.slug}`}
+            />
           ))}
+        </div>
+      </Leaf>
+
+      <Leaf>
+        <div className="measure-wide">
+          <div className="measure">
+            <SectionLabel>How dispensation works</SectionLabel>
+            <ol className="monograph-list">
+              <li>Read the monograph in full — every section, including honest limits.</li>
+              <li>Add to the counter when you have understood what you request.</li>
+              <li>Review your selection, provide correspondence details, and confirm.</li>
+              <li>The institution prepares and dispatches — considered, and in time.</li>
+            </ol>
+          </div>
+        </div>
+      </Leaf>
+
+      <Leaf>
+        <div className="measure">
+          <SectionLabel>The counter</SectionLabel>
+          <p className="type-body" style={{ marginBottom: "var(--s4)" }}>
+            Your selection awaits at the counter. Guest dispensation is honoured — no
+            account is required.
+          </p>
+          <QuietLink href="/the-apothecary/counter">Review the counter</QuietLink>
         </div>
       </Leaf>
     </>

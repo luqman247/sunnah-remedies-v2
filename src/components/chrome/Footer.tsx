@@ -22,65 +22,27 @@ const correspondLinks = [
 
 export function Footer() {
   return (
-    <footer
-      style={{
-        background: "var(--myrtle-deep)",
-        color: "var(--paper)",
-        padding: "var(--s7) var(--margin-mobile)",
-      }}
-    >
-      <div
-        className="measure-wide"
-        style={{
-          display: "grid",
-          gap: "var(--s6)",
-          gridTemplateColumns: "1fr",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            gap: "var(--s3)",
-          }}
-        >
-          <Emblem size={80} />
-          <p
-            style={{
-              fontFamily: "var(--font-display), Georgia, serif",
-              fontSize: "1.25rem",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              margin: 0,
-            }}
-          >
-            Sunnah Remedies
-          </p>
-          <p className="type-arabic" style={{ color: "var(--paper-dim)", margin: 0 }}>
+    <footer className="footer">
+      <div className="measure-wide footer__grid">
+        <div className="footer__identity">
+          <Emblem size={72} />
+          <p className="footer__name">Sunnah Remedies</p>
+          <p className="type-arabic footer__charter" style={{ color: "var(--paper-dim)" }}>
             الطب النبوي
           </p>
-          <p className="type-small" style={{ color: "var(--paper-dim)", margin: 0, maxWidth: "28rem" }}>
+          <p className="type-small footer__charter">
             An institution for the revival of Prophetic Medicine — scholarship,
             clinical excellence, and carefully curated natural therapeutics.
           </p>
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gap: "var(--s5)",
-            gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-          }}
-        >
+        <div className="footer__columns">
           <div>
-            <p className="type-eyebrow" style={{ color: "var(--gilt-soft)", marginBottom: "var(--s3)" }}>
-              Departments
-            </p>
-            <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "var(--s2)" }}>
+            <p className="type-eyebrow footer__column-label">Departments</p>
+            <ul className="footer__links">
               {departmentLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="quiet-link quiet-link--dark" style={{ fontSize: "0.72rem" }}>
+                  <Link href={link.href} className="quiet-link quiet-link--dark">
                     {link.label}
                   </Link>
                 </li>
@@ -89,13 +51,11 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="type-eyebrow" style={{ color: "var(--gilt-soft)", marginBottom: "var(--s3)" }}>
-              The Institution
-            </p>
-            <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "var(--s2)" }}>
+            <p className="type-eyebrow footer__column-label">The Institution</p>
+            <ul className="footer__links">
               {institutionLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="quiet-link quiet-link--dark" style={{ fontSize: "0.72rem" }}>
+                  <Link href={link.href} className="quiet-link quiet-link--dark">
                     {link.label}
                   </Link>
                 </li>
@@ -104,13 +64,11 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="type-eyebrow" style={{ color: "var(--gilt-soft)", marginBottom: "var(--s3)" }}>
-              Correspond
-            </p>
-            <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "var(--s2)" }}>
+            <p className="type-eyebrow footer__column-label">Correspond</p>
+            <ul className="footer__links">
               {correspondLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="quiet-link quiet-link--dark" style={{ fontSize: "0.72rem" }}>
+                  <Link href={link.href} className="quiet-link quiet-link--dark">
                     {link.label}
                   </Link>
                 </li>
@@ -121,10 +79,7 @@ export function Footer() {
 
         <hr className="hairline hairline--dark" />
 
-        <p
-          className="type-folio"
-          style={{ color: "var(--paper-dim)", margin: 0, textAlign: "center" }}
-        >
+        <p className="type-folio footer__colophon">
           MMXXV · Healing is from Allah · the remedy is a means
         </p>
       </div>

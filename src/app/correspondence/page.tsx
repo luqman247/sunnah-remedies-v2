@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Leaf } from "@/components/ui/Leaf";
-import { RunningHead } from "@/components/ui/Links";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { PageIntro } from "@/components/ui/PageIntro";
+import { QuietLink } from "@/components/ui/Links";
 
 export const metadata: Metadata = {
   title: "Correspondence",
@@ -12,37 +12,35 @@ export default function CorrespondencePage() {
     <>
       <Leaf>
         <div className="measure-wide">
-          <RunningHead section="Correspondence" folio="i" />
-          <ScrollReveal>
-            <h1 className="type-display-l" style={{ margin: "0 0 var(--s4)" }}>
-              Write to us
-            </h1>
-            <p className="type-body-l measure" style={{ marginBottom: "var(--s6)" }}>
-              The institution answers correspondence considered, and in time.
+          <PageIntro
+            section="Correspondence"
+            folio="i"
+            title="Write to us"
+            lede="The institution answers considered, and in time."
+          >
+            <p>
               For clinical matters, use Consultations. For scholarship, the Academy.
               For all else, write below.
             </p>
-          </ScrollReveal>
+          </PageIntro>
         </div>
       </Leaf>
 
       <Leaf variant="inset">
         <div className="measure" style={{ margin: "0 auto" }}>
           <p className="type-body">
-            <a href="mailto:correspondence@sunnahremedies.org" className="quiet-link">
+            <QuietLink href="mailto:correspondence@sunnahremedies.org">
               correspondence@sunnahremedies.org
-            </a>
+            </QuietLink>
           </p>
 
-          <section id="practitioners" style={{ marginTop: "var(--s6)" }}>
-            <h2 className="type-title" style={{ marginBottom: "var(--s3)" }}>
-              For Practitioners
-            </h2>
+          <section id="practitioners" className="charter-section">
+            <h2 className="type-title charter-section__title">For Practitioners</h2>
             <p className="type-body">
               Licensed practitioners seeking collaboration or referral may write to{" "}
-              <a href="mailto:practitioners@sunnahremedies.org" className="quiet-link">
+              <QuietLink href="mailto:practitioners@sunnahremedies.org">
                 practitioners@sunnahremedies.org
-              </a>
+              </QuietLink>
             </p>
           </section>
         </div>

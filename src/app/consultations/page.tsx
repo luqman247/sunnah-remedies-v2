@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Leaf } from "@/components/ui/Leaf";
-import { RunningHead, SolidAction } from "@/components/ui/Links";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { PageIntro } from "@/components/ui/PageIntro";
+import { SolidAction } from "@/components/ui/Links";
 
 export default function ConsultationsPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -37,20 +37,18 @@ export default function ConsultationsPage() {
     <>
       <Leaf>
         <div className="measure-wide">
-          <RunningHead section="Consultations" folio="i" />
-          <ScrollReveal>
-            <h1 className="type-display-l" style={{ margin: "0 0 var(--s4)" }}>
-              Clinical reception
-            </h1>
-            <p className="type-lede measure" style={{ color: "var(--muted)", fontStyle: "italic", margin: "0 0 var(--s6)" }}>
-              The patient received as a guest. Limits stated up front.
-            </p>
-            <p className="type-body-l measure" style={{ marginBottom: "var(--s6)" }}>
+          <PageIntro
+            section="Consultations"
+            folio="i"
+            title="Clinical reception"
+            lede="The patient received as a guest. Limits stated up front."
+          >
+            <p>
               Consultations are offered as a means of clinical guidance within the
               tradition of Prophetic Medicine. Healing is from Allah; we promise a
               means, never a cure. A remedy is not a substitute for a physician.
             </p>
-          </ScrollReveal>
+          </PageIntro>
         </div>
       </Leaf>
 
@@ -61,7 +59,7 @@ export default function ConsultationsPage() {
               Your request is received. We will write to you within five days.
             </p>
           ) : (
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "var(--s5)" }}>
+            <form onSubmit={handleSubmit} className="form-stack">
               <div className={`form-field ${errors.name ? "form-field--error" : ""}`}>
                 <label htmlFor="name">Your name</label>
                 <input id="name" name="name" type="text" autoComplete="name" />

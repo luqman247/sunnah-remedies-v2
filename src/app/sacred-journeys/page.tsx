@@ -1,56 +1,90 @@
 import type { Metadata } from "next";
 import { Leaf } from "@/components/ui/Leaf";
-import { RunningHead } from "@/components/ui/Links";
 import { ListingRow } from "@/components/ui/Attestation";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { PageIntro, SectionLabel } from "@/components/ui/PageIntro";
+import { GoLink } from "@/components/ui/Links";
+import { journeyCatalogue } from "@/lib/content/journeys";
 
 export const metadata: Metadata = {
   title: "Sacred Journeys",
+  description:
+    "Educational pilgrimage — meaning before logistics, scholars, preparation, and honest difficulty.",
 };
-
-const journeys = [
-  {
-    title: "The Olive Grove Retreat",
-    provenance: "Mediterranean · Spring",
-    href: "/sacred-journeys/olive-grove",
-  },
-  {
-    title: "The Desert Way",
-    provenance: "Arabian Peninsula · Autumn",
-    href: "/sacred-journeys/desert-way",
-  },
-];
 
 export default function SacredJourneysPage() {
   return (
     <>
       <Leaf>
         <div className="measure-wide">
-          <RunningHead section="Sacred Journeys" folio="i" />
-          <ScrollReveal>
-            <h1 className="type-display-l" style={{ margin: "0 0 var(--s4)" }}>
-              The few considered journeys
-            </h1>
-            <p className="type-lede measure" style={{ color: "var(--muted)", fontStyle: "italic", margin: "0 0 var(--s6)" }}>
-              A journey, not a holiday. Meaning before logistics.
-            </p>
-            <p className="type-body-l measure" style={{ marginBottom: "var(--s6)" }}>
+          <PageIntro
+            section="Sacred Journeys"
+            folio="i"
+            title="The few considered journeys"
+            lede="An educational pilgrimage institution — not a travel agency."
+          >
+            <p>
               Sacred Journeys embody the lived practice of Prophetic wellbeing.
-              Each journey names its meaning, its demands, and its honest reality —
-              including cost and difficulty — before any enquiry.
+              Each journey names its meaning before its logistics, its scholars
+              before its schedule, and its honest difficulty before any registration.
+              You are expected to read, prepare, and reflect — not to consume a holiday.
             </p>
-          </ScrollReveal>
+          </PageIntro>
+        </div>
+      </Leaf>
+
+      <Leaf variant="grave">
+        <div className="measure grave-block">
+          <p className="grave-block__qualifier" style={{ color: "var(--paper-dim)" }}>
+            A journey, not a holiday. Register your interest — never a booking without
+            interview. There is no need to decide today. The tradition keeps.
+          </p>
         </div>
       </Leaf>
 
       <Leaf variant="inset">
         <div className="measure-wide">
-          <p className="type-eyebrow" style={{ color: "var(--muted)", marginBottom: "var(--s4)" }}>
-            Journeys
-          </p>
-          {journeys.map((journey) => (
-            <ListingRow key={journey.href} {...journey} />
+          <SectionLabel>Journeys · {journeyCatalogue.length} departures</SectionLabel>
+          {journeyCatalogue.map((j) => (
+            <ListingRow
+              key={j.slug}
+              title={j.name}
+              subtitle={j.description}
+              provenance={`${j.season} · ${j.duration}`}
+              href={j.href}
+            />
           ))}
+        </div>
+      </Leaf>
+
+      <Leaf>
+        <div className="measure-wide">
+          <div className="measure">
+            <SectionLabel>What every journey includes</SectionLabel>
+            <ul className="monograph-list">
+              <li>Named scholars and guides with stated grounding — not anonymous tour leaders.</li>
+              <li>Educational itinerary with sourced seminars — not optional excursions.</li>
+              <li>Pre-retreat reading and preparation timeline — assigned, not suggested.</li>
+              <li>Safety assessment, insurance requirements, and postponement if travel is inadvisable.</li>
+              <li>Honest organisation — lodging, meals, and difficulty named before the fee.</li>
+              <li>Registration by interest and interview — placement is not automatic.</li>
+            </ul>
+          </div>
+        </div>
+      </Leaf>
+
+      <Leaf variant="inset">
+        <div className="measure">
+          <SectionLabel>The three departments</SectionLabel>
+          <p className="type-body" style={{ marginBottom: "var(--s4)" }}>
+            Journeys draw on the Academy for texts and the Apothecary for materia medica
+            studied on route. One institution — knowledge, means, embodiment.
+          </p>
+          <p className="type-body">
+            <GoLink href="/the-academy">The Academy</GoLink>
+          </p>
+          <p className="type-body" style={{ marginTop: "var(--s3)" }}>
+            <GoLink href="/the-apothecary">The Apothecary</GoLink>
+          </p>
         </div>
       </Leaf>
     </>

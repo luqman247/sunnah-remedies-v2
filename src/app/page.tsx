@@ -1,103 +1,159 @@
+import type { Metadata } from "next";
 import { ThresholdHero } from "@/components/threshold/ThresholdHero";
+import { DepartmentGateway } from "@/components/threshold/DepartmentGateway";
 import { Leaf } from "@/components/ui/Leaf";
-import { DepartmentCard } from "@/components/ui/Attestation";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { Specimen } from "@/components/ui/Attestation";
+import { QuietLink } from "@/components/ui/Links";
+import { SectionLabel } from "@/components/ui/PageIntro";
+import { remedies, formatProvenance } from "@/lib/content/remedies";
+import { academyCatalogue } from "@/lib/content/academy";
+import { journeyCatalogue } from "@/lib/content/journeys";
+import { primaryReference } from "@/lib/content/remedies";
+
+export const metadata: Metadata = {
+  title: "The Threshold",
+  description:
+    "The world's leading institute of Prophetic Medicine — scholarship, clinical care, and natural therapeutics under one house.",
+};
 
 export default function ThresholdPage() {
+  const specimen = primaryReference(remedies[0]);
+
   return (
     <>
       <ThresholdHero />
 
       <Leaf>
-        <ScrollReveal>
-          <div className="measure-wide">
-            <p className="type-eyebrow" style={{ color: "var(--muted)", marginBottom: "var(--s4)" }}>
-              The institution
+        <div className="measure-wide">
+          <SectionLabel>The house · Est. MMXXV</SectionLabel>
+          <p className="type-display-l threshold-house__title">
+            One institution — not a shop, a course platform, or a travel agency
+          </p>
+          <div className="measure threshold-house__body">
+            <p className="type-body-l">
+              Sunnah Remedies is the Institute of Prophetic Medicine. We exist
+              to revive, preserve, and advance <em>Tibb al-Nabawī</em> through
+              scholarship that cites its sources, therapeutics traced to their
+              provenance, and journeys that embody what the texts teach.
             </p>
-            <p className="type-body-l measure">
-              Sunnah Remedies exists to revive, preserve and advance the authentic
-              tradition of Prophetic Medicine through scholarship, clinical excellence,
-              education and carefully curated natural therapeutics, serving humanity
-              with integrity, compassion and evidence-informed practice.
+            <p className="type-body">
+              The institution is measured not in revenue but in trust — built on
+              the <em>waqf</em> model to be inherited whole. Nothing is
+              attributed that cannot be traced. We offer means, and never sell a
+              miracle.
             </p>
           </div>
-        </ScrollReveal>
+        </div>
       </Leaf>
 
-      <Leaf variant="inset">
-        <ScrollReveal>
-          <div className="measure-wide">
-            <p className="type-eyebrow" style={{ color: "var(--muted)", marginBottom: "var(--s5)" }}>
-              Three departments · one house
+      {specimen && (
+        <Leaf variant="inset">
+          <div className="measure-wide threshold-specimen">
+            <SectionLabel>How the institution speaks</SectionLabel>
+            <p className="type-body measure" style={{ marginBottom: "var(--s5)" }}>
+              Every claim carries a grade and a source before it enters the
+              institution&apos;s name. This is the apparatus — the same discipline
+              applied in the Academy, the Apothecary, and on every journey.
             </p>
-            <div
-              style={{
-                display: "grid",
-                gap: "var(--s4)",
-                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-              }}
-            >
-              <DepartmentCard
-                numeral="I"
-                name="The Apothecary"
-                role="Provision · Hand"
-                description="Remedies, traced to their source. The ordered cabinet of natural therapeutics, offered with provenance and honest limits."
-                href="/the-apothecary"
-                linkLabel="Enter the Apothecary"
-              />
-              <DepartmentCard
-                numeral="II"
-                name="The Academy"
-                role="Transmission · Mind"
-                description="The tradition, handed on whole. Structured study of Prophetic Medicine, grounded in scholarship and the discipline of isnād."
-                href="/the-academy"
-                linkLabel="Begin in the Academy"
-              />
-              <DepartmentCard
-                numeral="III"
-                name="Sacred Journeys"
-                role="Embodiment · Soul"
-                description="The tradition, lived. A journey, not a holiday — contemplative retreats grounded in practice and honest reality."
-                href="/sacred-journeys"
-                linkLabel="Read on"
-              />
-            </div>
+            <Specimen
+              statement={specimen.statement}
+              transliteration={specimen.transliteration}
+              grade={specimen.grade}
+              source={specimen.source}
+              standing={specimen.standing}
+            />
           </div>
-        </ScrollReveal>
+        </Leaf>
+      )}
+
+      <Leaf>
+        <div className="measure-wide">
+          <SectionLabel>Three departments · one house</SectionLabel>
+          <p className="type-body measure threshold-pathway__intro">
+            The mission moves in one direction: knowledge in the Academy, means in
+            the Apothecary, embodiment on Sacred Journeys. Each department opens
+            here — with a sentence of purpose and a glimpse of what awaits inside.
+          </p>
+
+          <DepartmentGateway
+            numeral="I"
+            name="The Apothecary"
+            role="Provision · Hand"
+            story="The material arm of the institution — a cabinet of simples and preparations, each with a monograph. You are expected to read before you request dispensation."
+            catalogueLabel="From the cabinet"
+            href="/the-apothecary"
+            linkLabel="Enter the Apothecary"
+            entries={remedies.slice(0, 3).map((r) => ({
+              title: r.name,
+              subtitle: `${r.transliteration} · ${r.botanicalName}`,
+              provenance: formatProvenance(r),
+              href: `/the-apothecary/${r.slug}`,
+            }))}
+          />
+
+          <DepartmentGateway
+            numeral="II"
+            name="The Academy"
+            role="Transmission · Mind"
+            story="The reading room of the tradition — programmes named by teacher, chain, and assessment standard before enrolment. Held to scholarship, never the standard of the marketplace."
+            catalogueLabel="Programmes & subjects"
+            href="/the-academy"
+            linkLabel="Begin in the Academy"
+            entries={academyCatalogue.slice(0, 3).map((p) => ({
+              title: p.name,
+              subtitle: p.description,
+              provenance: `${p.tier} · ${p.fee}`,
+              href: p.href,
+            }))}
+          />
+
+          <DepartmentGateway
+            numeral="III"
+            name="Sacred Journeys"
+            role="Embodiment · Soul"
+            story="Educational pilgrimage — meaning before logistics, scholars before schedule, honest difficulty before registration. A journey, not a holiday."
+            catalogueLabel="Considered departures"
+            href="/sacred-journeys"
+            linkLabel="Read on Sacred Journeys"
+            entries={journeyCatalogue.map((j) => ({
+              title: j.name,
+              subtitle: j.description,
+              provenance: `${j.season} · ${j.duration}`,
+              href: j.href,
+            }))}
+          />
+        </div>
       </Leaf>
 
       <Leaf variant="grave">
-        <ScrollReveal>
-          <div className="measure" style={{ textAlign: "center", margin: "0 auto" }}>
-            <p className="type-display-l" style={{ color: "var(--paper)", margin: "0 0 var(--s4)" }}>
-              Knowledge before commerce
-            </p>
-            <p
-              className="type-body-l"
-              style={{ color: "var(--paper-dim)", fontStyle: "italic", margin: 0 }}
-            >
-              We offer a means, and never sell a miracle. Nothing is attributed that
-              cannot be traced. Built to be inherited.
-            </p>
-          </div>
-        </ScrollReveal>
+        <div className="grave-block">
+          <p className="grave-block__line">Knowledge before commerce</p>
+          <p className="grave-block__qualifier">
+            Healing is from Allah; the remedy is a means. We do not trade in fear.
+            Beauty is an obligation. The person precedes the protocol. Built to be
+            inherited.
+          </p>
+        </div>
       </Leaf>
 
-      <Leaf>
-        <ScrollReveal>
-          <div className="measure-wide" style={{ textAlign: "center" }}>
-            <p className="type-eyebrow" style={{ color: "var(--muted)", marginBottom: "var(--s4)" }}>
-              Clinical care
-            </p>
-            <p className="type-body measure" style={{ margin: "0 auto var(--s4)" }}>
+      <Leaf variant="inset">
+        <div className="measure-wide">
+          <SectionLabel>Beyond the three departments</SectionLabel>
+          <div className="measure threshold-beyond">
+            <p className="type-body-l">
               Consultations are a cross-cutting clinical relationship — the patient
-              received as a guest, with limits stated up front.
+              received as a guest, with limits stated up front. The Founding Charter
+              is the constitution, readable by anyone who wishes to know how the
+              institution holds itself.
             </p>
-            <a href="/consultations" className="quiet-link">
-              Request a consultation
-            </a>
+            <p className="type-body">
+              <QuietLink href="/consultations">Request a consultation</QuietLink>
+            </p>
+            <p className="type-body" style={{ marginTop: "var(--s3)" }}>
+              <QuietLink href="/charter">Read the Founding Charter</QuietLink>
+            </p>
           </div>
-        </ScrollReveal>
+        </div>
       </Leaf>
     </>
   );
