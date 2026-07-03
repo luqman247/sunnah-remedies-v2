@@ -7,7 +7,7 @@ const p = getHijamaDiploma();
 
 export const metadata: Metadata = {
   title: "Gallery",
-  description: "Line studies of teaching and clinical spaces.",
+  description: "Photography of teaching, clinical, and scholarly spaces.",
 };
 
 export default function AcademyGalleryPage() {
@@ -15,7 +15,7 @@ export default function AcademyGalleryPage() {
     <AcademySectionPage
       folio="vi"
       title="Gallery"
-      lede="Line studies of institutional spaces, recorded without staging."
+      lede="Institutional spaces recorded without staging — the clinical suite, reading room, and seminar hall."
       currentHref="/the-academy/gallery"
       breadcrumbLabel="Gallery"
     >

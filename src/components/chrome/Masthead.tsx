@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { Seal } from "./Seal";
+import { brandContext, brandAlt } from "@/lib/brand";
 import { departments as siteDepartments } from "@/lib/navigation/site-structure";
 
 const departments = siteDepartments.map((d) => ({
@@ -41,12 +42,15 @@ export function Masthead() {
     <>
       <header className="masthead">
         <div className="masthead__inner measure-wide">
-          <Link href="/" className="masthead__brand">
-            <Seal size="small" linked={false} />
-            <span>
-              <span className="masthead__wordmark">Sunnah Remedies</span>
-              <span className="masthead__arabic type-arabic">الطب النبوي</span>
-            </span>
+          <Link href="/" className="masthead__brand" aria-label={brandAlt}>
+            <Image
+              src={brandContext.navigation}
+              alt={brandAlt}
+              width={180}
+              height={52}
+              priority
+              style={{ height: "clamp(28px, 4vw, 40px)", width: "auto", display: "block" }}
+            />
           </Link>
 
           <nav className="masthead-nav" aria-label="Primary">

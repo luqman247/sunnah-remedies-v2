@@ -7,7 +7,23 @@ import { JourneyGallery } from "@/components/journeys/JourneyGallery";
 import { JourneyRegistrationLedger } from "@/components/journeys/JourneyRegistrationLedger";
 import { RegistrationForm } from "@/components/journeys/RegistrationForm";
 import { Leaf } from "@/components/ui/Leaf";
+import { EditorialPhoto, PullQuote } from "@/components/editorial/Editorial";
 import type { SacredJourney } from "@/lib/content/journeys/types";
+
+const journeyPhotography: Record<string, { src: string; alt: string }> = {
+  umrah: {
+    src: "/photography/architecture-twilight.jpg",
+    alt: "Ancient Islamic architecture at twilight — a stone archway with lanterns casting warm light",
+  },
+  "olive-grove": {
+    src: "/photography/sacred-journeys-hero.jpg",
+    alt: "Pilgrims approaching the Prophet's Mosque in Madinah at dawn",
+  },
+  "desert-way": {
+    src: "/photography/sacred-journeys-hero.jpg",
+    alt: "Pilgrims walking across the marble courtyard toward the green dome at dawn",
+  },
+};
 
 interface JourneyViewProps {
   journey: SacredJourney;
@@ -24,8 +40,20 @@ function ProseList({ items }: { items: string[] }) {
 }
 
 export function JourneyView({ journey }: JourneyViewProps) {
+  const photo = journeyPhotography[journey.slug];
+
   return (
     <>
+      {photo && (
+        <EditorialPhoto
+          src={photo.src}
+          alt={photo.alt}
+          aspect="landscape"
+          fullBleed
+          priority
+        />
+      )}
+
       <Leaf>
         <div className="measure-wide">
           <RunningHead section="Sacred Journeys" folio={journey.folio} />
@@ -132,6 +160,12 @@ export function JourneyView({ journey }: JourneyViewProps) {
               <ProseList items={journey.learning} />
             </section>
 
+            <div className="monograph-section" style={{ marginBottom: "var(--s6)" }}>
+              <PullQuote
+                text="We travel to learn, not to see. The journey is inward before it is outward."
+              />
+            </div>
+
             <section id="sessions" className="monograph-section">
               <SectionLabel>Educational sessions</SectionLabel>
               <h2 className="monograph-section__title">Sessions</h2>
@@ -180,6 +214,12 @@ export function JourneyView({ journey }: JourneyViewProps) {
               <h2 className="monograph-section__title">Scholars and guides on route</h2>
               <ProseList items={journey.guidance} />
             </section>
+
+            <div className="monograph-section" style={{ marginBottom: "var(--s6)" }}>
+              <PullQuote
+                text="Preparation begins weeks before departure. The mind is prepared before the luggage."
+              />
+            </div>
 
             <section id="reflection" className="monograph-section">
               <SectionLabel>Reflection journals</SectionLabel>

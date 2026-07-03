@@ -20,8 +20,28 @@ import {
   PathwaysPanel,
 } from "@/components/apothecary/MonographExtras";
 import { Leaf } from "@/components/ui/Leaf";
+import { EditorialPhoto, PullQuote } from "@/components/editorial/Editorial";
 import type { Remedy, PropheticReference } from "@/lib/content/types";
 import { getRelatedRemedies, primaryReference } from "@/lib/content/remedies";
+
+const remedyPhotography: Record<string, { src: string; alt: string }> = {
+  "black-seed-oil": {
+    src: "/photography/black-seed-editorial.jpg",
+    alt: "A scholar's research desk with botanical journal on Nigella sativa, pressed specimens, and black seeds",
+  },
+  honey: {
+    src: "/photography/honey-editorial.jpg",
+    alt: "Golden honey being poured from a wooden dipper into a glass vessel, beside dried thyme",
+  },
+  "olive-oil": {
+    src: "/photography/olive-oil-editorial.jpg",
+    alt: "Premium olive oil in a glass cruet beside ripe olives and olive leaves on weathered wood",
+  },
+  senna: {
+    src: "/photography/senna-editorial.jpg",
+    alt: "Dried senna pods and leaves arranged on ivory linen beside a ceramic apothecary jar",
+  },
+};
 
 interface RemedyMonographProps {
   remedy: Remedy;
@@ -69,6 +89,16 @@ export function RemedyMonograph({ remedy }: RemedyMonographProps) {
           </div>
         </div>
       </Leaf>
+
+      {remedyPhotography[remedy.slug] && (
+        <EditorialPhoto
+          src={remedyPhotography[remedy.slug].src}
+          alt={remedyPhotography[remedy.slug].alt}
+          aspect="landscape"
+          fullBleed
+          caption={`${remedy.name} — editorial photography`}
+        />
+      )}
 
       <Leaf variant="inset">
         <div className="measure-wide monograph-layout monograph-layout--ledger">
@@ -123,6 +153,12 @@ export function RemedyMonograph({ remedy }: RemedyMonographProps) {
             </MonographSection>
 
             <EvidenceSection evidence={remedy.evidence} />
+
+            <div className="monograph-section" style={{ marginBottom: "var(--s6)" }}>
+              <PullQuote
+                text="Every remedy is documented to source. We state what we know, name what we do not, and dispense means with clear limits."
+              />
+            </div>
 
             <MonographSection id="provenance" title="Origin, cultivation, and harvesting">
               <h3 className="programme-subheading">Origin</h3>

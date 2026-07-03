@@ -1,6 +1,6 @@
 import { CounterProvider } from "@/context/CounterContext";
 import { Masthead } from "@/components/chrome/Masthead";
-import { Footer } from "@/components/chrome/Footer";
+import { PreFooter, Footer } from "@/components/chrome/Footer";
 import {
   Cormorant_Garamond,
   EB_Garamond,
@@ -49,7 +49,12 @@ export const metadata: Metadata = {
   description:
     "An institute of Prophetic Medicine for scholarship, clinical care, and natural therapeutics under one house.",
   icons: {
-    icon: "/brand/favicon.png",
+    icon: [
+      { url: "/brand/favicon.svg", type: "image/svg+xml" },
+      { url: "/brand/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/brand/favicon-16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/brand/icon-app-rounded-180.png",
   },
 };
 
@@ -67,6 +72,7 @@ export default function RootLayout({
         <CounterProvider>
           <Masthead />
           <main>{children}</main>
+          <PreFooter />
           <Footer />
         </CounterProvider>
       </body>

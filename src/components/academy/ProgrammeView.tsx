@@ -7,8 +7,21 @@ import { ProgrammeLedger } from "@/components/academy/ProgrammeLedger";
 import { FacilityGallery } from "@/components/academy/FacilityGallery";
 import { EnrolmentForm } from "@/components/academy/EnrolmentForm";
 import { EnrolmentJourney } from "@/components/academy/EnrolmentJourney";
+import Image from "next/image";
 import { Leaf } from "@/components/ui/Leaf";
+import { EditorialPhoto, PullQuote } from "@/components/editorial/Editorial";
 import type { AcademyProgramme } from "@/lib/content/academy/types";
+
+const facultyPortraits: Record<number, { src: string; alt: string }> = {
+  0: {
+    src: "/photography/faculty-portrait-1.jpg",
+    alt: "Faculty member — senior practitioner and scholar",
+  },
+  1: {
+    src: "/photography/faculty-portrait-2.jpg",
+    alt: "Faculty member — clinical practitioner",
+  },
+};
 
 interface ProgrammeViewProps {
   programme: AcademyProgramme;
@@ -67,13 +80,20 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
         </div>
       </Leaf>
 
+      <EditorialPhoto
+        src="/photography/clinical-practice.jpg"
+        alt="A clinical practitioner preparing sterile cupping equipment in a professional treatment room"
+        aspect="landscape"
+        fullBleed
+        caption="Clinical practice — sterile technique, patient care, and supervised assessment"
+      />
+
       <Leaf variant="grave">
         <div className="measure grave-block">
-          <p className="grave-block__qualifier" style={{ color: "var(--paper-dim)" }}>
-            This is not an abbreviated online course. It is a supervised
-            programme with published assessment criteria and faculty sign-off
-            only after demonstrated competency.
-          </p>
+          <PullQuote
+            text="This is not an abbreviated online course. It is a supervised programme with published assessment criteria and faculty sign-off only after demonstrated competency."
+            dark
+          />
         </div>
       </Leaf>
 
@@ -151,6 +171,12 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
               ))}
             </section>
 
+            <div className="monograph-section" style={{ marginBottom: "var(--s6)" }}>
+              <PullQuote
+                text="The teacher is named before the subject. The chain is stated before the curriculum. Assessment criteria are published before enrolment opens."
+              />
+            </div>
+
             <section id="practical" className="monograph-section">
               <SectionLabel>Practical sessions</SectionLabel>
               <h2 className="monograph-section__title">Supervised practice</h2>
@@ -171,17 +197,33 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
             <section id="faculty" className="monograph-section">
               <SectionLabel>Faculty</SectionLabel>
               <h2 className="monograph-section__title">Faculty</h2>
-              {programme.faculty.map((member) => (
-                <article key={member.name} className="faculty-card">
-                  <h3 className="type-title faculty-card__name">{member.name}</h3>
-                  <p className="type-micro faculty-card__title">{member.title}</p>
-                  <p className="type-small faculty-card__licence">{member.licence}</p>
-                  <p className="type-small faculty-card__chain">{member.chain}</p>
-                  {member.biography.map((para) => (
-                    <p key={para.slice(0, 40)} className="type-body faculty-card__bio">{para}</p>
-                  ))}
-                </article>
-              ))}
+              {programme.faculty.map((member, i) => {
+                const portrait = facultyPortraits[i];
+                return (
+                  <article key={member.name} className="faculty-card">
+                    {portrait && (
+                      <div className="faculty-card__portrait">
+                        <Image
+                          src={portrait.src}
+                          alt={portrait.alt}
+                          width={280}
+                          height={373}
+                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        />
+                      </div>
+                    )}
+                    <div>
+                      <h3 className="type-title faculty-card__name">{member.name}</h3>
+                      <p className="type-micro faculty-card__title">{member.title}</p>
+                      <p className="type-small faculty-card__licence">{member.licence}</p>
+                      <p className="type-small faculty-card__chain">{member.chain}</p>
+                      {member.biography.map((para) => (
+                        <p key={para.slice(0, 40)} className="type-body faculty-card__bio">{para}</p>
+                      ))}
+                    </div>
+                  </article>
+                );
+              })}
             </section>
 
             <section id="facilities" className="monograph-section">

@@ -5,7 +5,7 @@ import { journeys } from "@/lib/content/journeys";
 
 export const metadata: Metadata = {
   title: "Gallery",
-  description: "Line studies of places and paths encountered on programme.",
+  description: "Photography of places, paths, and architecture encountered on programme.",
 };
 
 export default function JourneysGalleryPage() {
@@ -20,13 +20,14 @@ export default function JourneysGalleryPage() {
     <JourneySectionPage
       folio="xvi"
       title="Gallery"
-      lede="Line studies of place, recorded without staging."
+      lede="Places and paths as encountered — recorded without staging."
       currentHref="/sacred-journeys/gallery"
       breadcrumbLabel="Gallery"
       intro={
         <p>
           The institution does not use stock photography or staged promotional
-          imagery. These studies record places and paths as encountered.
+          imagery. These photographs record places and paths as encountered
+          on programme.
         </p>
       }
     >

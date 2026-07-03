@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { Emblem, Wordmark } from "@/components/chrome/Wordmark";
+import Image from "next/image";
+import { brandContext, brandAlt } from "@/lib/brand";
 
 function ThresholdSequence({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -28,11 +29,20 @@ export function ThresholdHero() {
           بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
         </p>
 
-        <div className="threshold__emblem">
-          <Emblem size={128} />
+        <div className="threshold__emblem" style={{ display: "flex", justifyContent: "center" }}>
+          <Image
+            src={brandContext.homepageHero}
+            alt={brandAlt}
+            width={674}
+            height={374}
+            priority
+            style={{
+              width: "clamp(240px, 40vw, 480px)",
+              height: "auto",
+              display: "block",
+            }}
+          />
         </div>
-
-        <Wordmark variant="light" />
 
         <h1 className="type-display-xl threshold__standing">
           The world&apos;s leading institute of Prophetic Medicine
