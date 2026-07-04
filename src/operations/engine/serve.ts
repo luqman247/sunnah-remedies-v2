@@ -46,6 +46,9 @@ import { contactCreatedWorkflow } from "../workflows/commerce/contact-created";
 import { emailBounceWorkflow } from "../workflows/commerce/email-bounce";
 
 import { systemJobFailedWorkflow } from "../workflows/publishing/system-job-failed";
+import { healthCheckCron } from "../workflows/publishing/health-check-cron";
+import { alertEscalationCron } from "../workflows/publishing/alert-escalation-cron";
+import { inventoryCheckCron } from "../workflows/inventory/inventory-check-cron";
 
 export const { GET, POST, PUT } = serve({
   client: inngest,
@@ -79,5 +82,8 @@ export const { GET, POST, PUT } = serve({
     contactCreatedWorkflow,
     emailBounceWorkflow,
     systemJobFailedWorkflow,
+    healthCheckCron,
+    alertEscalationCron,
+    inventoryCheckCron,
   ],
 });
