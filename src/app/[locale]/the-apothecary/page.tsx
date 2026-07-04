@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { Leaf } from "@/components/ui/Leaf";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
 import { PageIntro } from "@/components/ui/PageIntro";
@@ -17,8 +19,14 @@ export const metadata: Metadata = {
     "A dispensary where each remedy carries a monograph: historical context, Prophetic reference, traditional use, stated limits, and provenance.",
 };
 
-export default async function ApothecaryPage() {
-  const products = await getAllProducts();
+export default async function ApothecaryPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const products = await getAllProducts(locale);
   return (
     <>
       <CinematicHero

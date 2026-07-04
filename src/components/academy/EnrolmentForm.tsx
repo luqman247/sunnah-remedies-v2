@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { SolidAction } from "@/components/ui/Links";
 
 interface EnrolmentFormProps {
@@ -8,6 +9,7 @@ interface EnrolmentFormProps {
 }
 
 export function EnrolmentForm({ programmeName }: EnrolmentFormProps) {
+  const t = useTranslations("academy.enrolmentForm");
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -17,19 +19,19 @@ export function EnrolmentForm({ programmeName }: EnrolmentFormProps) {
     const data = new FormData(form);
     const next: Record<string, string> = {};
 
-    if (!data.get("name")) next.name = "Full name is required.";
+    if (!data.get("name")) next.name = t("errors.name");
     const email = data.get("email") as string;
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      next.email = "Enter a valid email address, for example name@example.com.";
+      next.email = t("errors.email");
     }
     if (!data.get("qualification")) {
-      next.qualification = "State your healthcare qualification or prerequisite pathway.";
+      next.qualification = t("errors.qualification");
     }
     if (!data.get("statement")) {
-      next.statement = "Application statement is required (approximately 500 words).";
+      next.statement = t("errors.statement");
     }
     if (!data.get("acknowledge")) {
-      next.acknowledge = "Confirmation is required before submission.";
+      next.acknowledge = t("errors.acknowledge");
     }
 
     if (Object.keys(next).length > 0) {
@@ -44,8 +46,7 @@ export function EnrolmentForm({ programmeName }: EnrolmentFormProps) {
   if (submitted) {
     return (
       <p className="type-body-l" role="status">
-        Your application has been received. Faculty review is completed within
-        fourteen days, and you will be contacted by email
+        {t("successMessage")}
       </p>
     );
   }
@@ -53,26 +54,26 @@ export function EnrolmentForm({ programmeName }: EnrolmentFormProps) {
   return (
     <form onSubmit={handleSubmit} className="form-stack enrolment-form">
       <div className={`form-field ${errors.name ? "form-field--error" : ""}`}>
-        <label htmlFor="enrol-name">Full name</label>
+        <label htmlFor="enrol-name">{t("labelName")}</label>
         <input id="enrol-name" name="name" type="text" autoComplete="name" />
         {errors.name && <span className="form-error" role="alert">{errors.name}</span>}
       </div>
 
       <div className={`form-field ${errors.email ? "form-field--error" : ""}`}>
-        <label htmlFor="enrol-email">Email address</label>
+        <label htmlFor="enrol-email">{t("labelEmail")}</label>
         <input id="enrol-email" name="email" type="email" autoComplete="email" />
         {errors.email && <span className="form-error" role="alert">{errors.email}</span>}
       </div>
 
       <div className={`form-field ${errors.qualification ? "form-field--error" : ""}`}>
-        <label htmlFor="enrol-qualification">Healthcare qualification or prerequisite pathway</label>
+        <label htmlFor="enrol-qualification">{t("labelQualification")}</label>
         <input id="enrol-qualification" name="qualification" type="text" />
         {errors.qualification && <span className="form-error" role="alert">{errors.qualification}</span>}
       </div>
 
       <div className={`form-field ${errors.statement ? "form-field--error" : ""}`}>
         <label htmlFor="enrol-statement">
-          Application statement (prior study, motivation, understanding of limits)
+          {t("labelStatement")}
         </label>
         <textarea id="enrol-statement" name="statement" rows={8} />
         {errors.statement && <span className="form-error" role="alert">{errors.statement}</span>}
@@ -82,20 +83,17 @@ export function EnrolmentForm({ programmeName }: EnrolmentFormProps) {
         <label className="enrolment-form__checkbox">
           <input id="enrol-acknowledge" name="acknowledge" type="checkbox" value="yes" />
           <span className="type-body">
-            I confirm that I have read the entry requirements, assessment
-            standards, and policies for{" "}
-            {programmeName}. I understand that acceptance is not guaranteed
+            {t("acknowledgeText", { programme: programmeName })}
           </span>
         </label>
         {errors.acknowledge && <span className="form-error" role="alert">{errors.acknowledge}</span>}
       </div>
 
       <p className="type-small enrolment-form__note">
-        Submission records your interest. Admission is determined after academic
-        and clinical review
+        {t("note")}
       </p>
 
-      <SolidAction type="submit">Send application</SolidAction>
+      <SolidAction type="submit">{t("submit")}</SolidAction>
     </form>
   );
 }

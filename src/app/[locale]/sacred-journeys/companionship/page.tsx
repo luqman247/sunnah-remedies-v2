@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { PolicyBlocks } from "@/components/journeys/JourneyInstitutionBlocks";
 import { getJourneyBySlug } from "@/sanity/lib/fetch";
@@ -9,8 +11,14 @@ export const metadata: Metadata = {
   description: "Group size, adab, and disciplined travel in company.",
 };
 
-export default async function CompanionshipPage() {
-  await getJourneyBySlug("umrah");
+export default async function CompanionshipPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  await getJourneyBySlug("umrah", locale);
   const companionship = journeyInstitution.companionship;
 
   return (

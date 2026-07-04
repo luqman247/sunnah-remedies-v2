@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { PolicyBlocks } from "@/components/journeys/JourneyInstitutionBlocks";
 import { getJourneyBySlug } from "@/sanity/lib/fetch";
@@ -9,8 +11,14 @@ export const metadata: Metadata = {
   description: "Disclosure, fitness, environmental exposure, and travel deferral criteria.",
 };
 
-export default async function HealthGuidancePage() {
-  await getJourneyBySlug("umrah");
+export default async function HealthGuidancePage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  await getJourneyBySlug("umrah", locale);
   const healthGuidance = journeyInstitution.healthGuidance;
 
   return (

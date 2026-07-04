@@ -15,31 +15,33 @@
   },
   "footer": {
     "tagline": "Institut for Profetisk Medicin",
-    "foundingStatement": "Forskning, klinisk praksis og naturlig terapi under \u00e9t tag",
-    "closing": "Viden f\u00f8r handel. Tjeneste f\u00f8r profit. Tillid f\u00f8r v\u00e6kst",
-    "colophon": "Sunnah Remedies \u00b7 Grundlagt MMXXV \u00b7 Helbredelse er fra Allah \u00b7 midlet er et redskab",
+    "foundingStatement": "Forskning, klinisk praksis og naturlig terapi under ét tag",
+    "closing": "Viden før handel. Tjeneste før profit. Tillid før vækst",
+    "colophon": "Sunnah Remedies · Grundlagt MMXXV · Helbredelse er fra Allah · midlet er et redskab",
     "requestConsultation": "Anmod om en konsultation"
   },
   "common": {
-    "readMore": "L\u00e6s mere",
-    "learnMore": "L\u00e6r mere",
+    "readMore": "Læs mere",
+    "learnMore": "Lær mere",
     "viewAll": "Se alle",
     "backTo": "Tilbage til {page}",
-    "loading": "Indl\u00e6ser",
+    "loading": "Indlæser",
     "error": "Noget gik galt",
     "notFound": "Ikke fundet"
   },
   "notFound": {
-    "heading": "KORRIDOREN FORTS\u00c6TTER IKKE HER",
+    "heading": "KORRIDOREN FORTSÆTTER IKKE HER",
     "subheading": "Denne side er ikke fundet",
-    "body": "Du har muligvis fulgt et link, der er flyttet, eller siden kan v\u00e6re trukket tilbage. Institutionen forts\u00e6tter gennem d\u00f8rene nedenfor",
-    "returnHome": "Tilbage til t\u00e6rsklen",
+    "body": "Du har muligvis fulgt et link, der er flyttet, eller siden kan være trukket tilbage. Institutionen fortsætter gennem dørene nedenfor",
+    "returnHome": "Tilbage til tærsklen",
     "knowledgeLibrary": "Vidensbiblioteket",
     "theApothecary": "Apoteket",
     "theAcademy": "Akademiet"
   },
   "breadcrumbs": {
-    "home": "Hjem"
+    "home": "Hjem",
+    "ariaLabel": "Du er her",
+    "theInstitution": "Institutionen"
   },
   "form": {
     "name": "Navn",
@@ -48,18 +50,18 @@
     "message": "Besked",
     "placeholderEmail": "dig@eksempel.dk",
     "submit": "Send",
-    "sending": "Sender\u2026",
-    "success": "Tak \u2014 vi vender tilbage hurtigst muligt",
-    "error": "Noget gik galt. Pr\u00f8v venligst igen",
+    "sending": "Sender…",
+    "success": "Tak — vi vender tilbage hurtigst muligt",
+    "error": "Noget gik galt. Prøv venligst igen",
     "validation": {
-      "required": "Dette felt er p\u00e5kr\u00e6vet",
+      "required": "Dette felt er påkrævet",
       "email": "Indtast venligst en gyldig e-mailadresse",
-      "minLength": "Skal v\u00e6re mindst {min} tegn"
+      "minLength": "Skal være mindst {min} tegn"
     }
   },
   "search": {
-    "placeholder": "S\u00f8g\u2026",
-    "noResults": "Ingen resultater for \u201c{query}\u201d"
+    "placeholder": "Søg…",
+    "noResults": "Ingen resultater for “{query}”"
   },
   "apothecary": {
     "title": "Apoteket",
@@ -67,9 +69,63 @@
     "monographs": "Monografier",
     "ingredients": "Ingredienser",
     "qualityStandards": "Kvalitetsstandarder",
-    "laboratoryVerification": "Laboratoriebekr\u00e6ftelse",
-    "faqs": "Ofte stillede sp\u00f8rgsm\u00e5l",
-    "counter": "Disken"
+    "laboratoryVerification": "Laboratoriebekræftelse",
+    "faqs": "Ofte stillede spørgsmål",
+    "counter": "Disken",
+    "dispensation": {
+      "title": "Udlevering",
+      "intro": "Dette middel udleveres fra skabet og præsenteres ikke som en detailvare. Beløbet nedenfor dækker forberedelse, emballage og levering, og vises efter monografien så evidensen kan læses først",
+      "measure": "Mål",
+      "fee": "Gebyr",
+      "delivery": "Levering",
+      "unavailable": "Dette middel er i øjeblikket ikke tilgængeligt. Skriv til os for at modtage besked når lageret er genopfyldt",
+      "note": "Der er ingen grund til at beslutte med det samme. Læs den fulde monografi før du anmoder om udlevering"
+    },
+    "monographExtras": {
+      "commonQuestions": "Almindelige spørgsmål",
+      "evidenceLabel": "Evidensinformeret diskussion",
+      "evidenceContext": "Evidenskontekst",
+      "evidenceIntro": "Etableret evidens og nye fund er listet separat. Ingen af delene erstatter profetisk gradering eller traditionel videnskabelig status",
+      "established": "Etableret evidens",
+      "emerging": "Ny forskning",
+      "relatedAcademy": "Relateret akademiundervisning",
+      "knowledgeLibrary": "Vidensbiblioteket",
+      "knowledgeLibraryArticles": "Vidensbiblioteket artikler",
+      "furtherStudy": "Videre studier og praktisk udfoldelse",
+      "crossDepartment": "Tværafdelingsforløb",
+      "theAcademy": "Akademiet",
+      "sacredJourneys": "Hellige Rejser"
+    },
+    "monograph": {
+      "section": "Apoteket",
+      "remedyMonographs": "Middelmonografier",
+      "folioPrefix": "Middelmonografi",
+      "editorialPhotography": "redaktionel fotografering",
+      "institutionalSummary": "Institutionel opsummering",
+      "historicalUse": "Historisk brug",
+      "propheticTradition": "Profetisk tradition",
+      "traditionalScholarship": "Traditionel videnskab",
+      "traditionalUsage": "Traditionel anvendelse",
+      "provenance": "Oprindelse, dyrkning og høst",
+      "origin": "Oprindelse",
+      "cultivation": "Dyrkning",
+      "harvesting": "Høst",
+      "laboratoryVerification": "Laboratoriebekræftelse",
+      "qualityAssurance": "Kvalitetssikring",
+      "storage": "Opbevaring",
+      "preparation": "Forberedelse",
+      "suggestedUse": "Foreslået brug",
+      "suggestedUseIntro": "Tilbudt som et traditionelt diætetisk middel og ikke som behandling af en diagnosticeret medicinsk tilstand",
+      "contraindications": "Kontraindikationer",
+      "photographyGuidance": "Fotografivejledning",
+      "packaging": "Emballage",
+      "shipping": "Forsendelse",
+      "returns": "Returnering",
+      "customerSupport": "Kundesupport",
+      "attributionRevelation": "Allah siger",
+      "attributionHadith": "Profeten ﷺ sagde",
+      "attributionClassical": "Klassiske autoriteter registrerer"
+    }
   },
   "academy": {
     "title": "Akademiet",
@@ -77,8 +133,84 @@
     "faculty": "Fakultet",
     "enrolment": "Indskrivning",
     "testimonials": "Udtalelser",
-    "foundations": "Grundl\u00e6ggende",
-    "clinicalEthics": "Klinisk Etik"
+    "foundations": "Grundlæggende",
+    "clinicalEthics": "Klinisk Etik",
+    "enrolmentForm": {
+      "labelName": "Fulde navn",
+      "labelEmail": "E-mailadresse",
+      "labelQualification": "Sundhedsfaglig kvalifikation eller forudsætningsforløb",
+      "labelStatement": "Ansøgningserklæring (tidligere studier, motivation, forståelse af begrænsninger)",
+      "acknowledgeText": "Jeg bekræfter, at jeg har læst optagelseskravene, vurderingsstandarderne og politikkerne for {programme}. Jeg forstår, at optagelse ikke er garanteret",
+      "note": "Indsendelse registrerer din interesse. Optagelse afgøres efter akademisk og klinisk vurdering",
+      "submit": "Send ansøgning",
+      "successMessage": "Din ansøgning er modtaget. Fakultetets gennemgang er afsluttet inden for fjorten dage, og du vil blive kontaktet via e-mail",
+      "errors": {
+        "name": "Fulde navn er påkrævet",
+        "email": "Indtast en gyldig e-mailadresse, for eksempel navn@eksempel.dk",
+        "qualification": "Angiv din sundhedsfaglige kvalifikation eller forudsætningsforløb",
+        "statement": "Ansøgningserklæring er påkrævet (ca. 500 ord)",
+        "acknowledge": "Bekræftelse er påkrævet før indsendelse"
+      }
+    },
+    "programmeLedger": {
+      "ariaLabel": "Programindskrivningsoversigt",
+      "diploma": "Hijāma Diplom",
+      "sendApplication": "Send ansøgning",
+      "reviewFirst": "Gennemgå programmet først"
+    },
+    "programmeView": {
+      "section": "Akademiet",
+      "professionalFormation": "Professionel dannelse",
+      "metaDuration": "Programvarighed",
+      "metaFormat": "Leveringsformat",
+      "metaFee": "Programgebyr",
+      "metaIntake": "Næste optag",
+      "editorialCaption": "Klinisk praksis — steril teknik, patientpleje og superviseret vurdering",
+      "overviewLabel": "Omfang · Tilsigtet kohorte · Forpligtelser",
+      "overview": "Oversigt",
+      "programmeScope": "Programomfang",
+      "intendedCohort": "Tilsigtet kohorte",
+      "commitments": "Forpligtelser",
+      "outcomesLabel": "Læringsmål",
+      "outcomes": "Resultater",
+      "outcomesIntro": "Vurderede læringsmål offentliggøres før indskrivning og gennemgås inden eksamen",
+      "assessed": "Vurderet",
+      "curriculum": "Pensum",
+      "modules": "moduler",
+      "guidedHours": "vejledte timer",
+      "practicalComponent": "Praktisk komponent",
+      "primarySources": "Primære kilder",
+      "practicalLabel": "Praktiske sessioner",
+      "supervisedPractice": "Superviseret praksis",
+      "hours": "timer",
+      "supervision": "Supervision",
+      "faculty": "Fakultet",
+      "facilities": "Faciliteter",
+      "clinicalStandards": "Kliniske standarder",
+      "assessment": "Vurdering",
+      "clinicalPracticeLabel": "Klinisk praksisstandarder i løbet af semesteret",
+      "certification": "Certificering",
+      "entryRequirements": "Optagelseskrav",
+      "equipmentLabel": "Udstyrsliste",
+      "equipment": "Udstyr",
+      "tableItem": "Genstand",
+      "tableSpecification": "Specifikation",
+      "tableSupplied": "Leveret af",
+      "courseHandbook": "Kurshåndbog",
+      "studentGuide": "Studentervejledning",
+      "gallery": "Galleri",
+      "graduateAttestations": "Kandidatattestationer",
+      "testimonialsNote": "Offentliggjort med eksplicit samtykke. Initialer bruges medmindre fuld tilskrivning anmodes af kandidaten. Erklæringer er attestationsoptegnelser, ikke salgsfremmende tekst",
+      "graduatePathways": "Kandidatforløb",
+      "afterCertification": "Efter certificering",
+      "readPathwayDetails": "Læs forløbsdetaljer",
+      "policies": "Politikker",
+      "relatedProgrammes": "Relaterede programmer",
+      "application": "Ansøgning",
+      "enrolment": "Indskrivning",
+      "enrolmentIntro": "Gennemgå det fulde program før indsendelse. Hver ansøgning vurderes på akademisk parathed og klinisk egnethed",
+      "sendApplication": "Send ansøgning"
+    }
   },
   "journeys": {
     "title": "Hellige Rejser",
@@ -86,7 +218,76 @@
     "registration": "Registrering",
     "gallery": "Galleri",
     "itineraries": "Rejseplaner",
-    "faqs": "Ofte stillede sp\u00f8rgsm\u00e5l"
+    "faqs": "Ofte stillede spørgsmål",
+    "view": {
+      "section": "Hellige Rejser",
+      "guidedJourney": "Guidet uddannelsesrejse",
+      "metaSeason": "Rejsesæson",
+      "metaDuration": "Rejsevarighed",
+      "metaLocation": "Primær lokation",
+      "metaGroupSize": "Gruppestørrelse",
+      "metaFee": "Rejsegebyr",
+      "metaDeparture": "Næste afrejsevindue",
+      "meaningLabel": "Formål · Tilsigtede deltagere · Forpligtelser",
+      "meaning": "Betydning",
+      "intendedParticipants": "Tilsigtede deltagere",
+      "commitments": "Forpligtelser",
+      "preparation": "Forberedelse",
+      "viewPreparation": "Se forberedelsestidslinje",
+      "readingList": "Læseliste",
+      "reading": "Læsning",
+      "packingGuide": "Pakkevejledning",
+      "packing": "Pakning",
+      "flightGuidance": "Flyvejledning",
+      "flightPlanning": "Flyplanlægning og koordinering",
+      "accommodationLabel": "Indkvarteringsfilosofi",
+      "accommodation": "Indkvartering",
+      "learning": "Læring",
+      "educationalSessions": "Uddannelsessessioner",
+      "sessions": "Sessioner",
+      "dailyItinerary": "Daglig rejseplan",
+      "itinerary": "Rejseplan",
+      "focus": "Fokus",
+      "companionship": "Ledsagelse",
+      "guidance": "Vejledning",
+      "scholarsOnRoute": "Lærde og guider på ruten",
+      "reflectionJournals": "Refleksionsjournaler",
+      "reflection": "Refleksion",
+      "journalPractice": "Journalpraksis",
+      "healthGuidance": "Sundhedsvejledning",
+      "health": "Sundhed",
+      "safety": "Sikkerhed",
+      "organisation": "Organisation",
+      "scholarsAndGuides": "Lærde og guider",
+      "gallery": "Galleri",
+      "policies": "Politikker",
+      "relatedLearning": "Relateret læring",
+      "registration": "Registrering",
+      "registerInterest": "Tilmeld din interesse",
+      "registrationIntro": "Dette er ikke en booking. Hver registrering gennemgås gennem læsning, samtale og egnethedsundersøgelse hvor det er relevant, før placering bekræftes.",
+      "reviewRegistration": "Gennemgå registreringsforløb"
+    },
+    "registrationForm": {
+      "labelName": "Fulde navn",
+      "labelEmail": "E-mailadresse",
+      "labelProgramme": "Program",
+      "selectJourney": "Vælg en rejse",
+      "undecided": "Uafklaret - korrespondance velkommen",
+      "labelExperience": "Tidligere studier og relevant erfaring (grundlag, rejser, retreats)",
+      "labelHealth": "Sundhedsoplysninger relevante for guider (valgfrit)",
+      "acknowledgeText": "Jeg bekræfter, at jeg har læst den fulde rejseside for {programme}, herunder sikkerhedsvejledning, logistik, pakning og politikker",
+      "note": "Tilmeld din interesse; dette er ikke en bookingbekræftelse. Placering tilbydes efter gennemgang og samtale",
+      "submit": "Tilmeld din interesse",
+      "successMessage": "Din interesse er registreret. Institutionen kontakter dig inden for fjorten dage vedrørende læsegennemgang og samtale",
+      "yourSelectedJourney": "din valgte rejse",
+      "errors": {
+        "name": "Fulde navn er påkrævet",
+        "email": "Indtast en gyldig e-mailadresse, for eksempel navn@eksempel.dk",
+        "programme": "Vælg en rejse, eller vælg uafklaret",
+        "experience": "Beskriv dine tidligere studier og relevante rejseerfaringer",
+        "acknowledge": "Bekræftelse er påkrævet før indsendelse"
+      }
+    }
   },
   "knowledge": {
     "title": "Vidensbiblioteket",
@@ -100,23 +301,89 @@
   "booking": {
     "firstName": "Fornavn",
     "lastName": "Efternavn",
-    "dateOfBirth": "F\u00f8dselsdato",
-    "selectDate": "V\u00e6lg en dato",
-    "selectTime": "V\u00e6lg et tidspunkt",
-    "confirm": "Bekr\u00e6ft booking",
-    "success": "Din konsultation er booket",
+    "dateOfBirth": "Fødselsdato",
+    "selectDate": "Vælg en dato",
+    "selectTime": "Vælg et tidspunkt",
+    "confirm": "Bekræft booking",
     "returning": "Tilbagevendende patient",
-    "new": "Ny patient"
+    "new": "Ny patient",
+    "hero": {
+      "title": "Book din Hijama-session",
+      "subtitle": "Oplev profetisk medicin i et roligt, professionelt miljø. Vælg din behandler, foretrukne klinik og aftaletidspunkt",
+      "badgeQualified": "Kvalificerede behandlere",
+      "badgeSeparate": "Separate mande- og kvindeklinikker",
+      "badgeSunnah": "Sunnah-baseret pleje"
+    },
+    "success": {
+      "title": "Tak",
+      "message": "Din bookingforespørgsel er modtaget. Vi bekræfter din aftale snarest via e-mail",
+      "reference": "Reference: {id}",
+      "returnHome": "Tilbage til forsiden",
+      "bookAnother": "Book en ny session"
+    },
+    "patientForm": {
+      "stepLabel": "Trin 5",
+      "title": "Patientoplysninger",
+      "firstName": "Fornavn",
+      "surname": "Efternavn",
+      "email": "E-mail",
+      "telephone": "Telefon",
+      "reason": "Årsag til aftale",
+      "medicalConditions": "Eventuelle medicinske tilstande?",
+      "optional": "valgfrit",
+      "consentText": "Jeg forstår, at Hijama muligvis ikke er egnet for alle, og accepterer konsultationsprocessen"
+    }
   },
   "seasonal": {
-    "greeting": "S\u00e6sonhilsen"
+    "greeting": "Sæsonhilsen"
   },
   "draft": {
     "active": "Kladdevisning aktiv",
     "exit": "Afslut visning"
   },
   "metadata": {
-    "defaultTitle": "Sunnah Remedies \u2014 Institut for Profetisk Medicin",
-    "defaultDescription": "Verdens f\u00f8rende institut for Profetisk Medicin \u2014 forskning, klinisk behandling og naturlig terapi under \u00e9t tag"
+    "defaultTitle": "Sunnah Remedies — Institut for Profetisk Medicin",
+    "defaultDescription": "Verdens førende institut for Profetisk Medicin — forskning, klinisk behandling og naturlig terapi under ét tag"
+  },
+  "arrival": {
+    "enter": "Gå ind",
+    "authorityStamp": "AUTORITET",
+    "authorityHeading": "Autoritet",
+    "figurePending": "tal afventer"
+  },
+  "plate": {
+    "toBeCommissioned": "SKAL BESTILLES",
+    "purpose": "Formål",
+    "composition": "Komposition",
+    "lens": "Objektiv",
+    "light": "Lys",
+    "grade": "Karakter",
+    "mood": "Stemning",
+    "interim": "Midlertidig"
+  },
+  "threshold": {
+    "standing": "Verdens førende institut for Profetisk Medicin",
+    "declaration": "Et hus for forskning, klinisk praksis og naturlig terapi på tværs af fire afdelinger. Bygget til omhyggelig forskning, patientservice og langsigtet forvaltning",
+    "visitAcademy": "Besøg Akademiet",
+    "visitApothecary": "Besøg Apoteket",
+    "visitJourneys": "Besøg Hellige Rejser",
+    "visitLibrary": "Besøg Vidensbiblioteket",
+    "departmentNav": "Afdelingsnavigation"
+  },
+  "hospitable": {
+    "heading": "Huset forbereder sig",
+    "message": "Denne sektion gøres klar — den åbner, når den er den besøgende værdig"
+  },
+  "wayForward": {
+    "ariaLabel": "Fortsæt læsningen",
+    "returnTo": "Tilbage til",
+    "continueTo": "Fortsæt til"
+  },
+  "readingMode": {
+    "standard": "Dag",
+    "focused": "Fokus",
+    "evening": "Aften",
+    "ariaLabel": "Læsetilstand",
+    "legend": "Vælg læsetilstand"
   }
 }

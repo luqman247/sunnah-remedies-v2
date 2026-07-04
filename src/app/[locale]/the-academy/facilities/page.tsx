@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { AcademySectionPage } from "@/components/academy/AcademySectionPage";
 import { FacilityGallery } from "@/components/academy/FacilityGallery";
 import { getHijamaDiploma } from "@/lib/content/academy";
@@ -10,8 +12,14 @@ export const metadata: Metadata = {
   description: "Clinical suite, reading room, and seminar teaching spaces.",
 };
 
-export default async function FacilitiesPage() {
-  const programme = await getProgrammeBySlug("hijama-diploma");
+export default async function FacilitiesPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const programme = await getProgrammeBySlug("hijama-diploma", locale);
   const p = programme ? programmeToAcademyProgramme(programme) : getHijamaDiploma();
   return (
     <AcademySectionPage

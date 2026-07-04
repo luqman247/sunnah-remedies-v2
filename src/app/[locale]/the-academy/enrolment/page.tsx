@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { AcademySectionPage } from "@/components/academy/AcademySectionPage";
 import { EnrolmentForm } from "@/components/academy/EnrolmentForm";
 import { EnrolmentJourney } from "@/components/academy/EnrolmentJourney";
@@ -11,8 +13,14 @@ export const metadata: Metadata = {
   description: "Application journey and form for the Hijāma Diploma.",
 };
 
-export default async function EnrolmentPage() {
-  const programme = await getProgrammeBySlug("hijama-diploma");
+export default async function EnrolmentPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const programme = await getProgrammeBySlug("hijama-diploma", locale);
   const p = programme ? programmeToAcademyProgramme(programme) : getHijamaDiploma();
   return (
     <AcademySectionPage

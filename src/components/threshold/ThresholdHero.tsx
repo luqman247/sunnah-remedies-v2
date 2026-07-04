@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { brandContext, brandAlt } from "@/lib/brand";
 
 function ThresholdSequence({ children }: { children: React.ReactNode }) {
@@ -22,6 +23,8 @@ function ThresholdSequence({ children }: { children: React.ReactNode }) {
 }
 
 export function ThresholdHero() {
+  const t = useTranslations("threshold");
+
   return (
     <section className="leaf leaf--grave threshold">
       <ThresholdSequence>
@@ -45,27 +48,25 @@ export function ThresholdHero() {
         </div>
 
         <h1 className="type-display-xl threshold__standing">
-          The world&apos;s leading institute of Prophetic Medicine
+          {t("standing")}
         </h1>
 
         <p className="type-lede threshold__declaration">
-          A house for scholarship, clinical practice, and natural therapeutics
-          across four departments. Built for careful study, patient service, and
-          long stewardship
+          {t("declaration")}
         </p>
 
-        <nav className="threshold__nav" aria-label="Department navigation">
+        <nav className="threshold__nav" aria-label={t("departmentNav")}>
           <Link href="/the-academy" className="quiet-link quiet-link--dark">
-            Visit the Academy
+            {t("visitAcademy")}
           </Link>
           <Link href="/the-apothecary" className="quiet-link quiet-link--dark">
-            Visit the Apothecary
+            {t("visitApothecary")}
           </Link>
           <Link href="/sacred-journeys" className="quiet-link quiet-link--dark">
-            Visit Sacred Journeys
+            {t("visitJourneys")}
           </Link>
           <Link href="/knowledge-library" className="quiet-link quiet-link--dark">
-            Visit the Knowledge Library
+            {t("visitLibrary")}
           </Link>
         </nav>
       </ThresholdSequence>

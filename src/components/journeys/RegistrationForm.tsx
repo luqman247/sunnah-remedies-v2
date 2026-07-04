@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { SolidAction } from "@/components/ui/Links";
 import { journeyCatalogue } from "@/lib/content/journeys";
 
@@ -9,30 +10,30 @@ interface RegistrationFormProps {
 }
 
 export function RegistrationForm({ journeyName }: RegistrationFormProps) {
+  const t = useTranslations("journeys.registrationForm");
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const programmeLabel = journeyName ?? "your selected journey";
+  const programmeLabel = journeyName ?? t("yourSelectedJourney");
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const next: Record<string, string> = {};
 
-    if (!data.get("name")) next.name = "Full name is required.";
+    if (!data.get("name")) next.name = t("errors.name");
     const email = data.get("email") as string;
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      next.email = "Enter a valid email address, for example name@example.com.";
+      next.email = t("errors.email");
     }
     if (!journeyName && !data.get("programme")) {
-      next.programme = "Select a journey, or choose undecided.";
+      next.programme = t("errors.programme");
     }
     if (!data.get("experience")) {
-      next.experience = "Describe your prior study and relevant travel experience.";
+      next.experience = t("errors.experience");
     }
     if (!data.get("acknowledge")) {
-      next.acknowledge =
-        "Confirmation is required before submission.";
+      next.acknowledge = t("errors.acknowledge");
     }
 
     if (Object.keys(next).length > 0) {
@@ -47,8 +48,7 @@ export function RegistrationForm({ journeyName }: RegistrationFormProps) {
   if (submitted) {
     return (
       <p className="type-body-l" role="status">
-        Your interest has been registered. The institution will contact you
-        within fourteen days regarding reading review and interview
+        {t("successMessage")}
       </p>
     );
   }
@@ -56,25 +56,25 @@ export function RegistrationForm({ journeyName }: RegistrationFormProps) {
   return (
     <form onSubmit={handleSubmit} className="form-stack enrolment-form">
       <div className={`form-field ${errors.name ? "form-field--error" : ""}`}>
-        <label htmlFor="reg-name">Full name</label>
+        <label htmlFor="reg-name">{t("labelName")}</label>
         <input id="reg-name" name="name" type="text" autoComplete="name" />
         {errors.name && <span className="form-error" role="alert">{errors.name}</span>}
       </div>
 
       <div className={`form-field ${errors.email ? "form-field--error" : ""}`}>
-        <label htmlFor="reg-email">Email address</label>
+        <label htmlFor="reg-email">{t("labelEmail")}</label>
         <input id="reg-email" name="email" type="email" autoComplete="email" />
         {errors.email && <span className="form-error" role="alert">{errors.email}</span>}
       </div>
 
       {!journeyName && (
         <div className={`form-field ${errors.programme ? "form-field--error" : ""}`}>
-          <label htmlFor="reg-programme">Programme</label>
+          <label htmlFor="reg-programme">{t("labelProgramme")}</label>
           <select id="reg-programme" name="programme" defaultValue="">
             <option value="" disabled>
-              Select a journey
+              {t("selectJourney")}
             </option>
-            <option value="undecided">Undecided - correspondence welcome</option>
+            <option value="undecided">{t("undecided")}</option>
             {journeyCatalogue.map((j) => (
               <option key={j.slug} value={j.slug}>
                 {j.name}
@@ -91,7 +91,7 @@ export function RegistrationForm({ journeyName }: RegistrationFormProps) {
 
       <div className={`form-field ${errors.experience ? "form-field--error" : ""}`}>
         <label htmlFor="reg-experience">
-          Prior study and relevant experience (foundations, travel, retreats)
+          {t("labelExperience")}
         </label>
         <textarea id="reg-experience" name="experience" rows={6} />
         {errors.experience && (
@@ -100,7 +100,7 @@ export function RegistrationForm({ journeyName }: RegistrationFormProps) {
       </div>
 
       <div className="form-field">
-        <label htmlFor="reg-health">Health information relevant to guides (optional)</label>
+        <label htmlFor="reg-health">{t("labelHealth")}</label>
         <textarea id="reg-health" name="health" rows={3} />
       </div>
 
@@ -108,8 +108,7 @@ export function RegistrationForm({ journeyName }: RegistrationFormProps) {
         <label className="enrolment-form__checkbox">
           <input id="reg-acknowledge" name="acknowledge" type="checkbox" value="yes" />
           <span className="type-body">
-            I confirm that I have read the full journey page for {programmeLabel},
-            including safety guidance, logistics, packing, and policies
+            {t("acknowledgeText", { programme: programmeLabel })}
           </span>
         </label>
         {errors.acknowledge && (
@@ -118,11 +117,10 @@ export function RegistrationForm({ journeyName }: RegistrationFormProps) {
       </div>
 
       <p className="type-small enrolment-form__note">
-        Register your interest; this is not a booking confirmation. Placement
-        is offered after review and interview
+        {t("note")}
       </p>
 
-      <SolidAction type="submit">Register your interest</SolidAction>
+      <SolidAction type="submit">{t("submit")}</SolidAction>
     </form>
   );
 }

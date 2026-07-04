@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { PackingCategories } from "@/components/journeys/JourneyInstitutionBlocks";
 import { getJourneyBySlug } from "@/sanity/lib/fetch";
@@ -9,8 +11,14 @@ export const metadata: Metadata = {
   description: "Programme packing guidance covering climate, adab, and institutional provisions.",
 };
 
-export default async function PackingPage() {
-  await getJourneyBySlug("umrah");
+export default async function PackingPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  await getJourneyBySlug("umrah", locale);
   const categories = journeyInstitution.packingGuide;
 
   return (

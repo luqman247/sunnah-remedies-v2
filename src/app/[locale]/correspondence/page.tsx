@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { Leaf } from "@/components/ui/Leaf";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { QuietLink } from "@/components/ui/Links";
@@ -8,8 +10,14 @@ export const metadata: Metadata = {
   title: "Correspondence",
 };
 
-export default async function CorrespondencePage() {
-  const institution = await getInstitutionSettings();
+export default async function CorrespondencePage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const institution = await getInstitutionSettings(locale);
   const contactEmail = institution.contactEmail || "correspondence@sunnahremedies.org";
 
   return (

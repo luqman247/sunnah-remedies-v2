@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { SessionCards } from "@/components/journeys/JourneyInstitutionBlocks";
 import { getJourneyBySlug } from "@/sanity/lib/fetch";
@@ -9,8 +11,14 @@ export const metadata: Metadata = {
   description: "Seminars, field study, and circles delivered to a published structure.",
 };
 
-export default async function EducationalSessionsPage() {
-  const journey = await getJourneyBySlug("umrah");
+export default async function EducationalSessionsPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const journey = await getJourneyBySlug("umrah", locale);
   const sessions = journey?.educationalSessions?.length
     ? (journey.educationalSessions as { title: string; format: string; description: string }[])
     : journeyInstitution.educationalSessions;

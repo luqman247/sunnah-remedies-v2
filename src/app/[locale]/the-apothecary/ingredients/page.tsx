@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { ListingRow } from "@/components/ui/Attestation";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
@@ -10,7 +12,13 @@ export const metadata: Metadata = {
   description: "Simples and preparations with botanical identity and traditional standing.",
 };
 
-export default async function IngredientsPage() {
+export default async function IngredientsPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const staticIngredients = ingredients;
   const intro = ingredientLibraryIntro;
   return (

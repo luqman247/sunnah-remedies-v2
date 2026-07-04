@@ -1,14 +1,17 @@
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import type { FaqItem, ReadingItem, PathwayLink, RemedyEvidence } from "@/lib/content/types";
 import { SectionLabel } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
 
-export function FaqSection({ items }: { items: FaqItem[] }) {
+export async function FaqSection({ items }: { items: FaqItem[] }) {
+  const t = await getTranslations("apothecary.monographExtras");
+
   return (
     <section id="frequently-asked" className="monograph-section" aria-labelledby="faq-heading">
-      <SectionLabel>Common questions</SectionLabel>
+      <SectionLabel>{t("commonQuestions")}</SectionLabel>
       <h2 id="faq-heading" className="sr-only">
-        Common questions
+        {t("commonQuestions")}
       </h2>
       <dl className="faq-list">
         {items.map((item) => (
@@ -22,21 +25,22 @@ export function FaqSection({ items }: { items: FaqItem[] }) {
   );
 }
 
-export function EvidenceSection({ evidence }: { evidence: RemedyEvidence }) {
+export async function EvidenceSection({ evidence }: { evidence: RemedyEvidence }) {
+  const t = await getTranslations("apothecary.monographExtras");
+
   return (
     <section id="evidence-informed" className="monograph-section" aria-labelledby="evidence-heading">
-      <SectionLabel>Evidence-informed discussion</SectionLabel>
+      <SectionLabel>{t("evidenceLabel")}</SectionLabel>
       <h2 id="evidence-heading" className="monograph-section__title">
-        Evidence context
+        {t("evidenceContext")}
       </h2>
       <p className="type-body evidence-section__intro">
-        Established evidence and emerging findings are listed separately. Neither
-        replaces Prophetic grading or traditional scholarly standing
+        {t("evidenceIntro")}
       </p>
 
       {evidence.established.length > 0 && (
         <div className="evidence-block evidence-block--established">
-          <h3 className="type-micro evidence-block__label">Established evidence</h3>
+          <h3 className="type-micro evidence-block__label">{t("established")}</h3>
           <ul className="monograph-list">
             {evidence.established.map((item) => (
               <li key={item.slice(0, 48)}>{item}</li>
@@ -47,7 +51,7 @@ export function EvidenceSection({ evidence }: { evidence: RemedyEvidence }) {
 
       {evidence.emerging.length > 0 && (
         <div className="evidence-block evidence-block--emerging">
-          <h3 className="type-micro evidence-block__label">Emerging research</h3>
+          <h3 className="type-micro evidence-block__label">{t("emerging")}</h3>
           <ul className="monograph-list">
             {evidence.emerging.map((item) => (
               <li key={item.slice(0, 48)}>{item}</li>
@@ -59,14 +63,16 @@ export function EvidenceSection({ evidence }: { evidence: RemedyEvidence }) {
   );
 }
 
-export function AcademyLessons({ items }: { items: ReadingItem[] }) {
+export async function AcademyLessons({ items }: { items: ReadingItem[] }) {
   if (items.length === 0) return null;
+
+  const t = await getTranslations("apothecary.monographExtras");
 
   return (
     <section id="academy-lessons" className="monograph-section" aria-labelledby="academy-heading">
-      <SectionLabel>Related Academy teaching</SectionLabel>
+      <SectionLabel>{t("relatedAcademy")}</SectionLabel>
       <h2 id="academy-heading" className="sr-only">
-        Related Academy teaching
+        {t("relatedAcademy")}
       </h2>
       <ul className="reading-list">
         {items.map((item) => (
@@ -83,14 +89,16 @@ export function AcademyLessons({ items }: { items: ReadingItem[] }) {
   );
 }
 
-export function KnowledgeLibraryLinks({ items }: { items: ReadingItem[] }) {
+export async function KnowledgeLibraryLinks({ items }: { items: ReadingItem[] }) {
   if (items.length === 0) return null;
+
+  const t = await getTranslations("apothecary.monographExtras");
 
   return (
     <section id="knowledge-library" className="monograph-section" aria-labelledby="library-heading">
-      <SectionLabel>Knowledge Library</SectionLabel>
+      <SectionLabel>{t("knowledgeLibrary")}</SectionLabel>
       <h2 id="library-heading" className="sr-only">
-        Knowledge Library articles
+        {t("knowledgeLibraryArticles")}
       </h2>
       <ul className="reading-list">
         {items.map((item) => (
@@ -107,8 +115,10 @@ export function KnowledgeLibraryLinks({ items }: { items: ReadingItem[] }) {
   );
 }
 
-export function PathwaysPanel({ pathways }: { pathways: PathwayLink[] }) {
+export async function PathwaysPanel({ pathways }: { pathways: PathwayLink[] }) {
   if (pathways.length === 0) return null;
+
+  const t = await getTranslations("apothecary.monographExtras");
 
   const academy = pathways.filter((p) => p.department === "Academy");
   const journeys = pathways.filter((p) => p.department === "Sacred Journeys");
@@ -116,14 +126,14 @@ export function PathwaysPanel({ pathways }: { pathways: PathwayLink[] }) {
 
   return (
     <section id="pathways" className="monograph-section" aria-labelledby="pathways-heading">
-      <SectionLabel>Further study and embodied practice</SectionLabel>
+      <SectionLabel>{t("furtherStudy")}</SectionLabel>
       <h2 id="pathways-heading" className="sr-only">
-        Cross-department pathways
+        {t("crossDepartment")}
       </h2>
 
       {academy.length > 0 && (
         <div className="pathway-group">
-          <p className="type-micro pathway-group__label">The Academy</p>
+          <p className="type-micro pathway-group__label">{t("theAcademy")}</p>
           <ul className="pathway-group__list">
             {academy.map((p) => (
               <li key={p.href}>
@@ -136,7 +146,7 @@ export function PathwaysPanel({ pathways }: { pathways: PathwayLink[] }) {
 
       {library.length > 0 && (
         <div className="pathway-group">
-          <p className="type-micro pathway-group__label">Knowledge Library</p>
+          <p className="type-micro pathway-group__label">{t("knowledgeLibrary")}</p>
           <ul className="pathway-group__list">
             {library.map((p) => (
               <li key={p.href}>
@@ -149,7 +159,7 @@ export function PathwaysPanel({ pathways }: { pathways: PathwayLink[] }) {
 
       {journeys.length > 0 && (
         <div className="pathway-group">
-          <p className="type-micro pathway-group__label">Sacred Journeys</p>
+          <p className="type-micro pathway-group__label">{t("sacredJourneys")}</p>
           <ul className="pathway-group__list">
             {journeys.map((p) => (
               <li key={p.href}>

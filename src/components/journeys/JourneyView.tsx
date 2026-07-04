@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { RunningHead, GoLink } from "@/components/ui/Links";
 import { SectionLabel } from "@/components/ui/PageIntro";
 import { FaqSection } from "@/components/apothecary/MonographExtras";
@@ -39,7 +40,8 @@ function ProseList({ items }: { items: string[] }) {
   );
 }
 
-export function JourneyView({ journey }: JourneyViewProps) {
+export async function JourneyView({ journey }: JourneyViewProps) {
+  const t = await getTranslations("journeys.view");
   const photo = journeyPhotography[journey.slug];
 
   return (
@@ -56,40 +58,40 @@ export function JourneyView({ journey }: JourneyViewProps) {
 
       <Leaf>
         <div className="measure-wide">
-          <RunningHead section="Sacred Journeys" folio={journey.folio} />
+          <RunningHead section={t("section")} folio={journey.folio} />
           <Breadcrumb
             items={[
-              { label: "Sacred Journeys", href: "/sacred-journeys" },
+              { label: t("section"), href: "/sacred-journeys" },
               { label: journey.name },
             ]}
           />
           <header className="programme-header">
-            <p className="type-micro programme-header__tier">Guided educational journey</p>
+            <p className="type-micro programme-header__tier">{t("guidedJourney")}</p>
             <h1 className="page-intro__title">{journey.name}</h1>
             <p className="page-intro__lede">{journey.subtitle}</p>
             <dl className="programme-header__meta">
               <div>
-                <dt className="type-micro">Travel season</dt>
+                <dt className="type-micro">{t("metaSeason")}</dt>
                 <dd className="type-body">{journey.season}</dd>
               </div>
               <div>
-                <dt className="type-micro">Journey duration</dt>
+                <dt className="type-micro">{t("metaDuration")}</dt>
                 <dd className="type-body">{journey.duration}</dd>
               </div>
               <div>
-                <dt className="type-micro">Primary location</dt>
+                <dt className="type-micro">{t("metaLocation")}</dt>
                 <dd className="type-body">{journey.location}</dd>
               </div>
               <div>
-                <dt className="type-micro">Group size</dt>
+                <dt className="type-micro">{t("metaGroupSize")}</dt>
                 <dd className="type-body">{journey.groupSize}</dd>
               </div>
               <div>
-                <dt className="type-micro">Journey fee</dt>
+                <dt className="type-micro">{t("metaFee")}</dt>
                 <dd className="type-body">{journey.fee}</dd>
               </div>
               <div>
-                <dt className="type-micro">Next departure window</dt>
+                <dt className="type-micro">{t("metaDeparture")}</dt>
                 <dd className="type-body">{journey.nextDeparture}</dd>
               </div>
             </dl>
@@ -105,27 +107,27 @@ export function JourneyView({ journey }: JourneyViewProps) {
 
           <article className="monograph-layout__reading measure">
             <section id="meaning" className="monograph-section">
-              <SectionLabel>Purpose · Intended participants · Commitments</SectionLabel>
-              <h2 className="monograph-section__title">Meaning</h2>
+              <SectionLabel>{t("meaningLabel")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("meaning")}</h2>
               <ProseList items={journey.meaning} />
-              <h3 className="programme-subheading">Intended participants</h3>
+              <h3 className="programme-subheading">{t("intendedParticipants")}</h3>
               <ProseList items={journey.forWhom} />
-              <h3 className="programme-subheading">Commitments</h3>
+              <h3 className="programme-subheading">{t("commitments")}</h3>
               <ProseList items={journey.whatItAsks} />
             </section>
 
             <section id="preparation" className="monograph-section">
-              <SectionLabel>Preparation</SectionLabel>
-              <h2 className="monograph-section__title">Preparation</h2>
+              <SectionLabel>{t("preparation")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("preparation")}</h2>
               <ProseList items={journey.preparation} />
               <p className="type-small" style={{ marginTop: "var(--s4)" }}>
-                <GoLink href="/sacred-journeys/preparation">View preparation timeline</GoLink>
+                <GoLink href="/sacred-journeys/preparation">{t("viewPreparation")}</GoLink>
               </p>
             </section>
 
             <section id="reading" className="monograph-section">
-              <SectionLabel>Reading list</SectionLabel>
-              <h2 className="monograph-section__title">Reading</h2>
+              <SectionLabel>{t("readingList")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("reading")}</h2>
               <ul className="reading-list">
                 {journey.reading.map((r) => (
                   <li key={r.title} className="reading-list__item">
@@ -137,26 +139,26 @@ export function JourneyView({ journey }: JourneyViewProps) {
             </section>
 
             <section id="packing" className="monograph-section">
-              <SectionLabel>Packing guide</SectionLabel>
-              <h2 className="monograph-section__title">Packing</h2>
+              <SectionLabel>{t("packingGuide")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("packing")}</h2>
               <ProseList items={journey.packing} />
             </section>
 
             <section id="flights" className="monograph-section">
-              <SectionLabel>Flight guidance</SectionLabel>
-              <h2 className="monograph-section__title">Flight planning and coordination</h2>
+              <SectionLabel>{t("flightGuidance")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("flightPlanning")}</h2>
               <ProseList items={journey.flightGuidance} />
             </section>
 
             <section id="accommodation" className="monograph-section">
-              <SectionLabel>Accommodation philosophy</SectionLabel>
-              <h2 className="monograph-section__title">Accommodation</h2>
+              <SectionLabel>{t("accommodationLabel")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("accommodation")}</h2>
               <ProseList items={journey.accommodationPhilosophy} />
             </section>
 
             <section id="learning" className="monograph-section">
-              <SectionLabel>Learning</SectionLabel>
-              <h2 className="monograph-section__title">Learning</h2>
+              <SectionLabel>{t("learning")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("learning")}</h2>
               <ProseList items={journey.learning} />
             </section>
 
@@ -167,8 +169,8 @@ export function JourneyView({ journey }: JourneyViewProps) {
             </div>
 
             <section id="sessions" className="monograph-section">
-              <SectionLabel>Educational sessions</SectionLabel>
-              <h2 className="monograph-section__title">Sessions</h2>
+              <SectionLabel>{t("educationalSessions")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("sessions")}</h2>
               {journey.educationalSessions.map((session) => (
                 <article key={session.title} className="curriculum-module">
                   <header className="curriculum-module__header">
@@ -183,15 +185,15 @@ export function JourneyView({ journey }: JourneyViewProps) {
             </section>
 
             <section id="itinerary" className="monograph-section">
-              <SectionLabel>Daily itinerary</SectionLabel>
-              <h2 className="monograph-section__title">Itinerary</h2>
+              <SectionLabel>{t("dailyItinerary")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("itinerary")}</h2>
               {journey.itinerary.map((day) => (
                 <article key={day.day} className="curriculum-module itinerary-day">
                   <header className="curriculum-module__header">
                     <span className="curriculum-module__numeral">{day.day}</span>
                     <div>
                       <h3 className="type-title curriculum-module__title">{day.title}</h3>
-                      <p className="type-micro curriculum-module__hours">Focus: {day.focus}</p>
+                      <p className="type-micro curriculum-module__hours">{t("focus")}: {day.focus}</p>
                     </div>
                   </header>
                   <ul className="monograph-list">
@@ -204,14 +206,14 @@ export function JourneyView({ journey }: JourneyViewProps) {
             </section>
 
             <section id="companionship" className="monograph-section">
-              <SectionLabel>Companionship</SectionLabel>
-              <h2 className="monograph-section__title">Companionship</h2>
+              <SectionLabel>{t("companionship")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("companionship")}</h2>
               <ProseList items={journey.companionship} />
             </section>
 
             <section id="guidance" className="monograph-section">
-              <SectionLabel>Guidance</SectionLabel>
-              <h2 className="monograph-section__title">Scholars and guides on route</h2>
+              <SectionLabel>{t("guidance")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("scholarsOnRoute")}</h2>
               <ProseList items={journey.guidance} />
             </section>
 
@@ -222,28 +224,28 @@ export function JourneyView({ journey }: JourneyViewProps) {
             </div>
 
             <section id="reflection" className="monograph-section">
-              <SectionLabel>Reflection journals</SectionLabel>
-              <h2 className="monograph-section__title">Reflection</h2>
+              <SectionLabel>{t("reflectionJournals")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("reflection")}</h2>
               <ProseList items={journey.reflection} />
-              <h3 className="programme-subheading">Journal practice</h3>
+              <h3 className="programme-subheading">{t("journalPractice")}</h3>
               <ProseList items={journey.reflectionJournals} />
             </section>
 
             <section id="health" className="monograph-section">
-              <SectionLabel>Health guidance</SectionLabel>
-              <h2 className="monograph-section__title">Health</h2>
+              <SectionLabel>{t("healthGuidance")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("health")}</h2>
               <ProseList items={journey.healthGuidance} />
             </section>
 
             <section id="safety" className="monograph-section">
-              <SectionLabel>Safety</SectionLabel>
-              <h2 className="monograph-section__title">Safety</h2>
+              <SectionLabel>{t("safety")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("safety")}</h2>
               <ProseList items={journey.safety} />
             </section>
 
             <section id="organisation" className="monograph-section">
-              <SectionLabel>Organisation</SectionLabel>
-              <h2 className="monograph-section__title">Organisation</h2>
+              <SectionLabel>{t("organisation")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("organisation")}</h2>
               <p className="type-body" style={{ marginBottom: "var(--s4)", color: "var(--muted)" }}>
                 {journey.feeNote}
               </p>
@@ -251,8 +253,8 @@ export function JourneyView({ journey }: JourneyViewProps) {
             </section>
 
             <section id="scholars" className="monograph-section">
-              <SectionLabel>Scholars &amp; guides</SectionLabel>
-              <h2 className="monograph-section__title">Scholars and guides</h2>
+              <SectionLabel>{t("scholarsAndGuides")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("scholarsAndGuides")}</h2>
               {journey.scholars.map((s) => (
                 <article key={s.name} className="faculty-card">
                   <h3 className="type-title faculty-card__name">{s.name}</h3>
@@ -266,16 +268,16 @@ export function JourneyView({ journey }: JourneyViewProps) {
             </section>
 
             <section id="gallery" className="monograph-section">
-              <SectionLabel>Gallery</SectionLabel>
-              <h2 className="monograph-section__title">Gallery</h2>
+              <SectionLabel>{t("gallery")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("gallery")}</h2>
               <JourneyGallery items={journey.gallery} />
             </section>
 
             <FaqSection items={journey.faq} />
 
             <section id="policies" className="monograph-section">
-              <SectionLabel>Policies</SectionLabel>
-              <h2 className="monograph-section__title">Policies</h2>
+              <SectionLabel>{t("policies")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("policies")}</h2>
               {journey.policies.map((policy) => (
                 <article key={policy.title} className="policy-block">
                   <h3 className="type-title">{policy.title}</h3>
@@ -288,7 +290,7 @@ export function JourneyView({ journey }: JourneyViewProps) {
 
             {journey.pathways.length > 0 && (
               <section className="monograph-section">
-                <SectionLabel>Related learning</SectionLabel>
+                <SectionLabel>{t("relatedLearning")}</SectionLabel>
                 <ul className="pathway-group__list">
                   {journey.pathways.map((p) => (
                     <li key={p.href}>
@@ -300,13 +302,11 @@ export function JourneyView({ journey }: JourneyViewProps) {
             )}
 
             <section id="registration" className="dispensation-block enrolment-block">
-              <SectionLabel>Registration</SectionLabel>
-              <h2 className="monograph-section__title">Register your interest</h2>
+              <SectionLabel>{t("registration")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("registerInterest")}</h2>
               <p className="type-body" style={{ marginBottom: "var(--s5)" }}>
-                This is not a booking. Each registration is reviewed through
-                reading, interview, and suitability checks where applicable
-                before placement is confirmed.{" "}
-                <GoLink href="/sacred-journeys/registration">Review registration pathway</GoLink>
+                {t("registrationIntro")}{" "}
+                <GoLink href="/sacred-journeys/registration">{t("reviewRegistration")}</GoLink>
               </p>
               <RegistrationForm journeyName={journey.name} />
             </section>

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { Leaf } from "@/components/ui/Leaf";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
 import { PageIntro } from "@/components/ui/PageIntro";
@@ -23,8 +25,14 @@ export const metadata: Metadata = {
     "Clinical education in Prophetic Medicine and the Hijama Diploma — delivered with citation, supervision, and independent assessment.",
 };
 
-export default async function AcademyPage() {
-  const programme = await getProgrammeBySlug("hijama-diploma");
+export default async function AcademyPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const programme = await getProgrammeBySlug("hijama-diploma", locale);
   const diploma = programme ? programmeToAcademyProgramme(programme) : getHijamaDiploma();
   return (
     <>

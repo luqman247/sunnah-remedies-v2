@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { Leaf } from "@/components/ui/Leaf";
 import { PageIntro, SectionLabel } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
@@ -9,8 +11,14 @@ export const metadata: Metadata = {
   title: "Clinical Practice & Ethics",
 };
 
-export default async function ClinicalEthicsPage() {
-  const programme = await getProgrammeBySlug("hijama-diploma");
+export default async function ClinicalEthicsPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const programme = await getProgrammeBySlug("hijama-diploma", locale);
   return (
     <>
       <Leaf>

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { FaqSection } from "@/components/apothecary/MonographExtras";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { getJourneyBySlug } from "@/sanity/lib/fetch";
@@ -9,8 +11,14 @@ export const metadata: Metadata = {
   description: "Registration, safety, postponement, and institutional boundaries.",
 };
 
-export default async function JourneysFaqsPage() {
-  const journey = await getJourneyBySlug("umrah");
+export default async function JourneysFaqsPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const journey = await getJourneyBySlug("umrah", locale);
   const faq = journey?.faq?.length ? journey.faq : journeyInstitution.faq;
 
   return (

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
@@ -10,8 +12,14 @@ export const metadata: Metadata = {
   description: "Assigned texts to be completed before departure.",
 };
 
-export default async function ReadingPage() {
-  await getJourneyBySlug("umrah");
+export default async function ReadingPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  await getJourneyBySlug("umrah", locale);
   const readingList = journeyInstitution.readingList;
   return (
     <JourneySectionPage

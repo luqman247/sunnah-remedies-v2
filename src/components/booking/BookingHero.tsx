@@ -1,14 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-
-const badges = [
-  "Qualified Practitioners",
-  "Separate Male & Female Clinics",
-  "Sunnah-Based Care",
-];
+import { useTranslations } from "next-intl";
 
 export function BookingHero() {
+  const t = useTranslations("booking.hero");
+
+  const badges = [
+    t("badgeQualified"),
+    t("badgeSeparate"),
+    t("badgeSunnah"),
+  ];
+
   return (
     <section className="booking-hero">
       <motion.h1
@@ -17,7 +20,7 @@ export function BookingHero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
-        Book Your Hijama Session
+        {t("title")}
       </motion.h1>
 
       <motion.p
@@ -26,8 +29,7 @@ export function BookingHero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
       >
-        Experience Prophetic medicine in a calm, professional environment.
-        Choose your practitioner, preferred clinic and appointment time
+        {t("subtitle")}
       </motion.p>
 
       <motion.div

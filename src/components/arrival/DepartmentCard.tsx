@@ -5,7 +5,8 @@
  * a Plate, and a text link. Variants: standard | feature.
  */
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 import { Plate } from "./Plate";
 import { IsnadRule } from "./IsnadRule";
 
@@ -36,7 +37,7 @@ interface DepartmentCardProps {
 
 const numerals = ["I", "II", "III", "IV"];
 
-export function DepartmentCard({
+export async function DepartmentCard({
   order,
   nameEn,
   nameAr,
@@ -45,6 +46,7 @@ export function DepartmentCard({
   plate,
   size,
 }: DepartmentCardProps) {
+  const t = await getTranslations("arrival");
   const aspect = size === "feature" ? "16/7" : "4/3";
 
   return (
@@ -80,7 +82,7 @@ export function DepartmentCard({
           className="arrival-enter"
           style={{ marginBlockStart: "var(--space-5)", display: "inline-flex" }}
         >
-          Enter <span className="arrow" aria-hidden="true">⟶</span>
+          {t("enter")} <span className="arrow" aria-hidden="true">⟶</span>
         </span>
       </Link>
     </article>

@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { RunningHead, GoLink } from "@/components/ui/Links";
 import { SectionLabel } from "@/components/ui/PageIntro";
 import { FaqSection } from "@/components/apothecary/MonographExtras";
@@ -42,37 +43,39 @@ function PolicyBlocks({ items }: { items: { title: string; body: string[] }[] })
   );
 }
 
-export function ProgrammeView({ programme }: ProgrammeViewProps) {
+export async function ProgrammeView({ programme }: ProgrammeViewProps) {
+  const t = await getTranslations("academy.programmeView");
+
   return (
     <>
       <Leaf>
         <div className="measure-wide">
-          <RunningHead section="The Academy" folio={programme.folio} />
+          <RunningHead section={t("section")} folio={programme.folio} />
           <Breadcrumb
             items={[
-              { label: "The Academy", href: "/the-academy" },
+              { label: t("section"), href: "/the-academy" },
               { label: programme.name },
             ]}
           />
           <header className="programme-header programme-header--executive">
-            <p className="type-micro programme-header__tier">{programme.tier} · Professional formation</p>
+            <p className="type-micro programme-header__tier">{programme.tier} · {t("professionalFormation")}</p>
             <h1 className="page-intro__title">{programme.name}</h1>
             <p className="page-intro__lede">{programme.subtitle}</p>
             <dl className="programme-header__meta">
               <div>
-                <dt className="type-micro">Programme duration</dt>
+                <dt className="type-micro">{t("metaDuration")}</dt>
                 <dd className="type-body">{programme.duration}</dd>
               </div>
               <div>
-                <dt className="type-micro">Delivery format</dt>
+                <dt className="type-micro">{t("metaFormat")}</dt>
                 <dd className="type-body">{programme.format}</dd>
               </div>
               <div>
-                <dt className="type-micro">Programme fee</dt>
+                <dt className="type-micro">{t("metaFee")}</dt>
                 <dd className="type-body">{programme.fee}</dd>
               </div>
               <div>
-                <dt className="type-micro">Next intake</dt>
+                <dt className="type-micro">{t("metaIntake")}</dt>
                 <dd className="type-body">{programme.nextCohort}</dd>
               </div>
             </dl>
@@ -85,7 +88,7 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
         alt="A clinical practitioner preparing sterile cupping equipment in a professional treatment room"
         aspect="landscape"
         fullBleed
-        caption="Clinical practice — sterile technique, patient care, and supervised assessment"
+        caption={t("editorialCaption")}
       />
 
       <Leaf variant="grave">
@@ -105,21 +108,21 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
 
           <article className="monograph-layout__reading measure">
             <section id="overview" className="monograph-section">
-              <SectionLabel>Scope · Intended cohort · Commitments</SectionLabel>
-              <h2 className="monograph-section__title">Overview</h2>
-              <h3 className="programme-subheading">Programme scope</h3>
+              <SectionLabel>{t("overviewLabel")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("overview")}</h2>
+              <h3 className="programme-subheading">{t("programmeScope")}</h3>
               <ul className="monograph-list">
                 {programme.whatItIs.map((p) => (
                   <li key={p.slice(0, 40)}>{p}</li>
                 ))}
               </ul>
-              <h3 className="programme-subheading">Intended cohort</h3>
+              <h3 className="programme-subheading">{t("intendedCohort")}</h3>
               <ul className="monograph-list">
                 {programme.forWhom.map((p) => (
                   <li key={p.slice(0, 40)}>{p}</li>
                 ))}
               </ul>
-              <h3 className="programme-subheading">Commitments</h3>
+              <h3 className="programme-subheading">{t("commitments")}</h3>
               <ul className="monograph-list">
                 {programme.whatItAsks.map((p) => (
                   <li key={p.slice(0, 40)}>{p}</li>
@@ -128,18 +131,17 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
             </section>
 
             <section id="outcomes" className="monograph-section">
-              <SectionLabel>Learning outcomes</SectionLabel>
-              <h2 className="monograph-section__title">Outcomes</h2>
+              <SectionLabel>{t("outcomesLabel")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("outcomes")}</h2>
               <p className="type-small evidence-section__intro">
-                Assessed outcomes are published before enrolment and reviewed
-                prior to examination
+                {t("outcomesIntro")}
               </p>
               <ul className="outcome-list">
                 {programme.learningOutcomes.map((o) => (
                   <li key={o.outcome} className="outcome-list__item">
                     <span className="type-body">{o.outcome}</span>
                     {o.assessed && (
-                      <span className="type-micro outcome-list__badge">Assessed</span>
+                      <span className="type-micro outcome-list__badge">{t("assessed")}</span>
                     )}
                   </li>
                 ))}
@@ -147,25 +149,25 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
             </section>
 
             <section id="curriculum" className="monograph-section">
-              <SectionLabel>Curriculum · {programme.curriculum.length} modules</SectionLabel>
-              <h2 className="monograph-section__title">Curriculum</h2>
+              <SectionLabel>{t("curriculum")} · {programme.curriculum.length} {t("modules")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("curriculum")}</h2>
               {programme.curriculum.map((mod) => (
                 <article key={mod.number} className="curriculum-module">
                   <header className="curriculum-module__header">
                     <span className="curriculum-module__numeral">{mod.number}</span>
                     <div>
                       <h3 className="type-title curriculum-module__title">{mod.title}</h3>
-                      <p className="type-micro curriculum-module__hours">{mod.hours} guided hours</p>
+                      <p className="type-micro curriculum-module__hours">{mod.hours} {t("guidedHours")}</p>
                     </div>
                   </header>
                   <p className="type-body">{mod.description}</p>
                   {mod.practical && (
                     <p className="type-small" style={{ color: "var(--muted)" }}>
-                      Practical component: {mod.practical}
+                      {t("practicalComponent")}: {mod.practical}
                     </p>
                   )}
                   <p className="type-micro curriculum-module__sources">
-                    Primary sources: {mod.sources.join(" · ")}
+                    {t("primarySources")}: {mod.sources.join(" · ")}
                   </p>
                 </article>
               ))}
@@ -178,25 +180,25 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
             </div>
 
             <section id="practical" className="monograph-section">
-              <SectionLabel>Practical sessions</SectionLabel>
-              <h2 className="monograph-section__title">Supervised practice</h2>
+              <SectionLabel>{t("practicalLabel")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("supervisedPractice")}</h2>
               {programme.practicalSessions.map((session) => (
                 <article key={session.title} className="curriculum-module">
                   <h3 className="type-title">{session.title}</h3>
                   <p className="type-micro curriculum-module__hours">
-                    {session.schedule} · {session.hours} hours
+                    {session.schedule} · {session.hours} {t("hours")}
                   </p>
                   <p className="type-body">{session.description}</p>
                   <p className="type-small" style={{ color: "var(--muted)" }}>
-                    Supervision: {session.supervision}
+                    {t("supervision")}: {session.supervision}
                   </p>
                 </article>
               ))}
             </section>
 
             <section id="faculty" className="monograph-section">
-              <SectionLabel>Faculty</SectionLabel>
-              <h2 className="monograph-section__title">Faculty</h2>
+              <SectionLabel>{t("faculty")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("faculty")}</h2>
               {programme.faculty.map((member, i) => {
                 const portrait = facultyPortraits[i];
                 return (
@@ -227,8 +229,8 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
             </section>
 
             <section id="facilities" className="monograph-section">
-              <SectionLabel>Facilities</SectionLabel>
-              <h2 className="monograph-section__title">Facilities</h2>
+              <SectionLabel>{t("facilities")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("facilities")}</h2>
               {programme.facilities.map((f) => (
                 <article key={f.name} className="facility-card">
                   <h3 className="type-title">{f.name}</h3>
@@ -238,21 +240,21 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
             </section>
 
             <section id="clinical-standards" className="monograph-section">
-              <SectionLabel>Clinical standards</SectionLabel>
-              <h2 className="monograph-section__title">Clinical standards</h2>
+              <SectionLabel>{t("clinicalStandards")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("clinicalStandards")}</h2>
               <PolicyBlocks items={programme.clinicalStandards} />
             </section>
 
             <section id="assessment" className="monograph-section">
-              <SectionLabel>Assessment</SectionLabel>
-              <h2 className="monograph-section__title">Assessment</h2>
+              <SectionLabel>{t("assessment")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("assessment")}</h2>
               <ul className="monograph-list">
                 {programme.assessment.map((p) => (
                   <li key={p.slice(0, 40)}>{p}</li>
                 ))}
               </ul>
               <p className="type-body" style={{ marginTop: "var(--s4)" }}>
-                Clinical practice standards during term:
+                {t("clinicalPracticeLabel")}:
               </p>
               <ul className="monograph-list">
                 {programme.clinicalPractice.map((p) => (
@@ -262,8 +264,8 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
             </section>
 
             <section id="certification" className="monograph-section">
-              <SectionLabel>Certification</SectionLabel>
-              <h2 className="monograph-section__title">Certification</h2>
+              <SectionLabel>{t("certification")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("certification")}</h2>
               <ul className="monograph-list">
                 {programme.certification.map((p) => (
                   <li key={p.slice(0, 40)}>{p}</li>
@@ -272,8 +274,8 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
             </section>
 
             <section id="entry" className="monograph-section">
-              <SectionLabel>Entry requirements</SectionLabel>
-              <h2 className="monograph-section__title">Entry requirements</h2>
+              <SectionLabel>{t("entryRequirements")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("entryRequirements")}</h2>
               <ul className="monograph-list">
                 {programme.entryRequirements.map((p) => (
                   <li key={p.slice(0, 40)}>{p}</li>
@@ -282,14 +284,14 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
             </section>
 
             <section id="equipment" className="monograph-section">
-              <SectionLabel>Equipment list</SectionLabel>
-              <h2 className="monograph-section__title">Equipment</h2>
+              <SectionLabel>{t("equipmentLabel")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("equipment")}</h2>
               <table className="equipment-table">
                 <thead>
                   <tr>
-                    <th className="type-micro">Item</th>
-                    <th className="type-micro">Specification</th>
-                    <th className="type-micro">Supplied by</th>
+                    <th className="type-micro">{t("tableItem")}</th>
+                    <th className="type-micro">{t("tableSpecification")}</th>
+                    <th className="type-micro">{t("tableSupplied")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -305,44 +307,42 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
             </section>
 
             <section id="handbook" className="monograph-section">
-              <SectionLabel>Course handbook</SectionLabel>
-              <h2 className="monograph-section__title">Course handbook</h2>
+              <SectionLabel>{t("courseHandbook")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("courseHandbook")}</h2>
               <PolicyBlocks items={programme.courseHandbook} />
             </section>
 
             <section id="guide" className="monograph-section">
-              <SectionLabel>Student guide</SectionLabel>
-              <h2 className="monograph-section__title">Student guide</h2>
+              <SectionLabel>{t("studentGuide")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("studentGuide")}</h2>
               <PolicyBlocks items={programme.studentGuide} />
             </section>
 
             <section id="gallery" className="monograph-section">
-              <SectionLabel>Gallery</SectionLabel>
-              <h2 className="monograph-section__title">Gallery</h2>
+              <SectionLabel>{t("gallery")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("gallery")}</h2>
               <FacilityGallery items={programme.gallery} />
             </section>
 
             <section id="testimonials" className="monograph-section">
-              <SectionLabel>Graduate attestations</SectionLabel>
-              <h2 className="monograph-section__title">Graduate attestations</h2>
+              <SectionLabel>{t("graduateAttestations")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("graduateAttestations")}</h2>
               <p className="type-small" style={{ color: "var(--muted)", marginBottom: "var(--s5)" }}>
-                Published with explicit consent. Initials are used unless full
-                attribution is requested by the graduate. Statements are
-                attestation records, not promotional copy
+                {t("testimonialsNote")}
               </p>
-              {programme.testimonials.map((t) => (
-                <blockquote key={t.name + t.year} className="testimonial">
-                  <p className="type-body-l testimonial__statement">&ldquo;{t.statement}&rdquo;</p>
+              {programme.testimonials.map((item) => (
+                <blockquote key={item.name + item.year} className="testimonial">
+                  <p className="type-body-l testimonial__statement">&ldquo;{item.statement}&rdquo;</p>
                   <footer className="type-small testimonial__footer">
-                    {t.name} · {t.context} · {t.year}
+                    {item.name} · {item.context} · {item.year}
                   </footer>
                 </blockquote>
               ))}
             </section>
 
             <section id="pathways" className="monograph-section">
-              <SectionLabel>Graduate pathways</SectionLabel>
-              <h2 className="monograph-section__title">After certification</h2>
+              <SectionLabel>{t("graduatePathways")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("afterCertification")}</h2>
               {programme.graduatePathways.map((path) => (
                 <article key={path.title} className="policy-block">
                   <h3 className="type-title">{path.title}</h3>
@@ -351,7 +351,7 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
                   ))}
                   {path.href && (
                     <p className="type-body">
-                      <GoLink href={path.href}>Read pathway details</GoLink>
+                      <GoLink href={path.href}>{t("readPathwayDetails")}</GoLink>
                     </p>
                   )}
                 </article>
@@ -361,14 +361,14 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
             <FaqSection items={programme.faq} />
 
             <section id="policies" className="monograph-section">
-              <SectionLabel>Policies</SectionLabel>
-              <h2 className="monograph-section__title">Policies</h2>
+              <SectionLabel>{t("policies")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("policies")}</h2>
               <PolicyBlocks items={programme.policies} />
             </section>
 
             {programme.pathways.length > 0 && (
               <section className="monograph-section">
-                <SectionLabel>Related programmes</SectionLabel>
+                <SectionLabel>{t("relatedProgrammes")}</SectionLabel>
                 <ul className="pathway-group__list">
                   {programme.pathways.map((p) => (
                     <li key={p.href}>
@@ -380,14 +380,12 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
             )}
 
             <section id="enrolment" className="dispensation-block enrolment-block">
-              <SectionLabel>Application</SectionLabel>
-              <h2 className="monograph-section__title">Enrolment</h2>
+              <SectionLabel>{t("application")}</SectionLabel>
+              <h2 className="monograph-section__title">{t("enrolment")}</h2>
               <p className="type-body" style={{ marginBottom: "var(--s5)" }}>
-                {programme.feeNote} Review the full programme before
-                submission. Each application is evaluated on academic readiness
-                and clinical suitability
+                {programme.feeNote} {t("enrolmentIntro")}
               </p>
-              <SectionLabel>Send application</SectionLabel>
+              <SectionLabel>{t("sendApplication")}</SectionLabel>
               <EnrolmentJourney steps={programme.enrolmentJourney} />
               <div id="application" style={{ marginTop: "var(--s6)" }}>
                 <EnrolmentForm programmeName={programme.name} />

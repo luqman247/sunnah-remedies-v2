@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { JourneyView } from "@/components/journeys/JourneyView";
 import { getJourneySlugs, getJourneyBySlug } from "@/sanity/lib/fetch";
 import { journeyToSacredJourney } from "@/sanity/lib/adapters";
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: AppLocale }>;
 }
 
 export async function generateStaticParams() {
@@ -16,8 +18,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const journey = await getJourneyBySlug(slug);
+  const { slug, locale } = await params;
+  const journey = await getJourneyBySlug(slug, locale);
   if (!journey) return { title: "Journey programme" };
   const adapted = journeyToSacredJourney(journey);
   return {
@@ -27,8 +29,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function JourneyPage({ params }: PageProps) {
-  const { slug } = await params;
-  const journey = await getJourneyBySlug(slug);
+  const { slug, locale } = await params;
+  setRequestLocale(locale);
+  const journey = await getJourneyBySlug(slug, locale);
   if (!journey) notFound();
 
   return <JourneyView journey={journeyToSacredJourney(journey)} />;

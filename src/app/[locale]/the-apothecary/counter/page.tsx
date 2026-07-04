@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Leaf } from "@/components/ui/Leaf";
 import { PageIntro, SectionLabel } from "@/components/ui/PageIntro";
 import { SolidAction, QuietLink } from "@/components/ui/Links";

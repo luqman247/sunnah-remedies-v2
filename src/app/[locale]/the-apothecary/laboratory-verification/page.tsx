@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
 import { apothecary } from "@/sanity/lib/fetch";
@@ -9,7 +11,13 @@ export const metadata: Metadata = {
   description: "Independent analysis with batch records and certificates.",
 };
 
-export default async function LaboratoryVerificationPage() {
+export default async function LaboratoryVerificationPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const verification = laboratoryVerification;
   return (
     <SectionPage

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
 import { HospitableEmpty } from "@/components/ui/HospitableEmpty";
 import { WayForward } from "@/components/ui/WayForward";
@@ -57,8 +59,14 @@ const permanentExhibition = {
   ],
 };
 
-export default async function ExhibitionsPage() {
-  await getInstitutionSettings();
+export default async function ExhibitionsPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  await getInstitutionSettings(locale);
   return (
     <article>
       {/* ═══ Hero ═══ */}

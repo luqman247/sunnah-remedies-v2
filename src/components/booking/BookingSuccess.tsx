@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { SolidAction } from "@/components/ui/Links";
 
 interface BookingSuccessProps {
@@ -9,6 +10,8 @@ interface BookingSuccessProps {
 }
 
 export function BookingSuccess({ referenceId, onBookAnother }: BookingSuccessProps) {
+  const t = useTranslations("booking.success");
+
   return (
     <motion.section
       className="booking-success"
@@ -33,7 +36,7 @@ export function BookingSuccess({ referenceId, onBookAnother }: BookingSuccessPro
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.35 }}
       >
-        Thank you
+        {t("title")}
       </motion.h1>
 
       <motion.p
@@ -42,8 +45,7 @@ export function BookingSuccess({ referenceId, onBookAnother }: BookingSuccessPro
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.45 }}
       >
-        Your booking request has been received.
-        We will confirm your appointment shortly via email
+        {t("message")}
       </motion.p>
 
       {referenceId && (
@@ -53,7 +55,7 @@ export function BookingSuccess({ referenceId, onBookAnother }: BookingSuccessPro
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.55 }}
         >
-          Reference: {referenceId}
+          {t("reference", { id: referenceId })}
         </motion.p>
       )}
 
@@ -63,8 +65,8 @@ export function BookingSuccess({ referenceId, onBookAnother }: BookingSuccessPro
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.6 }}
       >
-        <SolidAction href="/">Return Home</SolidAction>
-        <SolidAction onClick={onBookAnother}>Book Another Session</SolidAction>
+        <SolidAction href="/">{t("returnHome")}</SolidAction>
+        <SolidAction onClick={onBookAnother}>{t("bookAnother")}</SolidAction>
       </motion.div>
     </motion.section>
   );

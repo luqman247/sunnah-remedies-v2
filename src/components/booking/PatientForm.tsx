@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { PatientDetails } from "@/lib/booking/types";
 
 interface PatientFormProps {
@@ -9,19 +10,21 @@ interface PatientFormProps {
 }
 
 export function PatientForm({ value, onChange, errors }: PatientFormProps) {
+  const t = useTranslations("booking.patientForm");
+
   function update(field: keyof PatientDetails, val: string | boolean) {
     onChange({ ...value, [field]: val });
   }
 
   return (
     <div className="booking-step">
-      <p className="booking-step__label">Step 5</p>
-      <h2 className="booking-step__title">Patient Information</h2>
+      <p className="booking-step__label">{t("stepLabel")}</p>
+      <h2 className="booking-step__title">{t("title")}</h2>
 
       <div className="patient-form">
         <div className="patient-form__row">
           <div className={`form-field ${errors.firstName ? "form-field--error" : ""}`}>
-            <label htmlFor="booking-first-name">First Name</label>
+            <label htmlFor="booking-first-name">{t("firstName")}</label>
             <input
               id="booking-first-name"
               type="text"
@@ -33,7 +36,7 @@ export function PatientForm({ value, onChange, errors }: PatientFormProps) {
           </div>
 
           <div className={`form-field ${errors.surname ? "form-field--error" : ""}`}>
-            <label htmlFor="booking-surname">Surname</label>
+            <label htmlFor="booking-surname">{t("surname")}</label>
             <input
               id="booking-surname"
               type="text"
@@ -47,7 +50,7 @@ export function PatientForm({ value, onChange, errors }: PatientFormProps) {
 
         <div className="patient-form__row">
           <div className={`form-field ${errors.email ? "form-field--error" : ""}`}>
-            <label htmlFor="booking-email">Email</label>
+            <label htmlFor="booking-email">{t("email")}</label>
             <input
               id="booking-email"
               type="email"
@@ -59,7 +62,7 @@ export function PatientForm({ value, onChange, errors }: PatientFormProps) {
           </div>
 
           <div className={`form-field ${errors.telephone ? "form-field--error" : ""}`}>
-            <label htmlFor="booking-telephone">Telephone</label>
+            <label htmlFor="booking-telephone">{t("telephone")}</label>
             <input
               id="booking-telephone"
               type="tel"
@@ -72,7 +75,7 @@ export function PatientForm({ value, onChange, errors }: PatientFormProps) {
         </div>
 
         <div className="form-field">
-          <label htmlFor="booking-reason">Reason for appointment <span style={{ color: "var(--muted-light)" }}>(optional)</span></label>
+          <label htmlFor="booking-reason">{t("reason")} <span style={{ color: "var(--muted-light)" }}>({t("optional")})</span></label>
           <input
             id="booking-reason"
             type="text"
@@ -82,7 +85,7 @@ export function PatientForm({ value, onChange, errors }: PatientFormProps) {
         </div>
 
         <div className="form-field">
-          <label htmlFor="booking-medical">Any medical conditions? <span style={{ color: "var(--muted-light)" }}>(optional)</span></label>
+          <label htmlFor="booking-medical">{t("medicalConditions")} <span style={{ color: "var(--muted-light)" }}>({t("optional")})</span></label>
           <textarea
             id="booking-medical"
             rows={3}
@@ -99,8 +102,7 @@ export function PatientForm({ value, onChange, errors }: PatientFormProps) {
             aria-describedby="consent-description"
           />
           <span className="patient-form__consent-text" id="consent-description">
-            I understand Hijama may not be suitable for everyone and agree to the
-            consultation process
+            {t("consentText")}
           </span>
         </label>
         {errors.consent && <span className="form-error" role="alert">{errors.consent}</span>}

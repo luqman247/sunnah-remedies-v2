@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { getAllProducts } from "@/sanity/lib/fetch";
 import { productToRemedy } from "@/sanity/lib/adapters";
 import { RegisterClient } from "./RegisterClient";
@@ -8,8 +10,14 @@ export const metadata: Metadata = {
   description: "Texts, remedies, and sources indexed by grade and department.",
 };
 
-export default async function RegisterPage() {
-  const products = await getAllProducts();
+export default async function RegisterPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const products = await getAllProducts(locale);
   const remedies = products.map(productToRemedy);
 
   const corpus = [

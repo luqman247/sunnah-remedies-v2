@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { ListingRow } from "@/components/ui/Attestation";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
@@ -12,8 +14,14 @@ export const metadata: Metadata = {
   description: "Scholarly remedy records with source before price and limits before measure.",
 };
 
-export default async function MonographsPage() {
-  const products = await getAllProducts();
+export default async function MonographsPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const products = await getAllProducts(locale);
   const remedies = products.map(productToRemedy);
 
   return (

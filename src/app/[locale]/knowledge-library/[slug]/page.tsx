@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
@@ -9,7 +11,7 @@ import { getAllKnowledgeSlugs, getKnowledgeTopic, getAllArticles, getArticleBySl
 import { PortableText } from "@portabletext/react";
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: AppLocale }>;
 }
 
 const topicPhotography: Record<string, { src: string; alt: string }> = {
@@ -47,8 +49,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const article = await getArticleBySlug(slug);
+  const { slug, locale } = await params;
+  const article = await getArticleBySlug(slug, locale);
   if (article) {
     return {
       title: article.seo?.metaTitle || article.title,
@@ -61,9 +63,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function KnowledgeTopicPage({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
+  setRequestLocale(locale);
 
-  const article = await getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug, locale);
 
   if (article) {
     return (

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { FaqSection } from "@/components/apothecary/MonographExtras";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { apothecary, getFaqs } from "@/sanity/lib/fetch";
@@ -9,8 +11,14 @@ export const metadata: Metadata = {
   description: "Questions on dispensation, provenance, and stated limits.",
 };
 
-export default async function ApothecaryFaqsPage() {
-  const cmsFaqs = await getFaqs("apothecary");
+export default async function ApothecaryFaqsPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const cmsFaqs = await getFaqs("apothecary", locale);
   const faqs =
     cmsFaqs.length > 0
       ? cmsFaqs.map((f) => ({ question: f.question, answer: f.answer }))

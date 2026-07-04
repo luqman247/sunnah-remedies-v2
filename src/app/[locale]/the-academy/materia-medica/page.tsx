@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { Leaf } from "@/components/ui/Leaf";
 import { PageIntro, SectionLabel } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
@@ -12,8 +14,14 @@ export const metadata: Metadata = {
   title: "The Materia Medica",
 };
 
-export default async function MateriaMedicaPage() {
-  const products = await getAllProducts();
+export default async function MateriaMedicaPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const products = await getAllProducts(locale);
   const remedies = products.length ? products.map(productToRemedy) : staticRemedies;
   return (
     <>

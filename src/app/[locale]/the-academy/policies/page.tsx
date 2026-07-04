@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { AcademySectionPage } from "@/components/academy/AcademySectionPage";
 import { getHijamaDiploma } from "@/lib/content/academy";
 import { getProgrammeBySlug } from "@/sanity/lib/fetch";
@@ -9,8 +11,14 @@ export const metadata: Metadata = {
   description: "Cancellation, conduct, and clinical responsibility policies.",
 };
 
-export default async function PoliciesPage() {
-  const programme = await getProgrammeBySlug("hijama-diploma");
+export default async function PoliciesPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const programme = await getProgrammeBySlug("hijama-diploma", locale);
   const p = programme ? programmeToAcademyProgramme(programme) : getHijamaDiploma();
   return (
     <AcademySectionPage

@@ -10,6 +10,7 @@
  */
 
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 
 interface MediaAsset {
   status: "brief" | "interim" | "final";
@@ -72,7 +73,9 @@ export function Plate({ asset, aspect, priority = false, variant = "standard" }:
   );
 }
 
-function PlateBrief({ asset }: { asset: MediaAsset }) {
+async function PlateBrief({ asset }: { asset: MediaAsset }) {
+  const t = await getTranslations("plate");
+
   return (
     <div
       style={{
@@ -87,21 +90,23 @@ function PlateBrief({ asset }: { asset: MediaAsset }) {
       }}
     >
       <span className="type-folio-v2" style={{ color: "var(--brass)" }}>
-        TO BE COMMISSIONED
+        {t("toBeCommissioned")}
       </span>
       <div className="type-caption" style={{ maxInlineSize: "48ch" }}>
-        <p style={{ margin: "0 0 var(--space-2)" }}><strong>Purpose:</strong> {asset.purpose}</p>
-        <p style={{ margin: "0 0 var(--space-2)" }}><strong>Composition:</strong> {asset.composition}</p>
-        {asset.lens && <p style={{ margin: "0 0 var(--space-2)" }}><strong>Lens:</strong> {asset.lens}</p>}
-        <p style={{ margin: "0 0 var(--space-2)" }}><strong>Light:</strong> {asset.lighting}</p>
-        {asset.grade && <p style={{ margin: "0 0 var(--space-2)" }}><strong>Grade:</strong> {asset.grade}</p>}
-        <p style={{ margin: 0 }}><strong>Mood:</strong> {asset.mood}</p>
+        <p style={{ margin: "0 0 var(--space-2)" }}><strong>{t("purpose")}:</strong> {asset.purpose}</p>
+        <p style={{ margin: "0 0 var(--space-2)" }}><strong>{t("composition")}:</strong> {asset.composition}</p>
+        {asset.lens && <p style={{ margin: "0 0 var(--space-2)" }}><strong>{t("lens")}:</strong> {asset.lens}</p>}
+        <p style={{ margin: "0 0 var(--space-2)" }}><strong>{t("light")}:</strong> {asset.lighting}</p>
+        {asset.grade && <p style={{ margin: "0 0 var(--space-2)" }}><strong>{t("grade")}:</strong> {asset.grade}</p>}
+        <p style={{ margin: 0 }}><strong>{t("mood")}:</strong> {asset.mood}</p>
       </div>
     </div>
   );
 }
 
-function PlateInterim({ asset, priority }: { asset: MediaAsset; priority: boolean }) {
+async function PlateInterim({ asset, priority }: { asset: MediaAsset; priority: boolean }) {
+  const t = await getTranslations("plate");
+
   return (
     <>
       <Image
@@ -122,7 +127,7 @@ function PlateInterim({ asset, priority }: { asset: MediaAsset; priority: boolea
             color: "var(--paper-on-deep)",
           }}
         >
-          {asset.caption} <em>(Interim)</em>
+          {asset.caption} <em>({t("interim")})</em>
         </figcaption>
       )}
     </>

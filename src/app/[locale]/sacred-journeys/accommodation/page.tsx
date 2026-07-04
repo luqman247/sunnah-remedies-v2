@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { PolicyBlocks } from "@/components/journeys/JourneyInstitutionBlocks";
 import { getJourneyBySlug } from "@/sanity/lib/fetch";
@@ -9,8 +11,14 @@ export const metadata: Metadata = {
   description: "Lodging selected for proximity, safety, and practical suitability.",
 };
 
-export default async function AccommodationPage() {
-  await getJourneyBySlug("umrah");
+export default async function AccommodationPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  await getJourneyBySlug("umrah", locale);
   const accommodation = journeyInstitution.accommodationPhilosophy;
 
   return (

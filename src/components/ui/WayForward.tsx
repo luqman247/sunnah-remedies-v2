@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 
 interface WayForwardItem {
   label: string;
@@ -15,17 +16,19 @@ interface WayForwardProps {
  * WayForward — the arcade's promise: always show the way back and the way onward.
  * Placed at the bottom of content sections to ensure the visitor is never abandoned.
  */
-export function WayForward({ back, forward }: WayForwardProps) {
+export async function WayForward({ back, forward }: WayForwardProps) {
   if (!back && (!forward || forward.length === 0)) return null;
 
+  const t = await getTranslations("wayForward");
+
   return (
-    <nav className="way-forward" aria-label="Continue reading">
+    <nav className="way-forward" aria-label={t("ariaLabel")}>
       {back && (
         <div className="way-forward__back">
           <Link href={back.href} className="way-forward__link way-forward__link--back">
             <span className="way-forward__arrow" aria-hidden="true">←</span>
             <span className="way-forward__text">
-              <span className="way-forward__direction type-eyebrow">Return to</span>
+              <span className="way-forward__direction type-eyebrow">{t("returnTo")}</span>
               <span className="way-forward__label type-title">{back.label}</span>
             </span>
           </Link>
@@ -41,7 +44,7 @@ export function WayForward({ back, forward }: WayForwardProps) {
               className="way-forward__link way-forward__link--forward"
             >
               <span className="way-forward__text">
-                <span className="way-forward__direction type-eyebrow">Continue to</span>
+                <span className="way-forward__direction type-eyebrow">{t("continueTo")}</span>
                 <span className="way-forward__label type-title">{item.label}</span>
                 {item.description && (
                   <span className="way-forward__desc type-small">{item.description}</span>

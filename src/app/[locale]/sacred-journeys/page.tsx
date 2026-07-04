@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { Leaf } from "@/components/ui/Leaf";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
 import { PageIntro } from "@/components/ui/PageIntro";
@@ -20,8 +22,14 @@ export const metadata: Metadata = {
     "Educational pilgrimage with preparation, reading, faculty companions, and clear guidance. We travel to learn, not to see.",
 };
 
-export default async function SacredJourneysPage() {
-  await getAllJourneys();
+export default async function SacredJourneysPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  await getAllJourneys(locale);
 
   return (
     <>

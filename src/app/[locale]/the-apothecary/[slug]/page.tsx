@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { RemedyMonograph } from "@/components/apothecary/RemedyMonograph";
 import { getProductBySlug, getProductSlugs } from "@/sanity/lib/fetch";
 import { productToRemedy } from "@/sanity/lib/adapters";
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: AppLocale }>;
 }
 
 export async function generateStaticParams() {
@@ -14,8 +16,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const product = await getProductBySlug(slug);
+  const { slug, locale } = await params;
+  const product = await getProductBySlug(slug, locale);
   if (!product) return { title: "Remedy monograph" };
   return {
     title: product.name,
@@ -24,8 +26,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function RemedyPage({ params }: PageProps) {
-  const { slug } = await params;
-  const product = await getProductBySlug(slug);
+  const { slug, locale } = await params;
+  setRequestLocale(locale);
+  const product = await getProductBySlug(slug, locale);
   if (!product) notFound();
 
   const remedy = productToRemedy(product);

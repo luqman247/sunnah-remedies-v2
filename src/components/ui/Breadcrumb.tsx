@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { getDepartmentByPath } from "@/lib/navigation/site-structure";
 
 export function Breadcrumb() {
+  const t = useTranslations("breadcrumbs");
   const pathname = usePathname();
 
   if (pathname === "/") return null;
@@ -15,11 +16,11 @@ export function Breadcrumb() {
   if (segments.length === 0) return null;
 
   return (
-    <nav className="breadcrumb" aria-label="You are here">
+    <nav className="breadcrumb" aria-label={t("ariaLabel")}>
       <ol className="breadcrumb__list">
         <li className="breadcrumb__item">
           <Link href="/" className="breadcrumb__link">
-            The Institution
+            {t("theInstitution")}
           </Link>
         </li>
         {segments.map((segment, i) => {

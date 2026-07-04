@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { knowledgeLibrary, getAllArticles, knowledgeTopics } from "@/sanity/lib/fetch";
 import { DepartmentHero } from "@/components/department/DepartmentHero";
 import { DepartmentStatement } from "@/components/department/DepartmentStatement";
@@ -27,8 +29,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function KnowledgeLibraryPage() {
-  const articles = await getAllArticles();
+export default async function KnowledgeLibraryPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const articles = await getAllArticles(locale);
   return (
     <div className="department-v2">
       <a href="#main-content" className="sr-only" style={{

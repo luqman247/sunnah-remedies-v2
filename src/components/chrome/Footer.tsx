@@ -18,8 +18,8 @@ export function PreFooter({ action }: PreFooterProps) {
     <section className="pre-footer" aria-label="Daily reflection">
       <div className="pre-footer__image">
         <Image
-          src="/photography/institution-hero.jpg"
-          alt="Scholarly hands examining an illuminated manuscript of Prophetic medicine"
+          src="/photography/prophetic-medicine-research-table.jpg"
+          alt="Oak research table with leather-bound Arabic manuscripts, amber apothecary bottles, olive leaves, black seed, mortar and pestle, and brass magnifying glass in warm natural light"
           fill
           sizes="100vw"
           quality={75}

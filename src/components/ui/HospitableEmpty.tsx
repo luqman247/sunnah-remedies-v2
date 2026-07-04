@@ -1,16 +1,20 @@
+import { getTranslations } from "next-intl/server";
+
 interface HospitableEmptyProps {
   heading?: string;
   message?: string;
 }
 
-export function HospitableEmpty({
-  heading = "The house is preparing",
-  message = "This section is being readied — it will open when it is worthy of the visitor",
+export async function HospitableEmpty({
+  heading,
+  message,
 }: HospitableEmptyProps) {
+  const t = await getTranslations("hospitable");
+
   return (
     <div className="hospitable-empty">
-      <p className="hospitable-empty__heading type-title">{heading}</p>
-      <p className="hospitable-empty__message type-body">{message}</p>
+      <p className="hospitable-empty__heading type-title">{heading ?? t("heading")}</p>
+      <p className="hospitable-empty__message type-body">{message ?? t("message")}</p>
     </div>
   );
 }

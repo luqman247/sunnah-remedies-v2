@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { Leaf } from "@/components/ui/Leaf";
 import { PageIntro } from "@/components/ui/PageIntro";
 import {
@@ -15,8 +17,14 @@ export const metadata: Metadata = {
     "The constitutional text of the institution — seven articles governing how Sunnah Remedies conducts itself.",
 };
 
-export default async function CharterPage() {
-  const charter = await getCharter() as { body?: any[]; seo?: { metaTitle?: string; metaDescription?: string } } | null;
+export default async function CharterPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const charter = await getCharter(locale) as { body?: any[]; seo?: { metaTitle?: string; metaDescription?: string } } | null;
 
   return (
     <>

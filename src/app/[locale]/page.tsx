@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { getHomepage } from "@/sanity/lib/fetch";
 import { getCurrentSeason, getHijriDate } from "@/lib/calendar/seasons";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
@@ -127,8 +129,14 @@ const fallback = {
   institutionStatement: "Knowledge before commerce. Service before profit. Trust before growth. The institution exists for the next generation",
 };
 
-export default async function ArrivalPage() {
-  const cms = await getHomepage();
+export default async function ArrivalPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const cms = await getHomepage(locale);
   const { season, label, greeting } = getCurrentSeason();
   const hijriDate = getHijriDate();
 

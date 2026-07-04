@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
 import { apothecary } from "@/sanity/lib/fetch";
@@ -9,7 +11,13 @@ export const metadata: Metadata = {
   description: "How the institution selects, stores, and dispenses remedies.",
 };
 
-export default async function QualityStandardsPage() {
+export default async function QualityStandardsPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const standards = qualityStandards;
   return (
     <SectionPage

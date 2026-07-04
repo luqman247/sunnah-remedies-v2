@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { AcademySectionPage } from "@/components/academy/AcademySectionPage";
 import { GoLink } from "@/components/ui/Links";
 import { getHijamaDiploma } from "@/lib/content/academy";
@@ -10,8 +12,14 @@ export const metadata: Metadata = {
   description: "Post-certification pathways described without career guarantees.",
 };
 
-export default async function GraduatePathwaysPage() {
-  const programme = await getProgrammeBySlug("hijama-diploma");
+export default async function GraduatePathwaysPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const programme = await getProgrammeBySlug("hijama-diploma", locale);
   const p = programme ? programmeToAcademyProgramme(programme) : getHijamaDiploma();
   return (
     <AcademySectionPage

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { AcademySectionPage } from "@/components/academy/AcademySectionPage";
 import { getHijamaDiploma } from "@/lib/content/academy";
 import { getProgrammeBySlug, getTestimonials } from "@/sanity/lib/fetch";
@@ -9,10 +11,16 @@ export const metadata: Metadata = {
   description: "Graduate attestations published with consent.",
 };
 
-export default async function TestimonialsPage() {
+export default async function TestimonialsPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const [programme, sanityTestimonials] = await Promise.all([
-    getProgrammeBySlug("hijama-diploma"),
-    getTestimonials("academy"),
+    getProgrammeBySlug("hijama-diploma", locale),
+    getTestimonials("academy", locale),
   ]);
 
   const testimonials = sanityTestimonials.length > 0

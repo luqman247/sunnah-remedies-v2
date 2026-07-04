@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
 import { SectionStamp } from "@/components/arrival/SectionStamp";
 import { Eyebrow } from "@/components/arrival/Eyebrow";

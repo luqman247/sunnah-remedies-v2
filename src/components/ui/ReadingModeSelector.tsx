@@ -1,21 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 type ReadingMode = "standard" | "focused" | "evening";
 
-const labels: Record<ReadingMode, string> = {
-  standard: "Day",
-  focused: "Focus",
-  evening: "Evening",
-};
+const MODES: ReadingMode[] = ["standard", "focused", "evening"];
 
 export function ReadingModeSelector() {
+  const t = useTranslations("readingMode");
   const [mode, setMode] = useState<ReadingMode>("standard");
 
   useEffect(() => {
     const saved = localStorage.getItem("reading-mode") as ReadingMode | null;
-    if (saved && labels[saved]) {
+    if (saved && MODES.includes(saved)) {
       setMode(saved);
     }
   }, []);
@@ -29,9 +27,9 @@ export function ReadingModeSelector() {
   }, [mode]);
 
   return (
-    <fieldset className="reading-mode-selector" aria-label="Reading mode">
-      <legend className="sr-only">Choose reading mode</legend>
-      {(Object.keys(labels) as ReadingMode[]).map((key) => (
+    <fieldset className="reading-mode-selector" aria-label={t("ariaLabel")}>
+      <legend className="sr-only">{t("legend")}</legend>
+      {MODES.map((key) => (
         <button
           key={key}
           type="button"
@@ -39,7 +37,7 @@ export function ReadingModeSelector() {
           onClick={() => setMode(key)}
           aria-pressed={mode === key}
         >
-          {labels[key]}
+          {t(key)}
         </button>
       ))}
     </fieldset>

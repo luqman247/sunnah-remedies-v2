@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { Leaf } from "@/components/ui/Leaf";
 import { PageIntro, SectionLabel } from "@/components/ui/PageIntro";
 import { GoLink, QuietLink } from "@/components/ui/Links";
@@ -23,8 +25,14 @@ const staticFaq = [
   },
 ];
 
-export default async function FoundationsPage() {
-  const programme = await getProgrammeBySlug("foundations");
+export default async function FoundationsPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const programme = await getProgrammeBySlug("foundations", locale);
   const faq =
     programme?.faq?.length
       ? programme.faq.map((f) => ({ question: f.question, answer: f.answer }))

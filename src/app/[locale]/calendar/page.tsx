@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
 import { WayForward } from "@/components/ui/WayForward";
 import {
@@ -42,7 +44,13 @@ const CATEGORY_LABELS: Record<string, string> = {
   garden: "The Gardens",
 };
 
-export default function CalendarPage() {
+export default async function CalendarPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const { season: currentSeason } = getCurrentSeason();
   const hijriYear = getHijriYear();
 

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { RegistrationJourney } from "@/components/journeys/RegistrationJourney";
 import { RegistrationForm } from "@/components/journeys/RegistrationForm";
@@ -11,8 +13,14 @@ export const metadata: Metadata = {
   description: "Register your interest. Placement follows interview and reading review.",
 };
 
-export default async function RegistrationPage() {
-  await getJourneyBySlug("umrah");
+export default async function RegistrationPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  await getJourneyBySlug("umrah", locale);
   const registrationSteps = journeyInstitution.registrationSteps;
 
   return (

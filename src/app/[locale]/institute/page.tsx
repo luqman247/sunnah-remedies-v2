@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
 import { WayForward } from "@/components/ui/WayForward";
 import { getInstitutionSettings } from "@/sanity/lib/fetch";
@@ -17,8 +19,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function InstitutePage() {
-  await getInstitutionSettings();
+export default async function InstitutePage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  await getInstitutionSettings(locale);
   return (
     <article>
       {/* ═══ Hero ═══ */}

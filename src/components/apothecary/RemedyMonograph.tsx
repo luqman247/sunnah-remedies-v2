@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { RunningHead } from "@/components/ui/Links";
 import { Specimen, SourceMark } from "@/components/ui/Attestation";
 import { SectionLabel } from "@/components/ui/PageIntro";
@@ -47,31 +48,32 @@ interface RemedyMonographProps {
   remedy: Remedy;
 }
 
-function attributionPhrase(ref: PropheticReference): string {
-  if (ref.attribution === "revelation") return "Allah says";
-  if (ref.attribution === "hadith") return "The Prophet ﷺ said";
-  return "Classical authorities record";
-}
-
-export function RemedyMonograph({ remedy }: RemedyMonographProps) {
+export async function RemedyMonograph({ remedy }: RemedyMonographProps) {
+  const t = await getTranslations("apothecary.monograph");
   const related = getRelatedRemedies(remedy.slug);
   const primary = primaryReference(remedy);
+
+  function attributionPhrase(ref: PropheticReference): string {
+    if (ref.attribution === "revelation") return t("attributionRevelation");
+    if (ref.attribution === "hadith") return t("attributionHadith");
+    return t("attributionClassical");
+  }
 
   return (
     <>
       <Leaf>
         <div className="measure-wide monograph-header monograph-header--museum">
-          <RunningHead section="The Apothecary" folio={remedy.folio} />
+          <RunningHead section={t("section")} folio={remedy.folio} />
           <Breadcrumb
             items={[
-              { label: "The Apothecary", href: "/the-apothecary" },
-              { label: "Remedy Monographs", href: "/the-apothecary/monographs" },
+              { label: t("section"), href: "/the-apothecary" },
+              { label: t("remedyMonographs"), href: "/the-apothecary/monographs" },
               { label: remedy.name },
             ]}
           />
           <div className="monograph-header__grid">
             <div className="monograph-header__text">
-              <p className="type-micro monograph-header__folio">Remedy monograph · {remedy.folio}</p>
+              <p className="type-micro monograph-header__folio">{t("folioPrefix")} · {remedy.folio}</p>
               <h1 className="page-intro__title">{remedy.name}</h1>
               <p className="monograph-header__meta">
                 <em>{remedy.transliteration}</em>
@@ -96,7 +98,7 @@ export function RemedyMonograph({ remedy }: RemedyMonographProps) {
           alt={remedyPhotography[remedy.slug].alt}
           aspect="landscape"
           fullBleed
-          caption={`${remedy.name} — editorial photography`}
+          caption={`${remedy.name} — ${t("editorialPhotography")}`}
         />
       )}
 
@@ -108,15 +110,15 @@ export function RemedyMonograph({ remedy }: RemedyMonographProps) {
 
           <article className="monograph-layout__reading measure">
             <section id="institutional-summary" className="monograph-section monograph-plaque">
-              <SectionLabel>Institutional summary</SectionLabel>
+              <SectionLabel>{t("institutionalSummary")}</SectionLabel>
               <p className="type-body-l monograph-plaque__text">{remedy.institutionalSummary}</p>
             </section>
 
-            <MonographSection id="historical-context" title="Historical use">
+            <MonographSection id="historical-context" title={t("historicalUse")}>
               <MonographProse paragraphs={remedy.historicalContext} />
             </MonographSection>
 
-            <MonographSection id="prophetic-tradition" title="Prophetic tradition">
+            <MonographSection id="prophetic-tradition" title={t("propheticTradition")}>
               {remedy.propheticReferences.map((ref) => (
                 <blockquote key={ref.siglum} className="prophetic-quote">
                   <p className="type-body-l">
@@ -144,11 +146,11 @@ export function RemedyMonograph({ remedy }: RemedyMonographProps) {
               )}
             </MonographSection>
 
-            <MonographSection id="traditional-scholarship" title="Traditional scholarship">
+            <MonographSection id="traditional-scholarship" title={t("traditionalScholarship")}>
               <MonographProse paragraphs={remedy.traditionalScholarship} />
             </MonographSection>
 
-            <MonographSection id="traditional-usage" title="Traditional usage">
+            <MonographSection id="traditional-usage" title={t("traditionalUsage")}>
               <MonographList items={remedy.traditionalUsage} />
             </MonographSection>
 
@@ -160,60 +162,59 @@ export function RemedyMonograph({ remedy }: RemedyMonographProps) {
               />
             </div>
 
-            <MonographSection id="provenance" title="Origin, cultivation, and harvesting">
-              <h3 className="programme-subheading">Origin</h3>
+            <MonographSection id="provenance" title={t("provenance")}>
+              <h3 className="programme-subheading">{t("origin")}</h3>
               <MonographList items={remedy.provenance.origin} />
-              <h3 className="programme-subheading">Cultivation</h3>
+              <h3 className="programme-subheading">{t("cultivation")}</h3>
               <MonographList items={remedy.provenance.cultivation} />
-              <h3 className="programme-subheading">Harvesting</h3>
+              <h3 className="programme-subheading">{t("harvesting")}</h3>
               <MonographList items={remedy.provenance.harvesting} />
             </MonographSection>
 
-            <MonographSection id="laboratory-verification" title="Laboratory verification">
+            <MonographSection id="laboratory-verification" title={t("laboratoryVerification")}>
               <MonographList items={remedy.laboratoryVerification} />
             </MonographSection>
 
-            <MonographSection id="quality-assurance" title="Quality assurance">
+            <MonographSection id="quality-assurance" title={t("qualityAssurance")}>
               <MonographList items={remedy.qualityAssurance} />
             </MonographSection>
 
-            <MonographSection id="storage" title="Storage">
+            <MonographSection id="storage" title={t("storage")}>
               <MonographList items={remedy.storage} />
             </MonographSection>
 
-            <MonographSection id="preparation" title="Preparation">
+            <MonographSection id="preparation" title={t("preparation")}>
               <MonographList items={remedy.preparation} />
             </MonographSection>
 
-            <MonographSection id="suggested-use" title="Suggested use">
+            <MonographSection id="suggested-use" title={t("suggestedUse")}>
               <p className="type-small evidence-section__intro">
-                Offered as a traditional dietary means and not as treatment for a
-                diagnosed medical condition
+                {t("suggestedUseIntro")}
               </p>
               <MonographList items={remedy.suggestedUse} />
             </MonographSection>
 
-            <MonographSection id="contraindications" title="Contraindications">
+            <MonographSection id="contraindications" title={t("contraindications")}>
               <MonographList items={remedy.contraindications} />
             </MonographSection>
 
-            <MonographSection id="photography" title="Photography guidance">
+            <MonographSection id="photography" title={t("photographyGuidance")}>
               <MonographList items={remedy.photographyDirection} />
             </MonographSection>
 
-            <MonographSection id="packaging" title="Packaging">
+            <MonographSection id="packaging" title={t("packaging")}>
               <MonographList items={remedy.packaging} />
             </MonographSection>
 
-            <MonographSection id="shipping" title="Shipping">
+            <MonographSection id="shipping" title={t("shipping")}>
               <MonographList items={remedy.shipping} />
             </MonographSection>
 
-            <MonographSection id="returns" title="Returns">
+            <MonographSection id="returns" title={t("returns")}>
               <MonographList items={remedy.returns} />
             </MonographSection>
 
-            <MonographSection id="customer-support" title="Customer support">
+            <MonographSection id="customer-support" title={t("customerSupport")}>
               <MonographList items={remedy.customerSupport} />
             </MonographSection>
 

@@ -39,7 +39,9 @@
     "theAcademy": "The Academy"
   },
   "breadcrumbs": {
-    "home": "Home"
+    "home": "Home",
+    "ariaLabel": "You are here",
+    "theInstitution": "The Institution"
   },
   "form": {
     "name": "Name",
@@ -48,8 +50,8 @@
     "message": "Message",
     "placeholderEmail": "you@example.com",
     "submit": "Send",
-    "sending": "Sending\u2026",
-    "success": "Thank you \u2014 we\u2019ll be in touch shortly",
+    "sending": "Sending…",
+    "success": "Thank you — we’ll be in touch shortly",
     "error": "Something went wrong. Please try again",
     "validation": {
       "required": "This field is required",
@@ -58,8 +60,8 @@
     }
   },
   "search": {
-    "placeholder": "Search\u2026",
-    "noResults": "No results found for \u201c{query}\u201d"
+    "placeholder": "Search…",
+    "noResults": "No results found for “{query}”"
   },
   "apothecary": {
     "title": "The Apothecary",
@@ -69,7 +71,61 @@
     "qualityStandards": "Quality Standards",
     "laboratoryVerification": "Laboratory Verification",
     "faqs": "Frequently Asked Questions",
-    "counter": "The Counter"
+    "counter": "The Counter",
+    "dispensation": {
+      "title": "Dispensation",
+      "intro": "This remedy is dispensed from the cabinet and not presented as a retail commodity. The amount below covers preparation, packaging, and delivery, and is provided after the monograph so the evidence may be read first",
+      "measure": "Measure",
+      "fee": "Fee",
+      "delivery": "Delivery",
+      "unavailable": "This remedy is currently unavailable. Write to us to receive a return notice when stock is restored",
+      "note": "There is no need to decide immediately. Read the full monograph before requesting dispensation"
+    },
+    "monographExtras": {
+      "commonQuestions": "Common questions",
+      "evidenceLabel": "Evidence-informed discussion",
+      "evidenceContext": "Evidence context",
+      "evidenceIntro": "Established evidence and emerging findings are listed separately. Neither replaces Prophetic grading or traditional scholarly standing",
+      "established": "Established evidence",
+      "emerging": "Emerging research",
+      "relatedAcademy": "Related Academy teaching",
+      "knowledgeLibrary": "Knowledge Library",
+      "knowledgeLibraryArticles": "Knowledge Library articles",
+      "furtherStudy": "Further study and embodied practice",
+      "crossDepartment": "Cross-department pathways",
+      "theAcademy": "The Academy",
+      "sacredJourneys": "Sacred Journeys"
+    },
+    "monograph": {
+      "section": "The Apothecary",
+      "remedyMonographs": "Remedy Monographs",
+      "folioPrefix": "Remedy monograph",
+      "editorialPhotography": "editorial photography",
+      "institutionalSummary": "Institutional summary",
+      "historicalUse": "Historical use",
+      "propheticTradition": "Prophetic tradition",
+      "traditionalScholarship": "Traditional scholarship",
+      "traditionalUsage": "Traditional usage",
+      "provenance": "Origin, cultivation, and harvesting",
+      "origin": "Origin",
+      "cultivation": "Cultivation",
+      "harvesting": "Harvesting",
+      "laboratoryVerification": "Laboratory verification",
+      "qualityAssurance": "Quality assurance",
+      "storage": "Storage",
+      "preparation": "Preparation",
+      "suggestedUse": "Suggested use",
+      "suggestedUseIntro": "Offered as a traditional dietary means and not as treatment for a diagnosed medical condition",
+      "contraindications": "Contraindications",
+      "photographyGuidance": "Photography guidance",
+      "packaging": "Packaging",
+      "shipping": "Shipping",
+      "returns": "Returns",
+      "customerSupport": "Customer support",
+      "attributionRevelation": "Allah says",
+      "attributionHadith": "The Prophet ﷺ said",
+      "attributionClassical": "Classical authorities record"
+    }
   },
   "academy": {
     "title": "The Academy",
@@ -78,7 +134,83 @@
     "enrolment": "Enrolment",
     "testimonials": "Testimonials",
     "foundations": "Foundations",
-    "clinicalEthics": "Clinical Ethics"
+    "clinicalEthics": "Clinical Ethics",
+    "enrolmentForm": {
+      "labelName": "Full name",
+      "labelEmail": "Email address",
+      "labelQualification": "Healthcare qualification or prerequisite pathway",
+      "labelStatement": "Application statement (prior study, motivation, understanding of limits)",
+      "acknowledgeText": "I confirm that I have read the entry requirements, assessment standards, and policies for {programme}. I understand that acceptance is not guaranteed",
+      "note": "Submission records your interest. Admission is determined after academic and clinical review",
+      "submit": "Send application",
+      "successMessage": "Your application has been received. Faculty review is completed within fourteen days, and you will be contacted by email",
+      "errors": {
+        "name": "Full name is required",
+        "email": "Enter a valid email address, for example name@example.com",
+        "qualification": "State your healthcare qualification or prerequisite pathway",
+        "statement": "Application statement is required (approximately 500 words)",
+        "acknowledge": "Confirmation is required before submission"
+      }
+    },
+    "programmeLedger": {
+      "ariaLabel": "Programme enrolment summary",
+      "diploma": "Hijāma Diploma",
+      "sendApplication": "Send application",
+      "reviewFirst": "Review the programme first"
+    },
+    "programmeView": {
+      "section": "The Academy",
+      "professionalFormation": "Professional formation",
+      "metaDuration": "Programme duration",
+      "metaFormat": "Delivery format",
+      "metaFee": "Programme fee",
+      "metaIntake": "Next intake",
+      "editorialCaption": "Clinical practice — sterile technique, patient care, and supervised assessment",
+      "overviewLabel": "Scope · Intended cohort · Commitments",
+      "overview": "Overview",
+      "programmeScope": "Programme scope",
+      "intendedCohort": "Intended cohort",
+      "commitments": "Commitments",
+      "outcomesLabel": "Learning outcomes",
+      "outcomes": "Outcomes",
+      "outcomesIntro": "Assessed outcomes are published before enrolment and reviewed prior to examination",
+      "assessed": "Assessed",
+      "curriculum": "Curriculum",
+      "modules": "modules",
+      "guidedHours": "guided hours",
+      "practicalComponent": "Practical component",
+      "primarySources": "Primary sources",
+      "practicalLabel": "Practical sessions",
+      "supervisedPractice": "Supervised practice",
+      "hours": "hours",
+      "supervision": "Supervision",
+      "faculty": "Faculty",
+      "facilities": "Facilities",
+      "clinicalStandards": "Clinical standards",
+      "assessment": "Assessment",
+      "clinicalPracticeLabel": "Clinical practice standards during term",
+      "certification": "Certification",
+      "entryRequirements": "Entry requirements",
+      "equipmentLabel": "Equipment list",
+      "equipment": "Equipment",
+      "tableItem": "Item",
+      "tableSpecification": "Specification",
+      "tableSupplied": "Supplied by",
+      "courseHandbook": "Course handbook",
+      "studentGuide": "Student guide",
+      "gallery": "Gallery",
+      "graduateAttestations": "Graduate attestations",
+      "testimonialsNote": "Published with explicit consent. Initials are used unless full attribution is requested by the graduate. Statements are attestation records, not promotional copy",
+      "graduatePathways": "Graduate pathways",
+      "afterCertification": "After certification",
+      "readPathwayDetails": "Read pathway details",
+      "policies": "Policies",
+      "relatedProgrammes": "Related programmes",
+      "application": "Application",
+      "enrolment": "Enrolment",
+      "enrolmentIntro": "Review the full programme before submission. Each application is evaluated on academic readiness and clinical suitability",
+      "sendApplication": "Send application"
+    }
   },
   "journeys": {
     "title": "Sacred Journeys",
@@ -86,7 +218,76 @@
     "registration": "Registration",
     "gallery": "Gallery",
     "itineraries": "Itineraries",
-    "faqs": "Frequently Asked Questions"
+    "faqs": "Frequently Asked Questions",
+    "view": {
+      "section": "Sacred Journeys",
+      "guidedJourney": "Guided educational journey",
+      "metaSeason": "Travel season",
+      "metaDuration": "Journey duration",
+      "metaLocation": "Primary location",
+      "metaGroupSize": "Group size",
+      "metaFee": "Journey fee",
+      "metaDeparture": "Next departure window",
+      "meaningLabel": "Purpose · Intended participants · Commitments",
+      "meaning": "Meaning",
+      "intendedParticipants": "Intended participants",
+      "commitments": "Commitments",
+      "preparation": "Preparation",
+      "viewPreparation": "View preparation timeline",
+      "readingList": "Reading list",
+      "reading": "Reading",
+      "packingGuide": "Packing guide",
+      "packing": "Packing",
+      "flightGuidance": "Flight guidance",
+      "flightPlanning": "Flight planning and coordination",
+      "accommodationLabel": "Accommodation philosophy",
+      "accommodation": "Accommodation",
+      "learning": "Learning",
+      "educationalSessions": "Educational sessions",
+      "sessions": "Sessions",
+      "dailyItinerary": "Daily itinerary",
+      "itinerary": "Itinerary",
+      "focus": "Focus",
+      "companionship": "Companionship",
+      "guidance": "Guidance",
+      "scholarsOnRoute": "Scholars and guides on route",
+      "reflectionJournals": "Reflection journals",
+      "reflection": "Reflection",
+      "journalPractice": "Journal practice",
+      "healthGuidance": "Health guidance",
+      "health": "Health",
+      "safety": "Safety",
+      "organisation": "Organisation",
+      "scholarsAndGuides": "Scholars and guides",
+      "gallery": "Gallery",
+      "policies": "Policies",
+      "relatedLearning": "Related learning",
+      "registration": "Registration",
+      "registerInterest": "Register your interest",
+      "registrationIntro": "This is not a booking. Each registration is reviewed through reading, interview, and suitability checks where applicable before placement is confirmed.",
+      "reviewRegistration": "Review registration pathway"
+    },
+    "registrationForm": {
+      "labelName": "Full name",
+      "labelEmail": "Email address",
+      "labelProgramme": "Programme",
+      "selectJourney": "Select a journey",
+      "undecided": "Undecided - correspondence welcome",
+      "labelExperience": "Prior study and relevant experience (foundations, travel, retreats)",
+      "labelHealth": "Health information relevant to guides (optional)",
+      "acknowledgeText": "I confirm that I have read the full journey page for {programme}, including safety guidance, logistics, packing, and policies",
+      "note": "Register your interest; this is not a booking confirmation. Placement is offered after review and interview",
+      "submit": "Register your interest",
+      "successMessage": "Your interest has been registered. The institution will contact you within fourteen days regarding reading review and interview",
+      "yourSelectedJourney": "your selected journey",
+      "errors": {
+        "name": "Full name is required",
+        "email": "Enter a valid email address, for example name@example.com",
+        "programme": "Select a journey, or choose undecided",
+        "experience": "Describe your prior study and relevant travel experience",
+        "acknowledge": "Confirmation is required before submission"
+      }
+    }
   },
   "knowledge": {
     "title": "Knowledge Library",
@@ -104,9 +305,34 @@
     "selectDate": "Select a date",
     "selectTime": "Select a time",
     "confirm": "Confirm booking",
-    "success": "Your consultation has been booked",
     "returning": "Returning patient",
-    "new": "New patient"
+    "new": "New patient",
+    "hero": {
+      "title": "Book Your Hijama Session",
+      "subtitle": "Experience Prophetic medicine in a calm, professional environment. Choose your practitioner, preferred clinic and appointment time",
+      "badgeQualified": "Qualified Practitioners",
+      "badgeSeparate": "Separate Male & Female Clinics",
+      "badgeSunnah": "Sunnah-Based Care"
+    },
+    "success": {
+      "title": "Thank you",
+      "message": "Your booking request has been received. We will confirm your appointment shortly via email",
+      "reference": "Reference: {id}",
+      "returnHome": "Return Home",
+      "bookAnother": "Book Another Session"
+    },
+    "patientForm": {
+      "stepLabel": "Step 5",
+      "title": "Patient Information",
+      "firstName": "First Name",
+      "surname": "Surname",
+      "email": "Email",
+      "telephone": "Telephone",
+      "reason": "Reason for appointment",
+      "medicalConditions": "Any medical conditions?",
+      "optional": "optional",
+      "consentText": "I understand Hijama may not be suitable for everyone and agree to the consultation process"
+    }
   },
   "seasonal": {
     "greeting": "Seasonal greeting"
@@ -116,7 +342,48 @@
     "exit": "Exit preview"
   },
   "metadata": {
-    "defaultTitle": "Sunnah Remedies \u2014 Institute of Prophetic Medicine",
-    "defaultDescription": "The world\u2019s leading institute of Prophetic Medicine \u2014 scholarship, clinical care, and natural therapeutics under one house"
+    "defaultTitle": "Sunnah Remedies — Institute of Prophetic Medicine",
+    "defaultDescription": "The world’s leading institute of Prophetic Medicine — scholarship, clinical care, and natural therapeutics under one house"
+  },
+  "arrival": {
+    "enter": "Enter",
+    "authorityStamp": "AUTHORITY",
+    "authorityHeading": "Authority",
+    "figurePending": "figure pending"
+  },
+  "plate": {
+    "toBeCommissioned": "TO BE COMMISSIONED",
+    "purpose": "Purpose",
+    "composition": "Composition",
+    "lens": "Lens",
+    "light": "Light",
+    "grade": "Grade",
+    "mood": "Mood",
+    "interim": "Interim"
+  },
+  "threshold": {
+    "standing": "The world’s leading institute of Prophetic Medicine",
+    "declaration": "A house for scholarship, clinical practice, and natural therapeutics across four departments. Built for careful study, patient service, and long stewardship",
+    "visitAcademy": "Visit the Academy",
+    "visitApothecary": "Visit the Apothecary",
+    "visitJourneys": "Visit Sacred Journeys",
+    "visitLibrary": "Visit the Knowledge Library",
+    "departmentNav": "Department navigation"
+  },
+  "hospitable": {
+    "heading": "The house is preparing",
+    "message": "This section is being readied — it will open when it is worthy of the visitor"
+  },
+  "wayForward": {
+    "ariaLabel": "Continue reading",
+    "returnTo": "Return to",
+    "continueTo": "Continue to"
+  },
+  "readingMode": {
+    "standard": "Day",
+    "focused": "Focus",
+    "evening": "Evening",
+    "ariaLabel": "Reading mode",
+    "legend": "Choose reading mode"
   }
 }

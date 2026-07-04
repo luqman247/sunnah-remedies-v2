@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { ListingRow } from "@/components/ui/Attestation";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
@@ -10,8 +12,14 @@ export const metadata: Metadata = {
   description: "Day-by-day educational itineraries published before departure.",
 };
 
-export default async function ItinerariesPage() {
-  const sanityJourneys = await getAllJourneys();
+export default async function ItinerariesPage({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const sanityJourneys = await getAllJourneys(locale);
   const journeyCatalogue = sanityJourneys.map((j) => {
     const adapted = journeyToSacredJourney(j);
     return {
