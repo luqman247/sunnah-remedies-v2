@@ -189,26 +189,29 @@ export default async function ArrivalPage() {
                 <Eyebrow>{eyebrow}</Eyebrow>
               </div>
 
-              <div className="choreo-arabic" style={{ marginBlockStart: "var(--space-8)" }}>
-                <p
-                  className="type-arabic-hero"
-                  lang="ar"
-                  dir="rtl"
-                  style={{ margin: 0 }}
-                >
-                  {arrivalArabic}
-                </p>
-              </div>
-
-              <IsnadRule variant="arrival" nodePosition={0.5} animated />
-
-              <h1
-                id="arrival-heading"
-                className="type-hero choreo-english"
-                style={{ margin: 0 }}
-              >
+              <h1 id="arrival-heading" style={{ margin: 0 }}>
                 <span className="sr-only">{arrivalEnglish}</span>
-                <span aria-hidden="true">{arrivalEnglish}</span>
+
+                <span className="choreo-arabic" aria-hidden="true" style={{ display: "block", marginBlockStart: "var(--space-8)" }}>
+                  <span
+                    className="type-arabic-hero"
+                    lang="ar"
+                    dir="rtl"
+                    style={{ display: "block" }}
+                  >
+                    {arrivalArabic}
+                  </span>
+                </span>
+
+                <IsnadRule variant="arrival" nodePosition={0.5} animated />
+
+                <span
+                  className="type-hero choreo-english"
+                  aria-hidden="true"
+                  style={{ display: "block" }}
+                >
+                  {arrivalEnglish}
+                </span>
               </h1>
 
               <p className="type-standfirst choreo-standfirst" style={{ marginBlockStart: "var(--space-6)", maxInlineSize: "60ch" }}>

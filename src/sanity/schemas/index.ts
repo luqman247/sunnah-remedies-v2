@@ -28,6 +28,9 @@ import { announcement } from "./documents/global/announcement";
 import { testimonial } from "./documents/global/testimonial";
 import { faq } from "./documents/global/faq";
 import mediaAsset from "./documents/global/media-asset";
+import videoAsset from "./documents/global/video-asset";
+import audioAsset from "./documents/global/audio-asset";
+import person from "./documents/global/person";
 import departmentCard from "./documents/global/department-card";
 
 // ── Documents: Apothecary ──
@@ -97,6 +100,9 @@ export const schemaTypes = [
   testimonial,
   faq,
   mediaAsset,
+  videoAsset,
+  audioAsset,
+  person,
   departmentCard,
 
   // Apothecary
