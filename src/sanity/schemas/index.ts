@@ -1,5 +1,6 @@
 // ── Objects ──
 import { seo } from "./objects/seo";
+import { relationship } from "./objects/relationship";
 import { institutionalImage, institutionalVideo, downloadFile } from "./objects/media";
 import { editorialWorkflow } from "./objects/editorial-workflow";
 import { propheticReference } from "./objects/prophetic-reference";
@@ -65,6 +66,10 @@ import { consultationsPage } from "./documents/clinical/consultations-page";
 // ── Documents: Institution ──
 import { charter } from "./documents/institution/charter";
 
+// ── Documents: Knowledge Graph (Phase 5 SEO) ──
+import { condition, bodySystem } from "./documents/knowledge-entities";
+import { hadith, quranReferenceDoc, researchPaper, scholar, reference } from "./documents/reference-entities";
+
 // ── Documents: Operations (Phase 4) ──
 import {
   batchRecord,
@@ -80,6 +85,7 @@ import { homepage } from "./documents/pages/homepage";
 export const schemaTypes = [
   // Objects
   seo,
+  relationship,
   institutionalImage,
   institutionalVideo,
   downloadFile,
@@ -144,6 +150,15 @@ export const schemaTypes = [
 
   // Institution
   charter,
+
+  // Knowledge Graph (Phase 5 SEO)
+  condition,
+  bodySystem,
+  hadith,
+  quranReferenceDoc,
+  researchPaper,
+  scholar,
+  reference,
 
   // Operations (Phase 4)
   batchRecord,

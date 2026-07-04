@@ -140,6 +140,14 @@ export const ingredient = defineType({
 
     // ── Connections (Phase 4 Commerce) ──
     defineField({
+      name: "relationships",
+      title: "Knowledge Graph Relationships",
+      type: "array",
+      group: "connections",
+      of: [{ type: "relationship" }],
+      description: "Typed edges to other entities (drives internal linking & structured data).",
+    }),
+    defineField({
       name: "relatedProducts",
       title: "Related Products",
       type: "array",
@@ -219,6 +227,28 @@ export const ingredient = defineType({
       title: "SEO",
       type: "seo",
       group: "overview",
+    }),
+    defineField({
+      name: "reviewer",
+      title: "Reviewer",
+      type: "reference",
+      group: "clinical",
+      to: [{ type: "faculty" }],
+      description: "Named clinical/scholarly reviewer (drives E-E-A-T and structured data).",
+    }),
+    defineField({
+      name: "reviewDate",
+      title: "Review Date",
+      type: "date",
+      group: "clinical",
+    }),
+    defineField({
+      name: "featuredSnippetAnswer",
+      title: "Featured Snippet Answer",
+      type: "text",
+      group: "overview",
+      rows: 3,
+      description: "Concise answer for rich results and AI retrieval.",
     }),
   ],
   preview: {

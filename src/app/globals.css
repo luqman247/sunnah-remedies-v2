@@ -3154,6 +3154,30 @@ a {
   background: color-mix(in oklch, var(--paper) 90%, var(--brass) 10%);
 }
 
+/* —— Knowledge Entity Fact Block —— */
+
+.fact-block {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s2) var(--s4);
+  padding: var(--s5);
+  background: color-mix(in oklch, var(--paper) 97%, var(--sage) 3%);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius, 4px);
+}
+
+.fact-block dt {
+  color: var(--muted);
+  font-size: var(--step--2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-top: 0.2em;
+}
+
+.fact-block dd {
+  margin: 0;
+}
+
 /* —— Way Forward (arcade navigation) —— */
 
 .way-forward {

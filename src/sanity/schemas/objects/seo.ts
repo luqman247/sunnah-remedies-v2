@@ -51,6 +51,7 @@ export const seo = defineType({
       type: "array",
       of: [{ type: "string" }],
       options: { layout: "tags" },
+      description: "Topical hints for search and internal categorisation.",
     }),
     defineField({
       name: "noIndex",
@@ -59,10 +60,30 @@ export const seo = defineType({
       initialValue: false,
     }),
     defineField({
+      name: "robots",
+      title: "Robots Directive",
+      type: "string",
+      options: {
+        list: [
+          { title: "Index, Follow (default)", value: "index, follow" },
+          { title: "No Index, Follow", value: "noindex, follow" },
+          { title: "Index, No Follow", value: "index, nofollow" },
+          { title: "No Index, No Follow", value: "noindex, nofollow" },
+        ],
+      },
+    }),
+    defineField({
+      name: "focusEntities",
+      title: "Focus Entities",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "ingredient" }, { type: "condition" }, { type: "bodySystem" }] }],
+      description: "Primary entities this document is 'about' — drives schema `about` property.",
+    }),
+    defineField({
       name: "structuredData",
-      title: "Structured Data (JSON-LD)",
+      title: "Schema Overrides (JSON-LD)",
       type: "text",
-      description: "Advanced: custom JSON-LD for rich search results.",
+      description: "Advanced: per-page schema field overrides/additions as JSON.",
     }),
   ],
 });

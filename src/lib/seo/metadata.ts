@@ -1,62 +1,182 @@
+/**
+ * Metadata Builder — Four-tier cascade.
+ *
+ * Resolution: Tier 4 (editorial override) > Tier 3 (document values) >
+ * Tier 2 (type defaults) > Tier 1 (institutional defaults).
+ *
+ * No page ever ships without a resolved title, description, canonical, and OG image.
+ */
+
 import type { Metadata } from "next";
-import { LOCALES, localeById, DEFAULT_LOCALE } from "@/i18n/locales";
+import { seoConfig, typeDefaults } from "./config";
+import { canonicalUrl } from "./canonical";
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://sunnahremedies.com";
-
-export function localeUrl(locale: string, path: string) {
-  const prefix = localeById(locale).prefix;
-  const clean = path.startsWith("/") ? path : `/${path}`;
-  const suffix = clean === "/" ? "" : clean;
-  return `${SITE}${prefix}${suffix}` || SITE;
+/**
+ * Build a locale-aware URL (unprefixed for default locale 'en').
+ */
+export function localeUrl(locale: string, path: string): string {
+  const prefix = locale === "en" ? "" : `/${locale}`;
+  return `${seoConfig.siteUrl}${prefix}${path}`;
 }
 
-export function buildMetadata(opts: {
-  locale: string;
-  path: string;
-  title?: string;
-  description?: string;
-  ogImage?: { asset?: { url?: string } } | string;
+export interface SeoOverrides {
+  seoTitle?: string;
+  seoDescription?: string;
+  canonicalUrl?: string;
+  socialImage?: string;
+  robots?: string;
+  keywords?: string[];
   noIndex?: boolean;
-  alternates?: { lang: string; slug: string }[];
-}): Metadata {
-  const { locale, path, title, description, ogImage, noIndex, alternates } = opts;
+}
 
-  const languages: Record<string, string> = {};
-  for (const l of LOCALES) {
-    const alt = alternates?.find((a) => a.lang === l.id);
-    const p = alt ? path.replace(/[^/]+$/, alt.slug) : path;
-    languages[l.htmlLang] = localeUrl(l.id, p);
+export interface DocumentMeta {
+  title?: string;
+  name?: string;
+  description?: string;
+  shortDescription?: string;
+  definition?: string;
+  question?: string;
+  slug?: string;
+  image?: string;
+  imageAlt?: string;
+  publishedAt?: string;
+  updatedAt?: string;
+  author?: string;
+  section?: string;
+  tags?: string[];
+}
+
+export interface MetadataInput {
+  path: string;
+  type?: string;
+  document?: DocumentMeta;
+  overrides?: SeoOverrides;
+}
+
+/**
+ * Apply a title pattern by replacing {field} tokens with document values.
+ */
+function applyPattern(pattern: string, doc: DocumentMeta): string {
+  return pattern.replace(/\{(\w+)\}/g, (_, key) => {
+    const value = doc[key as keyof DocumentMeta];
+    if (typeof value === "string") return value;
+    return "";
+  });
+}
+
+/**
+ * Truncate a string to a maximum length, breaking at word boundaries.
+ */
+function truncate(str: string, max: number): string {
+  if (str.length <= max) return str;
+  const truncated = str.slice(0, max);
+  const lastSpace = truncated.lastIndexOf(" ");
+  return lastSpace > max * 0.6 ? truncated.slice(0, lastSpace) : truncated;
+}
+
+/**
+ * Build complete Next.js Metadata for a route.
+ *
+ * Consumed by every route's generateMetadata export.
+ */
+export function buildMetadata(input: MetadataInput): Metadata {
+  const { path, type, document: doc, overrides } = input;
+
+  const typeConfig = type ? typeDefaults[type] : undefined;
+
+  // Tier 3: Document-derived values
+  let computedTitle = doc?.title || doc?.name || "";
+  let computedDescription = doc?.description || doc?.shortDescription || doc?.definition || "";
+
+  // Apply type patterns (Tier 2)
+  if (typeConfig && doc) {
+    if (!computedTitle && typeConfig.titlePattern) {
+      computedTitle = applyPattern(typeConfig.titlePattern, doc);
+    } else if (computedTitle && typeConfig.titlePattern) {
+      computedTitle = applyPattern(typeConfig.titlePattern, doc);
+    }
+    if (!computedDescription && typeConfig.descriptionPattern) {
+      computedDescription = applyPattern(typeConfig.descriptionPattern, doc);
+    }
   }
-  languages["x-default"] = localeUrl(DEFAULT_LOCALE, path);
 
-  const ogUrl = typeof ogImage === "string" ? ogImage : ogImage?.asset?.url;
+  // Tier 4: Editorial overrides
+  const finalTitle = overrides?.seoTitle || computedTitle || seoConfig.defaultTitle;
+  const finalDescription = truncate(
+    overrides?.seoDescription || computedDescription || seoConfig.defaultDescription,
+    155
+  );
+  const finalCanonical = overrides?.canonicalUrl || canonicalUrl(path);
+  const finalImage = overrides?.socialImage || doc?.image || seoConfig.defaultOgImage;
+  const finalRobots = overrides?.noIndex
+    ? "noindex, follow"
+    : overrides?.robots || typeConfig?.robots || "index, follow";
 
-  return {
-    metadataBase: new URL(SITE),
-    title,
-    description,
+  // Determine OG type
+  let ogType: "website" | "article" | "profile" = "website";
+  if (type === "article") ogType = "article";
+  if (type === "faculty") ogType = "profile";
+
+  const metadata: Metadata = {
+    title: finalTitle,
+    description: finalDescription,
     alternates: {
-      canonical: localeUrl(locale, path),
-      languages,
+      canonical: finalCanonical,
     },
-    robots: noIndex ? { index: false, follow: false } : undefined,
+    robots: finalRobots,
     openGraph: {
-      title: title || undefined,
-      description: description || undefined,
-      url: localeUrl(locale, path),
-      siteName: "Sunnah Remedies",
-      locale: localeById(locale).intl.replace("-", "_"),
-      alternateLocale: LOCALES.filter((l) => l.id !== locale).map((l) =>
-        l.intl.replace("-", "_"),
-      ),
-      images: ogUrl ? [{ url: ogUrl }] : undefined,
-      type: "website",
+      title: finalTitle,
+      description: finalDescription,
+      url: finalCanonical,
+      siteName: seoConfig.siteName,
+      locale: seoConfig.locale,
+      type: ogType,
+      images: [
+        {
+          url: finalImage,
+          width: 1200,
+          height: 630,
+          alt: doc?.imageAlt || finalTitle,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
-      title: title || undefined,
-      description: description || undefined,
-      images: ogUrl ? [ogUrl] : undefined,
+      title: finalTitle,
+      description: finalDescription,
+      images: [finalImage],
+      site: seoConfig.twitterHandle,
     },
   };
+
+  // Article-specific OG fields
+  if (type === "article" && metadata.openGraph && "type" in metadata.openGraph) {
+    const og = metadata.openGraph as Record<string, unknown>;
+    if (doc?.publishedAt) og.publishedTime = doc.publishedAt;
+    if (doc?.updatedAt) og.modifiedTime = doc.updatedAt;
+    if (doc?.author) og.authors = [doc.author];
+    if (doc?.section) og.section = doc.section;
+    if (doc?.tags) og.tags = doc.tags;
+  }
+
+  // Keywords (internal use, not meta keywords — used for search/topical hints)
+  if (overrides?.keywords && overrides.keywords.length > 0) {
+    metadata.keywords = overrides.keywords;
+  }
+
+  return metadata;
+}
+
+/**
+ * Build metadata for a simple static page (Tier 1 + 2 only).
+ */
+export function buildStaticMetadata(
+  path: string,
+  title: string,
+  description?: string
+): Metadata {
+  return buildMetadata({
+    path,
+    document: { title, description },
+  });
 }

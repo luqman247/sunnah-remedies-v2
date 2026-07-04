@@ -9,6 +9,7 @@ import { FooterServer } from "@/components/chrome/FooterServer";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { SeasonalGreeting } from "@/components/institutional/SeasonalGreeting";
 import { getCurrentSeason } from "@/lib/calendar/seasons";
+import { composeGraph, organizationNode, websiteNode } from "@/lib/seo/schema";
 import {
   Amiri,
   Fraunces,
@@ -75,6 +76,12 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: composeGraph(organizationNode(), websiteNode()),
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t){document.documentElement.setAttribute('data-theme',t)}else if(window.matchMedia('(prefers-color-scheme:dark)').matches){document.documentElement.setAttribute('data-theme','dark')}}catch(e){}})()`,
