@@ -1,11 +1,13 @@
+import { getLocale } from "next-intl/server";
 import { getFooter } from "@/sanity/lib/fetch";
 import { getTranslations } from "next-intl/server";
 import { PreFooter, Footer } from "./Footer";
 import { SeasonalMark } from "@/components/institutional/SeasonalMark";
 
 export async function FooterServer() {
+  const locale = await getLocale();
   const [footer, t] = await Promise.all([
-    getFooter(),
+    getFooter(locale),
     getTranslations("footer"),
   ]);
 
