@@ -109,8 +109,8 @@ const fallback = {
       nameAr: "\u0627\u0644\u0631\u062D\u0644\u0627\u062A \u0627\u0644\u0645\u0642\u062F\u0633\u0629",
       standfirst: "Educational pilgrimage to the Holy Lands — preparation precedes departure, purpose before itinerary. Every journey carries a reading list, a faculty companion, and a clear statement of difficulty",
       href: "/sacred-journeys",
-      size: "feature" as const,
-      plate: { status: "final" as const, purpose: "Pilgrims approaching a sacred site at dawn", composition: "Wide panoramic, golden hour", lighting: "Dawn light, warm amber", mood: "Reverent", image: { url: "/photography/sacred-journeys-hero.jpg" }, alt: "Pilgrims approaching the Prophet's Mosque in Madinah at dawn" },
+      size: "standard" as const,
+      plate: { status: "final" as const, purpose: "Masjid an-Nabawi at golden hour — quiet courtyard and green dome", composition: "Architectural detail, shallow depth", lighting: "Warm side light, golden hour", mood: "Reverent", image: { url: "/photography/sacred-journeys-editorial.jpg" }, alt: "Masjid an-Nabawi at golden hour — warm marble courtyard, green dome, and distant pilgrims in quiet reflection" },
     },
   ],
   authoritySignals: [
@@ -147,7 +147,7 @@ export default async function ArrivalPage({
   const enterLabel = cms?.enterLabel || fallback.enterLabel;
   const enterHref = cms?.enterHref || fallback.enterHref;
   const tradition = cms?.tradition || fallback.tradition;
-  const departments = cms?.departmentCards?.length
+  const rawDepartments = cms?.departmentCards?.length
     ? cms.departmentCards.map(card => ({
         order: card.order,
         nameEn: card.nameEn,
@@ -169,6 +169,15 @@ export default async function ArrivalPage({
           : { status: "brief" as const, purpose: card.standfirst, composition: "", lighting: "", mood: "" },
       }))
     : fallback.departments;
+  const departments = rawDepartments.map((dept) =>
+    dept.href === "/sacred-journeys"
+      ? {
+          ...dept,
+          size: "standard" as const,
+          plate: fallback.departments.find((d) => d.href === "/sacred-journeys")!.plate,
+        }
+      : dept,
+  );
   const authoritySignals = cms?.authoritySignals?.length ? cms.authoritySignals : fallback.authoritySignals;
   const correspondence = cms?.correspondence || fallback.correspondence;
   const institutionStatement = cms?.institutionStatement || fallback.institutionStatement;
@@ -342,7 +351,7 @@ export default async function ArrivalPage({
                 <h2 id="departments-heading" className="sr-only">The Departments</h2>
 
                 <div className="dept-grid">
-                  {departments.filter(d => d.size === "standard").map((dept, i) => (
+                  {departments.filter(d => d.size === "standard" && d.href !== "/the-apothecary").map((dept, i) => (
                     <Reveal key={dept.href} delay={i * 80}>
                       <DepartmentCard
                         order={dept.order}
@@ -359,19 +368,34 @@ export default async function ArrivalPage({
 
                 <DepartmentDivider />
 
-                {departments.filter(d => d.size === "feature").map((dept) => (
-                  <Reveal key={dept.href} delay={240}>
-                    <DepartmentCard
-                      order={dept.order}
-                      nameEn={dept.nameEn}
-                      nameAr={dept.nameAr}
-                      standfirst={dept.standfirst}
-                      href={dept.href}
-                      plate={dept.plate}
-                      size={dept.size}
-                    />
-                  </Reveal>
-                ))}
+                <div className="dept-spread">
+                  {departments.filter(d => d.href === "/the-apothecary").map((dept) => (
+                    <Reveal key={dept.href} delay={160}>
+                      <DepartmentCard
+                        order={dept.order}
+                        nameEn={dept.nameEn}
+                        nameAr={dept.nameAr}
+                        standfirst={dept.standfirst}
+                        href={dept.href}
+                        plate={dept.plate}
+                        size={dept.size}
+                      />
+                    </Reveal>
+                  ))}
+                  {departments.filter(d => d.href === "/sacred-journeys").map((dept) => (
+                    <Reveal key={dept.href} delay={240}>
+                      <DepartmentCard
+                        order={dept.order}
+                        nameEn={dept.nameEn}
+                        nameAr={dept.nameAr}
+                        standfirst={dept.standfirst}
+                        href={dept.href}
+                        plate={dept.plate}
+                        size={dept.size}
+                      />
+                    </Reveal>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

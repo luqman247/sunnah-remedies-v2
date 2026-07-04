@@ -28,7 +28,7 @@ export const relationship = defineType({
         { type: "researchPaper" },
         { type: "scholar" },
         { type: "faculty" },
-        { type: "reference" },
+        { type: "citation" },
       ],
       validation: (rule) => rule.required(),
     }),

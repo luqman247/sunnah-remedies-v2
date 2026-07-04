@@ -1,0 +1,126 @@
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Alert Thresholds — severity-tiered detection
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+quiet_hours:
+  start: "22:00"
+  end: "07:00"
+  timezone: "Europe/London"
+  info_suppressed: true
+  warn_suppressed: false
+  page_suppressed: false
+
+dedup_window_minutes: 60
+
+alerts:
+  - name: traffic_spike
+    metric: page_views_1h
+    condition: "> baseline * 3"
+    severity: info
+    route: slack
+    channel: "#analytics-alerts"
+
+  - name: traffic_drop
+    metric: page_views_1h
+    condition: "< baseline * 0.3"
+    severity: warn
+    route: slack
+    channel: "#analytics-alerts"
+
+  - name: seo_ranking_drop
+    metric: avg_position_change
+    condition: "> 5 positions drop"
+    severity: warn
+    route: slack_email
+    channel: "#seo-alerts"
+
+  - name: seo_indexation_drop
+    metric: indexed_pages
+    condition: "< previous_day * 0.9"
+    severity: warn
+    route: slack_email
+    channel: "#seo-alerts"
+
+  - name: broken_links
+    metric: broken_link_count
+    condition: "> 0 (new)"
+    severity: warn
+    route: slack
+    channel: "#engineering-alerts"
+
+  - name: broken_pages
+    metric: error_boundary_count_1h
+    condition: "> 5"
+    severity: warn
+    route: slack
+    channel: "#engineering-alerts"
+
+  - name: failed_searches_spike
+    metric: search_zero_result_rate_1h
+    condition: "> 0.3"
+    severity: warn
+    route: slack
+    channel: "#editorial-alerts"
+
+  - name: low_stock
+    metric: inventory_available
+    condition: "<= 5"
+    severity: warn
+    route: slack_email
+    channel: "#commerce-alerts"
+
+  - name: checkout_failure_spike
+    metric: checkout_no_purchase_rate_1h
+    condition: "> 0.5"
+    severity: page
+    route: pagerduty
+    channel: "#commerce-alerts"
+
+  - name: cwv_regression
+    metric: lcp_p75
+    condition: "> previous_release + 200ms"
+    severity: warn
+    route: slack
+    channel: "#engineering-alerts"
+
+  - name: cwv_critical
+    metric: lcp_p75
+    condition: "> 2500ms"
+    severity: page
+    route: slack
+    channel: "#engineering-alerts"
+
+  - name: ai_trust_drop
+    metric: ai_uncited_claim_rate_24h
+    condition: "> 0.15"
+    severity: page
+    route: pagerduty
+    channel: "#integrity-alerts"
+
+  - name: ai_low_confidence_spike
+    metric: ai_low_confidence_rate_1h
+    condition: "> 0.4"
+    severity: warn
+    route: slack
+    channel: "#ai-alerts"
+
+  - name: overdue_reviews
+    metric: content_overdue_review_count
+    condition: "> 0 (hadith or clinical)"
+    severity: warn
+    route: slack
+    channel: "#editorial-alerts"
+
+  - name: publishing_failure
+    metric: sanity_webhook_error_count_1h
+    condition: "> 0"
+    severity: warn
+    route: slack
+    channel: "#engineering-alerts"
+
+  - name: api_error_spike
+    metric: api_error_rate_5m
+    condition: "> 0.05"
+    severity: warn
+    route: slack
+    channel: "#engineering-alerts"

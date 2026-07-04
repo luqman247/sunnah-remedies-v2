@@ -51,6 +51,8 @@ import { ingredient } from "./documents/apothecary/ingredient";
 // ── Documents: Academy ──
 import { programme } from "./documents/academy/programme";
 import { faculty } from "./documents/academy/faculty";
+import { campusCourse } from "./documents/academy/campus-course";
+import { campusLesson } from "./documents/academy/campus-lesson";
 
 // ── Documents: Sacred Journeys ──
 import { journey } from "./documents/journeys/journey";
@@ -62,13 +64,16 @@ import { topic } from "./documents/knowledge/topic";
 
 // ── Documents: Clinical ──
 import { consultationsPage } from "./documents/clinical/consultations-page";
+import { clinicalProtocol } from "./documents/clinical/clinical-protocol";
+import { practitionerResource } from "./documents/clinical/practitioner-resource";
+import { researchPublication } from "./documents/clinical/research-publication";
 
 // ── Documents: Institution ──
 import { charter } from "./documents/institution/charter";
 
 // ── Documents: Knowledge Graph (Phase 5 SEO) ──
 import { condition, bodySystem } from "./documents/knowledge-entities";
-import { hadith, quranReferenceDoc, researchPaper, scholar, reference } from "./documents/reference-entities";
+import { hadith, quranReferenceDoc, researchPaper, scholar, citation } from "./documents/reference-entities";
 
 // ── Documents: Operations (Phase 4) ──
 import {
@@ -136,6 +141,8 @@ export const schemaTypes = [
   // Academy
   programme,
   faculty,
+  campusCourse,
+  campusLesson,
 
   // Sacred Journeys
   journey,
@@ -147,6 +154,9 @@ export const schemaTypes = [
 
   // Clinical
   consultationsPage,
+  clinicalProtocol,
+  practitionerResource,
+  researchPublication,
 
   // Institution
   charter,
@@ -158,7 +168,7 @@ export const schemaTypes = [
   quranReferenceDoc,
   researchPaper,
   scholar,
-  reference,
+  citation,
 
   // Operations (Phase 4)
   batchRecord,

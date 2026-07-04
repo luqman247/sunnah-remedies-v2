@@ -54,7 +54,7 @@ import type { KnowledgeTopic } from "@/lib/content/sections/knowledge-library";
 
 /* ── Helpers ────────────────────────────────────────────────────── */
 
-async function safeFetch<T>(
+export async function safeFetch<T>(
   query: string,
   params?: Record<string, string>,
   locale: string = DEFAULT_LOCALE,
@@ -80,14 +80,17 @@ async function safeFetch<T>(
 export interface NavigationData {
   items: { label: string; href: string; highlighted?: boolean; hidden?: boolean }[];
   announcement?: { active: boolean; message?: string; link?: string; linkLabel?: string };
+  /** True when labels come from a Sanity document for the requested locale */
+  fromCms: boolean;
 }
 
 export async function getNavigation(locale: string = DEFAULT_LOCALE): Promise<NavigationData> {
-  const sanity = await safeFetch<Navigation>(navigationQuery, {}, locale);
+  const sanity = await safeFetch<Navigation>(navigationQuery, {}, locale, false);
   if (sanity?.mainNavigation?.length) {
     return {
       items: sanity.mainNavigation.filter(i => !i.hidden),
       announcement: sanity.announcementBar,
+      fromCms: true,
     };
   }
   return {
@@ -95,6 +98,7 @@ export async function getNavigation(locale: string = DEFAULT_LOCALE): Promise<Na
       ...departments.map(d => ({ label: d.label, href: d.href })),
       { label: "Clinical consultations", href: "/consultations", highlighted: true },
     ],
+    fromCms: false,
   };
 }
 
@@ -106,10 +110,12 @@ export interface FooterData {
   columns: { title: string; links: { label: string; href: string }[] }[];
   closingStatement: string;
   colophon: string;
+  /** True when content comes from a Sanity document for the requested locale */
+  fromCms: boolean;
 }
 
 export async function getFooter(locale: string = DEFAULT_LOCALE): Promise<FooterData> {
-  const sanity = await safeFetch<FooterSettings>(footerQuery, {}, locale);
+  const sanity = await safeFetch<FooterSettings>(footerQuery, {}, locale, false);
   if (sanity?.columns?.length) {
     return {
       preFooterStatement: sanity.preFooterStatement || "Begin where you are. Whether you seek a remedy, wish to study, or are preparing for pilgrimage — the institution is open.",
@@ -117,6 +123,7 @@ export async function getFooter(locale: string = DEFAULT_LOCALE): Promise<Footer
       columns: sanity.columns,
       closingStatement: sanity.closingStatement || "Knowledge before commerce. Service before profit. Trust before growth.",
       colophon: sanity.colophon || "Sunnah Remedies · Est. MMXXV · Healing is from Allah · the remedy is a means",
+      fromCms: true,
     };
   }
   return {
@@ -130,6 +137,7 @@ export async function getFooter(locale: string = DEFAULT_LOCALE): Promise<Footer
     ],
     closingStatement: "Knowledge before commerce. Service before profit. Trust before growth.",
     colophon: "Sunnah Remedies · Est. MMXXV · Healing is from Allah · the remedy is a means",
+    fromCms: false,
   };
 }
 

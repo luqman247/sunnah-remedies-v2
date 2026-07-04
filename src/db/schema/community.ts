@@ -15,6 +15,7 @@ import {
   pgEnum,
   index,
   uniqueIndex,
+  integer,
 } from "drizzle-orm/pg-core";
 import { people } from "@/operations/db/schema";
 
@@ -290,4 +291,253 @@ export const communityAuditLog = pgTable("community_audit_log", {
   index("community_audit_actor_idx").on(table.actorAccountId),
   index("community_audit_target_idx").on(table.target, table.targetId),
   index("community_audit_occurred_idx").on(table.occurredAt),
+]);
+
+/* ── CPD Records ────────────────────────────────────────────────── */
+
+export const cpdCategoryEnum = pgEnum("cpd_category", [
+  "clinical_practice",
+  "research",
+  "teaching",
+  "institutional_event",
+  "journal_club",
+  "external_activity",
+  "mentorship",
+]);
+
+export const cpdRecords = pgTable("cpd_records", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  accountId: uuid("account_id")
+    .notNull()
+    .references(() => accounts.id),
+  activity: text("activity").notNull(),
+  categoryKey: cpdCategoryEnum("category_key").notNull(),
+  credits: integer("credits").notNull(),
+  evidenceRef: text("evidence_ref"),
+  activityDate: timestamp("activity_date").notNull(),
+  verifiedBy: uuid("verified_by").references(() => accounts.id),
+  verifiedAt: timestamp("verified_at"),
+  sourceType: text("source_type"),
+  sourceId: text("source_id"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  archivedAt: timestamp("archived_at"),
+}, (table) => [
+  index("cpd_records_account_idx").on(table.accountId),
+  index("cpd_records_date_idx").on(table.activityDate),
+  index("cpd_records_category_idx").on(table.categoryKey),
+]);
+
+/* ── CPD Cycles ─────────────────────────────────────────────────── */
+
+export const cpdCycles = pgTable("cpd_cycles", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  accountId: uuid("account_id")
+    .notNull()
+    .references(() => accounts.id),
+  year: integer("year").notNull(),
+  targetCredits: integer("target_credits").default(20).notNull(),
+  accruedCredits: integer("accrued_credits").default(0).notNull(),
+  statementRef: text("statement_ref"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => [
+  uniqueIndex("cpd_cycles_account_year_idx").on(table.accountId, table.year),
+  index("cpd_cycles_account_idx").on(table.accountId),
+]);
+
+/* ── Saved Resources ────────────────────────────────────────────── */
+
+export const savedResources = pgTable("saved_resources", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  accountId: uuid("account_id")
+    .notNull()
+    .references(() => accounts.id),
+  targetType: text("target_type").notNull(),
+  targetId: text("target_id").notNull(),
+  title: text("title").notNull(),
+  href: text("href"),
+  metadata: jsonb("metadata").$type<Record<string, unknown>>().default({}),
+  savedAt: timestamp("saved_at").defaultNow().notNull(),
+}, (table) => [
+  index("saved_resources_account_idx").on(table.accountId),
+  uniqueIndex("saved_resources_account_target_idx").on(
+    table.accountId,
+    table.targetType,
+    table.targetId
+  ),
+]);
+
+/* ── Practitioner Profiles ──────────────────────────────────────── */
+
+export const practitionerProfiles = pgTable("practitioner_profiles", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  accountId: uuid("account_id")
+    .notNull()
+    .references(() => accounts.id),
+  scopeOfPractice: text("scope_of_practice"),
+  registrationBody: text("registration_body"),
+  registrationNumber: text("registration_number"),
+  specialisations: jsonb("specialisations").$type<string[]>().default([]),
+  servicesOffered: jsonb("services_offered").$type<string[]>().default([]),
+  verifiedAt: timestamp("verified_at"),
+  verifiedUntil: timestamp("verified_until"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => [
+  uniqueIndex("practitioner_profiles_account_idx").on(table.accountId),
+]);
+
+/* ── Directory Listings (future-ready) ──────────────────────────── */
+
+export const directoryListings = pgTable("directory_listings", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  accountId: uuid("account_id")
+    .notNull()
+    .references(() => accounts.id),
+  visibilityScope: text("visibility_scope").default("members_only").notNull(),
+  locationConsented: boolean("location_consented").default(false),
+  contactConsented: boolean("contact_consented").default(false),
+  city: text("city"),
+  region: text("region"),
+  contactPreference: text("contact_preference").default("institution_routed"),
+  isListed: boolean("is_listed").default(false).notNull(),
+  listedAt: timestamp("listed_at"),
+  delistedAt: timestamp("delisted_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => [
+  uniqueIndex("directory_listings_account_idx").on(table.accountId),
+  index("directory_listings_listed_idx").on(table.isListed),
+]);
+
+/* ── Campus Enrolments (Phase 9 — Learning & Campus) ───────────── */
+
+export const campusEnrolmentStatusEnum = pgEnum("campus_enrolment_status", [
+  "active",
+  "paused",
+  "completed",
+  "withdrawn",
+]);
+
+export const campusEnrolments = pgTable("campus_enrolments", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  accountId: uuid("account_id")
+    .notNull()
+    .references(() => accounts.id),
+  courseRef: text("course_ref").notNull(),
+  courseSlug: text("course_slug").notNull(),
+  courseName: text("course_name").notNull(),
+  status: campusEnrolmentStatusEnum("status").default("active").notNull(),
+  progressPct: integer("progress_pct").default(0).notNull(),
+  startedAt: timestamp("started_at").defaultNow().notNull(),
+  completedAt: timestamp("completed_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => [
+  index("campus_enrolments_account_idx").on(table.accountId),
+  index("campus_enrolments_course_idx").on(table.courseRef),
+  uniqueIndex("campus_enrolments_account_course_idx").on(
+    table.accountId,
+    table.courseRef
+  ),
+]);
+
+export const lessonProgress = pgTable("lesson_progress", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  enrolmentId: uuid("enrolment_id")
+    .notNull()
+    .references(() => campusEnrolments.id),
+  lessonRef: text("lesson_ref").notNull(),
+  lessonSlug: text("lesson_slug").notNull(),
+  completedAt: timestamp("completed_at"),
+  secondsWatched: integer("seconds_watched").default(0),
+  lastPosition: integer("last_position").default(0),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => [
+  index("lesson_progress_enrolment_idx").on(table.enrolmentId),
+  uniqueIndex("lesson_progress_enrolment_lesson_idx").on(
+    table.enrolmentId,
+    table.lessonRef
+  ),
+]);
+
+export const courseNotes = pgTable("course_notes", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  accountId: uuid("account_id")
+    .notNull()
+    .references(() => accounts.id),
+  courseRef: text("course_ref").notNull(),
+  lessonRef: text("lesson_ref"),
+  body: text("body").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => [
+  index("course_notes_account_idx").on(table.accountId),
+  index("course_notes_course_idx").on(table.courseRef),
+]);
+
+export const campusAssignments = pgTable("campus_assignments", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  courseRef: text("course_ref").notNull(),
+  lessonRef: text("lesson_ref"),
+  title: text("title").notNull(),
+  prompt: text("prompt").notNull(),
+  dueAt: timestamp("due_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => [
+  index("campus_assignments_course_idx").on(table.courseRef),
+]);
+
+export const campusSubmissions = pgTable("campus_submissions", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  assignmentId: uuid("assignment_id")
+    .notNull()
+    .references(() => campusAssignments.id),
+  accountId: uuid("account_id")
+    .notNull()
+    .references(() => accounts.id),
+  body: text("body").notNull(),
+  attachments: jsonb("attachments").$type<string[]>().default([]),
+  grade: text("grade"),
+  feedback: text("feedback"),
+  submittedAt: timestamp("submitted_at").defaultNow().notNull(),
+  gradedAt: timestamp("graded_at"),
+}, (table) => [
+  index("campus_submissions_assignment_idx").on(table.assignmentId),
+  index("campus_submissions_account_idx").on(table.accountId),
+]);
+
+export const flashcardDecks = pgTable("flashcard_decks", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  accountId: uuid("account_id")
+    .notNull()
+    .references(() => accounts.id),
+  courseRef: text("course_ref").notNull(),
+  lessonRef: text("lesson_ref"),
+  front: text("front").notNull(),
+  back: text("back").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => [
+  index("flashcard_decks_account_idx").on(table.accountId),
+  index("flashcard_decks_course_idx").on(table.courseRef),
+]);
+
+export const flashcardReviews = pgTable("flashcard_reviews", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  deckId: uuid("deck_id")
+    .notNull()
+    .references(() => flashcardDecks.id),
+  accountId: uuid("account_id")
+    .notNull()
+    .references(() => accounts.id),
+  easeFactor: integer("ease_factor").default(250).notNull(),
+  interval: integer("interval").default(1).notNull(),
+  dueAt: timestamp("due_at").defaultNow().notNull(),
+  lastReviewedAt: timestamp("last_reviewed_at"),
+}, (table) => [
+  index("flashcard_reviews_deck_idx").on(table.deckId),
+  index("flashcard_reviews_account_idx").on(table.accountId),
+  index("flashcard_reviews_due_idx").on(table.dueAt),
 ]);

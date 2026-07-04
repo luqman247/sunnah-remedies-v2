@@ -13,7 +13,7 @@ interface Props {
 
 async function getReference(refId: string) {
   return client.fetch<CitationReference & { referencedBy: { _type: string; title: string; slug: string }[] }>(
-    `*[_type == "reference" && refId == $refId][0] {
+    `*[_type == "citation" && refId == $refId][0] {
       refId,
       "type": type,
       title,

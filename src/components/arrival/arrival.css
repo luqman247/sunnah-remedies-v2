@@ -367,6 +367,32 @@
   grid-column: 1 / -1;
 }
 
+/* ── Editorial spread (Apothecary + Sacred Journeys) ────────── */
+
+.arrival-v2 .dept-spread {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .arrival-v2 .dept-spread {
+    grid-template-columns: 45fr 55fr;
+    gap: var(--space-8);
+  }
+}
+
+@media (min-width: 1200px) {
+  .arrival-v2 .dept-spread {
+    grid-template-columns: minmax(340px, 1fr) minmax(560px, 1.45fr);
+  }
+}
+
+.arrival-v2 .dept-spread .dept-card--feature {
+  grid-column: auto;
+}
+
 /* ── Authority band (Ch. 9.6) ───────────────────────────────── */
 
 .arrival-v2 .authority-band {

@@ -398,3 +398,91 @@ export const articleSlugsQuery = groq`
   *[_type == "article" && defined(slug.current) && !(_id in path("drafts.**"))]
     { "slug": slug.current, language }
 `;
+
+/* ── Practitioner Portal ─────────────────────────────────────────── */
+
+export const clinicalProtocolsQuery = groq`
+  *[_type == "clinicalProtocol"
+    && reviewStatus == "approved"
+    && accessLevel == "practitioner"
+    && language == $language
+  ] | order(reviewedAt desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    version,
+    category,
+    summary,
+    reviewedAt,
+    "reviewedByName": reviewedBy->name
+  }
+`;
+
+export const clinicalProtocolBySlugQuery = groq`
+  *[_type == "clinicalProtocol"
+    && slug.current == $slug
+    && reviewStatus == "approved"
+    && language == $language
+  ][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    version,
+    category,
+    summary,
+    body,
+    sourceReferences,
+    reviewedAt,
+    "reviewedByName": reviewedBy->name,
+    downloadFile
+  }
+`;
+
+export const practitionerResourcesQuery = groq`
+  *[_type == "practitionerResource"
+    && reviewStatus == "approved"
+    && language == $language
+  ] | order(_updatedAt desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    resourceType,
+    description,
+    version,
+    reviewedAt,
+    "reviewedByName": reviewedBy->name,
+    downloadFile
+  }
+`;
+
+export const researchPublicationsQuery = groq`
+  *[_type == "researchPublication"
+    && accessLevel in ["practitioner", "researcher"]
+    && language == $language
+  ] | order(publishedAt desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    authors,
+    abstract,
+    publishedAt,
+    journal,
+    externalUrl,
+    downloadFile
+  }
+`;
+
+export const practitionerAnnouncementsQuery = groq`
+  *[_type == "announcement"
+    && active == true
+    && department == "practitioner"
+    && (!defined(startDate) || startDate <= now())
+    && (!defined(endDate) || endDate >= now())
+  ] | order(_updatedAt desc) {
+    _id,
+    message,
+    link,
+    startDate,
+    endDate
+  }
+`;

@@ -17,11 +17,8 @@ export async function MastheadServer() {
     getTranslations("nav"),
   ]);
 
-  const items = nav.items.length
-    ? nav.items.map((item) => {
-        const match = NAV_KEYS.find((n) => n.href === item.href);
-        return match ? { ...item, label: t(match.key as never) } : item;
-      })
+  const items = nav.fromCms
+    ? nav.items
     : NAV_KEYS.map((n) => ({
         label: t(n.key as never),
         href: n.href,

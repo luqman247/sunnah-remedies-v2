@@ -1,0 +1,154 @@
+{
+  "_comment": "GTM Container configuration reference — import into Google Tag Manager",
+  "containerName": "Sunnah Remedies — Production",
+  "containerId": "GTM-XXXXXXX",
+  "fingerprint": "phase-7-v1",
+
+  "tags": [
+    {
+      "name": "GA4 Configuration",
+      "type": "gaawc",
+      "parameter": {
+        "measurementId": "G-XXXXXXXXXX",
+        "sendPageView": true,
+        "enhancedMeasurement": {
+          "scrolls": true,
+          "outboundClicks": true,
+          "siteSearch": true,
+          "fileDownloads": true,
+          "videoEngagement": true,
+          "formInteractions": false
+        },
+        "consentMode": {
+          "analytics_storage": "{{Consent - Analytics}}",
+          "ad_storage": "{{Consent - Ads}}",
+          "ad_user_data": "{{Consent - Ad User Data}}",
+          "ad_personalization": "{{Consent - Ad Personalization}}"
+        }
+      },
+      "firingTriggerId": "all_pages",
+      "consentRequired": "analytics_storage"
+    },
+    {
+      "name": "GA4 - Custom Events",
+      "type": "gaawe",
+      "parameter": {
+        "eventName": "{{Event Name}}",
+        "eventParameters": "{{Event Parameters}}"
+      },
+      "firingTriggerId": "custom_event",
+      "consentRequired": "analytics_storage"
+    },
+    {
+      "name": "GA4 - Ecommerce Events",
+      "type": "gaawe",
+      "parameter": {
+        "eventName": "{{Ecommerce Event Name}}",
+        "ecommerce": "{{Ecommerce Object}}"
+      },
+      "firingTriggerId": "ecommerce_event",
+      "consentRequired": "analytics_storage"
+    },
+    {
+      "name": "Microsoft Clarity",
+      "type": "html",
+      "parameter": {
+        "html": "<!-- Loaded via analytics/lib/clarity.ts -->"
+      },
+      "_comment": "Clarity is loaded directly via the analytics provider, not through GTM, for better consent control"
+    }
+  ],
+
+  "triggers": [
+    {
+      "name": "all_pages",
+      "type": "pageview"
+    },
+    {
+      "name": "custom_event",
+      "type": "customEvent",
+      "filter": {
+        "parameter": "event",
+        "type": "matchRegex",
+        "value": "^(article_|search|entity_|course_|consultation_|booking_|journey_|ai_|newsletter_|error_|consent_|citation_|reference_|internal_link_|topic_|graph_|faq_|gallery_|revision_|preparation_|intake_|appointment_|translation_|account_|video_)"
+      }
+    },
+    {
+      "name": "ecommerce_event",
+      "type": "customEvent",
+      "filter": {
+        "parameter": "event",
+        "type": "matchRegex",
+        "value": "^(view_item|select_item|add_to_cart|remove_from_cart|begin_checkout|add_shipping_info|add_payment_info|purchase|refund)"
+      }
+    }
+  ],
+
+  "variables": [
+    {
+      "name": "Consent - Analytics",
+      "type": "jsm",
+      "value": "function() { return {{Consent State}}.analytics_storage || 'denied'; }"
+    },
+    {
+      "name": "Consent - Ads",
+      "type": "jsm",
+      "value": "function() { return {{Consent State}}.ad_storage || 'denied'; }"
+    },
+    {
+      "name": "Consent State",
+      "type": "dataLayer",
+      "dataLayerVariableName": "consent"
+    },
+    {
+      "name": "Event Name",
+      "type": "dataLayer",
+      "dataLayerVariableName": "event"
+    },
+    {
+      "name": "Event Parameters",
+      "type": "dataLayer",
+      "dataLayerVariableName": "*"
+    },
+    {
+      "name": "Ecommerce Object",
+      "type": "dataLayer",
+      "dataLayerVariableName": "ecommerce"
+    }
+  ],
+
+  "consentSettings": {
+    "consentDefault": {
+      "analytics_storage": "denied",
+      "ad_storage": "denied",
+      "ad_user_data": "denied",
+      "ad_personalization": "denied",
+      "regions": ["all"],
+      "wait_for_update": 500
+    },
+    "advancedConsentMode": true
+  },
+
+  "customDimensions": [
+    { "name": "pillar", "scope": "EVENT" },
+    { "name": "content_type", "scope": "EVENT" },
+    { "name": "entity_type", "scope": "EVENT" },
+    { "name": "hadith_grade", "scope": "EVENT" },
+    { "name": "content_freshness", "scope": "EVENT" },
+    { "name": "ai_confidence_band", "scope": "EVENT" },
+    { "name": "funnel_stage", "scope": "EVENT" },
+    { "name": "user_segment", "scope": "USER" },
+    { "name": "student_status", "scope": "USER" },
+    { "name": "consent_state", "scope": "USER" }
+  ],
+
+  "customMetrics": [
+    { "name": "reading_seconds", "scope": "EVENT" },
+    { "name": "scroll_pct", "scope": "EVENT" },
+    { "name": "video_pct", "scope": "EVENT" },
+    { "name": "quiz_score", "scope": "EVENT" },
+    { "name": "ai_confidence", "scope": "EVENT" },
+    { "name": "citation_count", "scope": "EVENT" },
+    { "name": "search_refinements", "scope": "EVENT" }
+  ]
+}

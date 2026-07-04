@@ -131,8 +131,8 @@ export const scholar = defineType({
 /**
  * Bibliographic reference entity (for citation pages).
  */
-export const reference = defineType({
-  name: "reference",
+export const citation = defineType({
+  name: "citation",
   title: "Reference / Citation",
   type: "document",
   fields: [

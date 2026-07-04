@@ -1,0 +1,981 @@
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Sunnah Remedies — Tracking Plan v1.0
+# Single source of truth for event taxonomy
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+version: "1.0"
+last_reviewed: "2026-07-04"
+governance:
+  changes_require_pr: true
+  quarterly_review: true
+  pii_prohibited: true
+
+# ── Custom Dimensions (registered in GA4) ──────────────
+custom_dimensions:
+  - name: pillar
+    scope: event
+    values: [apothecary, academy, journeys, knowledge, clinical, institute]
+
+  - name: content_type
+    scope: event
+    values: [article, product, course, entity, consultation, journey, video, faq]
+
+  - name: entity_type
+    scope: event
+    values: [disease, herb, product, hadith, verse, ingredient, faculty]
+
+  - name: hadith_grade
+    scope: event
+    values: [sahih, hasan, daif]
+
+  - name: content_freshness
+    scope: event
+    values: [fresh, due_review, stale]
+
+  - name: ai_confidence_band
+    scope: event
+    values: [high, medium, low]
+
+  - name: funnel_stage
+    scope: event
+    values: [threshold, corridor, pathway]
+
+  - name: user_segment
+    scope: user
+    values: [visitor, patient, student, researcher, customer]
+
+  - name: student_status
+    scope: user
+    values: [prospect, applicant, enrolled, graduate]
+
+  - name: consent_state
+    scope: user
+    values: [granted, denied, modelled]
+
+# ── Custom Metrics ─────────────────────────────────────
+custom_metrics:
+  - reading_seconds
+  - scroll_pct
+  - video_pct
+  - quiz_score
+  - ai_confidence
+  - citation_count
+  - search_refinements
+
+# ── User Properties ────────────────────────────────────
+user_properties:
+  - user_segment
+  - student_status
+  - preferred_language
+  - first_pillar_touched
+  - lifecycle_stage
+
+# ── Event Catalogue ────────────────────────────────────
+
+events:
+  # ─── Editorial / Knowledge Library ───────────────────
+  - event_name: article_view
+    trigger: User lands on an article page
+    surface: knowledge-library/[slug]
+    source: client
+    parameters:
+      - { name: article_id, type: string }
+      - { name: article_title, type: string }
+      - { name: pillar, type: string }
+      - { name: content_type, type: string, value: article }
+      - { name: content_freshness, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Which articles attract readership
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: article_read_25
+    trigger: User scrolls past 25% of article
+    surface: knowledge-library/[slug]
+    source: client
+    parameters:
+      - { name: article_id, type: string }
+      - { name: scroll_pct, type: number, value: 25 }
+      - { name: reading_seconds, type: number }
+    ledger: integrity
+    key_event: false
+    decision_served: Reading depth analysis
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: article_read_50
+    trigger: User scrolls past 50% of article
+    surface: knowledge-library/[slug]
+    source: client
+    parameters:
+      - { name: article_id, type: string }
+      - { name: scroll_pct, type: number, value: 50 }
+      - { name: reading_seconds, type: number }
+    ledger: integrity
+    key_event: false
+    decision_served: Reading depth analysis
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: article_read_75
+    trigger: User scrolls past 75% of article
+    surface: knowledge-library/[slug]
+    source: client
+    parameters:
+      - { name: article_id, type: string }
+      - { name: scroll_pct, type: number, value: 75 }
+      - { name: reading_seconds, type: number }
+    ledger: integrity
+    key_event: false
+    decision_served: Reading depth analysis
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: article_read_100
+    trigger: User scrolls past 100% of article
+    surface: knowledge-library/[slug]
+    source: client
+    parameters:
+      - { name: article_id, type: string }
+      - { name: scroll_pct, type: number, value: 100 }
+      - { name: reading_seconds, type: number }
+    ledger: integrity
+    key_event: false
+    decision_served: Full completion rates
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: article_complete
+    trigger: User reaches end of article (scroll 100% + minimum time)
+    surface: knowledge-library/[slug]
+    source: client
+    parameters:
+      - { name: article_id, type: string }
+      - { name: reading_seconds, type: number }
+    ledger: integrity
+    key_event: false
+    decision_served: True completion vs scroll-through
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: citation_click
+    trigger: User clicks a citation reference
+    surface: knowledge-library/[slug]
+    source: client
+    parameters:
+      - { name: article_id, type: string }
+      - { name: citation_id, type: string }
+      - { name: citation_type, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Research depth and source trust
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: reference_click
+    trigger: User clicks a reference link
+    surface: knowledge-library/[slug]
+    source: client
+    parameters:
+      - { name: article_id, type: string }
+      - { name: reference_id, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Reference engagement depth
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: internal_link_click
+    trigger: User clicks an internal link within content
+    surface: knowledge-library/[slug]
+    source: client
+    parameters:
+      - { name: source_page, type: string }
+      - { name: destination_page, type: string }
+      - { name: link_text, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Corridor traversal effectiveness
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: topic_view
+    trigger: User views a topic/category page
+    surface: knowledge-library
+    source: client
+    parameters:
+      - { name: topic_id, type: string }
+      - { name: topic_name, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Topic demand
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  # ─── Knowledge / Search ──────────────────────────────
+  - event_name: search
+    trigger: User performs a search
+    surface: search
+    source: client
+    parameters:
+      - { name: search_term, type: string }
+      - { name: search_refinements, type: number }
+    ledger: both
+    key_event: false
+    decision_served: What visitors are seeking
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: search_refine
+    trigger: User refines a search query
+    surface: search
+    source: client
+    parameters:
+      - { name: search_term, type: string }
+      - { name: previous_term, type: string }
+    ledger: both
+    key_event: false
+    decision_served: Search effectiveness and query gaps
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: search_zero_result
+    trigger: Search returns zero results
+    surface: search
+    source: client
+    parameters:
+      - { name: search_term, type: string }
+    ledger: both
+    key_event: false
+    decision_served: Content gaps / knowledge commissioning
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: entity_view
+    trigger: User views a knowledge entity page
+    surface: knowledge/[type]/[slug]
+    source: client
+    parameters:
+      - { name: entity_id, type: string }
+      - { name: entity_type, type: string }
+      - { name: entity_name, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Entity demand mapping
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: graph_traverse
+    trigger: User navigates between knowledge graph entities
+    surface: knowledge
+    source: client
+    parameters:
+      - { name: from_entity, type: string }
+      - { name: to_entity, type: string }
+      - { name: relationship_type, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Knowledge graph usage patterns
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: faq_expand
+    trigger: User expands an FAQ item
+    surface: various
+    source: client
+    parameters:
+      - { name: faq_id, type: string }
+      - { name: faq_question, type: string }
+      - { name: page, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Common questions and information demand
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  # ─── Commerce (Enhanced Ecommerce) ──────────────────
+  - event_name: view_item
+    trigger: User views a product detail page
+    surface: the-apothecary/[slug]
+    source: client
+    parameters:
+      - { name: items, type: array }
+      - { name: currency, type: string }
+      - { name: value, type: number }
+    ledger: commercial
+    key_event: false
+    decision_served: Product demand and discovery
+    owner: commerce
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: view_item_list
+    trigger: User views a product listing/collection
+    surface: the-apothecary, catalogue, collection pages
+    source: client
+    parameters:
+      - { name: items, type: array }
+      - { name: item_list_name, type: string }
+      - { name: item_list_id, type: string }
+    ledger: commercial
+    key_event: false
+    decision_served: Collection/list effectiveness
+    owner: commerce
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: select_item
+    trigger: User clicks on a product from a list
+    surface: the-apothecary, catalogue
+    source: client
+    parameters:
+      - { name: items, type: array }
+      - { name: item_list_name, type: string }
+    ledger: commercial
+    key_event: false
+    decision_served: List position and selection patterns
+    owner: commerce
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: gallery_interact
+    trigger: User interacts with product image gallery
+    surface: the-apothecary/[slug]
+    source: client
+    parameters:
+      - { name: item_id, type: string }
+      - { name: interaction_type, type: string }
+      - { name: image_index, type: number }
+    ledger: commercial
+    key_event: false
+    decision_served: Visual merchandising effectiveness
+    owner: commerce
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: add_to_cart
+    trigger: User adds item to cart
+    surface: the-apothecary/[slug], counter
+    source: client
+    parameters:
+      - { name: items, type: array }
+      - { name: currency, type: string }
+      - { name: value, type: number }
+    ledger: commercial
+    key_event: false
+    decision_served: Cart conversion and product demand
+    owner: commerce
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: remove_from_cart
+    trigger: User removes item from cart
+    surface: counter
+    source: client
+    parameters:
+      - { name: items, type: array }
+      - { name: currency, type: string }
+      - { name: value, type: number }
+    ledger: commercial
+    key_event: false
+    decision_served: Cart abandonment analysis
+    owner: commerce
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: begin_checkout
+    trigger: User begins checkout process
+    surface: checkout
+    source: client
+    parameters:
+      - { name: items, type: array }
+      - { name: currency, type: string }
+      - { name: value, type: number }
+      - { name: coupon, type: string }
+    ledger: commercial
+    key_event: false
+    decision_served: Checkout funnel entry
+    owner: commerce
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: add_shipping_info
+    trigger: User adds shipping information
+    surface: checkout
+    source: client
+    parameters:
+      - { name: items, type: array }
+      - { name: currency, type: string }
+      - { name: value, type: number }
+      - { name: shipping_tier, type: string }
+    ledger: commercial
+    key_event: false
+    decision_served: Checkout funnel progression
+    owner: commerce
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: add_payment_info
+    trigger: User adds payment information
+    surface: checkout
+    source: client
+    parameters:
+      - { name: items, type: array }
+      - { name: currency, type: string }
+      - { name: value, type: number }
+      - { name: payment_type, type: string }
+    ledger: commercial
+    key_event: false
+    decision_served: Checkout funnel progression
+    owner: commerce
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: purchase
+    trigger: Order confirmed (server-truth via webhook)
+    surface: order-confirmation, webhook
+    source: server
+    parameters:
+      - { name: transaction_id, type: string }
+      - { name: items, type: array }
+      - { name: currency, type: string }
+      - { name: value, type: number }
+      - { name: tax, type: number }
+      - { name: shipping, type: number }
+      - { name: coupon, type: string }
+    ledger: commercial
+    key_event: true
+    decision_served: Revenue, conversion, product performance
+    owner: commerce
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: refund
+    trigger: Refund processed (server-truth via webhook)
+    surface: webhook
+    source: server
+    parameters:
+      - { name: transaction_id, type: string }
+      - { name: items, type: array }
+      - { name: currency, type: string }
+      - { name: value, type: number }
+    ledger: commercial
+    key_event: false
+    decision_served: Refund rate as integrity guard
+    owner: commerce
+    consent_category: analytics
+    pii_risk: none
+
+  # ─── Academy / Courses ──────────────────────────────
+  - event_name: course_view
+    trigger: User views a course page
+    surface: the-academy/[slug]
+    source: client
+    parameters:
+      - { name: course_id, type: string }
+      - { name: course_name, type: string }
+      - { name: pillar, type: string, value: academy }
+    ledger: both
+    key_event: false
+    decision_served: Course demand
+    owner: academy
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: curriculum_view
+    trigger: User views course curriculum details
+    surface: the-academy/curriculum
+    source: client
+    parameters:
+      - { name: course_id, type: string }
+      - { name: course_name, type: string }
+    ledger: both
+    key_event: false
+    decision_served: Curriculum interest depth
+    owner: academy
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: course_application_start
+    trigger: User begins course application
+    surface: the-academy/enrolment
+    source: client
+    parameters:
+      - { name: course_id, type: string }
+      - { name: course_name, type: string }
+    ledger: commercial
+    key_event: false
+    decision_served: Application funnel entry
+    owner: academy
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: course_enrol
+    trigger: Student confirmed enrolled (server)
+    surface: server
+    source: server
+    parameters:
+      - { name: course_id, type: string }
+      - { name: course_name, type: string }
+      - { name: cohort, type: string }
+    ledger: commercial
+    key_event: true
+    decision_served: Enrolment volume and conversion
+    owner: academy
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: lesson_start
+    trigger: Student starts a lesson
+    surface: student-portal
+    source: server
+    parameters:
+      - { name: course_id, type: string }
+      - { name: lesson_id, type: string }
+      - { name: lesson_index, type: number }
+    ledger: integrity
+    key_event: false
+    decision_served: Lesson activation and drop-off
+    owner: academy
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: lesson_complete
+    trigger: Student completes a lesson
+    surface: student-portal
+    source: server
+    parameters:
+      - { name: course_id, type: string }
+      - { name: lesson_id, type: string }
+      - { name: lesson_index, type: number }
+      - { name: reading_seconds, type: number }
+    ledger: integrity
+    key_event: false
+    decision_served: Lesson completion and drop-off analysis
+    owner: academy
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: video_progress
+    trigger: Video reaches 25/50/75/100% milestone
+    surface: student-portal, content pages
+    source: client
+    parameters:
+      - { name: video_id, type: string }
+      - { name: video_title, type: string }
+      - { name: video_pct, type: number }
+      - { name: course_id, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Video engagement and completion
+    owner: academy
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: quiz_attempt
+    trigger: Student begins a quiz
+    surface: student-portal
+    source: server
+    parameters:
+      - { name: course_id, type: string }
+      - { name: quiz_id, type: string }
+      - { name: lesson_id, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Assessment engagement
+    owner: academy
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: quiz_complete
+    trigger: Student completes a quiz
+    surface: student-portal
+    source: server
+    parameters:
+      - { name: course_id, type: string }
+      - { name: quiz_id, type: string }
+      - { name: quiz_score, type: number }
+      - { name: passed, type: boolean }
+    ledger: integrity
+    key_event: false
+    decision_served: Knowledge mastery and curriculum gaps
+    owner: academy
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: certificate_issued
+    trigger: Certificate generated upon course completion
+    surface: server
+    source: server
+    parameters:
+      - { name: course_id, type: string }
+      - { name: course_name, type: string }
+    ledger: integrity
+    key_event: true
+    decision_served: Graduation rate and programme success
+    owner: academy
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: revision_open
+    trigger: Graduate revisits course material
+    surface: student-portal
+    source: client
+    parameters:
+      - { name: course_id, type: string }
+      - { name: lesson_id, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Post-graduation engagement
+    owner: academy
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: tutor_query
+    trigger: Student uses AI tutor
+    surface: student-portal
+    source: server
+    parameters:
+      - { name: course_id, type: string }
+      - { name: lesson_id, type: string }
+      - { name: query_topic, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Knowledge gaps and tutor effectiveness
+    owner: academy
+    consent_category: analytics
+    pii_risk: none
+
+  # ─── Clinical / Consultations ────────────────────────
+  - event_name: consultation_view
+    trigger: User views consultation page
+    surface: consultations
+    source: client
+    parameters:
+      - { name: consultation_type, type: string }
+      - { name: pillar, type: string, value: clinical }
+    ledger: integrity
+    key_event: false
+    decision_served: Clinical service demand
+    owner: clinical
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: booking_start
+    trigger: User begins booking process
+    surface: consultations
+    source: client
+    parameters:
+      - { name: consultation_type, type: string }
+      - { name: practitioner, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Booking funnel entry
+    owner: clinical
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: intake_start
+    trigger: Patient begins intake form
+    surface: consultations
+    source: client
+    parameters:
+      - { name: consultation_type, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Intake funnel entry
+    owner: clinical
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: intake_complete
+    trigger: Patient completes intake form
+    surface: consultations
+    source: server
+    parameters:
+      - { name: consultation_type, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Intake completion rate
+    owner: clinical
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: appointment_booked
+    trigger: Appointment confirmed
+    surface: server
+    source: server
+    parameters:
+      - { name: consultation_type, type: string }
+      - { name: appointment_date, type: string }
+    ledger: integrity
+    key_event: true
+    decision_served: Appointment conversion
+    owner: clinical
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: appointment_attended
+    trigger: Patient attends appointment (server-confirmed)
+    surface: server
+    source: server
+    parameters:
+      - { name: consultation_type, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Attendance rate vs booked
+    owner: clinical
+    consent_category: analytics
+    pii_risk: none
+
+  # ─── Sacred Journeys ────────────────────────────────
+  - event_name: journey_view
+    trigger: User views a journey page
+    surface: sacred-journeys
+    source: client
+    parameters:
+      - { name: journey_id, type: string }
+      - { name: journey_name, type: string }
+      - { name: pillar, type: string, value: journeys }
+    ledger: both
+    key_event: false
+    decision_served: Journey demand
+    owner: journeys
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: programme_view
+    trigger: User views a journey programme
+    surface: sacred-journeys/[slug]
+    source: client
+    parameters:
+      - { name: journey_id, type: string }
+      - { name: programme_id, type: string }
+    ledger: both
+    key_event: false
+    decision_served: Programme interest depth
+    owner: journeys
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: journey_booking_start
+    trigger: User begins journey booking
+    surface: sacred-journeys/registration
+    source: client
+    parameters:
+      - { name: journey_id, type: string }
+      - { name: programme_id, type: string }
+    ledger: commercial
+    key_event: false
+    decision_served: Journey booking funnel entry
+    owner: journeys
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: journey_deposit
+    trigger: Deposit paid for journey
+    surface: server
+    source: server
+    parameters:
+      - { name: journey_id, type: string }
+      - { name: programme_id, type: string }
+      - { name: value, type: number }
+      - { name: currency, type: string }
+    ledger: commercial
+    key_event: true
+    decision_served: Journey revenue and conversion
+    owner: journeys
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: preparation_open
+    trigger: Traveller opens preparation materials
+    surface: sacred-journeys/preparation
+    source: client
+    parameters:
+      - { name: journey_id, type: string }
+      - { name: material_type, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Duty-of-care preparation engagement
+    owner: journeys
+    consent_category: analytics
+    pii_risk: none
+
+  # ─── AI ──────────────────────────────────────────────
+  - event_name: ai_query
+    trigger: User submits a question to the AI assistant
+    surface: ai-assistant
+    source: server
+    parameters:
+      - { name: query_topic, type: string }
+      - { name: pillar, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: AI demand and topic mapping
+    owner: ai
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: ai_response
+    trigger: AI returns a response
+    surface: ai-assistant
+    source: server
+    parameters:
+      - { name: query_topic, type: string }
+      - { name: ai_confidence, type: number }
+      - { name: ai_confidence_band, type: string }
+      - { name: citation_count, type: number }
+      - { name: has_uncited_claims, type: boolean }
+    ledger: integrity
+    key_event: false
+    decision_served: AI quality and trust
+    owner: ai
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: ai_citation_shown
+    trigger: AI response includes cited source
+    surface: ai-assistant
+    source: server
+    parameters:
+      - { name: source_id, type: string }
+      - { name: source_type, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Citation coverage
+    owner: ai
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: ai_fallback
+    trigger: AI declines to answer or defers
+    surface: ai-assistant
+    source: server
+    parameters:
+      - { name: query_topic, type: string }
+      - { name: fallback_reason, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Knowledge gaps and AI limitations
+    owner: ai
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: ai_recommendation
+    trigger: AI recommends a product/course/consultation
+    surface: ai-assistant
+    source: server
+    parameters:
+      - { name: recommendation_type, type: string }
+      - { name: recommendation_id, type: string }
+      - { name: recommendation_name, type: string }
+    ledger: both
+    key_event: false
+    decision_served: Assistive recommendation value
+    owner: ai
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: ai_feedback
+    trigger: User provides feedback on AI response
+    surface: ai-assistant
+    source: client
+    parameters:
+      - { name: feedback_type, type: string }
+      - { name: rating, type: number }
+    ledger: integrity
+    key_event: false
+    decision_served: User-perceived AI quality
+    owner: ai
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: translation_used
+    trigger: User switches language
+    surface: global
+    source: client
+    parameters:
+      - { name: from_language, type: string }
+      - { name: to_language, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Language reach and Arabic fidelity
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  # ─── Trust / System ─────────────────────────────────
+  - event_name: newsletter_signup
+    trigger: User subscribes to newsletter
+    surface: correspondence
+    source: server
+    parameters:
+      - { name: source_page, type: string }
+    ledger: integrity
+    key_event: true
+    decision_served: Newsletter growth and engagement
+    owner: editorial
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: account_create
+    trigger: User creates an account
+    surface: sign-in
+    source: server
+    parameters:
+      - { name: account_type, type: string }
+    ledger: both
+    key_event: false
+    decision_served: User registration and segmentation
+    owner: engineering
+    consent_category: analytics
+    pii_risk: none
+
+  - event_name: error_boundary
+    trigger: Error boundary catches an error
+    surface: global
+    source: client
+    parameters:
+      - { name: error_type, type: string }
+      - { name: error_page, type: string }
+      - { name: error_component, type: string }
+    ledger: commercial
+    key_event: false
+    decision_served: Site stability and broken pages
+    owner: engineering
+    consent_category: functional
+    pii_risk: none
+
+  - event_name: consent_update
+    trigger: User updates consent preferences
+    surface: global
+    source: client
+    parameters:
+      - { name: analytics_storage, type: string }
+      - { name: ad_storage, type: string }
+      - { name: ad_user_data, type: string }
+      - { name: ad_personalization, type: string }
+    ledger: integrity
+    key_event: false
+    decision_served: Consent state auditing
+    owner: compliance
+    consent_category: functional
+    pii_risk: none

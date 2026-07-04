@@ -10,6 +10,10 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { SeasonalGreeting } from "@/components/institutional/SeasonalGreeting";
 import { getCurrentSeason } from "@/lib/calendar/seasons";
 import { composeGraph, organizationNode, websiteNode } from "@/lib/seo/schema";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { AnalyticsProvider } from "../../../analytics/lib/provider";
+import { ConsentBanner } from "../../../analytics/lib/consent-banner";
 import {
   Amiri,
   Fraunces,
@@ -99,11 +103,15 @@ export default async function LocaleLayout({
         )}
         <NextIntlClientProvider>
           <CounterProvider>
+            <AnalyticsProvider />
             <MastheadServer />
             <Breadcrumb />
             <SeasonalGreeting />
             <main>{children}</main>
             <FooterServer />
+            <ConsentBanner />
+            <Analytics />
+            <SpeedInsights />
           </CounterProvider>
         </NextIntlClientProvider>
       </body>
