@@ -12,19 +12,24 @@ export const metadata: Metadata = {
 export default function OpsIndexPage() {
   const forms = [
     {
+      href: "/ops/dashboard",
+      title: "Institutional Dashboard",
+      description: "Real-time overview of the entire institution",
+    },
+    {
       href: "/ops/daily-sign-off",
       title: "Daily Sign-Off",
-      description: "Opening and closing confirmation.",
+      description: "Opening and closing confirmation",
     },
     {
       href: "/ops/temperature-log",
       title: "Temperature Log",
-      description: "Dispensary and storage temperature recording.",
+      description: "Dispensary and storage temperature recording",
     },
     {
       href: "/ops/goods-in",
       title: "Goods-In",
-      description: "Record a batch receipt into stock.",
+      description: "Record a batch receipt into stock",
     },
   ];
 

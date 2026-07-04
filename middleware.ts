@@ -50,7 +50,11 @@ export default function middleware(req: NextRequest) {
   }
 
   // ── Auth-protected routes ───────────────────────────────────────
-  if (pathname.startsWith("/handbook") || pathname.startsWith("/ops")) {
+  if (
+    pathname.startsWith("/handbook") ||
+    pathname.startsWith("/ops") ||
+    pathname.startsWith("/intelligence")
+  ) {
     return (authMiddleware as (req: NextRequest) => NextResponse)(req);
   }
 

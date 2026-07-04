@@ -15,6 +15,10 @@ import {
   isAlreadyProcessed,
   markProcessed,
 } from "@/lib/commerce/webhooks";
+import {
+  processOrderCreated as emitOrderAnalytics,
+  processOrderCancelled as emitCancelAnalytics,
+} from "../../../../../analytics/server/webhooks/shopify";
 
 export async function POST(request: NextRequest) {
   const rawBody = await request.text();
@@ -91,12 +95,22 @@ async function handleShopifyTopic(topic: string, payload: Record<string, unknown
 
 async function handleOrderCreated(payload: Record<string, unknown>) {
   console.info(`[Webhook/Shopify] Order created: ${payload.id}`);
+  await emitOrderAnalytics(payload);
 }
 
 async function handleOrderFulfilled(payload: Record<string, unknown>) {
   console.info(`[Webhook/Shopify] Order fulfilled: ${payload.id}`);
+  const { emitEvent } = await import("@/operations/events/emit");
+  await emitEvent("order.shipped", {
+    orderId: (payload.id as number)?.toString() ?? "",
+    shopifyOrderId: (payload.id as number)?.toString() ?? "",
+    personId: "",
+    trackingNumber: (payload.fulfillments as Array<{ tracking_number?: string }>)?.[0]?.tracking_number,
+    carrier: (payload.fulfillments as Array<{ tracking_company?: string }>)?.[0]?.tracking_company,
+  });
 }
 
 async function handleOrderCancelled(payload: Record<string, unknown>) {
   console.info(`[Webhook/Shopify] Order cancelled: ${payload.id}`);
+  await emitCancelAnalytics(payload);
 }

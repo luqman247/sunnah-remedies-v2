@@ -14,6 +14,10 @@ import {
   isAlreadyProcessed,
   markProcessed,
 } from "@/lib/commerce/webhooks";
+import {
+  processPaymentSucceeded as emitPaymentAnalytics,
+  processChargeRefunded as emitRefundAnalytics,
+} from "../../../../../analytics/server/webhooks/stripe";
 
 export async function POST(request: NextRequest) {
   const rawBody = await request.text();
@@ -50,25 +54,68 @@ async function handleStripeEvent(
   type: string,
   data: Record<string, unknown>
 ) {
+  const { emitEvent } = await import("@/operations/events/emit");
+
   switch (type) {
     case "payment_intent.succeeded": {
       const purpose = (data.metadata as Record<string, string>)?.purpose;
       console.info(`[Webhook/Stripe] Payment succeeded: ${data.id} (${purpose})`);
+      await emitPaymentAnalytics(data);
+
+      await emitEvent("order.paid", {
+        orderId: (data.id as string) ?? "",
+        shopifyOrderId: (data.metadata as Record<string, string>)?.shopifyOrderId ?? "",
+        stripePaymentIntentId: (data.id as string) ?? "",
+        personId: (data.metadata as Record<string, string>)?.personId ?? "",
+        totalAmount: ((data.amount as number) ?? 0) / 100,
+        currency: (data.currency as string)?.toUpperCase() ?? "GBP",
+        lineItems: [],
+      });
       break;
     }
 
     case "payment_intent.payment_failed": {
       console.warn(`[Webhook/Stripe] Payment failed: ${data.id}`);
+      const { createAlert } = await import("@/operations/alerts/service");
+      await createAlert({
+        type: "payment_failure",
+        severity: "critical",
+        title: "Payment failed",
+        message: `Payment intent ${data.id} failed`,
+        resource: "payment",
+        resourceId: data.id as string,
+        deduplicationKey: `payment-fail:${data.id}`,
+      });
       break;
     }
 
     case "charge.refunded": {
       console.info(`[Webhook/Stripe] Refund processed: ${data.id}`);
+      await emitRefundAnalytics(data);
+
+      await emitEvent("order.refunded", {
+        orderId: (data.payment_intent as string) ?? "",
+        shopifyOrderId: "",
+        personId: "",
+        refundAmount: ((data.amount_refunded as number) ?? 0) / 100,
+        currency: (data.currency as string)?.toUpperCase() ?? "GBP",
+        reason: "Stripe refund",
+      });
       break;
     }
 
     case "charge.dispute.created": {
       console.warn(`[Webhook/Stripe] Dispute created: ${data.id}`);
+      const { createAlert } = await import("@/operations/alerts/service");
+      await createAlert({
+        type: "dispute_created",
+        severity: "critical",
+        title: "Payment dispute created",
+        message: `Dispute on charge ${data.id}`,
+        resource: "payment",
+        resourceId: data.id as string,
+        deduplicationKey: `dispute:${data.id}`,
+      });
       break;
     }
 
