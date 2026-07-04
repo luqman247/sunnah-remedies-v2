@@ -82,12 +82,30 @@
   transition-delay: 2.2s;
 }
 
+/* ── Rotation (turning the page) ───────────────────── */
+
+.revelation--present .revelation__layer {
+  transition:
+    opacity var(--r-dur-light) var(--r-ease-light),
+    transform var(--r-dur-settle) var(--r-ease-light);
+}
+
+.revelation--turning .revelation__layer {
+  opacity: 0;
+  transform: translateY(0);
+  transition: opacity 1.4s var(--r-ease-light);
+}
+
 /* ── Reduced motion ────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
   .revelation__layer {
     opacity: 1;
     transform: none;
+    transition: none;
+  }
+
+  .revelation--turning .revelation__layer {
     transition: none;
   }
 }

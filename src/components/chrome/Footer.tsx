@@ -1,7 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { brandContext, brandAlt } from "@/lib/brand";
-import { getRevelationForDay } from "@/lib/content/library";
+import {
+  getRevelationForDay,
+  publishedCollection,
+} from "@/lib/content/library";
 import { Revelation } from "@/components/institutional/Revelation";
 
 interface PreFooterProps {
@@ -24,7 +27,12 @@ export function PreFooter({ action }: PreFooterProps) {
       </div>
 
       <div className="pre-footer__content">
-        <Revelation entry={entry} variant="dark" />
+        <Revelation
+          entry={entry}
+          entries={publishedCollection}
+          interval={15000}
+          variant="dark"
+        />
 
         <div className="pre-footer__action">
           <Link
