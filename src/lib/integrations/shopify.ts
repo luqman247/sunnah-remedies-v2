@@ -67,29 +67,55 @@ export interface ShopifyCartLine {
 }
 
 /**
+ * i18n: When Shopify is activated, all fetch functions accept a locale parameter.
+ * The locale maps to a Shopify LanguageCode via localeById(locale).shopify.
+ * Queries use @inContext(language: $language) to return localised content.
+ *
+ * Example query pattern for future implementation:
+ *
+ *   query ProductByHandle($handle: String!, $language: LanguageCode!)
+ *   @inContext(language: $language) {
+ *     product(handle: $handle) {
+ *       id title description handle
+ *       seo { title description }
+ *       options { name values }
+ *       variants(first: 100) {
+ *         nodes { id title availableForSale price { amount currencyCode } }
+ *       }
+ *     }
+ *   }
+ */
+
+/**
  * Future: Fetch product availability from Shopify by product ID.
+ * @param _locale - App locale (e.g. "en", "da") for @inContext
  */
 export async function getShopifyProduct(
-  _productId: string
+  _productId: string,
+  _locale?: string,
 ): Promise<ShopifyProduct | null> {
   return null;
 }
 
 /**
  * Future: Create a Shopify cart.
+ * @param _locale - App locale for localised checkout
  */
 export async function createCart(
-  _lines?: { merchandiseId: string; quantity: number }[]
+  _lines?: { merchandiseId: string; quantity: number }[],
+  _locale?: string,
 ): Promise<ShopifyCart | null> {
   return null;
 }
 
 /**
  * Future: Add items to an existing cart.
+ * @param _locale - App locale for localised cart updates
  */
 export async function addToCart(
   _cartId: string,
-  _lines: { merchandiseId: string; quantity: number }[]
+  _lines: { merchandiseId: string; quantity: number }[],
+  _locale?: string,
 ): Promise<ShopifyCart | null> {
   return null;
 }
