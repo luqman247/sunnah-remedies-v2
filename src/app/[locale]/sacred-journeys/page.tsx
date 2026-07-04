@@ -90,11 +90,11 @@ export default async function SacredJourneysPage({
       </Leaf>
 
       <EditorialPhoto
-        src="/photography/sacred-journeys-hero.jpg"
-        alt="Pilgrims approaching the Prophet's Mosque in Madinah at dawn"
+        src="/photography/kaabah-golden-hour.jpg"
+        alt="The Kaabah at golden hour — pilgrims in white ihram performing tawaf across polished marble, soft amber light reflecting off the courtyard"
         aspect="landscape"
         fullBleed
-        caption="The Olive Grove Journey — walking through ancestral Palestinian olive groves"
+        caption="The Sacred Journey — the Kaabah, the heart and destination of every believing soul"
       />
 
       <Leaf>
