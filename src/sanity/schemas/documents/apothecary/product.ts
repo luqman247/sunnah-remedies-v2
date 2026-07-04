@@ -8,9 +8,12 @@ export const product = defineType({
     { name: "monograph", title: "Monograph", default: true },
     { name: "provenance", title: "Provenance & Quality" },
     { name: "usage", title: "Usage & Storage" },
+    { name: "scholarship", title: "Scholarship" },
+    { name: "clinical", title: "Clinical" },
     { name: "commerce", title: "Commerce" },
     { name: "media", title: "Media" },
     { name: "relations", title: "Relations" },
+    { name: "connections", title: "Connections" },
     { name: "seo", title: "SEO" },
     { name: "editorial", title: "Editorial" },
     { name: "operations", title: "Operations" },
@@ -229,6 +232,29 @@ export const product = defineType({
       hidden: true,
     }),
     defineField({
+      name: "commerce",
+      title: "Commerce Reference",
+      type: "commerceReference",
+      group: "commerce",
+      description: "The join to Shopify. Required unless purchaseFraming is reference-only.",
+    }),
+    defineField({
+      name: "purchaseFraming",
+      title: "Purchase Framing",
+      type: "string",
+      group: "commerce",
+      options: {
+        list: [
+          { title: "Standard", value: "standard" },
+          { title: "Education First", value: "education-first" },
+          { title: "Reference Only", value: "reference-only" },
+        ],
+      },
+      initialValue: "standard",
+      description: "Controls how prominent the purchase affordance is within the existing design.",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: "shipping",
       title: "Shipping Information",
       type: "array",
@@ -353,6 +379,63 @@ export const product = defineType({
           preview: { select: { title: "question" } },
         },
       ],
+    }),
+
+    // ── Scholarship (Phase 4 Commerce) ──
+    defineField({
+      name: "traditionLayers",
+      title: "Tradition Layers",
+      type: "traditionLayers",
+      group: "scholarship",
+      description: "The four-layer honesty framework for this product's tradition.",
+    }),
+    defineField({
+      name: "sources",
+      title: "Sources",
+      type: "array",
+      group: "scholarship",
+      of: [{ type: "sourceReference" }],
+      description: "Citations (hadith/Qur'an/research) backing claims.",
+    }),
+
+    // ── Clinical (Phase 4 Commerce) ──
+    defineField({
+      name: "clinicalNotes",
+      title: "Clinical Notes",
+      type: "array",
+      group: "clinical",
+      of: [{ type: "productClinicalNote" }],
+      description: "Safety/therapeutic notes with review workflow.",
+    }),
+
+    // ── Connections (Phase 4 Commerce) ──
+    defineField({
+      name: "primaryIngredient",
+      title: "Primary Ingredient",
+      type: "reference",
+      group: "connections",
+      to: [{ type: "ingredient" }],
+      description: "Links product to its ingredient hub.",
+    }),
+    defineField({
+      name: "crossReferences",
+      title: "Cross References",
+      type: "array",
+      group: "connections",
+      of: [
+        { type: "reference", to: [{ type: "article" }] },
+        { type: "reference", to: [{ type: "ingredient" }] },
+        { type: "reference", to: [{ type: "programme" }] },
+        { type: "reference", to: [{ type: "journey" }] },
+      ],
+      description: "Connective tissue: learn-more links to related content.",
+    }),
+    defineField({
+      name: "editorialProvenance",
+      title: "Provenance",
+      type: "provenanceNote",
+      group: "connections",
+      description: "Editorial provenance story (distinct from Shopify country-of-origin).",
     }),
 
     // ── SEO ──

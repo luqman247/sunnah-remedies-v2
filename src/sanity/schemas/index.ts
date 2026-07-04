@@ -5,6 +5,13 @@ import { editorialWorkflow } from "./objects/editorial-workflow";
 import { propheticReference } from "./objects/prophetic-reference";
 import { boardApproval } from "./objects/board-approval";
 import { translationStatus } from "./objects/translation-status";
+import { commerceReference } from "./objects/commerce-reference";
+import { variantReference } from "./objects/variant-reference";
+import { traditionLayers } from "./objects/tradition-layers";
+import { sourceReference } from "./objects/source-reference";
+import { productClinicalNote } from "./objects/product-clinical-note";
+import { provenanceNote } from "./objects/provenance-note";
+import { seasonWindow } from "./objects/season-window";
 import {
   richContent,
   arabicText,
@@ -80,6 +87,13 @@ export const schemaTypes = [
   propheticReference,
   boardApproval,
   translationStatus,
+  commerceReference,
+  variantReference,
+  traditionLayers,
+  sourceReference,
+  productClinicalNote,
+  provenanceNote,
+  seasonWindow,
   richContent,
   arabicText,
   quranReference,

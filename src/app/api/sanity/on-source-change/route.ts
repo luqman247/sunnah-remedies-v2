@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "next-sanity";
 
-const writableClient = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
-  token: process.env.SANITY_API_WRITE_TOKEN!,
-  apiVersion: "2024-01-01",
-  useCdn: false,
-});
+function getWritableClient() {
+  return createClient({
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+    token: process.env.SANITY_API_WRITE_TOKEN!,
+    apiVersion: "2024-01-01",
+    useCdn: false,
+  });
+}
 
 export async function POST(req: NextRequest) {
   const secret = req.headers.get("x-webhook-secret");
@@ -21,6 +23,8 @@ export async function POST(req: NextRequest) {
   if (language !== "en") {
     return NextResponse.json({ skipped: true, reason: "Not English source" });
   }
+
+  const writableClient = getWritableClient();
 
   const siblings = await writableClient.fetch<{ _id: string }[]>(
     `*[_type == "translation.metadata" && references($id)][0]

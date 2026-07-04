@@ -12,7 +12,7 @@ interface PageProps {
 
 export async function generateStaticParams() {
   const slugs = await getProductSlugs();
-  return slugs.map((slug) => ({ slug }));
+  return slugs.map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
