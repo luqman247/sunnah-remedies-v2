@@ -112,6 +112,60 @@ export default defineType({
       title: "Credit",
       type: "string",
     }),
+
+    // ── QC & Rights (Phase 4) ──
+    defineField({
+      name: "qcStatus",
+      title: "QC Status",
+      type: "string",
+      options: {
+        list: [
+          { title: "Not Yet Reviewed", value: "pending" },
+          { title: "QC Passed", value: "passed" },
+          { title: "QC Failed — Returned to Edit", value: "failed" },
+        ],
+      },
+      initialValue: "pending",
+    }),
+    defineField({
+      name: "qcPassedBy",
+      title: "QC Passed By",
+      type: "string",
+      hidden: ({ parent }) => parent?.qcStatus !== "passed",
+    }),
+    defineField({
+      name: "qcDate",
+      title: "QC Date",
+      type: "date",
+      hidden: ({ parent }) => parent?.qcStatus !== "passed",
+    }),
+    defineField({
+      name: "releaseOnFile",
+      title: "Release on File",
+      type: "string",
+      options: {
+        list: [
+          { title: "Not Required", value: "not-required" },
+          { title: "Model Release — On File", value: "model-release" },
+          { title: "Property Release — On File", value: "property-release" },
+          { title: "Required — NOT Yet Obtained", value: "missing" },
+        ],
+      },
+      initialValue: "not-required",
+    }),
+    defineField({
+      name: "rightsExpiry",
+      title: "Rights / Licence Expiry",
+      type: "date",
+      description: "If this asset has a time-limited licence, set the expiry date here.",
+    }),
+    defineField({
+      name: "accuracyApproval",
+      title: "Product Accuracy Approval",
+      type: "boolean",
+      description: "For product shots: Apothecary team confirms colour, scale, and quantity are truthful.",
+      initialValue: false,
+    }),
   ],
   preview: {
     select: { title: "title", status: "status", media: "image" },

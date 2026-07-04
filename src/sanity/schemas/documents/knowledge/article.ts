@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { requiredWhenPublished } from "@/sanity/validation/governance";
 
 export const article = defineType({
   name: "article",
@@ -10,6 +11,7 @@ export const article = defineType({
     { name: "media", title: "Media" },
     { name: "seo", title: "SEO" },
     { name: "editorial", title: "Editorial" },
+    { name: "governance", title: "Governance" },
   ],
   fields: [
     defineField({ name: "title", title: "Title", type: "string", group: "content", validation: (rule) => rule.required() }),
@@ -61,6 +63,53 @@ export const article = defineType({
     // ── SEO & Editorial ──
     defineField({ name: "seo", title: "SEO", type: "seo", group: "seo" }),
     defineField({ name: "editorial", title: "Editorial Workflow", type: "editorialWorkflow", group: "editorial" }),
+
+    // ── Governance (Phase 4) ──
+    defineField({
+      name: "nextReviewDate",
+      title: "Next Review Date",
+      type: "date",
+      group: "governance",
+      description: "When this article must be re-reviewed. Nothing publishes without one.",
+      validation: (rule) =>
+        rule.custom(requiredWhenPublished("A next review date is required before publishing.")),
+    }),
+    defineField({
+      name: "provenanceNote",
+      title: "Provenance Record",
+      type: "text",
+      group: "governance",
+      rows: 3,
+      description: "Source chain and verification notes. The editorial provenance record.",
+      validation: (rule) =>
+        rule.custom(requiredWhenPublished("A provenance record is required before publishing.")),
+    }),
+    defineField({
+      name: "scholarlyApproval",
+      title: "Scholarly Board Approval",
+      type: "object",
+      group: "governance",
+      description: "Required for any content touching the Islamic tradition.",
+      fields: [
+        defineField({ name: "approved", title: "Approved", type: "boolean", initialValue: false }),
+        defineField({ name: "approver", title: "Approver", type: "string" }),
+        defineField({ name: "date", title: "Date", type: "date" }),
+        defineField({ name: "notes", title: "Notes", type: "text", rows: 2 }),
+      ],
+    }),
+    defineField({
+      name: "clinicalApproval",
+      title: "Clinical Board Approval",
+      type: "object",
+      group: "governance",
+      description: "Required for any content touching the body or health.",
+      fields: [
+        defineField({ name: "approved", title: "Approved", type: "boolean", initialValue: false }),
+        defineField({ name: "approver", title: "Approver", type: "string" }),
+        defineField({ name: "date", title: "Date", type: "date" }),
+        defineField({ name: "notes", title: "Notes", type: "text", rows: 2 }),
+      ],
+    }),
   ],
   preview: {
     select: { title: "title", subtitle: "contentType", media: "mainImage" },

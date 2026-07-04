@@ -13,6 +13,7 @@ export const product = defineType({
     { name: "relations", title: "Relations" },
     { name: "seo", title: "SEO" },
     { name: "editorial", title: "Editorial" },
+    { name: "operations", title: "Operations" },
   ],
   fields: [
     // ── Identity ──
@@ -374,6 +375,31 @@ export const product = defineType({
       title: "Display Order",
       type: "number",
       group: "editorial",
+    }),
+
+    // ── Operations (Phase 4) ──
+    defineField({
+      name: "allergenData",
+      title: "Allergen Information",
+      type: "array",
+      group: "operations",
+      of: [{ type: "string" }],
+      description: "Allergens present in or handled alongside this product. Required for food-safety compliance.",
+    }),
+    defineField({
+      name: "batchRecords",
+      title: "Batch Records",
+      type: "array",
+      group: "operations",
+      of: [{ type: "reference", to: [{ type: "batchRecord" }] }],
+      description: "Linked batch records for traceability. Enables recall readiness.",
+    }),
+    defineField({
+      name: "storageRequirements",
+      title: "Storage Requirements (Internal)",
+      type: "string",
+      group: "operations",
+      description: "Internal storage conditions — temperature, light, humidity requirements for the dispensary.",
     }),
   ],
   preview: {

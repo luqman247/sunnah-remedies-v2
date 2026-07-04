@@ -1,0 +1,158 @@
+/**
+ * Handbook content styles — scoped to .handbook-content
+ *
+ * These styles govern the rendering of markdown handbook chapters
+ * in the internal staff area. They are intentionally separate from
+ * the public site's design system and do not affect any guest-facing pages.
+ *
+ * Typography choices: utilitarian and legible for sustained reading
+ * in an operational context. No decorative elements.
+ */
+
+.handbook-content {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: #0e3b2e;
+}
+
+.handbook-content .handbook-h1 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: #0e3b2e;
+}
+
+.handbook-content .handbook-h2 {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 400;
+  margin-top: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #0e3b2e;
+}
+
+.handbook-content .handbook-h3 {
+  font-family: var(--font-utility);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  color: #0e3b2e;
+  opacity: 0.7;
+}
+
+.handbook-content .handbook-h4,
+.handbook-content .handbook-h5,
+.handbook-content .handbook-h6 {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  margin-top: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.handbook-content .handbook-p {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.handbook-content .handbook-list {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-left: 1.25rem;
+}
+
+.handbook-content .handbook-list li {
+  margin-bottom: 0.25rem;
+}
+
+.handbook-content .handbook-ol {
+  list-style-type: decimal;
+}
+
+.handbook-content .handbook-check {
+  display: inline-block;
+  width: 1em;
+  margin-right: 0.25em;
+  opacity: 0.5;
+}
+
+.handbook-content .handbook-check.checked {
+  opacity: 1;
+}
+
+.handbook-content .handbook-blockquote {
+  border-left: 2px solid #0e3b2e20;
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.handbook-content .handbook-blockquote p {
+  margin-bottom: 0.25rem;
+}
+
+.handbook-content .handbook-hr {
+  border: none;
+  border-top: 1px solid #0e3b2e10;
+  margin: 2rem 0;
+}
+
+.handbook-content .handbook-table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.handbook-content .handbook-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  font-family: var(--font-utility);
+}
+
+.handbook-content .handbook-table th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #0e3b2e20;
+  font-weight: 500;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #0e3b2e;
+  opacity: 0.6;
+}
+
+.handbook-content .handbook-table td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid #0e3b2e08;
+  vertical-align: top;
+}
+
+.handbook-content .handbook-code {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  background: #0e3b2e08;
+  padding: 0.1em 0.35em;
+  border-radius: 2px;
+}
+
+.handbook-content .handbook-link {
+  color: #0e3b2e;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: #0e3b2e30;
+}
+
+.handbook-content .handbook-link:hover {
+  text-decoration-color: #0e3b2e;
+}
+
+.handbook-content strong {
+  font-weight: 500;
+}

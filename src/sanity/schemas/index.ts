@@ -3,6 +3,7 @@ import { seo } from "./objects/seo";
 import { institutionalImage, institutionalVideo, downloadFile } from "./objects/media";
 import { editorialWorkflow } from "./objects/editorial-workflow";
 import { propheticReference } from "./objects/prophetic-reference";
+import { boardApproval } from "./objects/board-approval";
 import {
   richContent,
   arabicText,
@@ -53,6 +54,15 @@ import { consultationsPage } from "./documents/clinical/consultations-page";
 // ── Documents: Institution ──
 import { charter } from "./documents/institution/charter";
 
+// ── Documents: Operations (Phase 4) ──
+import {
+  batchRecord,
+  operationalLog,
+  decisionRecord,
+  complianceEntry,
+  auditFinding,
+} from "./documents/operations";
+
 // ── Documents: Pages ──
 import { homepage } from "./documents/pages/homepage";
 
@@ -64,6 +74,7 @@ export const schemaTypes = [
   downloadFile,
   editorialWorkflow,
   propheticReference,
+  boardApproval,
   richContent,
   arabicText,
   quranReference,
@@ -111,6 +122,13 @@ export const schemaTypes = [
 
   // Institution
   charter,
+
+  // Operations (Phase 4)
+  batchRecord,
+  operationalLog,
+  decisionRecord,
+  complianceEntry,
+  auditFinding,
 
   // Pages
   homepage,

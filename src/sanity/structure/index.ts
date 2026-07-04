@@ -211,4 +211,46 @@ export const structure = (S: StructureBuilder) =>
                 ),
             ])
         ),
+
+      S.divider(),
+
+      // ── Operations (Phase 4) ──
+      S.listItem()
+        .title("Operations")
+        .child(
+          S.list()
+            .title("Operations")
+            .items([
+              S.listItem()
+                .title("Batch Records")
+                .child(
+                  S.documentTypeList("batchRecord")
+                    .title("Batch Records")
+                ),
+              S.listItem()
+                .title("Operational Logs")
+                .child(
+                  S.documentTypeList("operationalLog")
+                    .title("Operational Logs")
+                ),
+              S.listItem()
+                .title("Compliance Register")
+                .child(
+                  S.documentTypeList("complianceEntry")
+                    .title("Compliance Register")
+                ),
+              S.listItem()
+                .title("Decision Log")
+                .child(
+                  S.documentTypeList("decisionRecord")
+                    .title("Decision Log")
+                ),
+              S.listItem()
+                .title("Audit Findings")
+                .child(
+                  S.documentTypeList("auditFinding")
+                    .title("Audit Findings")
+                ),
+            ])
+        ),
     ]);
