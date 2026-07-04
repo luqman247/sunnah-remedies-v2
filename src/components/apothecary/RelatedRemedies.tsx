@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Remedy } from "@/lib/content/types";
 import { formatProvenance } from "@/lib/content/remedies";
 import { SectionLabel } from "@/components/ui/PageIntro";

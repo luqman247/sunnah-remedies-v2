@@ -1,5 +1,5 @@
 import { getCurrentSeason, getHijriDate, getNextEvent } from "@/lib/calendar/seasons";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 /**
  * SeasonalMark — the footer's quiet acknowledgment of the institutional calendar.

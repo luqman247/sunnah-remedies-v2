@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Department } from "@/lib/navigation/site-structure";
 
 interface DepartmentNavProps {

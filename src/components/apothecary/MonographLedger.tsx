@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Remedy } from "@/lib/content/types";
 import { formatPrice } from "@/lib/content/remedies";
 import { AddToCounter } from "./AddToCounter";
