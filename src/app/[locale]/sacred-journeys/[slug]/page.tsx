@@ -11,8 +11,8 @@ interface PageProps {
 export async function generateStaticParams() {
   const slugs = await getJourneySlugs();
   return slugs
-    .filter((slug) => slug !== "umrah")
-    .map((slug) => ({ slug }));
+    .filter((s) => s.slug !== "umrah")
+    .map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

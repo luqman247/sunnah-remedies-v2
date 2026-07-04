@@ -1,9 +1,18 @@
 import { groq } from "next-sanity";
 
+/**
+ * Translation siblings projection — reusable fragment for hreflang.
+ * Resolves all linked translations via the metadata document.
+ */
+const translationSiblings = `
+  "translations": *[_type == "translation.metadata" && references(^._id)][0]
+    .translations[].value->{ "lang": language, "slug": slug.current }
+`;
+
 /* ── Global ─────────────────────────────────────────────────────── */
 
 export const institutionSettingsQuery = groq`
-  *[_type == "institutionSettings"][0] {
+  *[_type == "institutionSettings" && language == $language][0] {
     name,
     descriptor,
     tagline,
@@ -16,7 +25,7 @@ export const institutionSettingsQuery = groq`
 `;
 
 export const navigationQuery = groq`
-  *[_type == "navigation"][0] {
+  *[_type == "navigation" && language == $language][0] {
     mainNavigation[] {
       label,
       href,
@@ -33,7 +42,7 @@ export const navigationQuery = groq`
 `;
 
 export const footerQuery = groq`
-  *[_type == "footerSettings"][0] {
+  *[_type == "footerSettings" && language == $language][0] {
     columns[] {
       title,
       links[] { label, href }
@@ -47,8 +56,7 @@ export const footerQuery = groq`
 /* ── Homepage ───────────────────────────────────────────────────── */
 
 export const homepageQuery = groq`
-  *[_type == "homepage"][0] {
-    // V2 Arrival fields
+  *[_type == "homepage" && language == $language][0] {
     eyebrow,
     foundingYear,
     arrivalArabic,
@@ -94,8 +102,6 @@ export const homepageQuery = groq`
       successText
     },
     institutionStatement,
-
-    // V1 fields (legacy support)
     hero {
       image { ..., asset-> },
       imageAlt,
@@ -172,7 +178,7 @@ export const homepageQuery = groq`
 /* ── Apothecary ─────────────────────────────────────────────────── */
 
 export const allProductsQuery = groq`
-  *[_type == "product" && !(_id in path("drafts.**"))] | order(orderRank) {
+  *[_type == "product" && language == $language && !(_id in path("drafts.**"))] | order(orderRank) {
     _id,
     slug,
     name,
@@ -191,21 +197,22 @@ export const allProductsQuery = groq`
 `;
 
 export const productBySlugQuery = groq`
-  *[_type == "product" && slug.current == $slug][0] {
+  *[_type == "product" && slug.current == $slug && language == $language][0] {
     ...,
     mainImage { ..., asset-> },
     gallery[] { ..., asset-> },
     propheticReferences[],
     "relatedProducts": relatedProducts[]->{ _id, slug, name, nature, mainImage { ..., asset-> } },
     "ingredients": ingredients[]->{ _id, slug, name, botanicalName },
-    seo
+    seo,
+    ${translationSiblings}
   }
 `;
 
 /* ── Academy ────────────────────────────────────────────────────── */
 
 export const allProgrammesQuery = groq`
-  *[_type == "programme" && !(_id in path("drafts.**"))] | order(orderRank) {
+  *[_type == "programme" && language == $language && !(_id in path("drafts.**"))] | order(orderRank) {
     _id,
     slug,
     name,
@@ -219,20 +226,21 @@ export const allProgrammesQuery = groq`
 `;
 
 export const programmeBySlugQuery = groq`
-  *[_type == "programme" && slug.current == $slug][0] {
+  *[_type == "programme" && slug.current == $slug && language == $language][0] {
     ...,
     curriculum[],
     faculty[]->{ _id, name, title, licence, chain, biography, portrait { ..., asset-> } },
     learningOutcomes[],
     testimonials[],
-    seo
+    seo,
+    ${translationSiblings}
   }
 `;
 
 /* ── Sacred Journeys ────────────────────────────────────────────── */
 
 export const allJourneysQuery = groq`
-  *[_type == "journey" && !(_id in path("drafts.**"))] | order(nextDeparture asc) {
+  *[_type == "journey" && language == $language && !(_id in path("drafts.**"))] | order(nextDeparture asc) {
     _id,
     slug,
     name,
@@ -247,21 +255,22 @@ export const allJourneysQuery = groq`
 `;
 
 export const journeyBySlugQuery = groq`
-  *[_type == "journey" && slug.current == $slug][0] {
+  *[_type == "journey" && slug.current == $slug && language == $language][0] {
     ...,
     heroImage { ..., asset-> },
     gallery[] { ..., asset-> },
     itinerary[],
     scholars[],
     educationalSessions[],
-    seo
+    seo,
+    ${translationSiblings}
   }
 `;
 
 /* ── Knowledge Library ──────────────────────────────────────────── */
 
 export const allArticlesQuery = groq`
-  *[_type == "article" && !(_id in path("drafts.**"))] | order(publishedAt desc) {
+  *[_type == "article" && language == $language && !(_id in path("drafts.**"))] | order(publishedAt desc) {
     _id,
     slug,
     title,
@@ -277,7 +286,7 @@ export const allArticlesQuery = groq`
 `;
 
 export const articleBySlugQuery = groq`
-  *[_type == "article" && slug.current == $slug][0] {
+  *[_type == "article" && slug.current == $slug && language == $language][0] {
     ...,
     mainImage { ..., asset-> },
     body[] {
@@ -287,14 +296,15 @@ export const articleBySlugQuery = groq`
     "author": author->{ name, title, biography, portrait { ..., asset-> } },
     topics[]->{ _id, slug, title },
     "relatedArticles": relatedArticles[]->{ _id, slug, title, excerpt, publishedAt },
-    seo
+    seo,
+    ${translationSiblings}
   }
 `;
 
 /* ── Faculty ────────────────────────────────────────────────────── */
 
 export const allFacultyQuery = groq`
-  *[_type == "faculty" && !(_id in path("drafts.**"))] | order(name asc) {
+  *[_type == "faculty" && language == $language && !(_id in path("drafts.**"))] | order(name asc) {
     _id,
     slug,
     name,
@@ -310,7 +320,7 @@ export const allFacultyQuery = groq`
 /* ── Testimonials ───────────────────────────────────────────────── */
 
 export const testimonialsByDepartmentQuery = groq`
-  *[_type == "testimonial" && department == $department && !(_id in path("drafts.**"))] | order(year desc) {
+  *[_type == "testimonial" && department == $department && language == $language && !(_id in path("drafts.**"))] | order(year desc) {
     _id,
     statement,
     name,
@@ -323,7 +333,7 @@ export const testimonialsByDepartmentQuery = groq`
 /* ── FAQs ───────────────────────────────────────────────────────── */
 
 export const faqsByDepartmentQuery = groq`
-  *[_type == "faq" && department == $department && !(_id in path("drafts.**"))] | order(orderRank) {
+  *[_type == "faq" && department == $department && language == $language && !(_id in path("drafts.**"))] | order(orderRank) {
     _id,
     question,
     answer,
@@ -334,7 +344,7 @@ export const faqsByDepartmentQuery = groq`
 /* ── Clinical Consultations ─────────────────────────────────────── */
 
 export const consultationsPageQuery = groq`
-  *[_type == "consultationsPage"][0] {
+  *[_type == "consultationsPage" && language == $language][0] {
     ...,
     consultationTypes[],
     practitioners[]->{ _id, name, title, specialisms, portrait { ..., asset-> } },
@@ -345,7 +355,7 @@ export const consultationsPageQuery = groq`
 /* ── Institution / Charter ──────────────────────────────────────── */
 
 export const charterQuery = groq`
-  *[_type == "charter"][0] {
+  *[_type == "charter" && language == $language][0] {
     ...,
     body[] {
       ...,
@@ -358,11 +368,33 @@ export const charterQuery = groq`
 /* ── Global SEO ─────────────────────────────────────────────────── */
 
 export const globalSeoQuery = groq`
-  *[_type == "globalSeo"][0] {
+  *[_type == "globalSeo" && language == $language][0] {
     siteName,
     siteDescription,
     defaultOgImage { ..., asset-> },
     twitterHandle,
     keywords
   }
+`;
+
+/* ── Slugs (all languages, for generateStaticParams) ────────────── */
+
+export const productSlugsQuery = groq`
+  *[_type == "product" && defined(slug.current) && !(_id in path("drafts.**"))]
+    { "slug": slug.current, language }
+`;
+
+export const programmeSlugsQuery = groq`
+  *[_type == "programme" && defined(slug.current) && !(_id in path("drafts.**"))]
+    { "slug": slug.current, language }
+`;
+
+export const journeySlugsQuery = groq`
+  *[_type == "journey" && defined(slug.current) && !(_id in path("drafts.**"))]
+    { "slug": slug.current, language }
+`;
+
+export const articleSlugsQuery = groq`
+  *[_type == "article" && defined(slug.current) && !(_id in path("drafts.**"))]
+    { "slug": slug.current, language }
 `;

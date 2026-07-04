@@ -1,13 +1,14 @@
 /**
- * Data Bridge — Sanity-first with static fallback.
+ * Data Bridge — Sanity-first with static fallback, locale-aware.
  *
- * Every function queries Sanity CMS. If Sanity returns null/empty
- * (content not yet published), it falls back to the existing static
- * data files. This allows progressive migration: as editors publish
- * content in Sanity, it takes precedence over the static files.
+ * Every function queries Sanity CMS with a language parameter. If Sanity
+ * returns null/empty (content not yet published), it falls back to existing
+ * static data files. If a locale-specific document doesn't exist, it falls
+ * back to the default locale (English).
  */
 
 import { client } from "./client";
+import { DEFAULT_LOCALE } from "@/i18n/locales";
 import {
   homepageQuery,
   navigationQuery,
@@ -41,7 +42,6 @@ import type {
   FaqItem,
 } from "./types";
 
-// Static fallback imports
 import { remedies, getRemedyBySlug as getStaticRemedy, getAllRemedySlugs } from "@/lib/content/remedies";
 import { getHijamaDiploma, programmes as staticProgrammes, getAllProgrammeSlugs } from "@/lib/content/academy";
 import { journeys as staticJourneys, getJourneyBySlug as getStaticJourney, getAllJourneySlugs } from "@/lib/content/journeys";
@@ -54,12 +54,22 @@ import type { KnowledgeTopic } from "@/lib/content/sections/knowledge-library";
 
 /* ── Helpers ────────────────────────────────────────────────────── */
 
-async function safeFetch<T>(query: string, params?: Record<string, string>): Promise<T | null> {
+async function safeFetch<T>(
+  query: string,
+  params?: Record<string, string>,
+  locale: string = DEFAULT_LOCALE,
+  fallbackToDefault: boolean = true,
+): Promise<T | null> {
   try {
-    const result = params
-      ? await client.fetch<T>(query, params)
-      : await client.fetch<T>(query);
-    return result;
+    const mergedParams = { ...params, language: locale };
+    const result = await client.fetch<T>(query, mergedParams);
+    if (result) return result;
+
+    if (fallbackToDefault && locale !== DEFAULT_LOCALE) {
+      const fallback = await client.fetch<T>(query, { ...params, language: DEFAULT_LOCALE });
+      return fallback;
+    }
+    return null;
   } catch {
     return null;
   }
@@ -72,8 +82,8 @@ export interface NavigationData {
   announcement?: { active: boolean; message?: string; link?: string; linkLabel?: string };
 }
 
-export async function getNavigation(): Promise<NavigationData> {
-  const sanity = await safeFetch<Navigation>(navigationQuery);
+export async function getNavigation(locale: string = DEFAULT_LOCALE): Promise<NavigationData> {
+  const sanity = await safeFetch<Navigation>(navigationQuery, {}, locale);
   if (sanity?.mainNavigation?.length) {
     return {
       items: sanity.mainNavigation.filter(i => !i.hidden),
@@ -98,8 +108,8 @@ export interface FooterData {
   colophon: string;
 }
 
-export async function getFooter(): Promise<FooterData> {
-  const sanity = await safeFetch<FooterSettings>(footerQuery);
+export async function getFooter(locale: string = DEFAULT_LOCALE): Promise<FooterData> {
+  const sanity = await safeFetch<FooterSettings>(footerQuery, {}, locale);
   if (sanity?.columns?.length) {
     return {
       preFooterStatement: sanity.preFooterStatement || "Begin where you are. Whether you seek a remedy, wish to study, or are preparing for pilgrimage — the institution is open.",
@@ -136,8 +146,8 @@ export interface InstitutionSettingsData {
   socialLinks?: { platform: string; url: string }[];
 }
 
-export async function getInstitutionSettings(): Promise<InstitutionSettingsData> {
-  const sanity = await safeFetch<InstitutionSettingsData>(institutionSettingsQuery);
+export async function getInstitutionSettings(locale: string = DEFAULT_LOCALE): Promise<InstitutionSettingsData> {
+  const sanity = await safeFetch<InstitutionSettingsData>(institutionSettingsQuery, {}, locale);
   if (sanity?.name) return sanity;
   return {
     name: "Sunnah Remedies",
@@ -148,8 +158,8 @@ export async function getInstitutionSettings(): Promise<InstitutionSettingsData>
 
 /* ── Homepage ───────────────────────────────────────────────────── */
 
-export async function getHomepage(): Promise<HomepageData | null> {
-  return safeFetch<HomepageData>(homepageQuery);
+export async function getHomepage(locale: string = DEFAULT_LOCALE): Promise<HomepageData | null> {
+  return safeFetch<HomepageData>(homepageQuery, {}, locale);
 }
 
 /* ── Global SEO ─────────────────────────────────────────────────── */
@@ -162,31 +172,42 @@ export interface GlobalSeoData {
   keywords?: string[];
 }
 
-export async function getGlobalSeo(): Promise<GlobalSeoData | null> {
-  return safeFetch<GlobalSeoData>(globalSeoQuery);
+export async function getGlobalSeo(locale: string = DEFAULT_LOCALE): Promise<GlobalSeoData | null> {
+  return safeFetch<GlobalSeoData>(globalSeoQuery, {}, locale);
 }
 
 /* ── Apothecary ─────────────────────────────────────────────────── */
 
-export async function getAllProducts(): Promise<Product[]> {
-  const sanity = await safeFetch<Product[]>(allProductsQuery);
+export async function getAllProducts(locale: string = DEFAULT_LOCALE): Promise<Product[]> {
+  const sanity = await safeFetch<Product[]>(allProductsQuery, {}, locale, false);
   if (sanity?.length) return sanity;
+  if (locale !== DEFAULT_LOCALE) {
+    const fallback = await safeFetch<Product[]>(allProductsQuery, {}, DEFAULT_LOCALE, false);
+    if (fallback?.length) return fallback;
+  }
   return remedies.map(r => remedyToProduct(r));
 }
 
-export async function getProductBySlug(slug: string): Promise<Product | null> {
-  const sanity = await safeFetch<Product>(productBySlugQuery, { slug });
+export async function getProductBySlug(slug: string, locale: string = DEFAULT_LOCALE): Promise<Product | null> {
+  const sanity = await safeFetch<Product>(productBySlugQuery, { slug }, locale, false);
   if (sanity) return sanity;
+  if (locale !== DEFAULT_LOCALE) {
+    const fallback = await safeFetch<Product>(productBySlugQuery, { slug }, DEFAULT_LOCALE, false);
+    if (fallback) return fallback;
+  }
   const staticRemedy = getStaticRemedy(slug);
   return staticRemedy ? remedyToProduct(staticRemedy) : null;
 }
 
-export async function getProductSlugs(): Promise<string[]> {
-  const sanity = await safeFetch<{ slug: { current: string } }[]>(
-    `*[_type == "product" && !(_id in path("drafts.**"))]{ slug }`
+export async function getProductSlugs(): Promise<{ slug: string; language: string }[]> {
+  const sanity = await safeFetch<{ slug: { current: string }; language: string }[]>(
+    `*[_type == "product" && !(_id in path("drafts.**"))]{ slug, language }`,
+    {},
+    DEFAULT_LOCALE,
+    false,
   );
-  if (sanity?.length) return sanity.map(p => p.slug.current);
-  return getAllRemedySlugs();
+  if (sanity?.length) return sanity.map(p => ({ slug: p.slug.current, language: p.language || DEFAULT_LOCALE }));
+  return getAllRemedySlugs().map(s => ({ slug: s, language: DEFAULT_LOCALE }));
 }
 
 function remedyToProduct(r: Remedy): Product {
@@ -240,31 +261,42 @@ function remedyToProduct(r: Remedy): Product {
 
 /* ── Academy ────────────────────────────────────────────────────── */
 
-export async function getAllProgrammes(): Promise<Programme[]> {
-  const sanity = await safeFetch<Programme[]>(allProgrammesQuery);
+export async function getAllProgrammes(locale: string = DEFAULT_LOCALE): Promise<Programme[]> {
+  const sanity = await safeFetch<Programme[]>(allProgrammesQuery, {}, locale, false);
   if (sanity?.length) return sanity;
+  if (locale !== DEFAULT_LOCALE) {
+    const fallback = await safeFetch<Programme[]>(allProgrammesQuery, {}, DEFAULT_LOCALE, false);
+    if (fallback?.length) return fallback;
+  }
   return staticProgrammes.map(p => programmeToSanity(p));
 }
 
-export async function getProgrammeBySlug(slug: string): Promise<Programme | null> {
-  const sanity = await safeFetch<Programme>(programmeBySlugQuery, { slug });
+export async function getProgrammeBySlug(slug: string, locale: string = DEFAULT_LOCALE): Promise<Programme | null> {
+  const sanity = await safeFetch<Programme>(programmeBySlugQuery, { slug }, locale, false);
   if (sanity) return sanity;
+  if (locale !== DEFAULT_LOCALE) {
+    const fallback = await safeFetch<Programme>(programmeBySlugQuery, { slug }, DEFAULT_LOCALE, false);
+    if (fallback) return fallback;
+  }
   if (slug === "hijama-diploma" || slug === "hijama") {
     return programmeToSanity(getHijamaDiploma());
   }
   return null;
 }
 
-export async function getProgrammeSlugs(): Promise<string[]> {
-  const sanity = await safeFetch<{ slug: { current: string } }[]>(
-    `*[_type == "programme" && !(_id in path("drafts.**"))]{ slug }`
+export async function getProgrammeSlugs(): Promise<{ slug: string; language: string }[]> {
+  const sanity = await safeFetch<{ slug: { current: string }; language: string }[]>(
+    `*[_type == "programme" && !(_id in path("drafts.**"))]{ slug, language }`,
+    {},
+    DEFAULT_LOCALE,
+    false,
   );
-  if (sanity?.length) return sanity.map(p => p.slug.current);
-  return getAllProgrammeSlugs();
+  if (sanity?.length) return sanity.map(p => ({ slug: p.slug.current, language: p.language || DEFAULT_LOCALE }));
+  return getAllProgrammeSlugs().map(s => ({ slug: s, language: DEFAULT_LOCALE }));
 }
 
-export async function getAllFaculty(): Promise<Faculty[]> {
-  const sanity = await safeFetch<Faculty[]>(allFacultyQuery);
+export async function getAllFaculty(locale: string = DEFAULT_LOCALE): Promise<Faculty[]> {
+  const sanity = await safeFetch<Faculty[]>(allFacultyQuery, {}, locale);
   if (sanity?.length) return sanity;
   const diploma = getHijamaDiploma();
   return diploma.faculty.map(f => ({
@@ -315,25 +347,36 @@ function programmeToSanity(p: AcademyProgramme): Programme {
 
 /* ── Sacred Journeys ────────────────────────────────────────────── */
 
-export async function getAllJourneys(): Promise<Journey[]> {
-  const sanity = await safeFetch<Journey[]>(allJourneysQuery);
+export async function getAllJourneys(locale: string = DEFAULT_LOCALE): Promise<Journey[]> {
+  const sanity = await safeFetch<Journey[]>(allJourneysQuery, {}, locale, false);
   if (sanity?.length) return sanity;
+  if (locale !== DEFAULT_LOCALE) {
+    const fallback = await safeFetch<Journey[]>(allJourneysQuery, {}, DEFAULT_LOCALE, false);
+    if (fallback?.length) return fallback;
+  }
   return staticJourneys.map(j => journeyToSanity(j));
 }
 
-export async function getJourneyBySlug(slug: string): Promise<Journey | null> {
-  const sanity = await safeFetch<Journey>(journeyBySlugQuery, { slug });
+export async function getJourneyBySlug(slug: string, locale: string = DEFAULT_LOCALE): Promise<Journey | null> {
+  const sanity = await safeFetch<Journey>(journeyBySlugQuery, { slug }, locale, false);
   if (sanity) return sanity;
+  if (locale !== DEFAULT_LOCALE) {
+    const fallback = await safeFetch<Journey>(journeyBySlugQuery, { slug }, DEFAULT_LOCALE, false);
+    if (fallback) return fallback;
+  }
   const staticJ = getStaticJourney(slug);
   return staticJ ? journeyToSanity(staticJ) : null;
 }
 
-export async function getJourneySlugs(): Promise<string[]> {
-  const sanity = await safeFetch<{ slug: { current: string } }[]>(
-    `*[_type == "journey" && !(_id in path("drafts.**"))]{ slug }`
+export async function getJourneySlugs(): Promise<{ slug: string; language: string }[]> {
+  const sanity = await safeFetch<{ slug: { current: string }; language: string }[]>(
+    `*[_type == "journey" && !(_id in path("drafts.**"))]{ slug, language }`,
+    {},
+    DEFAULT_LOCALE,
+    false,
   );
-  if (sanity?.length) return sanity.map(j => j.slug.current);
-  return getAllJourneySlugs();
+  if (sanity?.length) return sanity.map(j => ({ slug: j.slug.current, language: j.language || DEFAULT_LOCALE }));
+  return getAllJourneySlugs().map(s => ({ slug: s, language: DEFAULT_LOCALE }));
 }
 
 function journeyToSanity(j: SacredJourney): Journey {
@@ -383,14 +426,14 @@ function journeyToSanity(j: SacredJourney): Journey {
 
 /* ── Knowledge Library ──────────────────────────────────────────── */
 
-export async function getAllArticles(): Promise<Article[]> {
-  const sanity = await safeFetch<Article[]>(allArticlesQuery);
+export async function getAllArticles(locale: string = DEFAULT_LOCALE): Promise<Article[]> {
+  const sanity = await safeFetch<Article[]>(allArticlesQuery, {}, locale);
   if (sanity?.length) return sanity;
   return [];
 }
 
-export async function getArticleBySlug(slug: string): Promise<Article | null> {
-  const sanity = await safeFetch<Article>(articleBySlugQuery, { slug });
+export async function getArticleBySlug(slug: string, locale: string = DEFAULT_LOCALE): Promise<Article | null> {
+  const sanity = await safeFetch<Article>(articleBySlugQuery, { slug }, locale, false);
   if (sanity) return sanity;
   return null;
 }
@@ -400,26 +443,26 @@ export type { KnowledgeTopic };
 
 /* ── Testimonials & FAQs ────────────────────────────────────────── */
 
-export async function getTestimonials(department: string): Promise<Testimonial[]> {
-  const sanity = await safeFetch<Testimonial[]>(testimonialsByDepartmentQuery, { department });
+export async function getTestimonials(department: string, locale: string = DEFAULT_LOCALE): Promise<Testimonial[]> {
+  const sanity = await safeFetch<Testimonial[]>(testimonialsByDepartmentQuery, { department }, locale);
   return sanity ?? [];
 }
 
-export async function getFaqs(department: string): Promise<FaqItem[]> {
-  const sanity = await safeFetch<FaqItem[]>(faqsByDepartmentQuery, { department });
+export async function getFaqs(department: string, locale: string = DEFAULT_LOCALE): Promise<FaqItem[]> {
+  const sanity = await safeFetch<FaqItem[]>(faqsByDepartmentQuery, { department }, locale);
   return sanity ?? [];
 }
 
 /* ── Clinical ───────────────────────────────────────────────────── */
 
-export async function getConsultationsPage() {
-  return safeFetch(consultationsPageQuery);
+export async function getConsultationsPage(locale: string = DEFAULT_LOCALE) {
+  return safeFetch(consultationsPageQuery, {}, locale);
 }
 
 /* ── Institution ────────────────────────────────────────────────── */
 
-export async function getCharter() {
-  return safeFetch(charterQuery);
+export async function getCharter(locale: string = DEFAULT_LOCALE) {
+  return safeFetch(charterQuery, {}, locale);
 }
 
 /* ── Department structure (for navigation components) ───────────── */

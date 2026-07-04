@@ -6,12 +6,26 @@
 
 /* ── Base Types ─────────────────────────────────────────────────── */
 
+export interface TranslationStatus {
+  state?: "upToDate" | "aiDraft" | "needsTranslation";
+  sourceVersion?: string;
+  lastReviewedAt?: string;
+}
+
+export interface TranslationSibling {
+  lang: string;
+  slug: string;
+}
+
 export interface SanityDocument {
   _id: string;
   _type: string;
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  language?: string;
+  translationStatus?: TranslationStatus;
+  translations?: TranslationSibling[];
 }
 
 export interface SanityImage {
