@@ -4,6 +4,7 @@ import { institutionalImage, institutionalVideo, downloadFile } from "./objects/
 import { editorialWorkflow } from "./objects/editorial-workflow";
 import { propheticReference } from "./objects/prophetic-reference";
 import { boardApproval } from "./objects/board-approval";
+import { translationStatus } from "./objects/translation-status";
 import {
   richContent,
   arabicText,
@@ -78,6 +79,7 @@ export const schemaTypes = [
   editorialWorkflow,
   propheticReference,
   boardApproval,
+  translationStatus,
   richContent,
   arabicText,
   quranReference,

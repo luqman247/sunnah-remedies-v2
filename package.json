@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@portabletext/react": "^6.2.0",
+    "@sanity/document-internationalization": "^6.2.14",
     "@sanity/image-url": "^2.1.1",
+    "@sanity/language-filter": "^5.0.5",
     "@sanity/vision": "^6.3.0",
     "framer-motion": "^12.42.2",
     "next": "^16.2.10",

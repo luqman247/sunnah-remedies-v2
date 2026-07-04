@@ -1,5 +1,57 @@
 import type { StructureBuilder } from "sanity/structure";
 
+function languageGroupedList(
+  S: StructureBuilder,
+  title: string,
+  type: string,
+) {
+  return S.listItem()
+    .title(title)
+    .child(
+      S.list()
+        .title(title)
+        .items([
+          S.listItem()
+            .title("English")
+            .child(
+              S.documentList()
+                .title(`${title} — English`)
+                .filter(`_type == "${type}" && language == "en"`),
+            ),
+          S.listItem()
+            .title("Dansk")
+            .child(
+              S.documentList()
+                .title(`${title} — Dansk`)
+                .filter(`_type == "${type}" && language == "da"`),
+            ),
+          S.divider(),
+          S.listItem()
+            .title("Needs translation")
+            .child(
+              S.documentList()
+                .title(`${title} — Needs translation`)
+                .filter(
+                  `_type == "${type}" && language == "da" && translationStatus.state == "needsTranslation"`,
+                ),
+            ),
+          S.listItem()
+            .title("AI drafts to review")
+            .child(
+              S.documentList()
+                .title(`${title} — AI drafts`)
+                .filter(
+                  `_type == "${type}" && language == "da" && translationStatus.state == "aiDraft"`,
+                ),
+            ),
+          S.divider(),
+          S.listItem()
+            .title("All")
+            .child(S.documentTypeList(type).title(`All ${title}`)),
+        ]),
+    );
+}
+
 export const structure = (S: StructureBuilder) =>
   S.list()
     .title("Sunnah Remedies")
@@ -16,34 +68,23 @@ export const structure = (S: StructureBuilder) =>
                 .child(
                   S.document()
                     .schemaType("homepage")
-                    .documentId("homepage")
+                    .documentId("homepage"),
                 ),
               S.listItem()
                 .title("Navigation")
                 .child(
                   S.document()
                     .schemaType("navigation")
-                    .documentId("navigation")
+                    .documentId("navigation"),
                 ),
-              S.listItem()
-                .title("Announcements")
-                .child(
-                  S.documentTypeList("announcement")
-                    .title("Announcements")
-                ),
-              S.listItem()
-                .title("Department Cards")
-                .child(
-                  S.documentTypeList("departmentCard")
-                    .title("Department Cards")
-                ),
+              languageGroupedList(S, "Announcements", "announcement"),
+              languageGroupedList(S, "Department Cards", "departmentCard"),
               S.listItem()
                 .title("Media Assets")
                 .child(
-                  S.documentTypeList("mediaAsset")
-                    .title("Media Assets")
+                  S.documentTypeList("mediaAsset").title("Media Assets"),
                 ),
-            ])
+            ]),
         ),
 
       S.divider(),
@@ -55,31 +96,11 @@ export const structure = (S: StructureBuilder) =>
           S.list()
             .title("The Apothecary")
             .items([
-              S.listItem()
-                .title("Products")
-                .child(
-                  S.documentTypeList("product")
-                    .title("Products")
-                ),
-              S.listItem()
-                .title("Collections")
-                .child(
-                  S.documentTypeList("collection")
-                    .title("Collections")
-                ),
-              S.listItem()
-                .title("Categories")
-                .child(
-                  S.documentTypeList("category")
-                    .title("Categories")
-                ),
-              S.listItem()
-                .title("Ingredient Library")
-                .child(
-                  S.documentTypeList("ingredient")
-                    .title("Ingredients")
-                ),
-            ])
+              languageGroupedList(S, "Products", "product"),
+              languageGroupedList(S, "Collections", "collection"),
+              languageGroupedList(S, "Categories", "category"),
+              languageGroupedList(S, "Ingredients", "ingredient"),
+            ]),
         ),
 
       // ── The Academy ──
@@ -89,28 +110,13 @@ export const structure = (S: StructureBuilder) =>
           S.list()
             .title("The Academy")
             .items([
-              S.listItem()
-                .title("Programmes")
-                .child(
-                  S.documentTypeList("programme")
-                    .title("Programmes")
-                ),
-              S.listItem()
-                .title("Faculty")
-                .child(
-                  S.documentTypeList("faculty")
-                    .title("Faculty")
-                ),
-            ])
+              languageGroupedList(S, "Programmes", "programme"),
+              languageGroupedList(S, "Faculty", "faculty"),
+            ]),
         ),
 
       // ── Sacred Journeys ──
-      S.listItem()
-        .title("Sacred Journeys")
-        .child(
-          S.documentTypeList("journey")
-            .title("Sacred Journeys")
-        ),
+      languageGroupedList(S, "Sacred Journeys", "journey"),
 
       // ── Knowledge Library ──
       S.listItem()
@@ -119,25 +125,10 @@ export const structure = (S: StructureBuilder) =>
           S.list()
             .title("Knowledge Library")
             .items([
-              S.listItem()
-                .title("Articles")
-                .child(
-                  S.documentTypeList("article")
-                    .title("Articles")
-                ),
-              S.listItem()
-                .title("Authors")
-                .child(
-                  S.documentTypeList("author")
-                    .title("Authors")
-                ),
-              S.listItem()
-                .title("Topics")
-                .child(
-                  S.documentTypeList("topic")
-                    .title("Topics")
-                ),
-            ])
+              languageGroupedList(S, "Articles", "article"),
+              languageGroupedList(S, "Authors", "author"),
+              languageGroupedList(S, "Topics", "topic"),
+            ]),
         ),
 
       // ── Clinical ──
@@ -147,7 +138,7 @@ export const structure = (S: StructureBuilder) =>
           S.document()
             .schemaType("consultationsPage")
             .documentId("consultationsPage")
-            .title("Consultations Page")
+            .title("Consultations Page"),
         ),
 
       S.divider(),
@@ -164,30 +155,30 @@ export const structure = (S: StructureBuilder) =>
                 .child(
                   S.document()
                     .schemaType("charter")
-                    .documentId("charter")
+                    .documentId("charter"),
                 ),
               S.listItem()
                 .title("Institution Settings")
                 .child(
                   S.document()
                     .schemaType("institutionSettings")
-                    .documentId("institutionSettings")
+                    .documentId("institutionSettings"),
                 ),
               S.listItem()
                 .title("Footer")
                 .child(
                   S.document()
                     .schemaType("footerSettings")
-                    .documentId("footerSettings")
+                    .documentId("footerSettings"),
                 ),
               S.listItem()
                 .title("Global SEO")
                 .child(
                   S.document()
                     .schemaType("globalSeo")
-                    .documentId("globalSeo")
+                    .documentId("globalSeo"),
                 ),
-            ])
+            ]),
         ),
 
       // ── Testimonials & FAQs ──
@@ -197,24 +188,14 @@ export const structure = (S: StructureBuilder) =>
           S.list()
             .title("Testimonials & FAQs")
             .items([
-              S.listItem()
-                .title("Testimonials")
-                .child(
-                  S.documentTypeList("testimonial")
-                    .title("Testimonials")
-                ),
-              S.listItem()
-                .title("FAQs")
-                .child(
-                  S.documentTypeList("faq")
-                    .title("FAQs")
-                ),
-            ])
+              languageGroupedList(S, "Testimonials", "testimonial"),
+              languageGroupedList(S, "FAQs", "faq"),
+            ]),
         ),
 
       S.divider(),
 
-      // ── Operations (Phase 4) ──
+      // ── Operations (internal, not translatable) ──
       S.listItem()
         .title("Operations")
         .child(
@@ -224,33 +205,28 @@ export const structure = (S: StructureBuilder) =>
               S.listItem()
                 .title("Batch Records")
                 .child(
-                  S.documentTypeList("batchRecord")
-                    .title("Batch Records")
+                  S.documentTypeList("batchRecord").title("Batch Records"),
                 ),
               S.listItem()
                 .title("Operational Logs")
                 .child(
-                  S.documentTypeList("operationalLog")
-                    .title("Operational Logs")
+                  S.documentTypeList("operationalLog").title("Operational Logs"),
                 ),
               S.listItem()
                 .title("Compliance Register")
                 .child(
-                  S.documentTypeList("complianceEntry")
-                    .title("Compliance Register")
+                  S.documentTypeList("complianceEntry").title("Compliance Register"),
                 ),
               S.listItem()
                 .title("Decision Log")
                 .child(
-                  S.documentTypeList("decisionRecord")
-                    .title("Decision Log")
+                  S.documentTypeList("decisionRecord").title("Decision Log"),
                 ),
               S.listItem()
                 .title("Audit Findings")
                 .child(
-                  S.documentTypeList("auditFinding")
-                    .title("Audit Findings")
+                  S.documentTypeList("auditFinding").title("Audit Findings"),
                 ),
-            ])
+            ]),
         ),
     ]);
