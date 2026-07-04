@@ -5,15 +5,8 @@
  * with full editorial hierarchy. Usable on any page.
  *
  * When `entries` and `interval` are provided, the component
- * rotates through the collection. The transition resembles
- * light receding and returning — the visitor should barely
- * notice the change has happened.
- *
- * Motion philosophy:
- *   Nothing appears animated. Everything simply appears alive.
- *   Movement resembles changing light inside a library —
- *   the visitor should almost fail to notice it.
- *   Motion exists only to preserve continuity.
+ * rotates through the collection, alternating between
+ * Qur'anic verses and Prophetic traditions.
  */
 
 "use client";
@@ -39,11 +32,11 @@ export function Revelation({
   variant = "dark",
   showNotes = false,
 }: RevelationProps) {
-  const ref = useRef<HTMLElement>(null);
-  const [current, setCurrent] = useState(initialEntry);
-  const [turning, setTurning] = useState(false);
-  const indexRef = useRef(-1);
-  const reducedMotion = useRef(false);
+  const figureRef = useRef<HTMLElement>(null);
+  const [current, setCurrent] = useState<RevelationEntry>(initialEntry);
+  const [visible, setVisible] = useState(false);
+  const [hasEntered, setHasEntered] = useState(false);
+  const lastTypeRef = useRef<"quran" | "hadith">(initialEntry.type);
 
   const typeLabel = TYPE_LABELS[current.type];
   const hasNotes =
@@ -52,33 +45,37 @@ export function Revelation({
       current.classicalReferences?.length ||
       current.modernNotes);
 
-  const pickNext = useCallback(() => {
-    if (!entries || entries.length < 2) return;
-    let next: number;
-    do {
-      next = Math.floor(Math.random() * entries.length);
-    } while (next === indexRef.current);
-    indexRef.current = next;
-    return entries[next];
+  const pickNext = useCallback((): RevelationEntry | undefined => {
+    if (!entries || entries.length < 2) return undefined;
+
+    const nextType = lastTypeRef.current === "quran" ? "hadith" : "quran";
+    const pool = entries.filter((e) => e.type === nextType);
+    const source = pool.length > 0 ? pool : entries;
+
+    const pick = source[Math.floor(Math.random() * source.length)];
+    lastTypeRef.current = pick.type;
+    return pick;
   }, [entries]);
 
   useEffect(() => {
-    const el = ref.current;
+    const el = figureRef.current;
     if (!el) return;
 
-    reducedMotion.current = window.matchMedia(
+    const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    if (reducedMotion.current) {
-      el.classList.add("revelation--present");
+    if (prefersReduced) {
+      setVisible(true);
+      setHasEntered(true);
       return;
     }
 
     const observer = new IntersectionObserver(
       ([observed]) => {
         if (observed.isIntersecting) {
-          el.classList.add("revelation--present");
+          setVisible(true);
+          setTimeout(() => setHasEntered(true), 3000);
           observer.unobserve(el);
         }
       },
@@ -90,33 +87,39 @@ export function Revelation({
   }, []);
 
   useEffect(() => {
-    if (!entries || !interval || entries.length < 2) return;
+    if (!entries || !interval || entries.length < 2 || !hasEntered) return;
 
-    const FADE_OUT = reducedMotion.current ? 0 : 1400;
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    const fadeMs = prefersReduced ? 0 : 1400;
 
     const timer = setInterval(() => {
       const next = pickNext();
       if (!next) return;
 
-      if (reducedMotion.current) {
+      if (prefersReduced) {
         setCurrent(next);
         return;
       }
 
-      setTurning(true);
+      setVisible(false);
       setTimeout(() => {
         setCurrent(next);
-        setTurning(false);
-      }, FADE_OUT);
+        setVisible(true);
+      }, fadeMs);
     }, interval);
 
     return () => clearInterval(timer);
-  }, [entries, interval, pickNext]);
+  }, [entries, interval, pickNext, hasEntered]);
+
+  const enteringClass = visible && !hasEntered ? " revelation--entering" : "";
+  const visibleClass = visible ? " revelation--visible" : "";
 
   return (
     <figure
-      ref={ref}
-      className={`revelation revelation--${variant}${turning ? " revelation--turning" : ""}`}
+      ref={figureRef}
+      className={`revelation revelation--${variant}${visibleClass}${enteringClass}`}
       data-revelation-type={current.type}
     >
       <p className="revelation__classification revelation__layer">

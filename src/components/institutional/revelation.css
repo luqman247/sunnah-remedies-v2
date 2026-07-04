@@ -1,30 +1,18 @@
 /* ═══════════════════════════════════════════════════════════
  * <Revelation> — Institutional publishing component
  *
- * MOTION PHILOSOPHY
+ * Two modes of motion:
  *
- * Nothing should appear animated.
- * Everything should simply appear alive.
+ * 1. INITIAL REVEAL (plays once)
+ *    Staggered per-layer illumination when the component
+ *    enters the viewport. Classification first, Arabic next,
+ *    then the scholarly apparatus. Uses --entering class
+ *    which is removed after 3s.
  *
- * Movement resembles:
- *   — Turning a manuscript page
- *   — Changing light inside a library
- *   — Dust settling
- *   — Morning light entering a reading room
- *
- * The visitor should almost fail to notice the animation.
- * Motion exists only to preserve continuity.
- *
- * Implementation:
- *   Each editorial layer begins at rest — barely absent,
- *   not hidden. Presence arrives through opacity alone,
- *   with the faintest vertical settling (2–3px, as dust).
- *   Durations are long (2–3.5s). Easing is near-linear
- *   with a slow exhale at the end, like natural light.
- *   Layers are staggered not as a "sequence" but as a
- *   gradual illumination — classification first (the eye
- *   orients), Arabic text (the substance), then the
- *   scholarly apparatus fades in last.
+ * 2. ROTATION (every 15s)
+ *    All layers fade out together (1.4s), content swaps,
+ *    all layers fade back in together (2.4s). No stagger.
+ *    Resembles light receding and returning.
  * ═══════════════════════════════════════════════════════════ */
 
 /* ── Motion tokens ─────────────────────────────────── */
@@ -32,6 +20,7 @@
 .revelation {
   --r-dur-light: 2.4s;
   --r-dur-settle: 3.2s;
+  --r-dur-turn: 1.4s;
   --r-ease-light: cubic-bezier(0.16, 0.6, 0.4, 1);
   --r-settle: 3px;
 }
@@ -43,7 +32,7 @@
   margin: 0;
 }
 
-/* ── Presence choreography ─────────────────────────── */
+/* ── All layers: hidden by default ─────────────────── */
 
 .revelation__layer {
   opacity: 0;
@@ -53,47 +42,46 @@
     transform var(--r-dur-settle) var(--r-ease-light);
 }
 
-.revelation--present .revelation__layer {
+/* ── Visible state: all layers shown ───────────────── */
+
+.revelation--visible .revelation__layer {
   opacity: 1;
   transform: translateY(0);
 }
 
-.revelation--present .revelation__classification {
+/* ── Initial reveal: staggered per-layer delays ────── */
+/* Applied only during first entrance, removed after 3s */
+
+.revelation--entering .revelation__classification {
   transition-delay: 0s;
 }
 
-.revelation--present .revelation__text {
+.revelation--entering .revelation__text {
   transition-delay: 0.4s;
 }
 
-.revelation--present .revelation__translation-label {
+.revelation--entering .revelation__translation-label {
   transition-delay: 1.0s;
 }
 
-.revelation--present .revelation__english {
+.revelation--entering .revelation__english {
   transition-delay: 1.2s;
 }
 
-.revelation--present .revelation__source {
+.revelation--entering .revelation__source {
   transition-delay: 1.6s;
 }
 
-.revelation--present .revelation__notes {
+.revelation--entering .revelation__notes {
   transition-delay: 2.2s;
 }
 
-/* ── Rotation (turning the page) ───────────────────── */
+/* ── Rotation: uniform fade, no stagger ────────────── */
 
-.revelation--present .revelation__layer {
+.revelation:not(.revelation--entering) .revelation__layer {
   transition:
-    opacity var(--r-dur-light) var(--r-ease-light),
-    transform var(--r-dur-settle) var(--r-ease-light);
-}
-
-.revelation--turning .revelation__layer {
-  opacity: 0;
-  transform: translateY(0);
-  transition: opacity 1.4s var(--r-ease-light);
+    opacity var(--r-dur-turn) var(--r-ease-light),
+    transform 0s;
 }
 
 /* ── Reduced motion ────────────────────────────────── */
@@ -102,10 +90,6 @@
   .revelation__layer {
     opacity: 1;
     transform: none;
-    transition: none;
-  }
-
-  .revelation--turning .revelation__layer {
     transition: none;
   }
 }
