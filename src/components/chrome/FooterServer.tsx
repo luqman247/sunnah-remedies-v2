@@ -6,7 +6,6 @@ export async function FooterServer() {
   return (
     <>
       <PreFooter
-        statement={footer.preFooterStatement}
         action={footer.preFooterAction}
       />
       <Footer

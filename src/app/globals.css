@@ -587,7 +587,10 @@ a {
   text-transform: uppercase;
 }
 
-/* —— Pre-footer (editorial transition) —— */
+/* —— Pre-footer (daily revelation) ——————————————————
+ * Container only. Editorial hierarchy is handled by
+ * the reusable <Revelation> component (revelation.css).
+ * ——————————————————————————————————————————————————— */
 
 .pre-footer {
   position: relative;
@@ -632,16 +635,6 @@ a {
     padding-top: clamp(var(--s8), 14vw, 12rem);
     padding-bottom: clamp(var(--s8), 14vw, 12rem);
   }
-}
-
-.pre-footer__statement {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 300;
-  font-size: clamp(1.5rem, 3vw, 2.4rem);
-  line-height: 1.25;
-  letter-spacing: 0.01em;
-  color: var(--paper);
-  margin: 0 0 var(--s5);
 }
 
 .pre-footer__action {

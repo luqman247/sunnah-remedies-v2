@@ -1,15 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
 import { brandContext, brandAlt } from "@/lib/brand";
+import { getRevelationForDay } from "@/lib/content/library";
+import { Revelation } from "@/components/institutional/Revelation";
 
 interface PreFooterProps {
-  statement?: string;
   action?: { label: string; href: string };
 }
 
-export function PreFooter({ statement, action }: PreFooterProps) {
+export function PreFooter({ action }: PreFooterProps) {
+  const entry = getRevelationForDay();
+
   return (
-    <section className="pre-footer" aria-label="Institutional closing">
+    <section className="pre-footer" aria-label="Daily reflection">
       <div className="pre-footer__image">
         <Image
           src="/photography/institution-hero.jpg"
@@ -19,12 +22,15 @@ export function PreFooter({ statement, action }: PreFooterProps) {
           quality={75}
         />
       </div>
+
       <div className="pre-footer__content">
-        <p className="pre-footer__statement">
-          {statement || "Begin where you are. Whether you seek a remedy, wish to study, or are preparing for pilgrimage — the institution is open."}
-        </p>
+        <Revelation entry={entry} variant="dark" />
+
         <div className="pre-footer__action">
-          <Link href={action?.href || "/consultations"} className="quiet-link quiet-link--dark">
+          <Link
+            href={action?.href || "/consultations"}
+            className="quiet-link quiet-link--dark"
+          >
             {action?.label || "Request a consultation"}
           </Link>
         </div>

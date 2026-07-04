@@ -12,6 +12,7 @@ import {
 } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
+import "@/components/institutional/revelation.css";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],

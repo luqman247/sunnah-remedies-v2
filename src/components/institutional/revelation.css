@@ -1,0 +1,277 @@
+/* ═══════════════════════════════════════════════════════════
+ * <Revelation> — Institutional publishing component
+ *
+ * MOTION PHILOSOPHY
+ *
+ * Nothing should appear animated.
+ * Everything should simply appear alive.
+ *
+ * Movement resembles:
+ *   — Turning a manuscript page
+ *   — Changing light inside a library
+ *   — Dust settling
+ *   — Morning light entering a reading room
+ *
+ * The visitor should almost fail to notice the animation.
+ * Motion exists only to preserve continuity.
+ *
+ * Implementation:
+ *   Each editorial layer begins at rest — barely absent,
+ *   not hidden. Presence arrives through opacity alone,
+ *   with the faintest vertical settling (2–3px, as dust).
+ *   Durations are long (2–3.5s). Easing is near-linear
+ *   with a slow exhale at the end, like natural light.
+ *   Layers are staggered not as a "sequence" but as a
+ *   gradual illumination — classification first (the eye
+ *   orients), Arabic text (the substance), then the
+ *   scholarly apparatus fades in last.
+ * ═══════════════════════════════════════════════════════════ */
+
+/* ── Motion tokens ─────────────────────────────────── */
+
+.revelation {
+  --r-dur-light: 2.4s;
+  --r-dur-settle: 3.2s;
+  --r-ease-light: cubic-bezier(0.16, 0.6, 0.4, 1);
+  --r-settle: 3px;
+}
+
+/* ── Base layout ───────────────────────────────────── */
+
+.revelation {
+  text-align: center;
+  margin: 0;
+}
+
+/* ── Presence choreography ─────────────────────────── */
+
+.revelation__layer {
+  opacity: 0;
+  transform: translateY(var(--r-settle));
+  transition:
+    opacity var(--r-dur-light) var(--r-ease-light),
+    transform var(--r-dur-settle) var(--r-ease-light);
+}
+
+.revelation--present .revelation__layer {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.revelation--present .revelation__classification {
+  transition-delay: 0s;
+}
+
+.revelation--present .revelation__text {
+  transition-delay: 0.4s;
+}
+
+.revelation--present .revelation__translation-label {
+  transition-delay: 1.0s;
+}
+
+.revelation--present .revelation__english {
+  transition-delay: 1.2s;
+}
+
+.revelation--present .revelation__source {
+  transition-delay: 1.6s;
+}
+
+.revelation--present .revelation__notes {
+  transition-delay: 2.2s;
+}
+
+/* ── Reduced motion ────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .revelation__layer {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Layer 0: Classification ───────────────────────── */
+
+.revelation__classification {
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 0.625rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  margin: 0 0 var(--s5);
+}
+
+/* ── Layer 1 / 2: Sacred text ──────────────────────── */
+
+.revelation__text {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.revelation__arabic {
+  font-family: var(--font-arabic), "Noto Naskh Arabic", serif;
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+  line-height: 1.8;
+  margin: 0 0 var(--s5);
+  max-width: 38ch;
+  margin-inline: auto;
+}
+
+/* ── Boundary marker ──────────────────────────────── */
+
+.revelation__translation-label {
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 0.5625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin: 0 0 var(--s3);
+}
+
+/* ── English rendering ─────────────────────────────── */
+
+.revelation__english {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  margin: 0 0 var(--s5);
+}
+
+/* ── Source attribution ────────────────────────────── */
+
+.revelation__source {
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ── Editorial photography (future) ──────────────────
+ * .revelation__plate — reserved for editorial
+ * photography integration. Appears after source
+ * attribution, before scholarly notes.
+ *
+ * When implemented, follows the same motion philosophy
+ * as all other layers: light entering a reading room.
+ * The image must never compete with Revelation.
+ * It deepens the stillness.
+ *
+ * Approved subjects: manuscript, library-table,
+ * calligraphy, book, natural-paper, ink, glass,
+ * olive-branch, honey, stone, wood, morning-light.
+ * ──────────────────────────────────────────────────── */
+
+/* ── Scholarly notes (Layers 3–5) ──────────────────── */
+
+.revelation__notes {
+  margin-top: var(--s6);
+  padding-top: var(--s5);
+  border-top: 1px solid currentColor;
+  opacity: 0.7;
+  text-align: left;
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.revelation__note + .revelation__note {
+  margin-top: var(--s4);
+}
+
+.revelation__note-label {
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.5625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin: 0 0 var(--s2);
+}
+
+.revelation__note-text {
+  font-family: var(--font-body), Georgia, serif;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.revelation__note-list {
+  font-family: var(--font-body), Georgia, serif;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 1.25em;
+}
+
+/* ═══ Variant: Dark (myrtle ground) ═══════════════════ */
+
+.revelation--dark .revelation__classification {
+  color: var(--gilt-soft);
+}
+
+.revelation--dark .revelation__arabic {
+  color: var(--paper);
+}
+
+.revelation--dark[data-revelation-type="quran"] .revelation__arabic {
+  color: var(--gilt-soft);
+}
+
+.revelation--dark .revelation__translation-label {
+  color: var(--paper);
+  opacity: 0.4;
+}
+
+.revelation--dark .revelation__english {
+  color: var(--paper);
+  opacity: 0.85;
+}
+
+.revelation--dark .revelation__source {
+  color: var(--gilt-soft);
+}
+
+.revelation--dark .revelation__notes {
+  color: var(--paper);
+  border-color: var(--gilt-soft);
+}
+
+/* ═══ Variant: Light (paper ground) ═══════════════════ */
+
+.revelation--light .revelation__classification {
+  color: var(--v2-sage, #6b7c5e);
+}
+
+.revelation--light .revelation__arabic {
+  color: var(--v2-ink, #2c2c2c);
+}
+
+.revelation--light[data-revelation-type="quran"] .revelation__arabic {
+  color: var(--myrtle, #1a3a2a);
+}
+
+.revelation--light .revelation__translation-label {
+  color: var(--v2-ink, #2c2c2c);
+  opacity: 0.35;
+}
+
+.revelation--light .revelation__english {
+  color: var(--v2-ink, #2c2c2c);
+  opacity: 0.8;
+}
+
+.revelation--light .revelation__source {
+  color: var(--v2-sage, #6b7c5e);
+}
+
+.revelation--light .revelation__notes {
+  color: var(--v2-ink, #2c2c2c);
+  border-color: var(--v2-sage, #6b7c5e);
+}
