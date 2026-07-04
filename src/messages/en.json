@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "Home",
+    "theApothecary": "The Apothecary",
+    "theAcademy": "The Academy",
+    "sacredJourneys": "Sacred Journeys",
+    "knowledgeLibrary": "Knowledge Library",
+    "consultations": "Clinical Consultations",
+    "charter": "Charter",
+    "correspondence": "Correspondence",
+    "navigation": "Navigation",
+    "closeNavigation": "Close navigation",
+    "ariaMenu": "Main navigation",
+    "ariaLanguage": "Change language"
+  },
+  "footer": {
+    "tagline": "Institute of Prophetic Medicine",
+    "foundingStatement": "Scholarship, clinical practice, and natural therapeutics under one house",
+    "closing": "Knowledge before commerce. Service before profit. Trust before growth",
+    "colophon": "Sunnah Remedies · Est. MMXXV · Healing is from Allah · the remedy is a means",
+    "requestConsultation": "Request a consultation"
+  },
+  "common": {
+    "readMore": "Read more",
+    "learnMore": "Learn more",
+    "viewAll": "View all",
+    "backTo": "Back to {page}",
+    "loading": "Loading",
+    "error": "Something went wrong",
+    "notFound": "Not found"
+  },
+  "notFound": {
+    "heading": "THE CORRIDOR DOES NOT CONTINUE HERE",
+    "subheading": "This page has not been found",
+    "body": "You may have followed a link that has moved, or the page may have been withdrawn. The institution continues through the doors below",
+    "returnHome": "Return to the threshold",
+    "knowledgeLibrary": "The Knowledge Library",
+    "theApothecary": "The Apothecary",
+    "theAcademy": "The Academy"
+  },
+  "breadcrumbs": {
+    "home": "Home"
+  },
+  "form": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "placeholderEmail": "you@example.com",
+    "submit": "Send",
+    "sending": "Sending\u2026",
+    "success": "Thank you \u2014 we\u2019ll be in touch shortly",
+    "error": "Something went wrong. Please try again",
+    "validation": {
+      "required": "This field is required",
+      "email": "Please enter a valid email address",
+      "minLength": "Must be at least {min} characters"
+    }
+  },
+  "search": {
+    "placeholder": "Search\u2026",
+    "noResults": "No results found for \u201c{query}\u201d"
+  },
+  "apothecary": {
+    "title": "The Apothecary",
+    "catalogue": "Product Catalogue",
+    "monographs": "Monographs",
+    "ingredients": "Ingredients",
+    "qualityStandards": "Quality Standards",
+    "laboratoryVerification": "Laboratory Verification",
+    "faqs": "Frequently Asked Questions",
+    "counter": "The Counter"
+  },
+  "academy": {
+    "title": "The Academy",
+    "curriculum": "Curriculum",
+    "faculty": "Faculty",
+    "enrolment": "Enrolment",
+    "testimonials": "Testimonials",
+    "foundations": "Foundations",
+    "clinicalEthics": "Clinical Ethics"
+  },
+  "journeys": {
+    "title": "Sacred Journeys",
+    "preparation": "Preparation",
+    "registration": "Registration",
+    "gallery": "Gallery",
+    "itineraries": "Itineraries",
+    "faqs": "Frequently Asked Questions"
+  },
+  "knowledge": {
+    "title": "Knowledge Library",
+    "articles": "Articles",
+    "topics": "Topics"
+  },
+  "consultations": {
+    "title": "Clinical Consultations",
+    "bookAppointment": "Book an appointment"
+  },
+  "booking": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "dateOfBirth": "Date of birth",
+    "selectDate": "Select a date",
+    "selectTime": "Select a time",
+    "confirm": "Confirm booking",
+    "success": "Your consultation has been booked",
+    "returning": "Returning patient",
+    "new": "New patient"
+  },
+  "seasonal": {
+    "greeting": "Seasonal greeting"
+  },
+  "draft": {
+    "active": "Draft Preview Active",
+    "exit": "Exit preview"
+  },
+  "metadata": {
+    "defaultTitle": "Sunnah Remedies \u2014 Institute of Prophetic Medicine",
+    "defaultDescription": "The world\u2019s leading institute of Prophetic Medicine \u2014 scholarship, clinical care, and natural therapeutics under one house"
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "Hjem",
+    "theApothecary": "Apoteket",
+    "theAcademy": "Akademiet",
+    "sacredJourneys": "Hellige Rejser",
+    "knowledgeLibrary": "Vidensbiblioteket",
+    "consultations": "Kliniske Konsultationer",
+    "charter": "Charter",
+    "correspondence": "Korrespondance",
+    "navigation": "Navigation",
+    "closeNavigation": "Luk navigation",
+    "ariaMenu": "Hovednavigation",
+    "ariaLanguage": "Skift sprog"
+  },
+  "footer": {
+    "tagline": "Institut for Profetisk Medicin",
+    "foundingStatement": "Forskning, klinisk praksis og naturlig terapi under \u00e9t tag",
+    "closing": "Viden f\u00f8r handel. Tjeneste f\u00f8r profit. Tillid f\u00f8r v\u00e6kst",
+    "colophon": "Sunnah Remedies \u00b7 Grundlagt MMXXV \u00b7 Helbredelse er fra Allah \u00b7 midlet er et redskab",
+    "requestConsultation": "Anmod om en konsultation"
+  },
+  "common": {
+    "readMore": "L\u00e6s mere",
+    "learnMore": "L\u00e6r mere",
+    "viewAll": "Se alle",
+    "backTo": "Tilbage til {page}",
+    "loading": "Indl\u00e6ser",
+    "error": "Noget gik galt",
+    "notFound": "Ikke fundet"
+  },
+  "notFound": {
+    "heading": "KORRIDOREN FORTS\u00c6TTER IKKE HER",
+    "subheading": "Denne side er ikke fundet",
+    "body": "Du har muligvis fulgt et link, der er flyttet, eller siden kan v\u00e6re trukket tilbage. Institutionen forts\u00e6tter gennem d\u00f8rene nedenfor",
+    "returnHome": "Tilbage til t\u00e6rsklen",
+    "knowledgeLibrary": "Vidensbiblioteket",
+    "theApothecary": "Apoteket",
+    "theAcademy": "Akademiet"
+  },
+  "breadcrumbs": {
+    "home": "Hjem"
+  },
+  "form": {
+    "name": "Navn",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "message": "Besked",
+    "placeholderEmail": "dig@eksempel.dk",
+    "submit": "Send",
+    "sending": "Sender\u2026",
+    "success": "Tak \u2014 vi vender tilbage hurtigst muligt",
+    "error": "Noget gik galt. Pr\u00f8v venligst igen",
+    "validation": {
+      "required": "Dette felt er p\u00e5kr\u00e6vet",
+      "email": "Indtast venligst en gyldig e-mailadresse",
+      "minLength": "Skal v\u00e6re mindst {min} tegn"
+    }
+  },
+  "search": {
+    "placeholder": "S\u00f8g\u2026",
+    "noResults": "Ingen resultater for \u201c{query}\u201d"
+  },
+  "apothecary": {
+    "title": "Apoteket",
+    "catalogue": "Produktkatalog",
+    "monographs": "Monografier",
+    "ingredients": "Ingredienser",
+    "qualityStandards": "Kvalitetsstandarder",
+    "laboratoryVerification": "Laboratoriebekr\u00e6ftelse",
+    "faqs": "Ofte stillede sp\u00f8rgsm\u00e5l",
+    "counter": "Disken"
+  },
+  "academy": {
+    "title": "Akademiet",
+    "curriculum": "Pensum",
+    "faculty": "Fakultet",
+    "enrolment": "Indskrivning",
+    "testimonials": "Udtalelser",
+    "foundations": "Grundl\u00e6ggende",
+    "clinicalEthics": "Klinisk Etik"
+  },
+  "journeys": {
+    "title": "Hellige Rejser",
+    "preparation": "Forberedelse",
+    "registration": "Registrering",
+    "gallery": "Galleri",
+    "itineraries": "Rejseplaner",
+    "faqs": "Ofte stillede sp\u00f8rgsm\u00e5l"
+  },
+  "knowledge": {
+    "title": "Vidensbiblioteket",
+    "articles": "Artikler",
+    "topics": "Emner"
+  },
+  "consultations": {
+    "title": "Kliniske Konsultationer",
+    "bookAppointment": "Book en tid"
+  },
+  "booking": {
+    "firstName": "Fornavn",
+    "lastName": "Efternavn",
+    "dateOfBirth": "F\u00f8dselsdato",
+    "selectDate": "V\u00e6lg en dato",
+    "selectTime": "V\u00e6lg et tidspunkt",
+    "confirm": "Bekr\u00e6ft booking",
+    "success": "Din konsultation er booket",
+    "returning": "Tilbagevendende patient",
+    "new": "Ny patient"
+  },
+  "seasonal": {
+    "greeting": "S\u00e6sonhilsen"
+  },
+  "draft": {
+    "active": "Kladdevisning aktiv",
+    "exit": "Afslut visning"
+  },
+  "metadata": {
+    "defaultTitle": "Sunnah Remedies \u2014 Institut for Profetisk Medicin",
+    "defaultDescription": "Verdens f\u00f8rende institut for Profetisk Medicin \u2014 forskning, klinisk behandling og naturlig terapi under \u00e9t tag"
+  }
+}
