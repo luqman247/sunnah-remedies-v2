@@ -48,6 +48,7 @@ export const announcement = defineType({
           { title: "Sacred Journeys", value: "sacred-journeys" },
           { title: "Knowledge Library", value: "knowledge-library" },
           { title: "Practitioner Portal", value: "practitioner" },
+          { title: "Student Campus", value: "student" },
         ],
       },
       initialValue: "all",
