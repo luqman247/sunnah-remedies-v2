@@ -63,7 +63,7 @@ export default function CounterPage() {
           <PageIntro section="The Counter" folio="—" title="Dispensation received" />
           <p className="type-body-l">
             Your dispensation has been received. We will write to {details.email}
-            with confirmation and dispatch details.
+            with confirmation and dispatch details
           </p>
           <p className="type-body" style={{ marginTop: "var(--s5)" }}>
             <QuietLink href="/the-apothecary">Return to the cabinet</QuietLink>
@@ -81,11 +81,11 @@ export default function CounterPage() {
             section="The Counter"
             folio="i"
             title="The counter"
-            lede="Your selection is reviewed before dispensation."
+            lede="Your selection is reviewed before dispensation"
           >
             <p>
               Remedies are dispensed with grade and source. Delivery terms and
-              fees are stated plainly; nothing is added without disclosure.
+              fees are stated plainly; nothing is added without disclosure
             </p>
           </PageIntro>
         </div>
@@ -112,7 +112,7 @@ export default function CounterPage() {
             <>
               {items.length === 0 ? (
                 <>
-                  <p className="type-body-l">The counter is empty. Return to the cabinet.</p>
+                  <p className="type-body-l">The counter is empty. Return to the cabinet</p>
                   <p style={{ marginTop: "var(--s5)" }}>
                     <QuietLink href="/the-apothecary">Return to the Apothecary</QuietLink>
                   </p>
@@ -268,7 +268,7 @@ export default function CounterPage() {
               <p className="type-body" style={{ margin: "var(--s5) 0" }}>
                 Payment is completed through a secure payment provider. Card and
                 credential entry occurs in that provider interface; the
-                institution does not capture raw payment credentials.
+                institution does not capture raw payment credentials
               </p>
               <SolidAction type="button" onClick={handleComplete}>
                 Confirm dispensation

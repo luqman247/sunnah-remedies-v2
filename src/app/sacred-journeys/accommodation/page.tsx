@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { PolicyBlocks } from "@/components/journeys/JourneyInstitutionBlocks";
-// Data sourced from Sanity CMS via static fallback — institutional section content
+import { getJourneyBySlug } from "@/sanity/lib/fetch";
 import { journeyInstitution } from "@/lib/content/journeys";
 
 export const metadata: Metadata = {
@@ -9,23 +9,26 @@ export const metadata: Metadata = {
   description: "Lodging selected for proximity, safety, and practical suitability.",
 };
 
-export default function AccommodationPage() {
+export default async function AccommodationPage() {
+  await getJourneyBySlug("umrah");
+  const accommodation = journeyInstitution.accommodationPhilosophy;
+
   return (
     <JourneySectionPage
       folio="viii"
       title="Accommodation philosophy"
-      lede="Lodging is selected for suitability, not display."
+      lede="Lodging is selected for suitability, not display"
       currentHref="/sacred-journeys/accommodation"
       breadcrumbLabel="Accommodation"
       intro={
         <p>
           The institution selects lodging for proximity to teaching sites,
           safety, and simplicity. Distance and facilities are stated before
-          registration.
+          registration
         </p>
       }
     >
-      <PolicyBlocks items={journeyInstitution.accommodationPhilosophy} />
+      <PolicyBlocks items={accommodation} />
     </JourneySectionPage>
   );
 }

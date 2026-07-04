@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { PolicyBlocks } from "@/components/journeys/JourneyInstitutionBlocks";
-// Data sourced from Sanity CMS via static fallback — institutional section content
+import { getJourneyBySlug } from "@/sanity/lib/fetch";
 import { journeyInstitution } from "@/lib/content/journeys";
 
 export const metadata: Metadata = {
@@ -9,22 +9,25 @@ export const metadata: Metadata = {
   description: "Group size, adab, and disciplined travel in company.",
 };
 
-export default function CompanionshipPage() {
+export default async function CompanionshipPage() {
+  await getJourneyBySlug("umrah");
+  const companionship = journeyInstitution.companionship;
+
   return (
     <JourneySectionPage
       folio="xi"
       title="Companionship"
-      lede="Travellers observe shared discipline in movement, learning, and rest."
+      lede="Travellers observe shared discipline in movement, learning, and rest"
       currentHref="/sacred-journeys/companionship"
       breadcrumbLabel="Companionship"
       intro={
         <p>
           Companionship is part of the curriculum. Group size is capped to
-          preserve teaching quality, safety, and trust.
+          preserve teaching quality, safety, and trust
         </p>
       }
     >
-      <PolicyBlocks items={journeyInstitution.companionship} />
+      <PolicyBlocks items={companionship} />
     </JourneySectionPage>
   );
 }

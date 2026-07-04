@@ -27,7 +27,7 @@ export function BookingHero() {
         transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
       >
         Experience Prophetic medicine in a calm, professional environment.
-        Choose your practitioner, preferred clinic and appointment time.
+        Choose your practitioner, preferred clinic and appointment time
       </motion.p>
 
       <motion.div

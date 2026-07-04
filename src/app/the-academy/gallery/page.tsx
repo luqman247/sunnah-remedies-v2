@@ -17,7 +17,7 @@ export default async function AcademyGalleryPage() {
     <AcademySectionPage
       folio="vi"
       title="Gallery"
-      lede="Institutional spaces recorded without staging — the clinical suite, reading room, and seminar hall."
+      lede="Institutional spaces recorded without staging — the clinical suite, reading room, and seminar hall"
       currentHref="/the-academy/gallery"
       breadcrumbLabel="Gallery"
     >

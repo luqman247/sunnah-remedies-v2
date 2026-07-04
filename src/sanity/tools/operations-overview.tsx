@@ -108,13 +108,13 @@ export function OperationsOverview() {
     <div style={styles.container}>
       <h1 style={styles.heading}>Operations Overview</h1>
       <p style={styles.muted}>
-        Upcoming review dates, compliance alerts, and open findings.
+        Upcoming review dates, compliance alerts, and open findings
       </p>
 
       <section style={styles.section}>
         <h2 style={styles.sectionHeading}>Content Reviews Due (next 30 days)</h2>
         {reviewsDue.length === 0 ? (
-          <p style={styles.muted}>No reviews due.</p>
+          <p style={styles.muted}>No reviews due</p>
         ) : (
           <ul style={styles.list}>
             {reviewsDue.map((item) => (
@@ -130,7 +130,7 @@ export function OperationsOverview() {
       <section style={styles.section}>
         <h2 style={styles.sectionHeading}>Compliance Alerts</h2>
         {complianceAlerts.length === 0 ? (
-          <p style={styles.muted}>All entries green.</p>
+          <p style={styles.muted}>All entries green</p>
         ) : (
           <ul style={styles.list}>
             {complianceAlerts.map((item) => (
@@ -153,7 +153,7 @@ export function OperationsOverview() {
       <section style={styles.section}>
         <h2 style={styles.sectionHeading}>Open Audit Findings</h2>
         {openFindings.length === 0 ? (
-          <p style={styles.muted}>No open findings.</p>
+          <p style={styles.muted}>No open findings</p>
         ) : (
           <ul style={styles.list}>
             {openFindings.map((item) => (

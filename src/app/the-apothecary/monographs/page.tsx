@@ -21,7 +21,7 @@ export default async function MonographsPage() {
       department={apothecary}
       folio="iii"
       title="Product Monographs"
-      lede="Each remedy is presented as a scholarly record."
+      lede="Each remedy is presented as a scholarly record"
       currentHref="/the-apothecary/monographs"
       breadcrumb={[
         { label: "The Apothecary", href: "/the-apothecary" },
@@ -31,7 +31,7 @@ export default async function MonographsPage() {
         <p>
           Monographs include historical context, graded Prophetic references,
           traditional usage, evidence-informed notes, stated limits, and
-          dispensation details.
+          dispensation details
         </p>
       }
     >

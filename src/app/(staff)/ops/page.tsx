@@ -35,7 +35,7 @@ export default function OpsIndexPage() {
           Operational Forms
         </h1>
         <p className="font-[family-name:var(--font-body)] text-sm text-[#0E3B2E]/70 leading-relaxed">
-          Record operational events. Each submission is timestamped and attributed.
+          Record operational events. Each submission is timestamped and attributed
         </p>
       </header>
 

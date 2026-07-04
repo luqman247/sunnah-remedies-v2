@@ -2,12 +2,16 @@ import type { Metadata } from "next";
 import { Leaf } from "@/components/ui/Leaf";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { QuietLink } from "@/components/ui/Links";
+import { getInstitutionSettings } from "@/sanity/lib/fetch";
 
 export const metadata: Metadata = {
   title: "Correspondence",
 };
 
-export default function CorrespondencePage() {
+export default async function CorrespondencePage() {
+  const institution = await getInstitutionSettings();
+  const contactEmail = institution.contactEmail || "correspondence@sunnahremedies.org";
+
   return (
     <>
       <Leaf>
@@ -16,11 +20,11 @@ export default function CorrespondencePage() {
             section="Correspondence"
             folio="i"
             title="Write to us"
-            lede="The institution responds with care and in due course."
+            lede="The institution responds with care and in due course"
           >
             <p>
               For clinical matters, use Consultations. For programme questions,
-              use the Academy. For all other matters, write below.
+              use the Academy. For all other matters, write below
             </p>
           </PageIntro>
         </div>
@@ -29,8 +33,8 @@ export default function CorrespondencePage() {
       <Leaf variant="inset">
         <div className="measure" style={{ margin: "0 auto" }}>
           <p className="type-body">
-            <QuietLink href="mailto:correspondence@sunnahremedies.org">
-              correspondence@sunnahremedies.org
+            <QuietLink href={`mailto:${contactEmail}`}>
+              {contactEmail}
             </QuietLink>
           </p>
 

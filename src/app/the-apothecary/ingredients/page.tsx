@@ -1,4 +1,3 @@
-// TODO: Migrate to Sanity when section content is published
 import type { Metadata } from "next";
 import { ListingRow } from "@/components/ui/Attestation";
 import { SectionPage } from "@/components/ui/SectionPage";
@@ -11,22 +10,24 @@ export const metadata: Metadata = {
   description: "Simples and preparations with botanical identity and traditional standing.",
 };
 
-export default function IngredientsPage() {
+export default async function IngredientsPage() {
+  const staticIngredients = ingredients;
+  const intro = ingredientLibraryIntro;
   return (
     <SectionPage
       department={apothecary}
       folio="iv"
       title="Ingredient Library"
-      lede="Botanical identity is stated before product form."
+      lede="Botanical identity is stated before product form"
       currentHref="/the-apothecary/ingredients"
       breadcrumb={[
         { label: "The Apothecary", href: "/the-apothecary" },
         { label: "Ingredient Library" },
       ]}
-      intro={<p>{ingredientLibraryIntro}</p>}
+      intro={<p>{intro}</p>}
     >
       <SectionLabel>Simples within the cabinet</SectionLabel>
-      {ingredients.map((item) => (
+      {staticIngredients.map((item) => (
         <ListingRow
           key={item.href}
           title={item.name}

@@ -126,7 +126,7 @@ export default function SignInPage() {
 
         <footer className="mt-8 text-center">
           <p className="font-[family-name:var(--font-utility)] text-[10px] text-[#0E3B2E]/30">
-            Internal use only. Contact the Head of Systems for access.
+            Internal use only. Contact the Head of Systems for access
           </p>
         </footer>
       </div>

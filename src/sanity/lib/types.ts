@@ -311,6 +311,31 @@ export interface Topic extends SanityDocument {
   related?: Topic[];
 }
 
+/* ── Department Card (resolved from reference) ─────────────────── */
+
+export interface DepartmentCardResolved {
+  order: number;
+  nameEn: string;
+  nameAr: string;
+  standfirst: string;
+  href: string;
+  size: "standard" | "feature";
+  plate?: {
+    status: "brief" | "interim" | "final";
+    purpose: string;
+    composition: string;
+    lens?: string;
+    lighting: string;
+    grade?: string;
+    mood: string;
+    image?: SanityImage;
+    alt?: string;
+    caption?: string;
+    decorative?: boolean;
+    credit?: string;
+  };
+}
+
 /* ── Homepage ───────────────────────────────────────────────────── */
 
 export interface HomepagePillar {
@@ -410,7 +435,7 @@ export interface HomepageData extends SanityDocument {
     body: string[];
     pullQuote: { text: string; attribution?: string; source?: string };
   };
-  departmentCards?: { _ref: string }[];
+  departmentCards?: DepartmentCardResolved[];
   authoritySignals?: { label: string; value: string | null; note?: string }[];
   correspondence?: {
     heading: string;

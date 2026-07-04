@@ -100,7 +100,7 @@ export function PatientForm({ value, onChange, errors }: PatientFormProps) {
           />
           <span className="patient-form__consent-text" id="consent-description">
             I understand Hijama may not be suitable for everyone and agree to the
-            consultation process.
+            consultation process
           </span>
         </label>
         {errors.consent && <span className="form-error" role="alert">{errors.consent}</span>}

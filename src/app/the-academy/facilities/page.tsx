@@ -17,7 +17,7 @@ export default async function FacilitiesPage() {
     <AcademySectionPage
       folio="vii"
       title="Facilities"
-      lede="Purpose-built for supervised clinical education."
+      lede="Purpose-built for supervised clinical education"
       currentHref="/the-academy/facilities"
       breadcrumbLabel="Facilities"
     >

@@ -12,6 +12,7 @@ import {
   homepageQuery,
   navigationQuery,
   footerQuery,
+  institutionSettingsQuery,
   allProductsQuery,
   productBySlugQuery,
   allProgrammesQuery,
@@ -113,12 +114,35 @@ export async function getFooter(): Promise<FooterData> {
     preFooterAction: { label: "Request a consultation", href: "/consultations" },
     columns: [
       { title: "The Pillars", links: [{ label: "The Apothecary", href: "/the-apothecary" }, { label: "The Academy", href: "/the-academy" }, { label: "Sacred Journeys", href: "/sacred-journeys" }, { label: "Knowledge Library", href: "/knowledge-library" }] },
-      { title: "Institution", links: [{ label: "Founding Charter", href: "/charter" }, { label: "Quality Standards", href: "/the-apothecary/quality-standards" }, { label: "Consultations", href: "/consultations" }, { label: "The Register", href: "/the-register" }] },
+      { title: "Institution", links: [{ label: "The Institute", href: "/institute" }, { label: "Founding Charter", href: "/charter" }, { label: "The Institutional Year", href: "/calendar" }, { label: "Exhibitions", href: "/exhibitions" }, { label: "Research", href: "/research" }, { label: "The Press", href: "/press" }] },
       { title: "Connect", links: [{ label: "Correspondence", href: "/correspondence" }, { label: "Academy Enrolment", href: "/the-academy/enrolment" }, { label: "Journey Registration", href: "/sacred-journeys/registration" }] },
       { title: "Legal", links: [{ label: "Privacy", href: "/charter" }, { label: "Terms", href: "/charter" }, { label: "Accessibility", href: "/charter" }] },
     ],
     closingStatement: "Knowledge before commerce. Service before profit. Trust before growth.",
     colophon: "Sunnah Remedies · Est. MMXXV · Healing is from Allah · the remedy is a means",
+  };
+}
+
+/* ── Institution Settings ──────────────────────────────────────── */
+
+export interface InstitutionSettingsData {
+  name: string;
+  descriptor?: string;
+  tagline?: string;
+  foundingYear?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  address?: string;
+  socialLinks?: { platform: string; url: string }[];
+}
+
+export async function getInstitutionSettings(): Promise<InstitutionSettingsData> {
+  const sanity = await safeFetch<InstitutionSettingsData>(institutionSettingsQuery);
+  if (sanity?.name) return sanity;
+  return {
+    name: "Sunnah Remedies",
+    descriptor: "Institute of Prophetic Medicine",
+    foundingYear: "2025",
   };
 }
 
@@ -130,8 +154,16 @@ export async function getHomepage(): Promise<HomepageData | null> {
 
 /* ── Global SEO ─────────────────────────────────────────────────── */
 
-export async function getGlobalSeo() {
-  return safeFetch(globalSeoQuery);
+export interface GlobalSeoData {
+  siteName?: string;
+  siteDescription?: string;
+  defaultOgImage?: { asset?: { url?: string } };
+  twitterHandle?: string;
+  keywords?: string[];
+}
+
+export async function getGlobalSeo(): Promise<GlobalSeoData | null> {
+  return safeFetch<GlobalSeoData>(globalSeoQuery);
 }
 
 /* ── Apothecary ─────────────────────────────────────────────────── */

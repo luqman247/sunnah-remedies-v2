@@ -3,7 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { brandContext, brandAlt } from "@/lib/brand";
+import { ThemeToggle } from "./ThemeToggle";
 
 interface NavItem {
   label: string;
@@ -16,6 +18,7 @@ interface MastheadProps {
 }
 
 export function Masthead({ navItems }: MastheadProps) {
+  const pathname = usePathname();
   const departments = (navItems || []).filter(i => !i.highlighted);
   const highlighted = (navItems || []).find(i => i.highlighted);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -44,6 +47,11 @@ export function Masthead({ navItems }: MastheadProps) {
     };
   }, [menuOpen]);
 
+  function isActive(href: string): boolean {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  }
+
   return (
     <>
       <header className="masthead">
@@ -61,26 +69,38 @@ export function Masthead({ navItems }: MastheadProps) {
 
           <nav className="masthead-nav" aria-label="Primary">
             {departments.map((dept) => (
-              <Link key={dept.href} href={dept.href} className="nav-link">
+              <Link
+                key={dept.href}
+                href={dept.href}
+                className={`nav-link ${isActive(dept.href) ? "nav-link--current" : ""}`}
+                aria-current={isActive(dept.href) ? "page" : undefined}
+              >
                 {dept.label}
               </Link>
             ))}
             <span className="masthead-nav__divider" aria-hidden="true" />
-            <Link href={highlighted?.href || "/consultations"} className="nav-link nav-link--accent">
+            <Link
+              href={highlighted?.href || "/consultations"}
+              className={`nav-link nav-link--accent ${isActive(highlighted?.href || "/consultations") ? "nav-link--current" : ""}`}
+              aria-current={isActive(highlighted?.href || "/consultations") ? "page" : undefined}
+            >
               {highlighted?.label || "Clinical consultations"}
             </Link>
           </nav>
 
-          <button
-            ref={menuButtonRef}
-            type="button"
-            className="masthead-menu-btn"
-            onClick={() => setMenuOpen(true)}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-nav"
-          >
-            Navigation
-          </button>
+          <div className="masthead__actions">
+            <ThemeToggle />
+            <button
+              ref={menuButtonRef}
+              type="button"
+              className="masthead-menu-btn"
+              onClick={() => setMenuOpen(true)}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-nav"
+            >
+              Navigation
+            </button>
+          </div>
         </div>
       </header>
 
@@ -114,7 +134,8 @@ export function Masthead({ navItems }: MastheadProps) {
           <Link
             key={dept.href}
             href={dept.href}
-            className="quiet-link quiet-link--dark"
+            className={`quiet-link quiet-link--dark ${isActive(dept.href) ? "quiet-link--current" : ""}`}
+            aria-current={isActive(dept.href) ? "page" : undefined}
             onClick={() => setMenuOpen(false)}
           >
             {dept.label}

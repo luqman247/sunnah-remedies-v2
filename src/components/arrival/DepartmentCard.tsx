@@ -50,7 +50,7 @@ export function DepartmentCard({
   return (
     <article className={`dept-card ${size === "feature" ? "dept-card--feature" : ""}`}>
       <Link href={href} className="arrival-link" style={{ display: "block", textDecoration: "none", color: "inherit" }}>
-        <span className="type-folio-v2" style={{ color: "var(--v2-brass)" }}>
+        <span className="type-folio-v2" style={{ color: "var(--brass)" }}>
           {numerals[order - 1] || order}
         </span>
 
@@ -61,7 +61,7 @@ export function DepartmentCard({
           lang="ar"
           dir="rtl"
           className="type-arabic-body"
-          style={{ display: "block", fontSize: "1rem", color: "var(--v2-ink-soft)", marginBlockStart: "var(--space-2)" }}
+          style={{ display: "block", fontSize: "1rem", color: "var(--ink-soft)", marginBlockStart: "var(--space-2)" }}
         >
           {nameAr}
         </span>

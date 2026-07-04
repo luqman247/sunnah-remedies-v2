@@ -31,7 +31,7 @@ export function EvidenceSection({ evidence }: { evidence: RemedyEvidence }) {
       </h2>
       <p className="type-body evidence-section__intro">
         Established evidence and emerging findings are listed separately. Neither
-        replaces Prophetic grading or traditional scholarly standing.
+        replaces Prophetic grading or traditional scholarly standing
       </p>
 
       {evidence.established.length > 0 && (

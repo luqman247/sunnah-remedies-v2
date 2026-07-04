@@ -16,7 +16,7 @@ export default async function CourseHandbookPage() {
     <AcademySectionPage
       folio="v"
       title="Course handbook"
-      lede="Binding at enrolment: term structure, attendance, and academic integrity."
+      lede="Binding at enrolment: term structure, attendance, and academic integrity"
       currentHref="/the-academy/course-handbook"
       breadcrumbLabel="Course handbook"
     >

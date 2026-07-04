@@ -16,7 +16,7 @@ export default async function FacultyPage() {
     <AcademySectionPage
       folio="iii"
       title="Faculty"
-      lede="Each programme names its teaching faculty before enrolment."
+      lede="Each programme names its teaching faculty before enrolment"
       currentHref="/the-academy/faculty"
       breadcrumbLabel="Faculty"
     >

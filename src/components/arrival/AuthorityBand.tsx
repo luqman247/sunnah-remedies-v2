@@ -36,14 +36,14 @@ export function AuthorityBand({ items }: AuthorityBandProps) {
                 {item.value !== null ? (
                   item.value
                 ) : (
-                  <span aria-hidden="true" style={{ color: "var(--v2-ink-soft)" }}>———</span>
+                  <span aria-hidden="true" style={{ color: "var(--ink-soft)" }}>———</span>
                 )}
                 {item.value === null && (
                   <span className="sr-only">figure pending</span>
                 )}
               </dd>
               {item.note && (
-                <span className="type-small-v2" style={{ color: "var(--v2-ink-soft)" }}>
+                <span className="type-small-v2" style={{ color: "var(--ink-soft)" }}>
                   {item.note}
                 </span>
               )}

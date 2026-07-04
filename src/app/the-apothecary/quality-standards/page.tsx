@@ -1,4 +1,3 @@
-// TODO: Migrate to Sanity when section content is published
 import type { Metadata } from "next";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
@@ -10,20 +9,21 @@ export const metadata: Metadata = {
   description: "How the institution selects, stores, and dispenses remedies.",
 };
 
-export default function QualityStandardsPage() {
+export default async function QualityStandardsPage() {
+  const standards = qualityStandards;
   return (
     <SectionPage
       department={apothecary}
       folio="v"
       title="Quality Standards"
-      lede="Traceability is a condition of dispensation."
+      lede="Traceability is a condition of dispensation"
       currentHref="/the-apothecary/quality-standards"
       breadcrumb={[
         { label: "The Apothecary", href: "/the-apothecary" },
         { label: "Quality Standards" },
       ]}
     >
-      {qualityStandards.map((block) => (
+      {standards.map((block) => (
         <article key={block.title} className="policy-block">
           <SectionLabel>{block.title}</SectionLabel>
           {block.body.map((p) => (

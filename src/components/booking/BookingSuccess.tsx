@@ -43,7 +43,7 @@ export function BookingSuccess({ referenceId, onBookAnother }: BookingSuccessPro
         transition={{ duration: 0.6, delay: 0.45 }}
       >
         Your booking request has been received.
-        We will confirm your appointment shortly via email.
+        We will confirm your appointment shortly via email
       </motion.p>
 
       {referenceId && (

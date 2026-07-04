@@ -162,7 +162,7 @@ export function JourneyView({ journey }: JourneyViewProps) {
 
             <div className="monograph-section" style={{ marginBottom: "var(--s6)" }}>
               <PullQuote
-                text="We travel to learn, not to see. The journey is inward before it is outward."
+                text="We travel to learn, not to see. The journey is inward before it is outward"
               />
             </div>
 
@@ -217,7 +217,7 @@ export function JourneyView({ journey }: JourneyViewProps) {
 
             <div className="monograph-section" style={{ marginBottom: "var(--s6)" }}>
               <PullQuote
-                text="Preparation begins weeks before departure. The mind is prepared before the luggage."
+                text="Preparation begins weeks before departure. The mind is prepared before the luggage"
               />
             </div>
 

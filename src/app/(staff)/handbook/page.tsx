@@ -24,7 +24,7 @@ export default function HandbookIndexPage() {
         </h1>
         <p className="font-[family-name:var(--font-body)] text-sm text-[#0E3B2E]/70 leading-relaxed max-w-2xl">
           The internal operating manual of the headquarters. Read Chapters 00,
-          01, and 02, and the chapter for your role. That is enough to begin.
+          01, and 02, and the chapter for your role. That is enough to begin
         </p>
       </header>
 
@@ -36,7 +36,7 @@ export default function HandbookIndexPage() {
                 href={`/handbook/${chapter.slug}`}
                 className="group flex items-baseline gap-4 py-2 border-b border-[#0E3B2E]/5 hover:border-[#0E3B2E]/20 transition-colors"
               >
-                <span className="font-[family-name:var(--font-mono)] text-xs text-[#0E3B2E]/40 tabular-nums w-6 shrink-0">
+                <span className="font-[family-name:var(--font-utility)] text-xs text-[#0E3B2E]/40 tabular-nums w-6 shrink-0">
                   {chapter.number}
                 </span>
                 <span className="font-[family-name:var(--font-body)] text-sm text-[#0E3B2E] group-hover:text-[#0E3B2E]/80 transition-colors">

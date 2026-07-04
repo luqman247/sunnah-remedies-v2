@@ -47,7 +47,7 @@ export default function DailySignOffPage() {
           Daily Sign-Off
         </h1>
         <p className="font-[family-name:var(--font-body)] text-xs text-[#0E3B2E]/60">
-          Confirm the opening or closing checklist is complete. Your name and time are recorded.
+          Confirm the opening or closing checklist is complete. Your name and time are recorded
         </p>
       </header>
 
@@ -80,7 +80,7 @@ export default function DailySignOffPage() {
             />
             <span>
               I confirm that all items on the relevant checklist have been completed
-              satisfactorily. Any exceptions are noted below.
+              satisfactorily. Any exceptions are noted below
             </span>
           </label>
         </div>
@@ -93,7 +93,7 @@ export default function DailySignOffPage() {
             name="exceptions"
             rows={3}
             className="w-full px-2 py-1.5 border border-[#0E3B2E]/15 bg-white text-sm text-[#0E3B2E] placeholder:text-[#0E3B2E]/30 focus:outline-none focus:ring-1 focus:ring-[#0E3B2E]/30 focus:border-[#0E3B2E]/40 resize-none"
-            placeholder="Record anything that was not at standard and the action taken. Leave blank if none."
+            placeholder="Record anything that was not at standard and the action taken. Leave blank if none"
           />
         </div>
 
@@ -115,7 +115,7 @@ export default function DailySignOffPage() {
             aria-live="polite"
             className={`font-[family-name:var(--font-utility)] text-xs ${result.success ? "text-[#0E3B2E]" : "text-red-700"}`}
           >
-            {result.success ? "✓ Sign-off recorded." : `Error: ${result.error}`}
+            {result.success ? "✓ Sign-off recorded" : `Error: ${result.error}`}
           </p>
         )}
 

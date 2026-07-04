@@ -91,7 +91,7 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
       <Leaf variant="grave">
         <div className="measure grave-block">
           <PullQuote
-            text="This is not an abbreviated online course. It is a supervised programme with published assessment criteria and faculty sign-off only after demonstrated competency."
+            text="This is not an abbreviated online course. It is a supervised programme with published assessment criteria and faculty sign-off only after demonstrated competency"
             dark
           />
         </div>
@@ -132,7 +132,7 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
               <h2 className="monograph-section__title">Outcomes</h2>
               <p className="type-small evidence-section__intro">
                 Assessed outcomes are published before enrolment and reviewed
-                prior to examination.
+                prior to examination
               </p>
               <ul className="outcome-list">
                 {programme.learningOutcomes.map((o) => (
@@ -173,7 +173,7 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
 
             <div className="monograph-section" style={{ marginBottom: "var(--s6)" }}>
               <PullQuote
-                text="The teacher is named before the subject. The chain is stated before the curriculum. Assessment criteria are published before enrolment opens."
+                text="The teacher is named before the subject. The chain is stated before the curriculum. Assessment criteria are published before enrolment opens"
               />
             </div>
 
@@ -328,7 +328,7 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
               <p className="type-small" style={{ color: "var(--muted)", marginBottom: "var(--s5)" }}>
                 Published with explicit consent. Initials are used unless full
                 attribution is requested by the graduate. Statements are
-                attestation records, not promotional copy.
+                attestation records, not promotional copy
               </p>
               {programme.testimonials.map((t) => (
                 <blockquote key={t.name + t.year} className="testimonial">
@@ -385,7 +385,7 @@ export function ProgrammeView({ programme }: ProgrammeViewProps) {
               <p className="type-body" style={{ marginBottom: "var(--s5)" }}>
                 {programme.feeNote} Review the full programme before
                 submission. Each application is evaluated on academic readiness
-                and clinical suitability.
+                and clinical suitability
               </p>
               <SectionLabel>Send application</SectionLabel>
               <EnrolmentJourney steps={programme.enrolmentJourney} />

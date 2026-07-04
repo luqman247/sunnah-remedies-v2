@@ -16,7 +16,7 @@ export default async function CurriculumPage() {
     <AcademySectionPage
       folio="ii"
       title="Curriculum"
-      lede="Modules are sourced, scheduled, and assessed to published standards."
+      lede="Modules are sourced, scheduled, and assessed to published standards"
       currentHref="/the-academy/curriculum"
       breadcrumbLabel="Curriculum"
     >

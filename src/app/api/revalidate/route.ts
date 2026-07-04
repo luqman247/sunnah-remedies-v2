@@ -9,11 +9,17 @@ import { NextResponse } from "next/server";
  *
  * Configure in Sanity: Settings → API → Webhooks
  * URL: https://your-domain.com/api/revalidate
+ * Secret: Set SANITY_REVALIDATE_SECRET in environment and Sanity webhook config
  * Trigger: Create, Update, Delete
  * Filter: _type in ["homepage", "product", "programme", "journey", "article", ...]
  */
 export async function POST(request: Request) {
   try {
+    const secret = request.headers.get("x-sanity-webhook-secret");
+    if (process.env.SANITY_REVALIDATE_SECRET && secret !== process.env.SANITY_REVALIDATE_SECRET) {
+      return NextResponse.json({ revalidated: false, message: "Invalid secret" }, { status: 401 });
+    }
+
     const body = await request.json();
     const { _type, slug } = body;
 

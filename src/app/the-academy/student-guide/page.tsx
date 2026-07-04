@@ -16,7 +16,7 @@ export default async function StudentGuidePage() {
     <AcademySectionPage
       folio="vi"
       title="Student guide"
-      lede="What to expect week by week."
+      lede="What to expect week by week"
       currentHref="/the-academy/student-guide"
       breadcrumbLabel="Student guide"
     >

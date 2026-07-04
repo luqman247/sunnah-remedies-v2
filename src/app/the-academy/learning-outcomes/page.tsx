@@ -17,7 +17,7 @@ export default async function LearningOutcomesPage() {
     <AcademySectionPage
       folio="iii"
       title="Learning outcomes"
-      lede="Published before enrolment and assessed by written examination and OSCE."
+      lede="Published before enrolment and assessed by written examination and OSCE"
       currentHref="/the-academy/learning-outcomes"
       breadcrumbLabel="Learning outcomes"
     >

@@ -29,12 +29,12 @@ export default async function MateriaMedicaPage() {
             section="The Academy"
             folio="iv"
             title="The Materia Medica"
-            lede="Remedies of the tradition, graded, sourced, and studied as texts."
+            lede="Remedies of the tradition, graded, sourced, and studied as texts"
           >
             <p>
               Eight weeks, in-person teaching, and assigned reading. Each module
               pairs classical citations with Apothecary monographs. Assessment is
-              by written paper and oral examination on provenance.
+              by written paper and oral examination on provenance
             </p>
           </PageIntro>
         </div>

@@ -28,14 +28,14 @@ export default async function ItinerariesPage() {
     <JourneySectionPage
       folio="iii"
       title="Daily itineraries"
-      lede="Each journey publishes its educational itinerary before registration."
+      lede="Each journey publishes its educational itinerary before registration"
       currentHref="/sacred-journeys/itineraries"
       breadcrumbLabel="Itineraries"
       intro={
         <p>
           Open a journey to read the day-by-day programme: scholars, learning
           focus, sessions, and practical organisation. Comfort and limitations
-          are stated plainly.
+          are stated plainly
         </p>
       }
     >

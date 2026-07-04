@@ -3,12 +3,14 @@ import { Leaf } from "@/components/ui/Leaf";
 import { PageIntro, SectionLabel } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
 import { Breadcrumb } from "@/components/apothecary/Breadcrumb";
+import { getProgrammeBySlug } from "@/sanity/lib/fetch";
 
 export const metadata: Metadata = {
   title: "Clinical Practice & Ethics",
 };
 
-export default function ClinicalEthicsPage() {
+export default async function ClinicalEthicsPage() {
+  const programme = await getProgrammeBySlug("hijama-diploma");
   return (
     <>
       <Leaf>
@@ -23,13 +25,13 @@ export default function ClinicalEthicsPage() {
             section="The Academy"
             folio="v"
             title="Clinical Practice & Ethics"
-            lede="Practitioner responsibilities in limits, consent, and clinical adab."
+            lede="Practitioner responsibilities in limits, consent, and clinical adab"
           >
             <p>
               By application for licensed practitioners and Hijāma graduates.
               Case-based seminars cover referral, documentation, consent, and
               institutional conduct standards. Required for independent clinic
-              privileges under the institution&apos;s name.
+              privileges under the institution&apos;s name
             </p>
           </PageIntro>
         </div>

@@ -31,11 +31,11 @@ export function RegisterClient({ corpus }: { corpus: CorpusItem[] }) {
             section="The Register"
             folio="i"
             title="Search the institution"
-            lede="Texts, remedies, and sources indexed by grade and department."
+            lede="Texts, remedies, and sources indexed by grade and department"
           >
             <p>
               A reading room for the institution&apos;s corpus. Results list
-              provenance and department for consistent reference.
+              provenance and department for consistent reference
             </p>
           </PageIntro>
         </div>
@@ -62,7 +62,7 @@ export function RegisterClient({ corpus }: { corpus: CorpusItem[] }) {
           {searched && results.length === 0 && (
             <p className="type-body" style={{ marginTop: "var(--s5)" }}>
               No entry was found for that term. Try a broader term, search
-              within one department, or write to us for assistance.
+              within one department, or write to us for assistance
             </p>
           )}
 

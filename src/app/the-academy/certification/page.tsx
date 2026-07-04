@@ -16,7 +16,7 @@ export default async function CertificationPage() {
     <AcademySectionPage
       folio="v"
       title="Certification"
-      lede="Certification attests completed training and does not grant medical licensure."
+      lede="Certification attests completed training and does not grant medical licensure"
       currentHref="/the-academy/certification"
       breadcrumbLabel="Certification"
     >

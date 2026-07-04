@@ -17,9 +17,9 @@ export function ArrivalPullQuote({ text, attribution, source, dark }: ArrivalPul
       style={{
         margin: 0,
         padding: 0,
-        borderInlineStart: `1px solid ${dark ? "var(--v2-paper-on-deep)" : "var(--v2-brass)"}`,
+        borderInlineStart: `1px solid ${dark ? "var(--paper-on-deep)" : "var(--brass)"}`,
         paddingInlineStart: "var(--space-6)",
-        color: dark ? "var(--v2-paper-on-deep)" : undefined,
+        color: dark ? "var(--paper-on-deep)" : undefined,
       }}
     >
       <p style={{ margin: 0 }}>{text}</p>
@@ -30,7 +30,7 @@ export function ArrivalPullQuote({ text, attribution, source, dark }: ArrivalPul
             display: "block",
             marginBlockStart: "var(--space-4)",
             fontStyle: "normal",
-            color: dark ? "var(--v2-paper-on-deep)" : "var(--v2-ink-soft)",
+            color: dark ? "var(--paper-on-deep)" : "var(--ink-soft)",
           }}
         >
           — {attribution}

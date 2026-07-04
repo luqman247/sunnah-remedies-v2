@@ -4,12 +4,13 @@ import { PageIntro, SectionLabel } from "@/components/ui/PageIntro";
 import { GoLink, QuietLink } from "@/components/ui/Links";
 import { FaqSection } from "@/components/apothecary/MonographExtras";
 import { Breadcrumb } from "@/components/apothecary/Breadcrumb";
+import { getProgrammeBySlug } from "@/sanity/lib/fetch";
 
 export const metadata: Metadata = {
   title: "Foundations of Prophetic Medicine",
 };
 
-const faq = [
+const staticFaq = [
   {
     question: "Is this programme truly free?",
     answer:
@@ -22,7 +23,12 @@ const faq = [
   },
 ];
 
-export default function FoundationsPage() {
+export default async function FoundationsPage() {
+  const programme = await getProgrammeBySlug("foundations");
+  const faq =
+    programme?.faq?.length
+      ? programme.faq.map((f) => ({ question: f.question, answer: f.answer }))
+      : staticFaq;
   return (
     <>
       <Leaf>
@@ -37,13 +43,13 @@ export default function FoundationsPage() {
             section="The Academy"
             folio="iii"
             title="Foundations of Prophetic Medicine"
-            lede="Terms, grades, and method: an essential introduction to Tibb al-Nabawī."
+            lede="Terms, grades, and method: an essential introduction to Tibb al-Nabawī"
           >
             <p>
               A free, structured introduction offered as a right of the
               community. Eight modules cover terminology, the three grades of
               evidence, isnād discipline, and the institution&apos;s editorial
-              standard.
+              standard
             </p>
           </PageIntro>
         </div>

@@ -1,0 +1,410 @@
+/* ═══════════════════════════════════════════════════════════════
+   DEPARTMENT V2 — Shared styles for all department landing pages.
+   Applied via .department-v2 wrapper class on each department page.
+   Inherits unified design tokens from :root (globals.css).
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Base ────────────────────────────────────────────────────── */
+
+.department-v2 {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body), Georgia, "Times New Roman", serif;
+  font-size: 1.0625rem;
+  line-height: 1.62;
+}
+
+/* ── Type Ramp (mirrors arrival Ch. 6.2) ─────────────────────── */
+
+.department-v2 .type-hero {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.75rem, 6vw, 5.25rem);
+  font-weight: 380;
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.department-v2 .type-section-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  font-weight: 420;
+  font-variation-settings: "opsz" 72, "SOFT" 0, "WONK" 0;
+  line-height: 1.08;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+
+.department-v2 .type-dept-name {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  font-weight: 460;
+  font-variation-settings: "opsz" 40, "SOFT" 0, "WONK" 0;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.department-v2 .type-standfirst {
+  font-family: var(--font-body), Georgia, serif;
+  font-size: clamp(1.125rem, 1.4vw, 1.375rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.department-v2 .type-body-v2 {
+  font-family: var(--font-body), Georgia, serif;
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.62;
+  color: var(--ink);
+}
+
+.department-v2 .type-pullquote {
+  font-family: var(--font-body), Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.375rem, 2.4vw, 2rem);
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.department-v2 .type-small-v2 {
+  font-family: var(--font-body), Georgia, serif;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.department-v2 .type-eyebrow-v2 {
+  font-family: var(--font-utility), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.department-v2 .type-folio-v2 {
+  font-family: var(--font-utility), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+}
+
+.department-v2 .type-caption {
+  font-family: var(--font-utility), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+}
+
+.department-v2 .type-arabic-hero {
+  font-family: var(--font-arabic), "Noto Naskh Arabic", serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.3;
+  color: var(--sage);
+}
+
+.department-v2 .type-arabic-dept {
+  font-family: var(--font-arabic), "Noto Naskh Arabic", serif;
+  font-size: 1.375rem;
+  line-height: 1.9;
+  color: var(--ink-soft);
+}
+
+/* ── Grid & Rail Layout (Ch. 7) ─────────────────────────────── */
+
+.department-v2 .dept-container {
+  max-inline-size: 1200px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+@media (min-width: 768px) {
+  .department-v2 .dept-container {
+    padding-inline: 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .department-v2 .dept-container {
+    padding-inline: 64px;
+  }
+}
+
+.department-v2 .dept-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .department-v2 .dept-grid {
+    grid-template-columns: 72px 1fr;
+    gap: 0;
+  }
+}
+
+.department-v2 .dept-rail {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .department-v2 .dept-rail {
+    display: block;
+    position: sticky;
+    inset-block-start: 128px;
+    align-self: start;
+  }
+}
+
+/* ── Section spacing ────────────────────────────────────────── */
+
+.department-v2 .dept-section {
+  padding-block: var(--space-16);
+}
+
+@media (min-width: 1024px) {
+  .department-v2 .dept-section {
+    padding-block: var(--space-20);
+  }
+}
+
+/* ── Inverted band (sage-deep) ──────────────────────────────── */
+
+.department-v2 .dept-band-deep {
+  background: var(--sage-deep);
+  color: var(--paper-on-deep);
+}
+
+.department-v2 .dept-band-deep .type-body-v2,
+.department-v2 .dept-band-deep .type-standfirst {
+  color: var(--paper-on-deep);
+}
+
+.department-v2 .dept-band-deep .type-pullquote {
+  color: var(--paper-on-deep);
+}
+
+/* ── Measure constraint ─────────────────────────────────────── */
+
+.department-v2 .dept-measure {
+  max-inline-size: 62ch;
+}
+
+/* ── Reveal (scroll animation) ──────────────────────────────── */
+
+.department-v2 .reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--dur-reveal) var(--ease-out),
+              transform var(--dur-reveal) var(--ease-out);
+}
+
+.department-v2 .reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .department-v2 .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Focus ring (Ch. 13.2) ──────────────────────────────────── */
+
+.department-v2 :focus-visible {
+  outline: 2px solid var(--sage);
+  outline-offset: 2px;
+}
+
+/* ── Link interactions (Ch. 11.3) ───────────────────────────── */
+
+.department-v2 .dept-link {
+  position: relative;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.department-v2 .dept-link::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-end: -2px;
+  inline-size: 0;
+  block-size: 1px;
+  background: currentColor;
+  transition: inline-size 150ms var(--ease-out);
+}
+
+.department-v2 .dept-link:hover::after,
+.department-v2 .dept-link:focus-visible::after {
+  inline-size: 100%;
+}
+
+.department-v2 .dept-enter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body), serif;
+  font-size: 1.0625rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.department-v2 .dept-enter .arrow {
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.department-v2 .dept-enter:hover .arrow,
+.department-v2 .dept-enter:focus-visible .arrow {
+  transform: translateX(4px);
+}
+
+/* ── Section stamp responsive ───────────────────────────────── */
+
+.department-v2 .section-stamp-mobile {
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .department-v2 .section-stamp-mobile {
+    display: none;
+  }
+}
+
+/* ── Screen-reader only utility ─────────────────────────────── */
+
+.department-v2 .sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ── Feature layout ─────────────────────────────────────────── */
+
+.department-v2 .dept-feature {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .department-v2 .dept-feature {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-10);
+  }
+}
+
+.department-v2 .dept-feature--reverse {
+  direction: ltr;
+}
+
+@media (min-width: 768px) {
+  .department-v2 .dept-feature--reverse .dept-feature__photo {
+    order: 2;
+  }
+
+  .department-v2 .dept-feature--reverse .dept-feature__body {
+    order: 1;
+  }
+}
+
+.department-v2 .dept-feature__photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+.department-v2 .dept-feature--landscape .dept-feature__photo {
+  aspect-ratio: 3 / 2;
+}
+
+.department-v2 .dept-feature__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  justify-content: center;
+}
+
+/* ── Trust grid ─────────────────────────────────────────────── */
+
+.department-v2 .dept-trust-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .department-v2 .dept-trust-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.department-v2 .dept-trust-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.department-v2 .dept-trust-numeral {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 300;
+  font-variation-settings: "opsz" 72;
+  line-height: 1;
+  color: var(--brass);
+}
+
+/* ── Pull quote in department context ───────────────────────── */
+
+.department-v2 .dept-pullquote {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.department-v2 .dept-pullquote__text {
+  margin: 0;
+}
+
+.department-v2 .dept-pullquote__attribution {
+  margin-block-start: var(--space-4);
+  font-family: var(--font-utility), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+
+.department-v2 .dept-band-deep .dept-pullquote__attribution {
+  color: var(--brass);
+}
+
+/* ── Department navigation wrapper ──────────────────────────── */
+
+.department-v2 .dept-nav-section {
+  border-block-start: var(--hairline);
+}
+
+/* ── Hide layout chrome when using department v2 ────────────── */
+
+main:has(.department-v2) ~ footer,
+main:has(.department-v2) ~ section[aria-label="Institutional closing"] {
+  display: none;
+}

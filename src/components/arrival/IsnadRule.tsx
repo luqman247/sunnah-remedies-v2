@@ -29,7 +29,7 @@ export function IsnadRule({
         position: "relative",
         inlineSize: "100%",
         blockSize: "1px",
-        background: "var(--v2-brass)",
+        background: "var(--brass)",
         marginBlock: variant === "arrival" ? "var(--space-6)" : "var(--space-8)",
       }}
     >
@@ -42,7 +42,7 @@ export function IsnadRule({
           transform: "translate(-50%, -50%) rotate(45deg)",
           inlineSize: "5px",
           blockSize: "5px",
-          background: "var(--v2-brass)",
+          background: "var(--brass)",
         }}
       />
     </div>

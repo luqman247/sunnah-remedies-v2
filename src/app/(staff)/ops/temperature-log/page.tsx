@@ -75,7 +75,7 @@ export default function TemperatureLogPage() {
           Temperature Log
         </h1>
         <p className="font-[family-name:var(--font-body)] text-xs text-[#0E3B2E]/60">
-          Record storage temperatures at each location. Flag any out-of-range readings.
+          Record storage temperatures at each location. Flag any out-of-range readings
         </p>
       </header>
 
@@ -149,7 +149,7 @@ export default function TemperatureLogPage() {
             aria-live="polite"
             className={`font-[family-name:var(--font-utility)] text-xs ${result.success ? "text-[#0E3B2E]" : "text-red-700"}`}
           >
-            {result.success ? "✓ Recorded successfully." : `Error: ${result.error}`}
+            {result.success ? "✓ Recorded successfully" : `Error: ${result.error}`}
           </p>
         )}
 

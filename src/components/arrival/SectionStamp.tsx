@@ -13,12 +13,12 @@ interface SectionStampProps {
 export function SectionStamp({ numeral, label }: SectionStampProps) {
   return (
     <div className="section-stamp" aria-hidden="true">
-      <span className="type-folio-v2" style={{ color: "var(--v2-brass)" }}>
+      <span className="type-folio-v2" style={{ color: "var(--brass)" }}>
         {numeral}
       </span>
       {label && (
         <>
-          <span className="section-stamp__dot" style={{ color: "var(--v2-brass)", margin: "0 0.5em" }}>·</span>
+          <span className="section-stamp__dot" style={{ color: "var(--brass)", margin: "0 0.5em" }}>·</span>
           <span className="type-eyebrow-v2">{label}</span>
         </>
       )}

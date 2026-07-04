@@ -40,12 +40,12 @@ export default function FoundationsEnrolPage() {
           section="The Academy"
           folio="—"
           title="Register for Foundations"
-          lede="No fee. Offered as a right of the community."
+          lede="No fee. Offered as a right of the community"
         />
         {submitted ? (
           <p className="type-body-l">
             Registration is complete. Materials will be sent to your email
-            address within three days. No fee or further step is required.
+            address within three days. No fee or further step is required
           </p>
         ) : (
           <form onSubmit={handleSubmit} className="form-stack">

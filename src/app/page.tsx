@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getHomepage } from "@/sanity/lib/fetch";
+import { getCurrentSeason, getHijriDate } from "@/lib/calendar/seasons";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
 import { Plate } from "@/components/arrival/Plate";
 import { SectionStamp } from "@/components/arrival/SectionStamp";
@@ -55,19 +56,19 @@ function JsonLd() {
 const fallback = {
   eyebrow: "EST. ——— · INSTITUTE OF PROPHETIC MEDICINE",
   arrivalArabic: "\u0637\u0650\u0628\u0651\u064F \u0671\u0644\u0646\u0651\u064E\u0628\u064E\u0648\u0650\u064A\u0651",
-  arrivalEnglish: "The medicine of the prophetic tradition, kept living.",
-  standfirst: "An institution for the preservation and responsible transmission of prophetic medicine — grounded in primary-source scholarship, laboratory verification, clinical accountability, and plain limits.",
+  arrivalEnglish: "The medicine of the prophetic tradition, kept living",
+  standfirst: "An institution for the preservation and responsible transmission of prophetic medicine — grounded in primary-source scholarship, laboratory verification, clinical accountability, and plain limits",
   enterLabel: "Enter the institution",
   enterHref: "#departments",
   tradition: {
     stamp: "ON THE TRADITION",
     standfirst: "What is this discipline, and why does it require an institution?",
     body: [
-      "Prophetic Medicine is not folk remedy, not alternative wellness, not a brand opportunity. It is a received body of knowledge — transmitted through authenticated chains, tested against observable evidence, and constrained by the limits its own sources declare.",
-      "This institution exists because the discipline deserves the same rigour as any established medical tradition: verifiable scholarship, clinical governance, transparent provenance, and patient dignity at every encounter.",
+      "Prophetic Medicine is not folk remedy, not alternative wellness, not a brand opportunity. It is a received body of knowledge — transmitted through authenticated chains, tested against observable evidence, and constrained by the limits its own sources declare",
+      "This institution exists because the discipline deserves the same rigour as any established medical tradition: verifiable scholarship, clinical governance, transparent provenance, and patient dignity at every encounter",
     ],
     pullQuote: {
-      text: "Healing is from Allah; the remedy is a means.",
+      text: "Healing is from Allah; the remedy is a means",
       attribution: "Prophetic teaching",
       source: "Ṣaḥīḥ al-Bukhārī",
     },
@@ -77,7 +78,7 @@ const fallback = {
       order: 1,
       nameEn: "Knowledge Library",
       nameAr: "\u0645\u0643\u062A\u0628\u0629 \u0627\u0644\u0639\u0644\u0645",
-      standfirst: "The open shelf — monographs, research notes, and patient guides, all graded and cited.",
+      standfirst: "The open shelf — monographs, research notes, and patient guides, all graded and cited",
       href: "/knowledge-library",
       size: "standard" as const,
       plate: { status: "final" as const, purpose: "Reading room with scholarly texts", composition: "Wide shot, layered depth", lighting: "North window, diffused", mood: "Contemplative", image: { url: "/photography/reading-room.jpg" }, alt: "A scholarly reading room with open manuscripts and natural light" },
@@ -86,7 +87,7 @@ const fallback = {
       order: 2,
       nameEn: "The Academy",
       nameAr: "\u0627\u0644\u0623\u0643\u0627\u062F\u064A\u0645\u064A\u0629",
-      standfirst: "Clinical education in Hijama and Prophetic therapeutics, structured by isnād.",
+      standfirst: "Clinical education in Hijama and Prophetic therapeutics, structured by isnād",
       href: "/the-academy",
       size: "standard" as const,
       plate: { status: "final" as const, purpose: "Tutorial room with faculty and students", composition: "Medium shot, eye level", lighting: "Morning light, clinical", mood: "Disciplined", image: { url: "/photography/academy-learning.jpg" }, alt: "Students in a scholarly classroom studying anatomical charts and medical texts under natural light" },
@@ -95,7 +96,7 @@ const fallback = {
       order: 3,
       nameEn: "The Apothecary",
       nameAr: "\u0627\u0644\u0635\u064A\u062F\u0644\u064A\u0629",
-      standfirst: "A cabinet of preparations, each documented to source before dispensation.",
+      standfirst: "A cabinet of preparations, each documented to source before dispensation",
       href: "/the-apothecary",
       size: "standard" as const,
       plate: { status: "final" as const, purpose: "Dispensary shelves with amber vessels", composition: "Detail shot, shallow depth", lighting: "Warm side light", mood: "Craft", image: { url: "/photography/apothecary-hero.jpg" }, alt: "An apothecary dispensary with amber glass vessels of honey and oils arranged on aged wooden shelving" },
@@ -104,7 +105,7 @@ const fallback = {
       order: 4,
       nameEn: "Sacred Journeys",
       nameAr: "\u0627\u0644\u0631\u062D\u0644\u0627\u062A \u0627\u0644\u0645\u0642\u062F\u0633\u0629",
-      standfirst: "Educational pilgrimage to the Holy Lands — preparation precedes departure, purpose before itinerary. Every journey carries a reading list, a faculty companion, and a clear statement of difficulty.",
+      standfirst: "Educational pilgrimage to the Holy Lands — preparation precedes departure, purpose before itinerary. Every journey carries a reading list, a faculty companion, and a clear statement of difficulty",
       href: "/sacred-journeys",
       size: "feature" as const,
       plate: { status: "final" as const, purpose: "Pilgrims approaching a sacred site at dawn", composition: "Wide panoramic, golden hour", lighting: "Dawn light, warm amber", mood: "Reverent", image: { url: "/photography/sacred-journeys-hero.jpg" }, alt: "Pilgrims approaching the Prophet's Mosque in Madinah at dawn" },
@@ -118,16 +119,18 @@ const fallback = {
   ],
   correspondence: {
     heading: "Receive the institution\u2019s writing",
-    body: "Occasional correspondence on scholarship, new monographs, and programme announcements. No frequency promise; no promotional content.",
+    body: "Occasional correspondence on scholarship, new monographs, and programme announcements. No frequency promise; no promotional content",
     placeholder: "your@email.address",
-    consentText: "You will receive institutional correspondence by email. Unsubscribe at any time by replying or using the link provided.",
-    successText: "Requested — correspondence will follow.",
+    consentText: "You will receive institutional correspondence by email. Unsubscribe at any time by replying or using the link provided",
+    successText: "Requested — correspondence will follow",
   },
-  institutionStatement: "Knowledge before commerce. Service before profit. Trust before growth. The institution exists for the next generation.",
+  institutionStatement: "Knowledge before commerce. Service before profit. Trust before growth. The institution exists for the next generation",
 };
 
 export default async function ArrivalPage() {
   const cms = await getHomepage();
+  const { season, label, greeting } = getCurrentSeason();
+  const hijriDate = getHijriDate();
 
   const eyebrow = cms?.eyebrow || fallback.eyebrow;
   const arrivalArabic = cms?.arrivalArabic || fallback.arrivalArabic;
@@ -136,9 +139,30 @@ export default async function ArrivalPage() {
   const enterLabel = cms?.enterLabel || fallback.enterLabel;
   const enterHref = cms?.enterHref || fallback.enterHref;
   const tradition = cms?.tradition || fallback.tradition;
-  const departments = fallback.departments;
-  const authoritySignals = fallback.authoritySignals;
-  const correspondence = fallback.correspondence;
+  const departments = cms?.departmentCards?.length
+    ? cms.departmentCards.map(card => ({
+        order: card.order,
+        nameEn: card.nameEn,
+        nameAr: card.nameAr,
+        standfirst: card.standfirst,
+        href: card.href,
+        size: card.size,
+        plate: card.plate
+          ? {
+              status: card.plate.status,
+              purpose: card.plate.purpose,
+              composition: card.plate.composition,
+              lens: card.plate.lens,
+              lighting: card.plate.lighting,
+              mood: card.plate.mood,
+              image: card.plate.image?.asset?.url ? { url: card.plate.image.asset.url } : undefined,
+              alt: card.plate.alt,
+            }
+          : { status: "brief" as const, purpose: card.standfirst, composition: "", lighting: "", mood: "" },
+      }))
+    : fallback.departments;
+  const authoritySignals = cms?.authoritySignals?.length ? cms.authoritySignals : fallback.authoritySignals;
+  const correspondence = cms?.correspondence || fallback.correspondence;
   const institutionStatement = cms?.institutionStatement || fallback.institutionStatement;
 
   return (
@@ -223,6 +247,33 @@ export default async function ArrivalPage() {
         </section>
       </Reveal>
 
+      {/* ═══ SEASONAL AWARENESS — appears only during sacred seasons ═══ */}
+      {season !== "standard" && (
+        <Reveal>
+          <section
+            className="arrival-section"
+            aria-label={`Current season: ${label}`}
+            style={{ paddingBlock: "var(--space-8)", textAlign: "center" }}
+          >
+            <div className="arrival-container">
+              <p className="type-eyebrow-v2" style={{ color: "var(--brass)", marginBlockEnd: "var(--space-4)" }}>
+                {label}
+              </p>
+              {greeting && (
+                <p className="type-standfirst" style={{ maxInlineSize: "50ch", marginInline: "auto", fontStyle: "italic" }}>
+                  {greeting}
+                </p>
+              )}
+              {hijriDate && (
+                <p className="type-folio" style={{ color: "var(--muted)", marginBlockStart: "var(--space-4)" }}>
+                  {hijriDate}
+                </p>
+              )}
+            </div>
+          </section>
+        </Reveal>
+      )}
+
       {/* ═══ § 3 · ON THE TRADITION (Ch. 9.4) ═══ */}
       <Reveal>
         <section className="arrival-section arrival-band-deep" aria-labelledby="tradition-heading">
@@ -236,7 +287,7 @@ export default async function ArrivalPage() {
                   <SectionStamp numeral="II" label={tradition.stamp} />
                 </div>
 
-                <h2 id="tradition-heading" className="type-eyebrow-v2" style={{ color: "var(--v2-paper-on-deep)", marginBlockEnd: "var(--space-8)" }}>
+                <h2 id="tradition-heading" className="type-eyebrow-v2" style={{ color: "var(--paper-on-deep)", marginBlockEnd: "var(--space-8)" }}>
                   {tradition.stamp}
                 </h2>
 
@@ -344,7 +395,7 @@ export default async function ArrivalPage() {
         <div className="arrival-container">
           <IsnadRule variant="footer" nodePosition={0.5} />
 
-          <p className="type-body-v2" style={{ marginBlockStart: "var(--space-8)", maxInlineSize: "60ch", color: "var(--v2-paper-on-deep)" }}>
+          <p className="type-body-v2" style={{ marginBlockStart: "var(--space-8)", maxInlineSize: "60ch", color: "var(--paper-on-deep)" }}>
             {institutionStatement}
           </p>
 
@@ -355,12 +406,12 @@ export default async function ArrivalPage() {
                   key={dept.href}
                   href={dept.href}
                   className="arrival-link"
-                  style={{ color: "var(--v2-paper-on-deep)" }}
+                  style={{ color: "var(--paper-on-deep)" }}
                 >
-                  <span className="type-folio-v2" style={{ color: "var(--v2-brass)", marginInlineEnd: "0.5em" }}>
+                  <span className="type-folio-v2" style={{ color: "var(--brass)", marginInlineEnd: "0.5em" }}>
                     {["I", "II", "III", "IV"][dept.order - 1]}
                   </span>
-                  <span className="type-caption" style={{ color: "var(--v2-paper-on-deep)" }}>
+                  <span className="type-caption" style={{ color: "var(--paper-on-deep)" }}>
                     {dept.nameEn}
                   </span>
                 </Link>
@@ -369,14 +420,15 @@ export default async function ArrivalPage() {
           </nav>
 
           <div style={{ marginBlockStart: "var(--space-10)", display: "flex", flexWrap: "wrap", gap: "var(--space-6)" }}>
-            <Link href="/charter" className="arrival-link type-caption" style={{ color: "var(--v2-paper-on-deep)" }}>About</Link>
-            <Link href="/correspondence" className="arrival-link type-caption" style={{ color: "var(--v2-paper-on-deep)" }}>Contact</Link>
+            <Link href="/charter" className="arrival-link type-caption" style={{ color: "var(--paper-on-deep)" }}>About</Link>
+            <Link href="/correspondence" className="arrival-link type-caption" style={{ color: "var(--paper-on-deep)" }}>Contact</Link>
           </div>
 
-          <p className="type-folio-v2" style={{ marginBlockStart: "var(--space-10)", color: "var(--v2-brass)" }}>
+          <p className="type-folio-v2" style={{ marginBlockStart: "var(--space-10)", color: "var(--brass)" }}>
             <time dateTime={new Date().toISOString().split("T")[0]}>
               {new Date().getFullYear()} CE
             </time>
+            {hijriDate && <> · {hijriDate}</>}
             {" · "}Sunnah Remedies · Institute of Prophetic Medicine
           </p>
         </div>

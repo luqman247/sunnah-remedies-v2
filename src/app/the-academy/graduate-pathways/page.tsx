@@ -17,7 +17,7 @@ export default async function GraduatePathwaysPage() {
     <AcademySectionPage
       folio="xi"
       title="Graduate pathways"
-      lede="Typical pathways after certification, without institutional guarantees."
+      lede="Typical pathways after certification, without institutional guarantees"
       currentHref="/the-academy/graduate-pathways"
       breadcrumbLabel="Graduate pathways"
     >

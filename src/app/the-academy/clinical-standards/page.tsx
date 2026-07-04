@@ -16,13 +16,13 @@ export default async function ClinicalStandardsPage() {
     <AcademySectionPage
       folio="iv"
       title="Clinical standards"
-      lede="The patient is received as a guest, with limits stated without compromise."
+      lede="The patient is received as a guest, with limits stated without compromise"
       currentHref="/the-academy/clinical-standards"
       breadcrumbLabel="Clinical standards"
       intro={
         <p>
           Standards align with institutional protocol and mainstream clinical
-          caution on cupping — taught before any volunteer contact.
+          caution on cupping — taught before any volunteer contact
         </p>
       }
     >

@@ -17,7 +17,7 @@ export default async function AcademyFaqsPage() {
     <AcademySectionPage
       folio="xiv"
       title="Questions"
-      lede="Concise answers on policy, safety, and standards."
+      lede="Concise answers on policy, safety, and standards"
       currentHref="/the-academy/faqs"
       breadcrumbLabel="Questions"
     >

@@ -16,7 +16,7 @@ export default async function EquipmentPage() {
     <AcademySectionPage
       folio="x"
       title="Equipment list"
-      lede="Purchase required items before term; clinic consumables are supplied by the Academy."
+      lede="Purchase required items before term; clinic consumables are supplied by the Academy"
       currentHref="/the-academy/equipment"
       breadcrumbLabel="Equipment list"
     >

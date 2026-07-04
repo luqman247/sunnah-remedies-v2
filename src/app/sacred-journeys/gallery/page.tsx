@@ -24,14 +24,14 @@ export default async function JourneysGalleryPage() {
     <JourneySectionPage
       folio="xvi"
       title="Gallery"
-      lede="Places and paths as encountered — recorded without staging."
+      lede="Places and paths as encountered — recorded without staging"
       currentHref="/sacred-journeys/gallery"
       breadcrumbLabel="Gallery"
       intro={
         <p>
           The institution does not use stock photography or staged promotional
           imagery. These photographs record places and paths as encountered
-          on programme.
+          on programme
         </p>
       }
     >

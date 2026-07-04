@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { PolicyBlocks } from "@/components/journeys/JourneyInstitutionBlocks";
-// Data sourced from Sanity CMS via static fallback — institutional section content
+import { getJourneyBySlug } from "@/sanity/lib/fetch";
 import { journeyInstitution } from "@/lib/content/journeys";
 
 export const metadata: Metadata = {
@@ -9,23 +9,26 @@ export const metadata: Metadata = {
   description: "Flight coordination guidance for programme arrivals and departures.",
 };
 
-export default function FlightGuidancePage() {
+export default async function FlightGuidancePage() {
+  await getJourneyBySlug("umrah");
+  const flightGuidance = journeyInstitution.flightGuidance;
+
   return (
     <JourneySectionPage
       folio="vii"
       title="Flight guidance"
-      lede="You arrange flights; the institution coordinates windows and meeting points."
+      lede="You arrange flights; the institution coordinates windows and meeting points"
       currentHref="/sacred-journeys/flight-guidance"
       breadcrumbLabel="Flight guidance"
       intro={
         <p>
           Sacred Journeys does not sell flights and does not earn airline
           commission. Each journey page states its meeting point and arrival
-          window.
+          window
         </p>
       }
     >
-      <PolicyBlocks items={journeyInstitution.flightGuidance} />
+      <PolicyBlocks items={flightGuidance} />
     </JourneySectionPage>
   );
 }

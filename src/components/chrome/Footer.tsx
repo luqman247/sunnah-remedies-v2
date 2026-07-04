@@ -75,7 +75,7 @@ export function Footer({ columns, closingStatement, colophon }: FooterProps) {
           </p>
           <p className="type-small footer__founding">
             Scholarship, clinical practice, and natural therapeutics under one
-            house — structured for continuity, governed by restraint.
+            house — structured for continuity, governed by restraint
           </p>
         </div>
 

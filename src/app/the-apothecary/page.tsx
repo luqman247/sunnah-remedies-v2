@@ -3,7 +3,7 @@ import { Leaf } from "@/components/ui/Leaf";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
-import { apothecary } from "@/sanity/lib/fetch";
+import { apothecary, getAllProducts } from "@/sanity/lib/fetch";
 import {
   CinematicHero,
   EditorialFeature,
@@ -17,14 +17,15 @@ export const metadata: Metadata = {
     "A dispensary where each remedy carries a monograph: historical context, Prophetic reference, traditional use, stated limits, and provenance.",
 };
 
-export default function ApothecaryPage() {
+export default async function ApothecaryPage() {
+  const products = await getAllProducts();
   return (
     <>
       <CinematicHero
         src="/photography/apothecary-hero.jpg"
         alt="An apothecary dispensary: amber glass vessels of honey and oils arranged on aged wooden shelving beside dried medicinal herbs and a stone mortar"
         statement="The ordered cabinet"
-        qualifier="A dispensary where each remedy carries a monograph — historical context, Prophetic reference where sound, traditional use, stated limits, and provenance. Reading precedes dispensation."
+        qualifier="A dispensary where each remedy carries a monograph — historical context, Prophetic reference where sound, traditional use, stated limits, and provenance. Reading precedes dispensation"
       />
 
       <Leaf>
@@ -33,16 +34,16 @@ export default function ApothecaryPage() {
             section="The Apothecary"
             folio="i"
             title="Provision by hand"
-            lede="The material arm of the institute — a cabinet of simples and preparations, each documented to source."
+            lede="The material arm of the institute — a cabinet of simples and preparations, each documented to source"
           >
             <p>
               This is not a shop. It is a dispensary governed by the same
-              principles of scholarship that govern the Academy and the Library.
+              principles of scholarship that govern the Academy and the Library
               Every remedy is documented in a monograph before it is offered:
               origin, harvest, laboratory analysis, Prophetic reference with
               grade, traditional scholarly commentary, contraindications, and
               clear limits. We dispense means and state what we do not know with
-              the same care as what we do.
+              the same care as what we do
             </p>
           </PageIntro>
         </div>
@@ -66,7 +67,7 @@ export default function ApothecaryPage() {
               Single-origin <em>Ziziphus spina-christi</em> honey from the
               Hadhrami highlands. Each batch is laboratory-verified and
               documented in a monograph that states origin, harvest, analysis,
-              and scholarly basis.
+              and scholarly basis
             </p>
             <div>
               <GoLink href="/the-apothecary/honey">Read the monograph</GoLink>
@@ -87,7 +88,7 @@ export default function ApothecaryPage() {
             <p className="type-body">
               <em>Nigella sativa</em> oil, cold-pressed from Ethiopian seeds.
               Independently analysed for thymoquinone content. The monograph
-              records the full scholarly basis and states limits plainly.
+              records the full scholarly basis and states limits plainly
             </p>
             <div>
               <GoLink href="/the-apothecary/black-seed-oil">
@@ -110,7 +111,7 @@ export default function ApothecaryPage() {
               Palestinian extra virgin olive oil from ancestral groves.
               Mentioned in the Qur&apos;an as &ldquo;a blessed tree&rdquo;
               and documented extensively in classical scholarship. Cold-pressed,
-              laboratory-verified, traceable to grove.
+              laboratory-verified, traceable to grove
             </p>
             <div>
               <GoLink href="/the-apothecary/olive-oil">
@@ -124,7 +125,7 @@ export default function ApothecaryPage() {
       <Leaf variant="grave">
         <div className="measure grave-block">
           <PullQuote
-            text="Knowledge before measure. We dispense means and state limits plainly."
+            text="Knowledge before measure. We dispense means and state limits plainly"
             dark
           />
         </div>

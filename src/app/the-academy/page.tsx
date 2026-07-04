@@ -32,7 +32,7 @@ export default async function AcademyPage() {
         src="/photography/academy-learning.jpg"
         alt="Students in a scholarly classroom studying anatomical charts and medical texts under natural light"
         statement="The reading room"
-        qualifier="Clinical education in Prophetic Medicine, structured by chain of transmission, faculty qualification, and independent assessment. The teacher is named before the subject."
+        qualifier="Clinical education in Prophetic Medicine, structured by chain of transmission, faculty qualification, and independent assessment. The teacher is named before the subject"
       />
 
       <Leaf>
@@ -41,7 +41,7 @@ export default async function AcademyPage() {
             section="The Academy"
             folio="i"
             title="Transmission through study"
-            lede="In-person education with citation, supervision, and clear standards."
+            lede="In-person education with citation, supervision, and clear standards"
           >
             <p>
               The Academy transmits <em>Tibb al-Nabawi</em> through close
@@ -49,7 +49,7 @@ export default async function AcademyPage() {
               listed by qualification and <em>isnad</em>. Programmes state
               assessment criteria, fee structure, and clinical hours before
               enrolment opens — never after. Graduates are entered on the
-              Register and held to continuing professional standards.
+              Register and held to continuing professional standards
             </p>
           </PageIntro>
         </div>
@@ -90,7 +90,7 @@ export default async function AcademyPage() {
       <Leaf>
         <div className="measure-wide">
           <PullQuote
-            text="The teacher is named before the subject. The chain is stated before the curriculum. Assessment criteria are published before enrolment opens."
+            text="The teacher is named before the subject. The chain is stated before the curriculum. Assessment criteria are published before enrolment opens"
           />
         </div>
       </Leaf>
@@ -102,22 +102,22 @@ export default async function AcademyPage() {
             <TrustGridItem
               numeral="01"
               title="Faculty with isnad"
-              text="Every instructor is listed by qualification, chain of transmission, and clinical licence. The teacher is accountable before the student arrives."
+              text="Every instructor is listed by qualification, chain of transmission, and clinical licence. The teacher is accountable before the student arrives"
             />
             <TrustGridItem
               numeral="02"
               title="Published assessment"
-              text="Examination standards, clinical hours, and competency thresholds are stated before enrolment. There are no surprises after commitment."
+              text="Examination standards, clinical hours, and competency thresholds are stated before enrolment. There are no surprises after commitment"
             />
             <TrustGridItem
               numeral="03"
               title="Supervised clinical hours"
-              text="Forty supervised sessions in the flagship Hijama Diploma. Students do not practise independently until assessed and registered."
+              text="Forty supervised sessions in the flagship Hijama Diploma. Students do not practise independently until assessed and registered"
             />
             <TrustGridItem
               numeral="04"
               title="The Register"
-              text="Graduates are entered on the public Register and held to continuing professional standards. The institution stands behind every listed practitioner."
+              text="Graduates are entered on the public Register and held to continuing professional standards. The institution stands behind every listed practitioner"
             />
           </div>
         </div>
@@ -126,7 +126,7 @@ export default async function AcademyPage() {
       <Leaf variant="grave">
         <div className="measure grave-block">
           <PullQuote
-            text="Held to the standard of scholarship and clinical responsibility."
+            text="Held to the standard of scholarship and clinical responsibility"
             dark
           />
         </div>

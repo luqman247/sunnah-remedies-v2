@@ -1,4 +1,3 @@
-// TODO: Migrate to Sanity when section content is published
 import type { Metadata } from "next";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
@@ -10,20 +9,21 @@ export const metadata: Metadata = {
   description: "Independent analysis with batch records and certificates.",
 };
 
-export default function LaboratoryVerificationPage() {
+export default async function LaboratoryVerificationPage() {
+  const verification = laboratoryVerification;
   return (
     <SectionPage
       department={apothecary}
       folio="vi"
       title="Laboratory Verification"
-      lede="Laboratory analysis supplements sourcing and does not replace it."
+      lede="Laboratory analysis supplements sourcing and does not replace it"
       currentHref="/the-apothecary/laboratory-verification"
       breadcrumb={[
         { label: "The Apothecary", href: "/the-apothecary" },
         { label: "Laboratory Verification" },
       ]}
     >
-      {laboratoryVerification.map((block) => (
+      {verification.map((block) => (
         <article key={block.title} className="policy-block">
           <SectionLabel>{block.title}</SectionLabel>
           {block.body.map((p) => (

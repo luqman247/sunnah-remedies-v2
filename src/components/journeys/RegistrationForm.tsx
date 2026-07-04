@@ -48,7 +48,7 @@ export function RegistrationForm({ journeyName }: RegistrationFormProps) {
     return (
       <p className="type-body-l" role="status">
         Your interest has been registered. The institution will contact you
-        within fourteen days regarding reading review and interview.
+        within fourteen days regarding reading review and interview
       </p>
     );
   }
@@ -109,7 +109,7 @@ export function RegistrationForm({ journeyName }: RegistrationFormProps) {
           <input id="reg-acknowledge" name="acknowledge" type="checkbox" value="yes" />
           <span className="type-body">
             I confirm that I have read the full journey page for {programmeLabel},
-            including safety guidance, logistics, packing, and policies.
+            including safety guidance, logistics, packing, and policies
           </span>
         </label>
         {errors.acknowledge && (
@@ -119,7 +119,7 @@ export function RegistrationForm({ journeyName }: RegistrationFormProps) {
 
       <p className="type-small enrolment-form__note">
         Register your interest; this is not a booking confirmation. Placement
-        is offered after review and interview.
+        is offered after review and interview
       </p>
 
       <SolidAction type="submit">Register your interest</SolidAction>

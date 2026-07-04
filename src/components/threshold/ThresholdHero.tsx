@@ -51,7 +51,7 @@ export function ThresholdHero() {
         <p className="type-lede threshold__declaration">
           A house for scholarship, clinical practice, and natural therapeutics
           across four departments. Built for careful study, patient service, and
-          long stewardship.
+          long stewardship
         </p>
 
         <nav className="threshold__nav" aria-label="Department navigation">

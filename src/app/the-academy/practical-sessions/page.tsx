@@ -16,7 +16,7 @@ export default async function PracticalSessionsPage() {
     <AcademySectionPage
       folio="iv"
       title="Practical sessions"
-      lede="Supervised practice with staged progression before independent work."
+      lede="Supervised practice with staged progression before independent work"
       currentHref="/the-academy/practical-sessions"
       breadcrumbLabel="Practical sessions"
     >

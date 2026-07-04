@@ -5,7 +5,8 @@ import { SectionLabel } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
 import { knowledgeLibrary } from "@/sanity/lib/fetch";
 import { EditorialPhoto, PullQuote } from "@/components/editorial/Editorial";
-import { getAllKnowledgeSlugs, getKnowledgeTopic } from "@/sanity/lib/fetch";
+import { getAllKnowledgeSlugs, getKnowledgeTopic, getAllArticles, getArticleBySlug } from "@/sanity/lib/fetch";
+import { PortableText } from "@portabletext/react";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -35,11 +36,25 @@ const topicPhotography: Record<string, { src: string; alt: string }> = {
 };
 
 export async function generateStaticParams() {
-  return getAllKnowledgeSlugs().map((slug) => ({ slug }));
+  const staticSlugs = getAllKnowledgeSlugs().map((slug) => ({ slug }));
+  const articles = await getAllArticles();
+  const sanitySlugs = articles.map((a) => ({ slug: a.slug.current }));
+  const seen = new Set(staticSlugs.map((s) => s.slug));
+  for (const s of sanitySlugs) {
+    if (!seen.has(s.slug)) staticSlugs.push(s);
+  }
+  return staticSlugs;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const article = await getArticleBySlug(slug);
+  if (article) {
+    return {
+      title: article.seo?.metaTitle || article.title,
+      description: article.seo?.metaDescription || article.excerpt,
+    };
+  }
   const topic = getKnowledgeTopic(slug);
   if (!topic) return { title: "Knowledge Library" };
   return { title: topic.title, description: topic.lede };
@@ -47,6 +62,80 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function KnowledgeTopicPage({ params }: PageProps) {
   const { slug } = await params;
+
+  const article = await getArticleBySlug(slug);
+
+  if (article) {
+    return (
+      <>
+        {article.mainImage?.asset && (
+          <EditorialPhoto
+            src={article.mainImage.asset._ref || article.mainImage.asset.url || ""}
+            alt={article.mainImage.alt || article.title}
+            aspect="landscape"
+            fullBleed
+            caption={article.mainImage.caption || `${article.title} — editorial photography`}
+          />
+        )}
+
+        <SectionPage
+          department={knowledgeLibrary}
+          folio="ii"
+          title={article.title}
+          lede={article.excerpt || ""}
+          currentHref={`/knowledge-library/${slug}`}
+          breadcrumb={[
+            { label: "Knowledge Library", href: "/knowledge-library" },
+            { label: article.title },
+          ]}
+        >
+          {article.author && (
+            <p className="type-folio-v2" style={{ color: "var(--brass)" }}>
+              {article.author.name}
+              {article.author.title ? ` · ${article.author.title}` : ""}
+              {article.publishedAt
+                ? ` · ${new Date(article.publishedAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`
+                : ""}
+              {article.readingTime ? ` · ${article.readingTime} min read` : ""}
+            </p>
+          )}
+
+          {article.body && article.body.length > 0 && (
+            <div className="type-body portable-text-body">
+              <PortableText value={article.body} />
+            </div>
+          )}
+
+          {article.topics && article.topics.length > 0 && (
+            <>
+              <SectionLabel>Topics</SectionLabel>
+              <ul className="pathway-group__list">
+                {article.topics.map((topic) => (
+                  <li key={topic._id}>
+                    <GoLink href={`/knowledge-library/${topic.slug.current}`}>{topic.title}</GoLink>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          {article.relatedArticles && article.relatedArticles.length > 0 && (
+            <>
+              <SectionLabel>Related entries</SectionLabel>
+              <ul className="pathway-group__list">
+                {article.relatedArticles.map((rel) => (
+                  <li key={rel._id}>
+                    <GoLink href={`/knowledge-library/${rel.slug.current}`}>{rel.title}</GoLink>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </SectionPage>
+      </>
+    );
+  }
+
   const topic = getKnowledgeTopic(slug);
   if (!topic) notFound();
 

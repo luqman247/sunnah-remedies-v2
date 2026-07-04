@@ -16,7 +16,7 @@ export default async function PoliciesPage() {
     <AcademySectionPage
       folio="xiii"
       title="Policies"
-      lede="Binding from offer letter through certification."
+      lede="Binding from offer letter through certification"
       currentHref="/the-academy/policies"
       breadcrumbLabel="Policies"
     >

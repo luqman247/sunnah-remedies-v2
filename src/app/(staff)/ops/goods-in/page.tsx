@@ -45,7 +45,7 @@ export default function GoodsInPage() {
           Goods-In
         </h1>
         <p className="font-[family-name:var(--font-body)] text-xs text-[#0E3B2E]/60">
-          Record a batch receipt. Nothing enters stock unverified.
+          Record a batch receipt. Nothing enters stock unverified
         </p>
       </header>
 
@@ -159,7 +159,7 @@ export default function GoodsInPage() {
             aria-live="polite"
             className={`font-[family-name:var(--font-utility)] text-xs ${result.success ? "text-[#0E3B2E]" : "text-red-700"}`}
           >
-            {result.success ? "✓ Batch recorded successfully." : `Error: ${result.error}`}
+            {result.success ? "✓ Batch recorded successfully" : `Error: ${result.error}`}
           </p>
         )}
 

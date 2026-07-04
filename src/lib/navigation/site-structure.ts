@@ -22,9 +22,19 @@ export const institution: Department = {
       description: "The entrance: purpose, direction, and the four departments.",
     },
     {
+      label: "The Institute",
+      href: "/institute",
+      description: "Vision, governance, and the endowment.",
+    },
+    {
       label: "The Founding Charter",
       href: "/charter",
       description: "The constitutional text of the institution.",
+    },
+    {
+      label: "The Institutional Year",
+      href: "/calendar",
+      description: "Traditions, rituals, and the annual rhythm.",
     },
     {
       label: "Consultations",
@@ -337,5 +347,13 @@ export function getDepartmentByPath(path: string): Department | undefined {
   if (path.startsWith("/the-academy")) return academy;
   if (path.startsWith("/sacred-journeys")) return sacredJourneys;
   if (path.startsWith("/knowledge-library")) return knowledgeLibrary;
+  if (path.startsWith("/institute")) return institution;
+  if (path.startsWith("/charter")) return institution;
+  if (path.startsWith("/calendar")) return institution;
+  if (path.startsWith("/consultations")) return institution;
+  if (path.startsWith("/correspondence")) return institution;
+  if (path.startsWith("/exhibitions")) return institution;
+  if (path.startsWith("/research")) return institution;
+  if (path.startsWith("/press")) return institution;
   return undefined;
 }

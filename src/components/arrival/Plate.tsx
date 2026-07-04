@@ -78,15 +78,15 @@ function PlateBrief({ asset }: { asset: MediaAsset }) {
       style={{
         position: "absolute",
         inset: 0,
-        background: "var(--v2-paper-sunk)",
-        border: "1px solid var(--v2-brass)",
+        background: "var(--paper-deep)",
+        border: "1px solid var(--brass)",
         padding: "var(--space-6)",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
       }}
     >
-      <span className="type-folio-v2" style={{ color: "var(--v2-brass)" }}>
+      <span className="type-folio-v2" style={{ color: "var(--brass)" }}>
         TO BE COMMISSIONED
       </span>
       <div className="type-caption" style={{ maxInlineSize: "48ch" }}>
@@ -110,7 +110,7 @@ function PlateInterim({ asset, priority }: { asset: MediaAsset; priority: boolea
         fill
         sizes="(min-width: 1024px) 1200px, 100vw"
         priority={priority}
-        style={{ objectFit: "cover", border: "1px solid var(--v2-brass)" }}
+        style={{ objectFit: "cover", border: "1px solid var(--brass)" }}
       />
       {asset.caption && (
         <figcaption
@@ -119,7 +119,7 @@ function PlateInterim({ asset, priority }: { asset: MediaAsset; priority: boolea
             position: "absolute",
             insetBlockEnd: "var(--space-4)",
             insetInlineStart: "var(--space-4)",
-            color: "var(--v2-paper-on-deep)",
+            color: "var(--paper-on-deep)",
           }}
         >
           {asset.caption} <em>(Interim)</em>

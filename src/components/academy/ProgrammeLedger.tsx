@@ -16,7 +16,7 @@ export function ProgrammeLedger({ programme }: ProgrammeLedgerProps) {
         <p className="type-title monograph-ledger__name">{programme.duration}</p>
         <p className="type-micro monograph-ledger__measure">{programme.nextCohort}</p>
         <p className="monograph-ledger__fee">{programme.fee}</p>
-        <p className="type-small monograph-ledger__delivery">{programme.feeNote.split(".")[0]}.</p>
+        <p className="type-small monograph-ledger__delivery">{programme.feeNote.split(".")[0]}</p>
         <Link href="/the-academy/enrolment#application" className="solid-action programme-ledger__cta">
           Send application
         </Link>

@@ -22,7 +22,7 @@ export default async function CataloguePage() {
       department={apothecary}
       folio="ii"
       title="Product Catalogue"
-      lede="Each entry states provenance before the monograph."
+      lede="Each entry states provenance before the monograph"
       currentHref="/the-apothecary/catalogue"
       breadcrumb={[
         { label: "The Apothecary", href: "/the-apothecary" },
@@ -32,7 +32,7 @@ export default async function CataloguePage() {
         <p>
           Each entry opens a monograph: a scholarly record with provenance,
           graded references, and stated limits. The catalogue indexes records
-          for reading before dispensation.
+          for reading before dispensation
         </p>
       }
     >

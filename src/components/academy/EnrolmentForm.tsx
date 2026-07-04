@@ -45,7 +45,7 @@ export function EnrolmentForm({ programmeName }: EnrolmentFormProps) {
     return (
       <p className="type-body-l" role="status">
         Your application has been received. Faculty review is completed within
-        fourteen days, and you will be contacted by email.
+        fourteen days, and you will be contacted by email
       </p>
     );
   }
@@ -84,7 +84,7 @@ export function EnrolmentForm({ programmeName }: EnrolmentFormProps) {
           <span className="type-body">
             I confirm that I have read the entry requirements, assessment
             standards, and policies for{" "}
-            {programmeName}. I understand that acceptance is not guaranteed.
+            {programmeName}. I understand that acceptance is not guaranteed
           </span>
         </label>
         {errors.acknowledge && <span className="form-error" role="alert">{errors.acknowledge}</span>}
@@ -92,7 +92,7 @@ export function EnrolmentForm({ programmeName }: EnrolmentFormProps) {
 
       <p className="type-small enrolment-form__note">
         Submission records your interest. Admission is determined after academic
-        and clinical review.
+        and clinical review
       </p>
 
       <SolidAction type="submit">Send application</SolidAction>

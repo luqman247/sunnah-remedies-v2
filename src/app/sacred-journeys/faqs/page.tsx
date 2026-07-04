@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { FaqSection } from "@/components/apothecary/MonographExtras";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
-// Data sourced from Sanity CMS via static fallback — institutional section content
+import { getJourneyBySlug } from "@/sanity/lib/fetch";
 import { journeyInstitution } from "@/lib/content/journeys";
 
 export const metadata: Metadata = {
@@ -9,22 +9,25 @@ export const metadata: Metadata = {
   description: "Registration, safety, postponement, and institutional boundaries.",
 };
 
-export default function JourneysFaqsPage() {
+export default async function JourneysFaqsPage() {
+  const journey = await getJourneyBySlug("umrah");
+  const faq = journey?.faq?.length ? journey.faq : journeyInstitution.faq;
+
   return (
     <JourneySectionPage
       folio="xv"
       title="Questions"
-      lede="Registration, safety, and institutional limits."
+      lede="Registration, safety, and institutional limits"
       currentHref="/sacred-journeys/faqs"
       breadcrumbLabel="FAQs"
       intro={
         <p>
           These answers apply to all programmes unless a journey page states
-          otherwise.
+          otherwise
         </p>
       }
     >
-      <FaqSection items={journeyInstitution.faq} />
+      <FaqSection items={faq} />
     </JourneySectionPage>
   );
 }

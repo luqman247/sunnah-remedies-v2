@@ -1,8 +1,7 @@
-// TODO: Migrate to Sanity when section content is published
 import type { Metadata } from "next";
 import { FaqSection } from "@/components/apothecary/MonographExtras";
 import { SectionPage } from "@/components/ui/SectionPage";
-import { apothecary } from "@/sanity/lib/fetch";
+import { apothecary, getFaqs } from "@/sanity/lib/fetch";
 import { apothecaryFaqs } from "@/lib/content/sections/apothecary";
 
 export const metadata: Metadata = {
@@ -10,20 +9,26 @@ export const metadata: Metadata = {
   description: "Questions on dispensation, provenance, and stated limits.",
 };
 
-export default function ApothecaryFaqsPage() {
+export default async function ApothecaryFaqsPage() {
+  const cmsFaqs = await getFaqs("apothecary");
+  const faqs =
+    cmsFaqs.length > 0
+      ? cmsFaqs.map((f) => ({ question: f.question, answer: f.answer }))
+      : apothecaryFaqs;
+
   return (
     <SectionPage
       department={apothecary}
       folio="vii"
       title="Questions"
-      lede="Questions on dispensation, provenance, and institutional scope."
+      lede="Questions on dispensation, provenance, and institutional scope"
       currentHref="/the-apothecary/faqs"
       breadcrumb={[
         { label: "The Apothecary", href: "/the-apothecary" },
         { label: "FAQs" },
       ]}
     >
-      <FaqSection items={apothecaryFaqs} />
+      <FaqSection items={faqs} />
     </SectionPage>
   );
 }

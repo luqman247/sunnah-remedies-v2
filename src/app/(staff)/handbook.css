@@ -135,7 +135,7 @@
 }
 
 .handbook-content .handbook-code {
-  font-family: var(--font-mono);
+  font-family: var(--font-utility);
   font-size: 0.8125rem;
   background: #0e3b2e08;
   padding: 0.1em 0.35em;

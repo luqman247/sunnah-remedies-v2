@@ -156,7 +156,7 @@ export function RemedyMonograph({ remedy }: RemedyMonographProps) {
 
             <div className="monograph-section" style={{ marginBottom: "var(--s6)" }}>
               <PullQuote
-                text="Every remedy is documented to source. We state what we know, name what we do not, and dispense means with clear limits."
+                text="Every remedy is documented to source. We state what we know, name what we do not, and dispense means with clear limits"
               />
             </div>
 
@@ -188,7 +188,7 @@ export function RemedyMonograph({ remedy }: RemedyMonographProps) {
             <MonographSection id="suggested-use" title="Suggested use">
               <p className="type-small evidence-section__intro">
                 Offered as a traditional dietary means and not as treatment for a
-                diagnosed medical condition.
+                diagnosed medical condition
               </p>
               <MonographList items={remedy.suggestedUse} />
             </MonographSection>

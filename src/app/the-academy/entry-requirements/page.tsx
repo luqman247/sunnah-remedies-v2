@@ -16,7 +16,7 @@ export default async function EntryRequirementsPage() {
     <AcademySectionPage
       folio="ix"
       title="Entry requirements"
-      lede="Applications are reviewed by clinical and academic judgement."
+      lede="Applications are reviewed by clinical and academic judgement"
       currentHref="/the-academy/entry-requirements"
       breadcrumbLabel="Entry requirements"
     >

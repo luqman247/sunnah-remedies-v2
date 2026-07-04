@@ -16,7 +16,7 @@ export default async function AssessmentPage() {
     <AcademySectionPage
       folio="viii"
       title="Assessment"
-      lede="Rubrics are published at enrolment; remediation is limited per component."
+      lede="Rubrics are published at enrolment; remediation is limited per component"
       currentHref="/the-academy/assessment"
       breadcrumbLabel="Assessment"
     >

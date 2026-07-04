@@ -18,13 +18,13 @@ export default async function EnrolmentPage() {
     <AcademySectionPage
       folio="xv"
       title="Enrolment"
-      lede="Application pathway. Admission is decided by faculty review."
+      lede="Application pathway. Admission is decided by faculty review"
       currentHref="/the-academy/enrolment"
       breadcrumbLabel="Enrolment"
       intro={
         <p>
           Read the Hijāma Diploma programme, clinical standards, and assessment
-          criteria before applying.
+          criteria before applying
         </p>
       }
     >

@@ -15,7 +15,7 @@ export function DispensationBlock({ remedy }: DispensationBlockProps) {
       <p className="type-body dispensation-block__intro">
         This remedy is dispensed from the cabinet and not presented as a retail
         commodity. The amount below covers preparation, packaging, and delivery,
-        and is provided after the monograph so the evidence may be read first.
+        and is provided after the monograph so the evidence may be read first
       </p>
       <dl className="dispensation-block__details">
         <div>
@@ -36,12 +36,12 @@ export function DispensationBlock({ remedy }: DispensationBlockProps) {
       ) : (
         <p className="type-body">
           This remedy is currently unavailable. Write to us to receive a return
-          notice when stock is restored.
+          notice when stock is restored
         </p>
       )}
       <p className="type-small dispensation-block__note">
         There is no need to decide immediately. Read the full monograph before
-        requesting dispensation.
+        requesting dispensation
       </p>
     </section>
   );

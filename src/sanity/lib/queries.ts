@@ -4,17 +4,14 @@ import { groq } from "next-sanity";
 
 export const institutionSettingsQuery = groq`
   *[_type == "institutionSettings"][0] {
-    ...,
-    "navigation": *[_type == "navigation"][0] {
-      mainNavigation[] {
-        ...,
-        "items": items[] {
-          ...,
-          reference->{ _type, slug, title }
-        }
-      }
-    },
-    "footer": *[_type == "footerSettings"][0]
+    name,
+    descriptor,
+    tagline,
+    foundingYear,
+    contactEmail,
+    contactPhone,
+    address,
+    socialLinks[] { platform, url }
   }
 `;
 
@@ -51,6 +48,54 @@ export const footerQuery = groq`
 
 export const homepageQuery = groq`
   *[_type == "homepage"][0] {
+    // V2 Arrival fields
+    eyebrow,
+    foundingYear,
+    arrivalArabic,
+    arrivalEnglish,
+    "standfirst": arrivalStandfirst,
+    enterLabel,
+    enterHref,
+    tradition {
+      stamp,
+      arabicEpigraph,
+      standfirst,
+      body,
+      pullQuote { text, attribution, source }
+    },
+    "departmentCards": departmentCards[]-> {
+      order,
+      nameEn,
+      nameAr,
+      standfirst,
+      href,
+      size,
+      "plate": plate-> {
+        status,
+        purpose,
+        composition,
+        lens,
+        lighting,
+        grade,
+        mood,
+        image { ..., asset-> },
+        alt,
+        caption,
+        decorative,
+        credit
+      }
+    },
+    authoritySignals[] { label, value, note },
+    correspondence {
+      heading,
+      body,
+      placeholder,
+      consentText,
+      successText
+    },
+    institutionStatement,
+
+    // V1 fields (legacy support)
     hero {
       image { ..., asset-> },
       imageAlt,
