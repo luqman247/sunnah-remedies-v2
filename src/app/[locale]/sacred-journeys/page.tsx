@@ -12,6 +12,7 @@ import {
   InstitutionalDivider,
   EditorialPhoto,
 } from "@/components/editorial/Editorial";
+import { InterestForm } from "@/components/journeys/InterestForm";
 
 export const metadata: Metadata = {
   title: "Sacred Journeys",
@@ -124,6 +125,7 @@ export default async function SacredJourneysPage() {
             text="Register your interest. Placement follows interview and academic review"
             dark
           />
+          <InterestForm />
         </div>
       </Leaf>
 

@@ -3247,3 +3247,119 @@ a {
 .way-forward__desc {
   color: var(--muted);
 }
+
+/* —— Interest Form (dark context) —— */
+
+.interest-form {
+  max-width: var(--measure-reading);
+  margin: var(--s5) auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+}
+
+.interest-form__fields {
+  display: grid;
+  gap: var(--s4);
+}
+
+@media (min-width: 640px) {
+  .interest-form__fields {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s4);
+  }
+}
+
+.interest-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+}
+
+.interest-form__label {
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
+.interest-form__input {
+  font-family: var(--font-body), Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  padding: 0.7rem 0.85rem;
+  min-height: 44px;
+  background: transparent;
+  border: 1px solid var(--rule-dark);
+  border-radius: 0;
+  color: var(--paper);
+  width: 100%;
+  transition: border-color var(--duration-base) var(--ease);
+}
+
+.interest-form__input::placeholder {
+  color: var(--paper-dim);
+  opacity: 0.5;
+}
+
+.interest-form__input:focus {
+  outline: none;
+  border-color: var(--gilt);
+  box-shadow: inset 0 -2px 0 0 var(--gilt);
+}
+
+.interest-form__field--error .interest-form__input {
+  border-color: var(--oxblood);
+}
+
+.interest-form__field .form-error {
+  color: #c47a68;
+  font-size: 0.85rem;
+}
+
+.interest-form__submit {
+  display: inline-block;
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--myrtle);
+  background: var(--paper);
+  border: 1px solid var(--paper);
+  border-radius: 0;
+  padding: 0.85rem 1.8rem;
+  min-height: 44px;
+  cursor: pointer;
+  text-decoration: none;
+  align-self: flex-start;
+  transition: background var(--duration-base) var(--ease),
+              color var(--duration-base) var(--ease);
+}
+
+@media (max-width: 639px) {
+  .interest-form__submit {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.interest-form__submit:hover,
+.interest-form__submit:focus-visible {
+  background: var(--gilt);
+  border-color: var(--gilt);
+  color: var(--paper);
+}
+
+.interest-form__submit:focus-visible {
+  outline: 2px solid var(--gilt);
+  outline-offset: 3px;
+}
+
+.interest-form__confirmation {
+  color: var(--paper-dim);
+  text-align: center;
+  margin: var(--s5) auto 0;
+  font-style: italic;
+}
