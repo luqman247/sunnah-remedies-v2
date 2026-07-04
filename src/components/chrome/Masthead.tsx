@@ -1,11 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
 import { brandContext, brandAlt } from "@/lib/brand";
 import { ThemeToggle } from "./ThemeToggle";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 interface NavItem {
   label: string;
@@ -18,6 +19,7 @@ interface MastheadProps {
 }
 
 export function Masthead({ navItems }: MastheadProps) {
+  const t = useTranslations("nav");
   const pathname = usePathname();
   const departments = (navItems || []).filter(i => !i.highlighted);
   const highlighted = (navItems || []).find(i => i.highlighted);
@@ -84,11 +86,12 @@ export function Masthead({ navItems }: MastheadProps) {
               className={`nav-link nav-link--accent ${isActive(highlighted?.href || "/consultations") ? "nav-link--current" : ""}`}
               aria-current={isActive(highlighted?.href || "/consultations") ? "page" : undefined}
             >
-              {highlighted?.label || "Clinical consultations"}
-            </Link>
+            {highlighted?.label || t("consultations")}
+          </Link>
           </nav>
 
           <div className="masthead__actions">
+            <LanguageSwitcher />
             <ThemeToggle />
             <button
               ref={menuButtonRef}
@@ -98,7 +101,7 @@ export function Masthead({ navItems }: MastheadProps) {
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
             >
-              Navigation
+              {t("navigation")}
             </button>
           </div>
         </div>
@@ -121,14 +124,14 @@ export function Masthead({ navItems }: MastheadProps) {
             menuButtonRef.current?.focus();
           }}
         >
-          Close navigation
+          {t("closeNavigation")}
         </button>
         <Link
           href="/"
           className="quiet-link quiet-link--dark"
           onClick={() => setMenuOpen(false)}
         >
-          Home
+          {t("home")}
         </Link>
         {departments.map((dept) => (
           <Link
@@ -147,7 +150,7 @@ export function Masthead({ navItems }: MastheadProps) {
           onClick={() => setMenuOpen(false)}
           style={{ color: "var(--gilt-soft)" }}
         >
-          {highlighted?.label || "Clinical consultations"}
+          {highlighted?.label || t("consultations")}
         </Link>
       </div>
     </>

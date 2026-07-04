@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { brandContext, brandAlt } from "@/lib/brand";
 import {
@@ -51,9 +51,11 @@ interface FooterProps {
   columns?: { title: string; links: { label: string; href: string }[] }[];
   closingStatement?: string;
   colophon?: string;
+  tagline?: string;
+  foundingStatement?: string;
 }
 
-export function Footer({ columns, closingStatement, colophon }: FooterProps) {
+export function Footer({ columns, closingStatement, colophon, tagline, foundingStatement }: FooterProps) {
   return (
     <footer className="footer">
       <div className="measure-wide footer__grid">
@@ -71,11 +73,10 @@ export function Footer({ columns, closingStatement, colophon }: FooterProps) {
             }}
           />
           <p className="footer__tagline">
-            Institute of Prophetic Medicine
+            {tagline || "Institute of Prophetic Medicine"}
           </p>
           <p className="type-small footer__founding">
-            Scholarship, clinical practice, and natural therapeutics under one
-            house — structured for continuity, governed by restraint
+            {foundingStatement || "Scholarship, clinical practice, and natural therapeutics under one house — structured for continuity, governed by restraint"}
           </p>
         </div>
 
