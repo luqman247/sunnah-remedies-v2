@@ -76,4 +76,9 @@ export const FLAGS = {
   BOOKING_AUTOMATION: "booking.automation",
   ALERTS: "alerts.enabled",
   DASHBOARD: "dashboard.enabled",
+  /* Phase 9 — Community & Membership */
+  COMMUNITY_MEMBERSHIP: "community.membership",
+  COMMUNITY_PORTALS: "community.portals",
+  COMMUNITY_FORUMS: "community.forums",
+  COMMUNITY_EVENTS: "community.events",
 } as const;
