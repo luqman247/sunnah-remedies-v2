@@ -12,7 +12,7 @@ import { SectionStamp } from "@/components/arrival/SectionStamp";
 import { Eyebrow } from "@/components/arrival/Eyebrow";
 import { ArrivalPullQuote } from "@/components/arrival/ArrivalPullQuote";
 import { AuthorityBand } from "@/components/arrival/AuthorityBand";
-import { DepartmentCard, DepartmentDivider } from "@/components/arrival/DepartmentCard";
+import { DepartmentCard } from "@/components/arrival/DepartmentCard";
 import { CorrespondenceForm } from "@/components/arrival/CorrespondenceForm";
 import { Reveal } from "@/components/arrival/Reveal";
 import "@/components/arrival/arrival.css";
@@ -90,15 +90,31 @@ export default async function ArrivalPage({
           : { status: "brief" as const, purpose: card.standfirst, composition: "", lighting: "", mood: "" },
       }))
     : fallback.departments;
-  const departments = rawDepartments.map((dept) =>
-    dept.href === "/sacred-journeys"
-      ? {
+  const homepageDepartmentOrder = [
+    "/the-apothecary",
+    "/the-academy",
+    "/sacred-journeys",
+    "/knowledge-library",
+  ] as const;
+  const homepageDepartments = homepageDepartmentOrder
+    .map((href) => {
+      const dept = rawDepartments.find((d) => d.href === href);
+      if (!dept) return undefined;
+      if (href === "/sacred-journeys") {
+        const journeysFallback = fallback.departments.find(
+          (d) => d.href === "/sacred-journeys",
+        )!;
+        return {
           ...dept,
           size: "standard" as const,
-          plate: fallback.departments.find((d) => d.href === "/sacred-journeys")!.plate,
-        }
-      : dept,
-  );
+          standfirst: journeysFallback.standfirst,
+          plate: journeysFallback.plate,
+        };
+      }
+      return { ...dept, size: "standard" as const };
+    })
+    .filter((dept): dept is NonNullable<typeof dept> => dept !== undefined);
+  const departments = homepageDepartments;
   const authoritySignals = cms?.authoritySignals?.length ? cms.authoritySignals : fallback.authoritySignals;
   const correspondence = cms?.correspondence || fallback.correspondence;
   const institutionStatement = cms?.institutionStatement || fallback.institutionStatement;
@@ -272,39 +288,8 @@ export default async function ArrivalPage({
                 <h2 id="departments-heading" className="sr-only">{ui("departmentsHeading")}</h2>
 
                 <div className="dept-grid">
-                  {departments.filter(d => d.size === "standard" && d.href !== "/the-apothecary").map((dept, i) => (
+                  {homepageDepartments.map((dept, i) => (
                     <Reveal key={dept.href} delay={i * 80}>
-                      <DepartmentCard
-                        order={dept.order}
-                        nameEn={dept.nameEn}
-                        nameAr={dept.nameAr}
-                        standfirst={dept.standfirst}
-                        href={dept.href}
-                        plate={dept.plate}
-                        size={dept.size}
-                      />
-                    </Reveal>
-                  ))}
-                </div>
-
-                <DepartmentDivider />
-
-                <div className="dept-spread">
-                  {departments.filter(d => d.href === "/the-apothecary").map((dept) => (
-                    <Reveal key={dept.href} delay={160}>
-                      <DepartmentCard
-                        order={dept.order}
-                        nameEn={dept.nameEn}
-                        nameAr={dept.nameAr}
-                        standfirst={dept.standfirst}
-                        href={dept.href}
-                        plate={dept.plate}
-                        size={dept.size}
-                      />
-                    </Reveal>
-                  ))}
-                  {departments.filter(d => d.href === "/sacred-journeys").map((dept) => (
-                    <Reveal key={dept.href} delay={240}>
                       <DepartmentCard
                         order={dept.order}
                         nameEn={dept.nameEn}
