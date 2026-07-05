@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { PractitionerSectionPage } from "@/components/portal/PractitionerSectionPage";
 import { requirePractitionerPortal } from "@/lib/auth/portal-guard";
 import {
@@ -8,10 +9,13 @@ import {
   getCredentialVerificationCode,
 } from "@/modules/practitioner/credentials";
 
-export const metadata: Metadata = {
-  title: "Digital credentials",
-  description: "Verifiable badges and practitioner verification status",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("portal.practitioner.credentials", "/portal/practitioner/credentials");
+}
 
 export default async function CredentialsPage({
   params,

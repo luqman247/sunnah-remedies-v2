@@ -8,6 +8,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { EditorialImage } from "./EditorialImage";
 
 interface GalleryItem {
@@ -25,6 +26,7 @@ interface GalleryProps {
 }
 
 export function Gallery({ items, layout = "grid" }: GalleryProps) {
+  const t = useTranslations("media");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
 
@@ -44,13 +46,13 @@ export function Gallery({ items, layout = "grid" }: GalleryProps) {
 
   return (
     <>
-      <div style={gridStyle} role="list" aria-label="Gallery">
+      <div style={gridStyle} role="list" aria-label={t("gallery")}>
         {items.map((item, i) => (
           <div key={i} role="listitem" style={layout === "strip" ? { flexShrink: 0, width: "280px" } : undefined}>
             <button
               type="button"
               onClick={(e) => openLightbox(i, e.currentTarget)}
-              aria-label={`View ${item.alt || `image ${i + 1}`}`}
+              aria-label={t("viewImage", { alt: item.alt || t("imageNumber", { number: i + 1 }) })}
               style={{ display: "block", width: "100%", border: "none", padding: 0, cursor: "pointer", background: "none" }}
             >
               <EditorialImage
@@ -86,6 +88,7 @@ interface LightboxProps {
 }
 
 function Lightbox({ items, currentIndex, onClose, onNavigate }: LightboxProps) {
+  const t = useTranslations("media");
   const dialogRef = useRef<HTMLDialogElement>(null);
   const item = items[currentIndex];
 
@@ -107,7 +110,7 @@ function Lightbox({ items, currentIndex, onClose, onNavigate }: LightboxProps) {
     <dialog
       ref={dialogRef}
       onClose={onClose}
-      aria-label="Image lightbox"
+      aria-label={t("lightbox")}
       style={{
         position: "fixed",
         inset: 0,
@@ -129,7 +132,7 @@ function Lightbox({ items, currentIndex, onClose, onNavigate }: LightboxProps) {
       <button
         type="button"
         onClick={onClose}
-        aria-label="Close lightbox"
+        aria-label={t("closeLightbox")}
         style={{
           position: "absolute",
           insetBlockStart: "var(--space-6)",
@@ -169,7 +172,7 @@ function Lightbox({ items, currentIndex, onClose, onNavigate }: LightboxProps) {
           type="button"
           onClick={() => onNavigate(currentIndex - 1)}
           disabled={currentIndex === 0}
-          aria-label="Previous image"
+          aria-label={t("previousImage")}
           style={{ background: "none", border: "none", color: "var(--paper)", fontSize: "1.5rem", cursor: "pointer", minWidth: "44px", minHeight: "44px", opacity: currentIndex === 0 ? 0.3 : 1 }}
         >
           ←
@@ -181,7 +184,7 @@ function Lightbox({ items, currentIndex, onClose, onNavigate }: LightboxProps) {
           type="button"
           onClick={() => onNavigate(currentIndex + 1)}
           disabled={currentIndex === items.length - 1}
-          aria-label="Next image"
+          aria-label={t("nextImage")}
           style={{ background: "none", border: "none", color: "var(--paper)", fontSize: "1.5rem", cursor: "pointer", minWidth: "44px", minHeight: "44px", opacity: currentIndex === items.length - 1 ? 0.3 : 1 }}
         >
           →

@@ -1,8 +1,11 @@
+"use client";
+
 /**
  * AuthorBio — person reference rendered as a compact bio block (Ch. 3.2).
  * Portrait + name + role + short bio.
  */
 
+import { useTranslations } from "next-intl";
 import { EditorialImage } from "@/components/media/EditorialImage";
 
 interface AuthorBioProps {
@@ -13,9 +16,11 @@ interface AuthorBioProps {
 }
 
 export function AuthorBio({ name, role, bio, portrait }: AuthorBioProps) {
+  const t = useTranslations("editorial");
+
   return (
     <aside
-      aria-label={`About ${name}`}
+      aria-label={t("aboutAuthor", { name })}
       style={{
         display: "grid",
         gridTemplateColumns: portrait ? "64px 1fr" : "1fr",

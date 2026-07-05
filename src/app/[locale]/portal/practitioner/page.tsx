@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { Leaf } from "@/components/ui/Leaf";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
@@ -10,10 +11,13 @@ import { practitionerPortal } from "@/lib/navigation/practitioner-portal";
 import { requirePractitionerPortal } from "@/lib/auth/portal-guard";
 import { getPractitionerDashboard } from "@/modules/practitioner/dashboard";
 
-export const metadata: Metadata = {
-  title: "Practitioner Portal",
-  description: "Clinical protocols, CPD, credentials, and practice resources",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("portal.practitioner", "/portal/practitioner");
+}
 
 export default async function PractitionerDashboardPage({
   params,

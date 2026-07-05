@@ -1,8 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export function InterestForm() {
+  const tForm = useTranslations("form");
+  const tInterest = useTranslations("journeys.interestForm");
+  const tRegistration = useTranslations("journeys.registrationForm");
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -11,10 +15,10 @@ export function InterestForm() {
     const data = new FormData(e.currentTarget);
     const next: Record<string, string> = {};
 
-    if (!data.get("name")) next.name = "Name is required";
+    if (!data.get("name")) next.name = tForm("validation.required");
     const email = data.get("email") as string;
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      next.email = "A valid email address is required";
+      next.email = tForm("validation.email");
     }
 
     if (Object.keys(next).length > 0) {
@@ -29,7 +33,7 @@ export function InterestForm() {
   if (submitted) {
     return (
       <p className="type-body-l interest-form__confirmation" role="status">
-        Your interest has been noted. We will be in touch within fourteen days
+        {tInterest("successMessage")}
       </p>
     );
   }
@@ -39,7 +43,7 @@ export function InterestForm() {
       <div className="interest-form__fields">
         <div className={`interest-form__field ${errors.name ? "interest-form__field--error" : ""}`}>
           <label htmlFor="interest-name" className="interest-form__label">
-            Name
+            {tForm("name")}
           </label>
           <input
             id="interest-name"
@@ -55,7 +59,7 @@ export function InterestForm() {
 
         <div className={`interest-form__field ${errors.email ? "interest-form__field--error" : ""}`}>
           <label htmlFor="interest-email" className="interest-form__label">
-            Email address
+            {tRegistration("labelEmail")}
           </label>
           <input
             id="interest-email"
@@ -71,7 +75,7 @@ export function InterestForm() {
       </div>
 
       <button type="submit" className="interest-form__submit">
-        Register interest
+        {tInterest("registerInterest")}
       </button>
     </form>
   );

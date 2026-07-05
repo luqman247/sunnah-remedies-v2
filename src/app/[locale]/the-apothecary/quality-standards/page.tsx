@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
 import { apothecary } from "@/sanity/lib/fetch";
 import { qualityStandards } from "@/lib/content/sections/apothecary";
 
-export const metadata: Metadata = {
-  title: "Quality Standards",
-  description: "How the institution selects, stores, and dispenses remedies.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("theApothecary.qualityStandards", "/the-apothecary/quality-standards");
+}
 
 export default async function QualityStandardsPage({
   params,

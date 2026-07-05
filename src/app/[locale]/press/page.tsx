@@ -1,24 +1,20 @@
 import type { Metadata } from "next";
+import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
 import { Link } from "@/i18n/navigation";
 import { setRequestLocale } from "next-intl/server";
-import type { AppLocale } from "@/i18n/locales";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
 import { HospitableEmpty } from "@/components/ui/HospitableEmpty";
 import { WayForward } from "@/components/ui/WayForward";
 import { getInstitutionSettings } from "@/sanity/lib/fetch";
 
-export const metadata: Metadata = {
-  title: "The Press",
-  description:
-    "The Institute's publishing house — scholarly editions, patient guides, and fine artefacts, published slowly and permanently rather than quickly and disposably.",
-  openGraph: {
-    title: "The Press · Sunnah Remedies",
-    description:
-      "Nothing published that the Institute would be unwilling to defend before a scholar and a physician.",
-    type: "website",
-    siteName: "Sunnah Remedies",
-  },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("press", "/press");
+}
 
 export default async function PressPage({
   params,

@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
+import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
 import "@/components/booking/booking.css";
 
-export const metadata: Metadata = {
-  title: "Book a Hijama Session",
-  description:
-    "Book your Hijama (wet cupping) appointment with a qualified practitioner at one of our clinics in London, Aarhus or Riyadh.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("consultations", "/consultations");
+}
 
 export default function ConsultationsLayout({
   children,

@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { PolicyBlocks } from "@/components/journeys/JourneyInstitutionBlocks";
 import { getJourneyBySlug } from "@/sanity/lib/fetch";
 import { journeyInstitution } from "@/lib/content/journeys";
 import type { PolicyItem } from "@/lib/content/journeys/types";
 
-export const metadata: Metadata = {
-  title: "Policies",
-  description: "Cancellation, conduct, and insurance standards stated plainly.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("sacredJourneys.policies", "/sacred-journeys/policies");
+}
 
 export default async function PoliciesPage({
   params,

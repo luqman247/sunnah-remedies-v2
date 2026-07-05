@@ -1,23 +1,19 @@
 import type { Metadata } from "next";
+import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
 import { Link } from "@/i18n/navigation";
 import { setRequestLocale } from "next-intl/server";
-import type { AppLocale } from "@/i18n/locales";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
 import { WayForward } from "@/components/ui/WayForward";
 import { getInstitutionSettings } from "@/sanity/lib/fetch";
 
-export const metadata: Metadata = {
-  title: "The Institute",
-  description:
-    "The Sunnah Remedies Institute — a modern bimāristān for the preservation, study, practice, teaching, and honest testing of Prophetic Medicine.",
-  openGraph: {
-    title: "The Institute · Sunnah Remedies",
-    description:
-      "A bimāristān reborn — healing, scholarship, and hospitality under one endowment.",
-    type: "website",
-    siteName: "Sunnah Remedies",
-  },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("institute", "/institute");
+}
 
 export default async function InstitutePage({
   params,

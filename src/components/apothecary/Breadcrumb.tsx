@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
 interface BreadcrumbProps {
@@ -5,8 +8,10 @@ interface BreadcrumbProps {
 }
 
 export function Breadcrumb({ items }: BreadcrumbProps) {
+  const t = useTranslations("breadcrumbs");
+
   return (
-    <nav aria-label="Breadcrumb" className="type-micro" style={{ color: "var(--muted)", marginBottom: "var(--s4)" }}>
+    <nav aria-label={t("ariaLabelNav")} className="type-micro" style={{ color: "var(--muted)", marginBottom: "var(--s4)" }}>
       {items.map((item, i) => (
         <span key={`${item.label}-${i}`}>
           {i > 0 && <span aria-hidden="true"> / </span>}

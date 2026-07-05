@@ -11,14 +11,30 @@
     "navigation": "Navigation",
     "closeNavigation": "Close navigation",
     "ariaMenu": "Main navigation",
-    "ariaLanguage": "Change language"
+    "ariaLanguage": "Change language",
+    "ariaPrimary": "Primary"
   },
   "footer": {
     "tagline": "Institute of Prophetic Medicine",
     "foundingStatement": "Scholarship, clinical practice, and natural therapeutics under one house",
     "closing": "Knowledge before commerce. Service before profit. Trust before growth",
     "colophon": "Sunnah Remedies · Est. MMXXV · Healing is from Allah · the remedy is a means",
-    "requestConsultation": "Request a consultation"
+    "requestConsultation": "Request a consultation",
+    "dailyReflectionAria": "Daily reflection",
+    "preFooterImageAlt": "Research table — manuscripts, instruments, and natural specimens arranged for scholarly study"
+  },
+  "theme": {
+    "nightMode": "Night mode",
+    "dayMode": "Day mode",
+    "switchToNight": "Switch to night mode",
+    "switchToDay": "Switch to day mode"
+  },
+  "commerce": {
+    "payment": {
+      "failed": "Payment failed",
+      "processing": "Processing…",
+      "submit": "Complete payment"
+    }
   },
   "common": {
     "readMore": "Read more",
@@ -27,7 +43,8 @@
     "backTo": "Back to {page}",
     "loading": "Loading",
     "error": "Something went wrong",
-    "notFound": "Not found"
+    "notFound": "Not found",
+    "tableOfContents": "Table of contents"
   },
   "notFound": {
     "heading": "THE CORRIDOR DOES NOT CONTINUE HERE",
@@ -41,6 +58,7 @@
   "breadcrumbs": {
     "home": "Home",
     "ariaLabel": "You are here",
+    "ariaLabelNav": "Breadcrumb",
     "theInstitution": "The Institution"
   },
   "form": {
@@ -53,6 +71,7 @@
     "sending": "Sending…",
     "success": "Thank you — we’ll be in touch shortly",
     "error": "Something went wrong. Please try again",
+    "serverError": "Unable to reach the server. Please try again shortly",
     "validation": {
       "required": "This field is required",
       "email": "Please enter a valid email address",
@@ -60,8 +79,113 @@
     }
   },
   "search": {
-    "placeholder": "Search…",
-    "noResults": "No results found for “{query}”"
+    "placeholder": "Search remedies, conditions, hadith, courses…",
+    "ariaLabel": "Site search",
+    "inputAriaLabel": "Search the institution",
+    "searching": "Searching…",
+    "resultsSummary": "{count} results in {ms}ms",
+    "noResults": "No results found for “{query}”",
+    "tryDifferent": "Try a different spelling, or browse the institution through the navigation above",
+    "askDirectly": "Or ask us directly"
+  },
+  "ai": {
+    "header": "Institute Research Assistant",
+    "placeholder": "Ask the Institute",
+    "emptyState": "Ask a question about Prophetic Medicine, remedies, ingredients, or any topic covered by the Institute",
+    "inputAriaLabel": "Ask the Institute",
+    "submitAriaLabel": "Submit question",
+    "submit": "Ask",
+    "error": "An error occurred. Please try again",
+    "emergencyWarning": "If you are in immediate danger, contact emergency services now",
+    "relatedTopics": "Related topics",
+    "evidenceProvenance": "Evidence Provenance",
+    "furtherReading": "Further reading",
+    "bookConsultation": "Book a consultation",
+    "viewCourses": "View courses",
+    "learnMore": "Learn more",
+    "confidence": "Confidence: {percent}%",
+    "sources": "{count, plural, one {# source} other {# sources}}",
+    "categories": {
+      "QURAN": "Qur'anic Reference",
+      "SUNNAH": "Prophetic Tradition",
+      "CLASSICAL": "Classical Scholarship",
+      "CONTEMPORARY": "Contemporary Scholarship",
+      "RESEARCH": "Scientific Research",
+      "TRADITION": "Traditional Practice",
+      "INSTITUTIONAL": "Institutional Guidance"
+    }
+  },
+  "portal": {
+    "memberSignIn": {
+      "email": "Email",
+      "password": "Password",
+      "signIn": "Sign in",
+      "signingIn": "Signing in…",
+      "credentialsError": "We could not verify those credentials. Please try again",
+      "serverError": "Unable to reach the server. Please try again shortly"
+    },
+    "enrol": {
+      "button": "Enrol on this course",
+      "enrolling": "Enrolling…",
+      "failed": "Enrolment failed",
+      "unable": "Unable to complete enrolment"
+    },
+    "lesson": {
+      "complete": "Mark lesson complete",
+      "recording": "Recording…",
+      "markedComplete": "Lesson marked complete"
+    },
+    "student": {
+      "digitalCampus": "Digital Campus"
+    },
+    "practitioner": {
+      "portal": "Practitioner Portal"
+    }
+  },
+  "editorial": {
+    "readingTime": "{minutes} min read",
+    "references": "References",
+    "link": "[link]",
+    "backToCitation": "Back to citation {number}",
+    "reference": "Reference {number}",
+    "backToReference": "Back to reference {number}",
+    "footnote": "Footnote {number}",
+    "figureCaption": "Fig. {number}. {caption}",
+    "aboutAuthor": "About {name}"
+  },
+  "revelation": {
+    "translation": "Translation",
+    "scholarlyNotes": "Scholarly notes",
+    "editorialNote": "Editorial note",
+    "classicalReferences": "Classical references",
+    "modernContext": "Modern context",
+    "types": {
+      "quran": "The Noble Qurʼan",
+      "hadith": "Prophetic Tradition"
+    }
+  },
+  "media": {
+    "gallery": "Gallery",
+    "viewImage": "View {alt}",
+    "imageNumber": "image {number}",
+    "lightbox": "Image lightbox",
+    "closeLightbox": "Close lightbox",
+    "previousImage": "Previous image",
+    "nextImage": "Next image",
+    "playVideo": "Play video",
+    "videoPoster": "Video poster",
+    "view360ComingSoon": "360° view coming soon",
+    "view360": "360° view: {alt}"
+  },
+  "attestation": {
+    "specimenAriaLabel": "Attestation record specimen",
+    "recordSpecimen": "Record specimen",
+    "hadithGrade": "Hadith grade",
+    "primarySource": "Primary source",
+    "scholarlyStanding": "Scholarly standing"
+  },
+  "departmentNav": {
+    "sectionsAriaLabel": "{department} sections"
   },
   "apothecary": {
     "title": "The Apothecary",
@@ -72,6 +196,25 @@
     "laboratoryVerification": "Laboratory Verification",
     "faqs": "Frequently Asked Questions",
     "counter": "The Counter",
+    "addToCounter": {
+      "added": "{name} has been added to the counter",
+      "reviewItem": "Review item details",
+      "addButton": "Add to counter"
+    },
+    "monographLedger": {
+      "ariaLabel": "Remedy dispensation summary",
+      "label": "Cabinet dispensation",
+      "unavailable": "Currently unavailable",
+      "contactDispensary": "Contact the dispensary",
+      "readBeforeOrder": "Read the monograph before ordering"
+    },
+    "relatedRemedies": {
+      "title": "Related remedies",
+      "srHeading": "Related remedy monographs"
+    },
+    "monographToc": {
+      "ariaLabel": "Monograph table of contents"
+    },
     "dispensation": {
       "title": "Dispensation",
       "intro": "This remedy is dispensed from the cabinet and not presented as a retail commodity. The amount below covers preparation, packaging, and delivery, and is provided after the monograph so the evidence may be read first",
@@ -124,7 +267,19 @@
       "customerSupport": "Customer support",
       "attributionRevelation": "Allah says",
       "attributionHadith": "The Prophet ﷺ said",
-      "attributionClassical": "Classical authorities record"
+      "attributionClassical": "Classical authorities record",
+      "evidenceInformed": "Evidence-informed",
+      "frequentlyAsked": "Common questions",
+      "relatedRemediesSection": "Related remedies",
+      "academyLessons": "Academy lessons",
+      "knowledgeLibrarySection": "Knowledge Library",
+      "pathways": "Further study and practice",
+      "dispensationSection": "Dispensation",
+      "pullQuoteDocumentation": "Every remedy is documented to source. We state what we know, name what we do not, and dispense means with clear limits",
+      "photoBlackSeed": "A scholar's research desk with botanical journal on Nigella sativa, pressed specimens, and black seeds",
+      "photoHoney": "Golden honey being poured from a wooden dipper into a glass vessel, beside dried thyme",
+      "photoOliveOil": "Premium olive oil in a glass cruet beside ripe olives and olive leaves on weathered wood",
+      "photoSenna": "Dried senna pods and leaves arranged on ivory linen beside a ceramic apothecary jar"
     }
   },
   "academy": {
@@ -157,6 +312,15 @@
       "diploma": "Hijāma Diploma",
       "sendApplication": "Send application",
       "reviewFirst": "Review the programme first"
+    },
+    "programmeContents": {
+      "ariaLabel": "Programme table of contents"
+    },
+    "facilityGallery": {
+      "clinicalSuite": "The clinical suite — a practitioner preparing sterile cupping equipment in a calm treatment room",
+      "readingRoom": "The reading room — a scholarly library with bound volumes and study desks",
+      "seminarHall": "The seminar hall — students studying primary sources under faculty guidance",
+      "clinicalInstruments": "Clinical instruments — sterile cupping cups, lancets, and preparation materials"
     },
     "programmeView": {
       "section": "The Academy",
@@ -209,7 +373,12 @@
       "application": "Application",
       "enrolment": "Enrolment",
       "enrolmentIntro": "Review the full programme before submission. Each application is evaluated on academic readiness and clinical suitability",
-      "sendApplication": "Send application"
+      "sendApplication": "Send application",
+      "pullQuoteSupervised": "This is not an abbreviated online course. It is a supervised programme with published assessment criteria and faculty sign-off only after demonstrated competency",
+      "pullQuoteTeacher": "The teacher is named before the subject. The chain is stated before the curriculum. Assessment criteria are published before enrolment opens",
+      "facultyPortraitSenior": "Faculty member — senior practitioner and scholar",
+      "facultyPortraitClinical": "Faculty member — clinical practitioner",
+      "clinicalPracticeAlt": "A clinical practitioner preparing sterile cupping equipment in a professional treatment room"
     }
   },
   "journeys": {
@@ -219,6 +388,27 @@
     "gallery": "Gallery",
     "itineraries": "Itineraries",
     "faqs": "Frequently Asked Questions",
+    "journeyLedger": {
+      "ariaLabel": "Journey registration summary",
+      "upcomingDeparture": "Upcoming departure"
+    },
+    "journeyToc": {
+      "ariaLabel": "Journey table of contents"
+    },
+    "interestForm": {
+      "successMessage": "Your interest has been registered. We will be in touch shortly",
+      "registerInterest": "Register interest"
+    },
+    "galleryAlts": {
+      "grovePath": "Ancient olive grove path — stone walkway through terraced hillsides at dawn",
+      "lodge": "The lodge — historic stone architecture with warm lantern light at twilight",
+      "press": "The olive press — traditional oil production from ancestral groves",
+      "ridge": "The ridge path — pilgrims walking through ancient landscape at golden hour",
+      "desertWalk": "The desert walk — an open landscape of sand and sky at dawn",
+      "camp": "The evening camp — a quiet gathering place under shelter",
+      "stars": "Night sky over the landscape — reflection and stillness",
+      "host": "The host — a gathering space for companionship and shared meals"
+    },
     "view": {
       "section": "Sacred Journeys",
       "guidedJourney": "Guided educational journey",
@@ -265,7 +455,12 @@
       "registration": "Registration",
       "registerInterest": "Register your interest",
       "registrationIntro": "This is not a booking. Each registration is reviewed through reading, interview, and suitability checks where applicable before placement is confirmed.",
-      "reviewRegistration": "Review registration pathway"
+      "reviewRegistration": "Review registration pathway",
+      "photoUmrah": "Ancient Islamic architecture at twilight — a stone archway with lanterns casting warm light",
+      "photoOliveGrove": "Pilgrims approaching the Prophet's Mosque in Madinah at dawn",
+      "photoDesertWay": "Pilgrims walking across the marble courtyard toward the green dome at dawn",
+      "pullQuoteTravel": "We travel to learn, not to see. The journey is inward before it is outward",
+      "pullQuotePreparation": "Preparation begins weeks before departure. The mind is prepared before the luggage"
     },
     "registrationForm": {
       "labelName": "Full name",
@@ -292,7 +487,22 @@
   "knowledge": {
     "title": "Knowledge Library",
     "articles": "Articles",
-    "topics": "Topics"
+    "topics": "Topics",
+    "relatedHeading": "Related",
+    "relations": {
+      "relatedArticles": "Related articles",
+      "relatedTopics": "Related topics",
+      "relatedRemedies": "Related remedies",
+      "relatedProgrammes": "Related programmes",
+      "relatedJourneys": "Related journeys",
+      "relatedConditions": "Related conditions",
+      "relatedIngredients": "Related ingredients",
+      "relatedHadith": "Related hadith",
+      "relatedScholars": "Related scholars",
+      "relatedSources": "Related sources",
+      "relatedCourses": "Related courses",
+      "relatedConsultations": "Related consultations"
+    }
   },
   "consultations": {
     "title": "Clinical Consultations",
@@ -332,10 +542,97 @@
       "medicalConditions": "Any medical conditions?",
       "optional": "optional",
       "consentText": "I understand Hijama may not be suitable for everyone and agree to the consultation process"
+    },
+    "steps": {
+      "step1": "Step 1",
+      "step2": "Step 2",
+      "step3": "Step 3",
+      "step4": "Step 4",
+      "choosePractitioner": "Choose Practitioner",
+      "chooseClinic": "Choose Clinic",
+      "chooseDate": "Choose Date",
+      "chooseTime": "Choose Time",
+      "practitionerGenderAria": "Practitioner gender",
+      "clinicLocationAria": "Clinic location",
+      "availableDatesAria": "Available dates",
+      "availableTimesAria": "Available times",
+      "malePractitioner": "Male Practitioner",
+      "femalePractitioner": "Female Practitioner"
+    },
+    "summary": {
+      "ariaLabel": "Appointment summary",
+      "label": "Appointment Summary",
+      "practitioner": "Practitioner",
+      "clinic": "Clinic",
+      "date": "Date",
+      "time": "Time",
+      "duration": "Duration",
+      "price": "Price",
+      "submitAria": "Book my appointment",
+      "submit": "Book My Appointment"
     }
   },
   "seasonal": {
-    "greeting": "Seasonal greeting"
+    "greeting": "Seasonal greeting",
+    "calendarAriaLabel": "Institutional calendar",
+    "next": "Next: {title}",
+    "currentSeason": "Current season: {label}",
+    "seasons": {
+      "ramadan": {
+        "label": "Ramaḍān",
+        "greeting": "The month of patience and the month in which the Qur'ān was revealed",
+        "reflection": "The Institute enters its most reverent season — commerce set aside, the sacred brought forward"
+      },
+      "hajj": {
+        "label": "The Days of Ḥajj",
+        "greeting": "The best days of the year upon which the sun rises",
+        "reflection": "The Sacred Journeys community gathers — preparation, purpose, and the duty of care"
+      },
+      "dhul-hijjah": {
+        "label": "Dhūl Ḥijjah",
+        "greeting": "The sacred month of pilgrimage",
+        "reflection": "The first ten days — no deeds are more beloved to Allah than those performed in these days"
+      },
+      "rabi-al-awwal": {
+        "label": "Rabīʿ al-Awwal",
+        "greeting": "The month of the Prophetic birth — ṣallā Allāhu ʿalayhi wa sallam",
+        "reflection": "The tradition we preserve and practise has its origin in mercy sent to all the worlds"
+      },
+      "muharram": {
+        "label": "Muḥarram",
+        "greeting": "The sacred month — a new year for the community",
+        "reflection": "A new Hijrī year begins — the Institution renews its covenant with knowledge and service"
+      }
+    },
+    "events": {
+      "new-year": {
+        "title": "The New Hijrī Year"
+      },
+      "mawlid": {
+        "title": "The Prophetic Month"
+      },
+      "spring-planting": {
+        "title": "The Planting"
+      },
+      "annual-lecture": {
+        "title": "The Annual Lecture"
+      },
+      "ramadan-programme": {
+        "title": "The Ramaḍān Programme"
+      },
+      "annual-conference": {
+        "title": "The Annual Conference"
+      },
+      "harvest": {
+        "title": "The Harvest"
+      },
+      "hajj-season": {
+        "title": "The Sacred Journeys Season"
+      },
+      "ijaza-ceremony": {
+        "title": "The Ijāzah Ceremony"
+      }
+    }
   },
   "draft": {
     "active": "Draft Preview Active",
@@ -349,7 +646,12 @@
     "enter": "Enter",
     "authorityStamp": "AUTHORITY",
     "authorityHeading": "Authority",
-    "figurePending": "figure pending"
+    "figurePending": "figure pending",
+    "correspondence": {
+      "requesting": "Requesting…",
+      "submit": "Request correspondence",
+      "emailLabel": "Email address"
+    }
   },
   "plate": {
     "toBeCommissioned": "TO BE COMMISSIONED",
@@ -385,5 +687,382 @@
     "evening": "Evening",
     "ariaLabel": "Reading mode",
     "legend": "Choose reading mode"
+  },
+  "pages": {
+    "home": {
+      "title": "Sunnah Remedies — Institute of Prophetic Medicine",
+      "description": "The world's leading institute of Prophetic Medicine — scholarship, clinical care, and natural therapeutics under one house"
+    },
+    "calendar": {
+      "title": "The Institutional Year",
+      "description": "The annual rhythm of the Sunnah Remedies Institute — ceremonies, seasons, gatherings, and the garden's turning"
+    },
+    "charter": {
+      "title": "The Founding Charter",
+      "description": "The constitutional text of the institution — seven articles governing how Sunnah Remedies conducts itself"
+    },
+    "consultations": {
+      "title": "Book a Hijama Session",
+      "description": "Book your Hijama (wet cupping) appointment with a qualified practitioner at one of our clinics in London, Aarhus or Riyadh"
+    },
+    "correspondence": {
+      "title": "Correspondence"
+    },
+    "exhibitions": {
+      "title": "Exhibitions",
+      "description": "The digital museum — exhibitions on Prophetic Medicine and the great Islamic tradition of healing, presented with scholarly care and reverence"
+    },
+    "institute": {
+      "title": "The Institute",
+      "description": "The Sunnah Remedies Institute — a modern bimāristān for the preservation, study, practice, teaching, and honest testing of Prophetic Medicine"
+    },
+    "knowledgeLibrary": {
+      "title": "Knowledge Library · Sunnah Remedies",
+      "description": "The institution's publishing programme — monographs, research notes, and patient guides on Prophetic Medicine, published with citation, grading, and clear limits"
+    },
+    "membership": {
+      "accessDenied": {
+        "title": "Access not granted"
+      },
+      "signIn": {
+        "title": "Member sign in"
+      }
+    },
+    "portal": {
+      "practitioner": {
+        "title": "Practitioner Portal",
+        "description": "Clinical protocols, CPD, credentials, and practice resources",
+        "certificates": {
+          "title": "Certificates",
+          "description": "Course and event credentials held"
+        },
+        "credentials": {
+          "title": "Digital credentials",
+          "description": "Verifiable badges and practitioner verification status"
+        },
+        "cpd": {
+          "title": "CPD ledger",
+          "description": "Continuing professional development record"
+        },
+        "downloads": {
+          "title": "Downloads",
+          "description": "Templates, patient resources, and treatment guides"
+        },
+        "layout": {
+          "title": "Practitioner Portal"
+        },
+        "profile": {
+          "title": "Professional profile",
+          "description": "Scope of practice and registration details"
+        },
+        "protocols": {
+          "title": "Clinical protocols",
+          "description": "Faculty-reviewed clinical protocols for verified practitioners"
+        },
+        "research": {
+          "title": "Research library",
+          "description": "Publications and institutional research briefings"
+        },
+        "saved": {
+          "title": "Saved resources",
+          "description": "Private bookmarks across the practitioner portal"
+        },
+        "updates": {
+          "title": "Practice updates",
+          "description": "Clinical announcements and faculty notices for practitioners"
+        }
+      },
+      "student": {
+        "title": "Digital Campus",
+        "description": "Your scholarly workspace during study",
+        "assignments": {
+          "title": "Assignments"
+        },
+        "calendar": {
+          "title": "Calendar"
+        },
+        "certificates": {
+          "title": "Certificates"
+        },
+        "courses": {
+          "title": "My courses"
+        },
+        "layout": {
+          "title": "Digital Campus"
+        },
+        "revision": {
+          "title": "Revision"
+        },
+        "saved": {
+          "title": "Saved resources"
+        },
+        "tutor": {
+          "title": "AI Tutor"
+        }
+      }
+    },
+    "press": {
+      "title": "The Press",
+      "description": "The Institute's publishing house — scholarly editions, patient guides, and fine artefacts, published slowly and permanently rather than quickly and disposably"
+    },
+    "research": {
+      "title": "Research Centre",
+      "description": "The Institute's bridge to modern medicine — testing Prophetic Medicine honestly against the best available evidence, neither flattering it nor betraying it"
+    },
+    "sacredJourneys": {
+      "title": "Sacred Journeys",
+      "description": "Educational pilgrimage with preparation, reading, faculty companions, and clear guidance. We travel to learn, not to see",
+      "accommodation": {
+        "title": "Accommodation",
+        "description": "Lodging selected for proximity, safety, and practical suitability"
+      },
+      "companionship": {
+        "title": "Companionship",
+        "description": "Group size, adab, and disciplined travel in company"
+      },
+      "educationalSessions": {
+        "title": "Educational sessions",
+        "description": "Seminars, field study, and circles delivered to a published structure"
+      },
+      "faqs": {
+        "title": "FAQs",
+        "description": "Registration, safety, postponement, and institutional boundaries"
+      },
+      "flightGuidance": {
+        "title": "Flight guidance",
+        "description": "Flight coordination guidance for programme arrivals and departures"
+      },
+      "gallery": {
+        "title": "Gallery",
+        "description": "Photography of places, paths, and architecture encountered on programme"
+      },
+      "healthGuidance": {
+        "title": "Health guidance",
+        "description": "Disclosure, fitness, environmental exposure, and travel deferral criteria"
+      },
+      "itineraries": {
+        "title": "Itineraries",
+        "description": "Day-by-day educational itineraries published before departure"
+      },
+      "packing": {
+        "title": "Packing guide",
+        "description": "Programme packing guidance covering climate, adab, and institutional provisions"
+      },
+      "policies": {
+        "title": "Policies",
+        "description": "Cancellation, conduct, and insurance standards stated plainly"
+      },
+      "preparation": {
+        "title": "Preparation",
+        "description": "Reading, health preparation, documents, and timeline before travel"
+      },
+      "reading": {
+        "title": "Reading list",
+        "description": "Assigned texts to be completed before departure"
+      },
+      "reflectionJournals": {
+        "title": "Reflection journals",
+        "description": "Assigned reflection prompts linked to seminars and readings"
+      },
+      "registration": {
+        "title": "Registration",
+        "description": "Register your interest. Placement follows interview and reading review"
+      },
+      "umrah": {
+        "title": "Umrah",
+        "description": "Educational pilgrimage in which rites are taught through sourced seminars and guided preparation"
+      }
+    },
+    "theAcademy": {
+      "title": "The Academy",
+      "description": "Clinical education in Prophetic Medicine and the Hijama Diploma — delivered with citation, supervision, and independent assessment",
+      "assessment": {
+        "title": "Assessment",
+        "description": "Written papers, clinical logbook, and OSCE assessment"
+      },
+      "certification": {
+        "title": "Certification",
+        "description": "Scope of certification and its stated limits"
+      },
+      "clinicalEthics": {
+        "title": "Clinical Practice & Ethics"
+      },
+      "clinicalStandards": {
+        "title": "Clinical standards",
+        "description": "Contraindications, technique standards, and infection control"
+      },
+      "courseHandbook": {
+        "title": "Course handbook",
+        "description": "Term dates, attendance requirements, conduct, and fees"
+      },
+      "curriculum": {
+        "title": "Curriculum",
+        "description": "Curriculum modules with sources and practical components"
+      },
+      "enrolment": {
+        "title": "Enrolment",
+        "description": "Application journey and form for the Hijāma Diploma"
+      },
+      "entryRequirements": {
+        "title": "Entry requirements",
+        "description": "Entry qualifications, safeguarding checks, and interview process"
+      },
+      "equipment": {
+        "title": "Equipment list",
+        "description": "Equipment responsibilities for students and Academy supply"
+      },
+      "facilities": {
+        "title": "Facilities",
+        "description": "Clinical suite, reading room, and seminar teaching spaces"
+      },
+      "faculty": {
+        "title": "Faculty",
+        "description": "Named faculty, training lineage, and academic accountability"
+      },
+      "faqs": {
+        "title": "Questions",
+        "description": "Questions on recognition, safety, attendance, and fees"
+      },
+      "foundations": {
+        "title": "Foundations of Prophetic Medicine"
+      },
+      "gallery": {
+        "title": "Gallery",
+        "description": "Photography of teaching, clinical, and scholarly spaces"
+      },
+      "graduatePathways": {
+        "title": "Graduate pathways",
+        "description": "Post-certification pathways described without career guarantees"
+      },
+      "learningOutcomes": {
+        "title": "Learning outcomes",
+        "description": "Assessed competencies for the Hijāma Diploma"
+      },
+      "materiaMedica": {
+        "title": "The Materia Medica"
+      },
+      "policies": {
+        "title": "Policies",
+        "description": "Cancellation, conduct, and clinical responsibility policies"
+      },
+      "practicalSessions": {
+        "title": "Practical sessions",
+        "description": "Supervised clinical timetable for the Hijāma Diploma"
+      },
+      "studentGuide": {
+        "title": "Student guide",
+        "description": "Guidance from induction through certification"
+      },
+      "testimonials": {
+        "title": "Graduate attestations",
+        "description": "Graduate attestations published with consent"
+      }
+    },
+    "theApothecary": {
+      "title": "The Apothecary",
+      "description": "A dispensary where each remedy carries a monograph: historical context, Prophetic reference, traditional use, stated limits, and provenance",
+      "catalogue": {
+        "title": "Product Catalogue",
+        "description": "The ordered cabinet with remedies traced to source"
+      },
+      "counter": {
+        "title": "The Counter"
+      },
+      "faqs": {
+        "title": "FAQs",
+        "description": "Questions on dispensation, provenance, and stated limits"
+      },
+      "ingredients": {
+        "title": "Ingredient Library",
+        "description": "Simples and preparations with botanical identity and traditional standing"
+      },
+      "laboratoryVerification": {
+        "title": "Laboratory Verification",
+        "description": "Independent analysis with batch records and certificates"
+      },
+      "monographs": {
+        "title": "Product Monographs",
+        "description": "Scholarly remedy records with source before price and limits before measure"
+      },
+      "orderConfirmation": {
+        "title": "Order Confirmed — Sunnah Remedies"
+      },
+      "qualityStandards": {
+        "title": "Quality Standards",
+        "description": "How the institution selects, stores, and dispenses remedies"
+      }
+    },
+    "theRegister": {
+      "title": "The Register",
+      "description": "Texts, remedies, and sources indexed by grade and department"
+    },
+    "search": {
+      "title": "Search",
+      "description": "Find remedies, conditions, research, courses, hadith, and scholarly articles across the entire institution",
+      "heading": "Search the institution",
+      "popularHeading": "POPULAR SEARCHES",
+      "popularTerms": [
+        "Black seed",
+        "Honey",
+        "Hijama",
+        "Senna",
+        "Digestive health",
+        "Prophetic fasting",
+        "Olive oil",
+        "Immune support"
+      ]
+    }
+  },
+  "homepage": {
+    "skipToContent": "Skip to content",
+    "departmentsStamp": "THE DEPARTMENTS",
+    "departmentsHeading": "The Departments",
+    "correspondenceStamp": "CORRESPONDENCE",
+    "correspondenceHeading": "Correspondence",
+    "departmentsNavAria": "Departments",
+    "about": "About",
+    "contact": "Contact",
+    "footerColophon": "Sunnah Remedies · Institute of Prophetic Medicine",
+    "eyebrow": "EST. ——— · INSTITUTE OF PROPHETIC MEDICINE",
+    "arrivalEnglish": "The medicine of the prophetic tradition, kept living",
+    "standfirst": "An institution for the preservation and responsible transmission of prophetic medicine — grounded in primary-source scholarship, laboratory verification, clinical accountability, and plain limits",
+    "enterLabel": "Enter the institution",
+    "enterHref": "#departments",
+    "traditionStamp": "ON THE TRADITION",
+    "traditionStandfirst": "What is this discipline, and why does it require an institution?",
+    "traditionBody0": "Prophetic Medicine is not folk remedy, not alternative wellness, not a brand opportunity. It is a received body of knowledge — transmitted through authenticated chains, tested against observable evidence, and constrained by the limits its own sources declare",
+    "traditionBody1": "This institution exists because the discipline deserves the same rigour as any established medical tradition: verifiable scholarship, clinical governance, transparent provenance, and patient dignity at every encounter",
+    "pullQuoteText": "Healing is from Allah; the remedy is a means",
+    "pullQuoteAttribution": "Prophetic teaching",
+    "pullQuoteSource": "Ṣaḥīḥ al-Bukhārī",
+    "thresholdPurpose": "The threshold — crossing into the institution",
+    "thresholdComposition": "Wide establishing shot, strong architecture, human presence suggested not centred",
+    "thresholdLens": "35mm, deep focus",
+    "thresholdLighting": "Late afternoon, directional warmth",
+    "thresholdMood": "Gravitas",
+    "thresholdAlt": "Scholarly hands examining an illuminated manuscript of Prophetic medicine beside glass vessels of amber oil and black seed",
+    "authorityYears": "Years of practice",
+    "authorityStudents": "Students trained",
+    "authorityCountries": "Countries served",
+    "authorityPublications": "Publications",
+    "correspondenceHeadingText": "Receive the institution's writing",
+    "correspondenceBody": "Occasional correspondence on scholarship, new monographs, and programme announcements. No frequency promise; no promotional content",
+    "correspondencePlaceholder": "your@email.address",
+    "correspondenceConsent": "You will receive institutional correspondence by email. Unsubscribe at any time by replying or using the link provided",
+    "correspondenceSuccess": "Requested — correspondence will follow",
+    "institutionStatement": "Knowledge before commerce. Service before profit. Trust before growth. The institution exists for the next generation",
+    "deptKnowledgeStandfirst": "The open shelf — monographs, research notes, and patient guides, all graded and cited",
+    "deptKnowledgePlatePurpose": "Reading room with scholarly texts",
+    "deptKnowledgePlateAlt": "A scholarly reading room with open manuscripts and natural light",
+    "deptAcademyStandfirst": "Clinical education in Hijama and Prophetic therapeutics, structured by isnād",
+    "deptAcademyPlatePurpose": "Tutorial room with faculty and students",
+    "deptAcademyPlateAlt": "Students in a scholarly classroom studying anatomical charts and medical texts under natural light",
+    "deptApothecaryStandfirst": "A cabinet of preparations, each documented to source before dispensation",
+    "deptApothecaryPlatePurpose": "Dispensary shelves with amber vessels",
+    "deptApothecaryPlateAlt": "An apothecary dispensary with amber glass vessels of honey and oils arranged on aged wooden shelving",
+    "deptJourneysStandfirst": "Educational pilgrimage to the Holy Lands — preparation precedes departure, purpose before itinerary. Every journey carries a reading list, a faculty companion, and a clear statement of difficulty",
+    "deptJourneysPlatePurpose": "Masjid an-Nabawi at golden hour — quiet courtyard and green dome",
+    "deptJourneysPlateAlt": "Masjid an-Nabawi at golden hour — warm marble courtyard, green dome, and distant pilgrims in quiet reflection",
+    "jsonLdDescription": "An institute of Prophetic Medicine for scholarship, clinical care, and natural therapeutics"
   }
 }

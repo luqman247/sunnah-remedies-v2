@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { StudentSectionPage } from "@/components/portal/StudentSectionPage";
 import { requireStudentPortal } from "@/lib/auth/portal-guard";
 import { getEnrolments } from "@/modules/student/enrolments";
 import { getAssignmentsForCourse, getSubmissionsForAccount } from "@/modules/student/assignments";
 
-export const metadata: Metadata = {
-  title: "Assignments",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("portal.student.assignments", "/portal/student/assignments");
+}
 
 export default async function AssignmentsPage({
   params,

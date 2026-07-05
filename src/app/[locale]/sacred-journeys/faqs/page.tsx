@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { FaqSection } from "@/components/apothecary/MonographExtras";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { getJourneyBySlug } from "@/sanity/lib/fetch";
 import { journeyInstitution } from "@/lib/content/journeys";
 
-export const metadata: Metadata = {
-  title: "FAQs",
-  description: "Registration, safety, postponement, and institutional boundaries.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("sacredJourneys.faqs", "/sacred-journeys/faqs");
+}
 
 export default async function JourneysFaqsPage({
   params,

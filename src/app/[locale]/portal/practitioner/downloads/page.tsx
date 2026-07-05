@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { PractitionerSectionPage } from "@/components/portal/PractitionerSectionPage";
 import { ListingRow } from "@/components/ui/Attestation";
 import { getPractitionerResources } from "@/sanity/lib/practitioner-fetch";
 
-export const metadata: Metadata = {
-  title: "Downloads",
-  description: "Templates, patient resources, and treatment guides",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("portal.practitioner.downloads", "/portal/practitioner/downloads");
+}
 
 export default async function DownloadsPage({
   params,

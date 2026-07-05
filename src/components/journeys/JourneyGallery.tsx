@@ -1,52 +1,57 @@
+"use client";
+
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import type { GalleryItem } from "@/lib/content/journeys/types";
 
-const galleryPhotography: Record<string, { src: string; alt: string }> = {
+const galleryPhotoKeys: Record<string, { src: string; altKey: string }> = {
   "grove-path": {
     src: "/photography/sacred-journeys-hero.jpg",
-    alt: "Ancient olive grove path — stone walkway through terraced hillsides at dawn",
+    altKey: "grovePath",
   },
   lodge: {
     src: "/photography/architecture-twilight.jpg",
-    alt: "The lodge — historic stone architecture with warm lantern light at twilight",
+    altKey: "lodge",
   },
   press: {
     src: "/photography/olive-oil-editorial.jpg",
-    alt: "The olive press — traditional oil production from ancestral groves",
+    altKey: "press",
   },
   ridge: {
     src: "/photography/sacred-journeys-hero.jpg",
-    alt: "The ridge path — pilgrims walking through ancient landscape at golden hour",
+    altKey: "ridge",
   },
   "desert-walk": {
     src: "/photography/sacred-journeys-hero.jpg",
-    alt: "The desert walk — an open landscape of sand and sky at dawn",
+    altKey: "desertWalk",
   },
   camp: {
     src: "/photography/architecture-twilight.jpg",
-    alt: "The evening camp — a quiet gathering place under shelter",
+    altKey: "camp",
   },
   stars: {
     src: "/photography/sacred-journeys-hero.jpg",
-    alt: "Night sky over the landscape — reflection and stillness",
+    altKey: "stars",
   },
   host: {
     src: "/photography/architecture-twilight.jpg",
-    alt: "The host — a gathering space for companionship and shared meals",
+    altKey: "host",
   },
 };
 
 export function JourneyGallery({ items }: { items: GalleryItem[] }) {
+  const t = useTranslations("journeys.galleryAlts");
+
   return (
     <div className="facility-gallery">
       {items.map((item) => {
-        const photo = galleryPhotography[item.id];
+        const photo = galleryPhotoKeys[item.id];
         return (
           <figure key={item.id} className="facility-gallery__item">
             {photo ? (
               <Image
                 src={photo.src}
-                alt={photo.alt}
+                alt={t(photo.altKey as "grovePath" | "lodge" | "press" | "ridge" | "desertWalk" | "camp" | "stars" | "host")}
                 width={640}
                 height={440}
                 style={{

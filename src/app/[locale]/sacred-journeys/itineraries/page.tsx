@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { ListingRow } from "@/components/ui/Attestation";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
 import { getAllJourneys } from "@/sanity/lib/fetch";
 import { journeyToSacredJourney } from "@/sanity/lib/adapters";
 
-export const metadata: Metadata = {
-  title: "Itineraries",
-  description: "Day-by-day educational itineraries published before departure.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("sacredJourneys.itineraries", "/sacred-journeys/itineraries");
+}
 
 export default async function ItinerariesPage({
   params,

@@ -9,6 +9,7 @@
  */
 
 import { useState, useRef, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import type { StructuredResponse, Claim, SourceCategory } from "@/ai/evidence-engine/types";
 import { EVIDENCE_COLOUR_TOKENS } from "@/ai/evidence-engine/types";
 
@@ -32,27 +33,17 @@ interface Message {
   timestamp: number;
 }
 
-/* ── Evidence Category Labels ────────────────────────────────────── */
-
-const CATEGORY_LABELS: Record<SourceCategory, string> = {
-  QURAN: "Qur'anic Reference",
-  SUNNAH: "Prophetic Tradition",
-  CLASSICAL: "Classical Scholarship",
-  CONTEMPORARY: "Contemporary Scholarship",
-  RESEARCH: "Scientific Research",
-  TRADITION: "Traditional Practice",
-  INSTITUTIONAL: "Institutional Guidance",
-};
-
 /* ── Component ───────────────────────────────────────────────────── */
 
 export function InstitutionalAssistant({
   surface = "knowledge",
-  placeholder = "Ask the Institute",
+  placeholder,
   language = "en",
   courseId,
   lectureId,
 }: AssistantProps) {
+  const t = useTranslations("ai");
+  const resolvedPlaceholder = placeholder ?? t("placeholder");
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -111,7 +102,7 @@ export function InstitutionalAssistant({
           {
             id: `msg-${Date.now()}`,
             role: "assistant",
-            content: "An error occurred. Please try again",
+            content: t("error"),
             timestamp: Date.now(),
           },
         ]);
@@ -120,20 +111,20 @@ export function InstitutionalAssistant({
         inputRef.current?.focus();
       }
     },
-    [input, loading, surface, language, sessionId, courseId, lectureId]
+    [input, loading, surface, language, sessionId, courseId, lectureId, t]
   );
 
   return (
     <div className="ai-assistant">
       <div className="ai-assistant__header">
-        <p className="section-label">Institute Research Assistant</p>
+        <p className="section-label">{t("header")}</p>
       </div>
 
       <div className="ai-assistant__messages">
         {messages.length === 0 && (
           <div className="ai-assistant__empty">
             <p className="type-body" style={{ color: "var(--muted)" }}>
-              Ask a question about Prophetic Medicine, remedies, ingredients, or any topic covered by the Institute
+              {t("emptyState")}
             </p>
           </div>
         )}
@@ -168,18 +159,18 @@ export function InstitutionalAssistant({
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder={placeholder}
+          placeholder={resolvedPlaceholder}
           className="ai-assistant__input"
           disabled={loading}
-          aria-label="Ask the Institute"
+          aria-label={t("inputAriaLabel")}
         />
         <button
           type="submit"
           disabled={loading || !input.trim()}
           className="ai-assistant__submit"
-          aria-label="Submit question"
+          aria-label={t("submitAriaLabel")}
         >
-          Ask
+          {t("submit")}
         </button>
       </form>
     </div>
@@ -189,6 +180,8 @@ export function InstitutionalAssistant({
 /* ── Assistant Response Rendering ────────────────────────────────── */
 
 function AssistantResponse({ message }: { message: Message }) {
+  const t = useTranslations("ai");
+
   if (message.escalation) {
     return (
       <div className="ai-assistant__escalation">
@@ -200,7 +193,7 @@ function AssistantResponse({ message }: { message: Message }) {
             className="type-body"
             style={{ color: "var(--oxblood)", marginTop: "var(--space-3)" }}
           >
-            If you are in immediate danger, contact emergency services now
+            {t("emergencyWarning")}
           </p>
         )}
       </div>
@@ -214,7 +207,7 @@ function AssistantResponse({ message }: { message: Message }) {
         {message.fallback.suggestions && message.fallback.suggestions.length > 0 && (
           <div style={{ marginTop: "var(--space-4)" }}>
             <p className="type-folio" style={{ color: "var(--muted)" }}>
-              Related topics
+              {t("relatedTopics")}
             </p>
             <ul className="ai-assistant__suggestions">
               {message.fallback.suggestions.map((s, i) => (
@@ -247,7 +240,7 @@ function AssistantResponse({ message }: { message: Message }) {
       {grouped.size > 0 && (
         <div className="ai-assistant__evidence">
           <p className="type-folio" style={{ color: "var(--muted)", marginBottom: "var(--space-3)" }}>
-            Evidence Provenance
+            {t("evidenceProvenance")}
           </p>
           {Array.from(grouped.entries()).map(([category, claims]) => (
             <EvidenceGroup key={category} category={category} claims={claims} />
@@ -305,10 +298,10 @@ function AssistantResponse({ message }: { message: Message }) {
             style={{ color: "var(--sage)", textDecoration: "underline" }}
           >
             {response.escalation.recommend === "clinical_consultation"
-              ? "Book a consultation"
+              ? t("bookConsultation")
               : response.escalation.recommend === "course_enrolment"
-                ? "View courses"
-                : "Learn more"}
+                ? t("viewCourses")
+                : t("learnMore")}
           </a>
         </div>
       )}
@@ -325,6 +318,7 @@ function EvidenceGroup({
   category: SourceCategory;
   claims: Claim[];
 }) {
+  const t = useTranslations("ai");
   const token = EVIDENCE_COLOUR_TOKENS[category];
   return (
     <div className="ai-assistant__evidence-group" data-evidence={token}>
@@ -337,14 +331,14 @@ function EvidenceGroup({
           marginBottom: "var(--space-3)",
         }}
       >
-        {CATEGORY_LABELS[category]}
+        {t(`categories.${category}`)}
       </p>
       {claims.map((claim, i) => (
         <div key={i} className="ai-assistant__claim">
           <p className="type-body">{claim.text}</p>
           <span className="type-caption" style={{ color: "var(--muted)" }}>
-            Confidence: {Math.round(claim.confidence * 100)}%
-            {claim.citations.length > 0 && ` · ${claim.citations.length} source${claim.citations.length !== 1 ? "s" : ""}`}
+            {t("confidence", { percent: Math.round(claim.confidence * 100) })}
+            {claim.citations.length > 0 && ` · ${t("sources", { count: claim.citations.length })}`}
           </span>
         </div>
       ))}
@@ -365,12 +359,14 @@ function RelatedContent({
     related.products.length > 0 ||
     related.consultations.length > 0;
 
+  const t = useTranslations("ai");
+
   if (!hasRelated) return null;
 
   return (
     <div className="ai-assistant__related" style={{ marginTop: "var(--space-5)" }}>
       <p className="type-folio" style={{ color: "var(--muted)", marginBottom: "var(--space-3)" }}>
-        Further reading
+        {t("furtherReading")}
       </p>
       <div className="ai-assistant__related-grid">
         {related.articles.map((a) => (

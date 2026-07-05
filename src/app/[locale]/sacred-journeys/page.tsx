@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { Leaf } from "@/components/ui/Leaf";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
 import { PageIntro } from "@/components/ui/PageIntro";
@@ -16,11 +17,13 @@ import {
 } from "@/components/editorial/Editorial";
 import { InterestForm } from "@/components/journeys/InterestForm";
 
-export const metadata: Metadata = {
-  title: "Sacred Journeys",
-  description:
-    "Educational pilgrimage with preparation, reading, faculty companions, and clear guidance. We travel to learn, not to see.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("sacredJourneys", "/sacred-journeys");
+}
 
 export default async function SacredJourneysPage({
   params,

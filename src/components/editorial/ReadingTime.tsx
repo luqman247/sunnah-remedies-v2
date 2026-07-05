@@ -1,7 +1,11 @@
+"use client";
+
 /**
  * ReadingTime — computed reading time display (Ch. 3.2).
  * Calculates from word count unless overridden.
  */
+
+import { useTranslations } from "next-intl";
 
 interface ReadingTimeProps {
   wordCount?: number;
@@ -15,12 +19,13 @@ export function computeReadingTime(wordCount: number): number {
 }
 
 export function ReadingTime({ wordCount, override }: ReadingTimeProps) {
+  const t = useTranslations("editorial");
   const minutes = override || (wordCount ? computeReadingTime(wordCount) : null);
   if (!minutes) return null;
 
   return (
     <span className="type-caption" style={{ color: "var(--ink-soft)" }}>
-      {minutes} min read
+      {t("readingTime", { minutes })}
     </span>
   );
 }

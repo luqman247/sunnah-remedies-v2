@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { AcademySectionPage } from "@/components/academy/AcademySectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
 import { getHijamaDiploma } from "@/lib/content/academy";
 import { getProgrammeBySlug } from "@/sanity/lib/fetch";
 import { programmeToAcademyProgramme } from "@/sanity/lib/adapters";
 
-export const metadata: Metadata = {
-  title: "Learning outcomes",
-  description: "Assessed competencies for the Hijāma Diploma.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("theAcademy.learningOutcomes", "/the-academy/learning-outcomes");
+}
 
 export default async function LearningOutcomesPage({
   params,

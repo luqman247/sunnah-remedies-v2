@@ -11,6 +11,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { CldVideoPlayer } from "next-cloudinary";
 import { Poster } from "./Poster";
 import { MediaCaption } from "./MediaCaption";
@@ -36,6 +37,7 @@ export function EditorialVideo({
   credit,
   priority,
 }: EditorialVideoProps) {
+  const t = useTranslations("media");
   const [isPlaying, setIsPlaying] = useState(false);
   const [shouldAutoplay, setShouldAutoplay] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -55,7 +57,7 @@ export function EditorialVideo({
           <Poster
             publicId={poster?.publicId}
             src={poster?.src}
-            alt={poster?.alt || "Video poster"}
+            alt={poster?.alt || t("videoPoster")}
             aspect={aspect}
             priority={priority}
             onPlay={() => setIsPlaying(true)}
@@ -89,7 +91,7 @@ export function EditorialVideo({
         <Poster
           publicId={poster?.publicId}
           src={poster?.src}
-          alt={poster?.alt || "Video poster"}
+          alt={poster?.alt || t("videoPoster")}
           aspect={aspect}
           priority={priority}
           onPlay={() => setIsPlaying(true)}

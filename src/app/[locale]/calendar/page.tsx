@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
 import { WayForward } from "@/components/ui/WayForward";
 import {
@@ -9,18 +10,13 @@ import {
   getHijriYear,
 } from "@/lib/calendar/seasons";
 
-export const metadata: Metadata = {
-  title: "The Institutional Year",
-  description:
-    "The annual rhythm of the Sunnah Remedies Institute — ceremonies, seasons, gatherings, and the garden's turning.",
-  openGraph: {
-    title: "The Institutional Year · Sunnah Remedies",
-    description:
-      "Traditions, rituals, and the sacred calendar that give the institution its rhythm.",
-    type: "website",
-    siteName: "Sunnah Remedies",
-  },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("calendar", "/calendar");
+}
 
 const HIJRI_MONTHS: Record<number, string> = {
   1: "Muḥarram",

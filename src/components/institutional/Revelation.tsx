@@ -12,8 +12,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import type { RevelationEntry } from "@/lib/content/schema";
-import { TYPE_LABELS } from "@/lib/content/schema";
 
 type Variant = "dark" | "light";
 
@@ -32,13 +32,14 @@ export function Revelation({
   variant = "dark",
   showNotes = false,
 }: RevelationProps) {
+  const t = useTranslations("revelation");
   const figureRef = useRef<HTMLElement>(null);
   const [current, setCurrent] = useState<RevelationEntry>(initialEntry);
   const [visible, setVisible] = useState(false);
   const [hasEntered, setHasEntered] = useState(false);
   const lastTypeRef = useRef<"quran" | "hadith">(initialEntry.type);
 
-  const typeLabel = TYPE_LABELS[current.type];
+  const typeLabel = t(`types.${current.type}`);
   const hasNotes =
     showNotes &&
     (current.scholarNotes ||
@@ -136,7 +137,7 @@ export function Revelation({
       </blockquote>
 
       <p className="revelation__translation-label revelation__layer">
-        Translation
+        {t("translation")}
       </p>
 
       <p className="revelation__english revelation__layer">{current.english}</p>
@@ -157,18 +158,18 @@ export function Revelation({
       {hasNotes && (
         <aside
           className="revelation__notes revelation__layer"
-          aria-label="Scholarly notes"
+          aria-label={t("scholarlyNotes")}
         >
           {current.scholarNotes && (
             <div className="revelation__note revelation__note--editorial">
-              <p className="revelation__note-label">Editorial note</p>
+              <p className="revelation__note-label">{t("editorialNote")}</p>
               <p className="revelation__note-text">{current.scholarNotes}</p>
             </div>
           )}
 
           {current.classicalReferences?.length ? (
             <div className="revelation__note revelation__note--classical">
-              <p className="revelation__note-label">Classical references</p>
+              <p className="revelation__note-label">{t("classicalReferences")}</p>
               <ul className="revelation__note-list">
                 {current.classicalReferences.map((r, i) => (
                   <li key={i}>{r}</li>
@@ -179,7 +180,7 @@ export function Revelation({
 
           {current.modernNotes && (
             <div className="revelation__note revelation__note--modern">
-              <p className="revelation__note-label">Modern context</p>
+              <p className="revelation__note-label">{t("modernContext")}</p>
               <p className="revelation__note-text">{current.modernNotes}</p>
             </div>
           )}

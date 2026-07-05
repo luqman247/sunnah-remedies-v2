@@ -3,8 +3,10 @@
 import { signIn } from "next-auth/react";
 import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 function MemberSignInForm() {
+  const t = useTranslations("portal.memberSignIn");
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/portal/practitioner";
   const [email, setEmail] = useState("");
@@ -26,13 +28,13 @@ function MemberSignInForm() {
       });
 
       if (result?.error) {
-        setError("We could not verify those credentials. Please try again");
+        setError(t("credentialsError"));
         setLoading(false);
       } else if (result?.url) {
         window.location.href = result.url;
       }
     } catch {
-      setError("Unable to reach the server. Please try again shortly");
+      setError(t("serverError"));
       setLoading(false);
     }
   }
@@ -41,7 +43,7 @@ function MemberSignInForm() {
     <form onSubmit={handleSubmit} className="measure" style={{ margin: "0 auto" }}>
       <div style={{ marginBottom: "var(--s4)" }}>
         <label htmlFor="member-email" className="type-micro">
-          Email
+          {t("email")}
         </label>
         <input
           id="member-email"
@@ -65,7 +67,7 @@ function MemberSignInForm() {
 
       <div style={{ marginBottom: "var(--s4)" }}>
         <label htmlFor="member-password" className="type-micro">
-          Password
+          {t("password")}
         </label>
         <input
           id="member-password"
@@ -94,7 +96,7 @@ function MemberSignInForm() {
       )}
 
       <button type="submit" disabled={loading} className="solid-action">
-        {loading ? "Signing in…" : "Sign in"}
+        {loading ? t("signingIn") : t("signIn")}
       </button>
     </form>
   );

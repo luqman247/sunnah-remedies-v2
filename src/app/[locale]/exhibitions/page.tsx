@@ -1,24 +1,20 @@
 import type { Metadata } from "next";
+import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
 import { Link } from "@/i18n/navigation";
 import { setRequestLocale } from "next-intl/server";
-import type { AppLocale } from "@/i18n/locales";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
 import { HospitableEmpty } from "@/components/ui/HospitableEmpty";
 import { WayForward } from "@/components/ui/WayForward";
 import { getInstitutionSettings } from "@/sanity/lib/fetch";
 
-export const metadata: Metadata = {
-  title: "Exhibitions",
-  description:
-    "The digital museum — exhibitions on Prophetic Medicine and the great Islamic tradition of healing, presented with scholarly care and reverence.",
-  openGraph: {
-    title: "Exhibitions · Sunnah Remedies",
-    description:
-      "The tradition of healing told through objects, manuscripts, and honest scholarship.",
-    type: "website",
-    siteName: "Sunnah Remedies",
-  },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("exhibitions", "/exhibitions");
+}
 
 const permanentExhibition = {
   title: "The Tradition of Healing",

@@ -1,0 +1,275 @@
+{
+  "home": {
+    "title": "Sunnah Remedies — Institute of Prophetic Medicine",
+    "description": "The world's leading institute of Prophetic Medicine — scholarship, clinical care, and natural therapeutics under one house"
+  },
+  "calendar": {
+    "title": "The Institutional Year",
+    "description": "The annual rhythm of the Sunnah Remedies Institute — ceremonies, seasons, gatherings, and the garden's turning"
+  },
+  "charter": {
+    "title": "The Founding Charter",
+    "description": "The constitutional text of the institution — seven articles governing how Sunnah Remedies conducts itself"
+  },
+  "consultations": {
+    "title": "Book a Hijama Session",
+    "description": "Book your Hijama (wet cupping) appointment with a qualified practitioner at one of our clinics in London, Aarhus or Riyadh"
+  },
+  "correspondence": { "title": "Correspondence" },
+  "exhibitions": {
+    "title": "Exhibitions",
+    "description": "The digital museum — exhibitions on Prophetic Medicine and the great Islamic tradition of healing, presented with scholarly care and reverence"
+  },
+  "institute": {
+    "title": "The Institute",
+    "description": "The Sunnah Remedies Institute — a modern bimāristān for the preservation, study, practice, teaching, and honest testing of Prophetic Medicine"
+  },
+  "knowledgeLibrary": {
+    "title": "Knowledge Library · Sunnah Remedies",
+    "description": "The institution's publishing programme — monographs, research notes, and patient guides on Prophetic Medicine, published with citation, grading, and clear limits"
+  },
+  "membership.accessDenied": { "title": "Access not granted" },
+  "membership.signIn": { "title": "Member sign in" },
+  "portal.practitioner": {
+    "title": "Practitioner Portal",
+    "description": "Clinical protocols, CPD, credentials, and practice resources"
+  },
+  "portal.practitioner.certificates": {
+    "title": "Certificates",
+    "description": "Course and event credentials held"
+  },
+  "portal.practitioner.credentials": {
+    "title": "Digital credentials",
+    "description": "Verifiable badges and practitioner verification status"
+  },
+  "portal.practitioner.cpd": {
+    "title": "CPD ledger",
+    "description": "Continuing professional development record"
+  },
+  "portal.practitioner.downloads": {
+    "title": "Downloads",
+    "description": "Templates, patient resources, and treatment guides"
+  },
+  "portal.practitioner.layout": { "title": "Practitioner Portal" },
+  "portal.practitioner.profile": {
+    "title": "Professional profile",
+    "description": "Scope of practice and registration details"
+  },
+  "portal.practitioner.protocols": {
+    "title": "Clinical protocols",
+    "description": "Faculty-reviewed clinical protocols for verified practitioners"
+  },
+  "portal.practitioner.research": {
+    "title": "Research library",
+    "description": "Publications and institutional research briefings"
+  },
+  "portal.practitioner.saved": {
+    "title": "Saved resources",
+    "description": "Private bookmarks across the practitioner portal"
+  },
+  "portal.practitioner.updates": {
+    "title": "Practice updates",
+    "description": "Clinical announcements and faculty notices for practitioners"
+  },
+  "portal.student": {
+    "title": "Digital Campus",
+    "description": "Your scholarly workspace during study"
+  },
+  "portal.student.assignments": { "title": "Assignments" },
+  "portal.student.calendar": { "title": "Calendar" },
+  "portal.student.certificates": { "title": "Certificates" },
+  "portal.student.courses": { "title": "My courses" },
+  "portal.student.layout": { "title": "Digital Campus" },
+  "portal.student.revision": { "title": "Revision" },
+  "portal.student.saved": { "title": "Saved resources" },
+  "portal.student.tutor": { "title": "AI Tutor" },
+  "press": {
+    "title": "The Press",
+    "description": "The Institute's publishing house — scholarly editions, patient guides, and fine artefacts, published slowly and permanently rather than quickly and disposably"
+  },
+  "research": {
+    "title": "Research Centre",
+    "description": "The Institute's bridge to modern medicine — testing Prophetic Medicine honestly against the best available evidence, neither flattering it nor betraying it"
+  },
+  "sacredJourneys": {
+    "title": "Sacred Journeys",
+    "description": "Educational pilgrimage with preparation, reading, faculty companions, and clear guidance. We travel to learn, not to see"
+  },
+  "sacredJourneys.accommodation": {
+    "title": "Accommodation",
+    "description": "Lodging selected for proximity, safety, and practical suitability"
+  },
+  "sacredJourneys.companionship": {
+    "title": "Companionship",
+    "description": "Group size, adab, and disciplined travel in company"
+  },
+  "sacredJourneys.educationalSessions": {
+    "title": "Educational sessions",
+    "description": "Seminars, field study, and circles delivered to a published structure"
+  },
+  "sacredJourneys.faqs": {
+    "title": "FAQs",
+    "description": "Registration, safety, postponement, and institutional boundaries"
+  },
+  "sacredJourneys.flightGuidance": {
+    "title": "Flight guidance",
+    "description": "Flight coordination guidance for programme arrivals and departures"
+  },
+  "sacredJourneys.gallery": {
+    "title": "Gallery",
+    "description": "Photography of places, paths, and architecture encountered on programme"
+  },
+  "sacredJourneys.healthGuidance": {
+    "title": "Health guidance",
+    "description": "Disclosure, fitness, environmental exposure, and travel deferral criteria"
+  },
+  "sacredJourneys.itineraries": {
+    "title": "Itineraries",
+    "description": "Day-by-day educational itineraries published before departure"
+  },
+  "sacredJourneys.packing": {
+    "title": "Packing guide",
+    "description": "Programme packing guidance covering climate, adab, and institutional provisions"
+  },
+  "sacredJourneys.policies": {
+    "title": "Policies",
+    "description": "Cancellation, conduct, and insurance standards stated plainly"
+  },
+  "sacredJourneys.preparation": {
+    "title": "Preparation",
+    "description": "Reading, health preparation, documents, and timeline before travel"
+  },
+  "sacredJourneys.reading": {
+    "title": "Reading list",
+    "description": "Assigned texts to be completed before departure"
+  },
+  "sacredJourneys.reflectionJournals": {
+    "title": "Reflection journals",
+    "description": "Assigned reflection prompts linked to seminars and readings"
+  },
+  "sacredJourneys.registration": {
+    "title": "Registration",
+    "description": "Register your interest. Placement follows interview and reading review"
+  },
+  "sacredJourneys.umrah": {
+    "title": "Umrah",
+    "description": "Educational pilgrimage in which rites are taught through sourced seminars and guided preparation"
+  },
+  "theAcademy": {
+    "title": "The Academy",
+    "description": "Clinical education in Prophetic Medicine and the Hijama Diploma — delivered with citation, supervision, and independent assessment"
+  },
+  "theAcademy.assessment": {
+    "title": "Assessment",
+    "description": "Written papers, clinical logbook, and OSCE assessment"
+  },
+  "theAcademy.certification": {
+    "title": "Certification",
+    "description": "Scope of certification and its stated limits"
+  },
+  "theAcademy.clinicalEthics": { "title": "Clinical Practice & Ethics" },
+  "theAcademy.clinicalStandards": {
+    "title": "Clinical standards",
+    "description": "Contraindications, technique standards, and infection control"
+  },
+  "theAcademy.courseHandbook": {
+    "title": "Course handbook",
+    "description": "Term dates, attendance requirements, conduct, and fees"
+  },
+  "theAcademy.curriculum": {
+    "title": "Curriculum",
+    "description": "Curriculum modules with sources and practical components"
+  },
+  "theAcademy.enrolment": {
+    "title": "Enrolment",
+    "description": "Application journey and form for the Hijāma Diploma"
+  },
+  "theAcademy.entryRequirements": {
+    "title": "Entry requirements",
+    "description": "Entry qualifications, safeguarding checks, and interview process"
+  },
+  "theAcademy.equipment": {
+    "title": "Equipment list",
+    "description": "Equipment responsibilities for students and Academy supply"
+  },
+  "theAcademy.facilities": {
+    "title": "Facilities",
+    "description": "Clinical suite, reading room, and seminar teaching spaces"
+  },
+  "theAcademy.faculty": {
+    "title": "Faculty",
+    "description": "Named faculty, training lineage, and academic accountability"
+  },
+  "theAcademy.faqs": {
+    "title": "Questions",
+    "description": "Questions on recognition, safety, attendance, and fees"
+  },
+  "theAcademy.foundations": { "title": "Foundations of Prophetic Medicine" },
+  "theAcademy.gallery": {
+    "title": "Gallery",
+    "description": "Photography of teaching, clinical, and scholarly spaces"
+  },
+  "theAcademy.graduatePathways": {
+    "title": "Graduate pathways",
+    "description": "Post-certification pathways described without career guarantees"
+  },
+  "theAcademy.learningOutcomes": {
+    "title": "Learning outcomes",
+    "description": "Assessed competencies for the Hijāma Diploma"
+  },
+  "theAcademy.materiaMedica": { "title": "The Materia Medica" },
+  "theAcademy.policies": {
+    "title": "Policies",
+    "description": "Cancellation, conduct, and clinical responsibility policies"
+  },
+  "theAcademy.practicalSessions": {
+    "title": "Practical sessions",
+    "description": "Supervised clinical timetable for the Hijāma Diploma"
+  },
+  "theAcademy.studentGuide": {
+    "title": "Student guide",
+    "description": "Guidance from induction through certification"
+  },
+  "theAcademy.testimonials": {
+    "title": "Graduate attestations",
+    "description": "Graduate attestations published with consent"
+  },
+  "theApothecary": {
+    "title": "The Apothecary",
+    "description": "A dispensary where each remedy carries a monograph: historical context, Prophetic reference, traditional use, stated limits, and provenance"
+  },
+  "theApothecary.catalogue": {
+    "title": "Product Catalogue",
+    "description": "The ordered cabinet with remedies traced to source"
+  },
+  "theApothecary.counter": { "title": "The Counter" },
+  "theApothecary.faqs": {
+    "title": "FAQs",
+    "description": "Questions on dispensation, provenance, and stated limits"
+  },
+  "theApothecary.ingredients": {
+    "title": "Ingredient Library",
+    "description": "Simples and preparations with botanical identity and traditional standing"
+  },
+  "theApothecary.laboratoryVerification": {
+    "title": "Laboratory Verification",
+    "description": "Independent analysis with batch records and certificates"
+  },
+  "theApothecary.monographs": {
+    "title": "Product Monographs",
+    "description": "Scholarly remedy records with source before price and limits before measure"
+  },
+  "theApothecary.orderConfirmation": { "title": "Order Confirmed — Sunnah Remedies" },
+  "theApothecary.qualityStandards": {
+    "title": "Quality Standards",
+    "description": "How the institution selects, stores, and dispenses remedies"
+  },
+  "theRegister": {
+    "title": "The Register",
+    "description": "Texts, remedies, and sources indexed by grade and department"
+  },
+  "search": {
+    "title": "Search",
+    "description": "Find remedies, conditions, research, courses, hadith, and scholarly articles across the entire institution"
+  }
+}

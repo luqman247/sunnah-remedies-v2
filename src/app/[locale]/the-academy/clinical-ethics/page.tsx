@@ -1,15 +1,20 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { Leaf } from "@/components/ui/Leaf";
 import { PageIntro, SectionLabel } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
 import { Breadcrumb } from "@/components/apothecary/Breadcrumb";
 import { getProgrammeBySlug } from "@/sanity/lib/fetch";
 
-export const metadata: Metadata = {
-  title: "Clinical Practice & Ethics",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("theAcademy.clinicalEthics", "/the-academy/clinical-ethics");
+}
 
 export default async function ClinicalEthicsPage({
   params,

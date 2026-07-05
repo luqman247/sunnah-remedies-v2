@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Leaf } from "@/components/ui/Leaf";
 import { Breadcrumb } from "@/components/apothecary/Breadcrumb";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
@@ -23,14 +26,16 @@ export function AcademySectionPage({
   intro,
   children,
 }: AcademySectionPageProps) {
+  const t = useTranslations("academy");
+
   return (
     <>
       <Leaf>
         <div className="measure-wide section-page__header">
           <Breadcrumb
             items={[
-              { label: "The Academy", href: "/the-academy" },
-              { label: "Hijāma Diploma", href: "/the-academy/hijama-diploma" },
+              { label: t("title"), href: "/the-academy" },
+              { label: t("programmeLedger.diploma"), href: "/the-academy/hijama-diploma" },
               { label: breadcrumbLabel },
             ]}
           />
@@ -39,7 +44,7 @@ export function AcademySectionPage({
               <DepartmentNav department={academy} currentHref={currentHref} />
             </aside>
             <div className="section-page__intro">
-              <PageIntro section="The Academy" folio={folio} title={title} lede={lede}>
+              <PageIntro section={t("title")} folio={folio} title={title} lede={lede}>
                 {intro}
               </PageIntro>
             </div>

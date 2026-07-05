@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { AcademySectionPage } from "@/components/academy/AcademySectionPage";
 import { getHijamaDiploma } from "@/lib/content/academy";
 import { getProgrammeBySlug } from "@/sanity/lib/fetch";
 import { programmeToAcademyProgramme } from "@/sanity/lib/adapters";
 
-export const metadata: Metadata = {
-  title: "Practical sessions",
-  description: "Supervised clinical timetable for the Hijāma Diploma.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("theAcademy.practicalSessions", "/the-academy/practical-sessions");
+}
 
 export default async function PracticalSessionsPage({
   params,

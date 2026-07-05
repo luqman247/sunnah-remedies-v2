@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface LessonCompleteButtonProps {
   enrolmentId: string;
@@ -17,6 +18,7 @@ export function LessonCompleteButton({
   totalLessons,
   initiallyCompleted = false,
 }: LessonCompleteButtonProps) {
+  const t = useTranslations("portal.lesson");
   const [completed, setCompleted] = useState(initiallyCompleted);
   const [loading, setLoading] = useState(false);
 
@@ -43,7 +45,7 @@ export function LessonCompleteButton({
   if (completed) {
     return (
       <p className="type-micro" style={{ color: "var(--muted)" }}>
-        Lesson marked complete
+        {t("markedComplete")}
       </p>
     );
   }
@@ -55,7 +57,7 @@ export function LessonCompleteButton({
       disabled={loading}
       className="solid-action"
     >
-      {loading ? "Recording…" : "Mark lesson complete"}
+      {loading ? t("recording") : t("complete")}
     </button>
   );
 }

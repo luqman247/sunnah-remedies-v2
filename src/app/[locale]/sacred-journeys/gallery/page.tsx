@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { JourneyGallery } from "@/components/journeys/JourneyGallery";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { getAllJourneys } from "@/sanity/lib/fetch";
 import { journeyToSacredJourney } from "@/sanity/lib/adapters";
 
-export const metadata: Metadata = {
-  title: "Gallery",
-  description: "Photography of places, paths, and architecture encountered on programme.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("sacredJourneys.gallery", "/sacred-journeys/gallery");
+}
 
 export default async function JourneysGalleryPage({
   params,

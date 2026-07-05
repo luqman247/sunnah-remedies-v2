@@ -2,15 +2,13 @@
 
 import { useRef } from "react";
 import { motion } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
 
 interface DateSelectorProps {
   dates: Date[];
   value: Date | null;
   onChange: (date: Date) => void;
 }
-
-const DAY_NAMES = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-const MONTH_NAMES = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
 function isSameDay(a: Date, b: Date): boolean {
   return (
@@ -22,20 +20,24 @@ function isSameDay(a: Date, b: Date): boolean {
 
 export function DateSelector({ dates, value, onChange }: DateSelectorProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const locale = useLocale();
+  const t = useTranslations("booking.steps");
 
   return (
     <div className="booking-step">
-      <p className="booking-step__label">Step 3</p>
-      <h2 className="booking-step__title">Choose Date</h2>
+      <p className="booking-step__label">{t("step3")}</p>
+      <h2 className="booking-step__title">{t("chooseDate")}</h2>
 
       <div
         ref={scrollRef}
         className="date-selector"
         role="listbox"
-        aria-label="Available dates"
+        aria-label={t("availableDatesAria")}
       >
         {dates.map((date) => {
           const selected = value ? isSameDay(date, value) : false;
+          const dayName = date.toLocaleDateString(locale, { weekday: "short" }).toUpperCase();
+          const monthName = date.toLocaleDateString(locale, { month: "short" }).toUpperCase();
 
           return (
             <motion.button
@@ -47,9 +49,9 @@ export function DateSelector({ dates, value, onChange }: DateSelectorProps) {
               aria-selected={selected}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="date-pill__day">{DAY_NAMES[date.getDay()]}</span>
+              <span className="date-pill__day">{dayName}</span>
               <span className="date-pill__num">{date.getDate()}</span>
-              <span className="date-pill__month">{MONTH_NAMES[date.getMonth()]}</span>
+              <span className="date-pill__month">{monthName}</span>
             </motion.button>
           );
         })}

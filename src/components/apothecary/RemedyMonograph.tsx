@@ -25,25 +25,6 @@ import { EditorialPhoto, PullQuote } from "@/components/editorial/Editorial";
 import type { Remedy, PropheticReference } from "@/lib/content/types";
 import { getRelatedRemedies, primaryReference } from "@/lib/content/remedies";
 
-const remedyPhotography: Record<string, { src: string; alt: string }> = {
-  "black-seed-oil": {
-    src: "/photography/black-seed-editorial.jpg",
-    alt: "A scholar's research desk with botanical journal on Nigella sativa, pressed specimens, and black seeds",
-  },
-  honey: {
-    src: "/photography/honey-editorial.jpg",
-    alt: "Golden honey being poured from a wooden dipper into a glass vessel, beside dried thyme",
-  },
-  "olive-oil": {
-    src: "/photography/olive-oil-editorial.jpg",
-    alt: "Premium olive oil in a glass cruet beside ripe olives and olive leaves on weathered wood",
-  },
-  senna: {
-    src: "/photography/senna-editorial.jpg",
-    alt: "Dried senna pods and leaves arranged on ivory linen beside a ceramic apothecary jar",
-  },
-};
-
 interface RemedyMonographProps {
   remedy: Remedy;
 }
@@ -52,6 +33,25 @@ export async function RemedyMonograph({ remedy }: RemedyMonographProps) {
   const t = await getTranslations("apothecary.monograph");
   const related = getRelatedRemedies(remedy.slug);
   const primary = primaryReference(remedy);
+
+  const remedyPhotography: Record<string, { src: string; alt: string }> = {
+    "black-seed-oil": {
+      src: "/photography/black-seed-editorial.jpg",
+      alt: t("photoBlackSeed"),
+    },
+    honey: {
+      src: "/photography/honey-editorial.jpg",
+      alt: t("photoHoney"),
+    },
+    "olive-oil": {
+      src: "/photography/olive-oil-editorial.jpg",
+      alt: t("photoOliveOil"),
+    },
+    senna: {
+      src: "/photography/senna-editorial.jpg",
+      alt: t("photoSenna"),
+    },
+  };
 
   function attributionPhrase(ref: PropheticReference): string {
     if (ref.attribution === "revelation") return t("attributionRevelation");
@@ -157,9 +157,7 @@ export async function RemedyMonograph({ remedy }: RemedyMonographProps) {
             <EvidenceSection evidence={remedy.evidence} />
 
             <div className="monograph-section" style={{ marginBottom: "var(--s6)" }}>
-              <PullQuote
-                text="Every remedy is documented to source. We state what we know, name what we do not, and dispense means with clear limits"
-              />
+              <PullQuote text={t("pullQuoteDocumentation")} />
             </div>
 
             <MonographSection id="provenance" title={t("provenance")}>

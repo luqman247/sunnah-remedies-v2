@@ -99,9 +99,9 @@ export function getCurrentSeason(): SeasonalContext {
 /**
  * Get Hijri date string for display.
  */
-export function getHijriDate(): string {
+export function getHijriDate(locale = "en"): string {
   try {
-    const formatter = new Intl.DateTimeFormat("en-u-ca-islamic", {
+    const formatter = new Intl.DateTimeFormat(`${locale}-u-ca-islamic`, {
       day: "numeric",
       month: "long",
       year: "numeric",

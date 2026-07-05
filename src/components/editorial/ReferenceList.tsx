@@ -1,7 +1,11 @@
+"use client";
+
 /**
  * ReferenceList — academic reference list at the foot of an article (Ch. 3.2).
  * Renders numbered references with back-links to their citation points.
  */
+
+import { useTranslations } from "next-intl";
 
 interface Reference {
   id: string;
@@ -16,12 +20,14 @@ interface ReferenceListProps {
 }
 
 export function ReferenceList({ references }: ReferenceListProps) {
+  const t = useTranslations("editorial");
+
   if (!references.length) return null;
 
   return (
     <section aria-labelledby="references-heading" style={{ marginBlockStart: "var(--space-12)" }}>
       <h2 id="references-heading" className="type-eyebrow-v2" style={{ marginBlockEnd: "var(--space-6)" }}>
-        References
+        {t("references")}
       </h2>
       <ol style={{ margin: 0, padding: 0, listStyle: "none" }}>
         {references.map((ref) => (
@@ -63,12 +69,12 @@ export function ReferenceList({ references }: ReferenceListProps) {
                 rel="noopener noreferrer"
                 style={{ marginInlineStart: "0.5em", color: "var(--sage)" }}
               >
-                [link]
+                {t("link")}
               </a>
             )}
             <a
               href={`#cite-${ref.id}`}
-              aria-label={`Back to citation ${ref.number}`}
+              aria-label={t("backToCitation", { number: ref.number })}
               style={{ marginInlineStart: "0.5em", color: "var(--brass)", textDecoration: "none" }}
             >
               ↩

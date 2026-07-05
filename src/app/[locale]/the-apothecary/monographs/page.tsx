@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { ListingRow } from "@/components/ui/Attestation";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
@@ -9,10 +10,13 @@ import { getAllProducts } from "@/sanity/lib/fetch";
 import { productToRemedy } from "@/sanity/lib/adapters";
 import { formatProvenance } from "@/lib/content/remedies";
 
-export const metadata: Metadata = {
-  title: "Product Monographs",
-  description: "Scholarly remedy records with source before price and limits before measure.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("theApothecary.monographs", "/the-apothecary/monographs");
+}
 
 export default async function MonographsPage({
   params,

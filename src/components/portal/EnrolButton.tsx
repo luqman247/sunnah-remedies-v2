@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 
 interface EnrolButtonProps {
@@ -10,6 +11,7 @@ interface EnrolButtonProps {
 }
 
 export function EnrolButton({ courseRef, courseSlug, courseName }: EnrolButtonProps) {
+  const t = useTranslations("portal.enrol");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -25,12 +27,12 @@ export function EnrolButton({ courseRef, courseSlug, courseName }: EnrolButtonPr
       });
       if (!res.ok) {
         const data = await res.json();
-        setError(data.error ?? "Enrolment failed");
+        setError(data.error ?? t("failed"));
         return;
       }
       router.refresh();
     } catch {
-      setError("Unable to complete enrolment");
+      setError(t("unable"));
     } finally {
       setLoading(false);
     }
@@ -39,7 +41,7 @@ export function EnrolButton({ courseRef, courseSlug, courseName }: EnrolButtonPr
   return (
     <div>
       <button type="button" onClick={handleEnrol} disabled={loading} className="solid-action">
-        {loading ? "Enrolling…" : "Enrol on this course"}
+        {loading ? t("enrolling") : t("button")}
       </button>
       {error && (
         <p className="type-small" role="alert" style={{ marginTop: "var(--s2)" }}>

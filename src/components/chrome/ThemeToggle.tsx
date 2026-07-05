@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 type Theme = "light" | "dark";
 
 export function ThemeToggle() {
+  const t = useTranslations("theme");
   const [theme, setTheme] = useState<Theme>("light");
   const [mounted, setMounted] = useState(false);
 
@@ -30,8 +32,8 @@ export function ThemeToggle() {
       type="button"
       className="theme-toggle"
       onClick={toggle}
-      aria-label={theme === "light" ? "Switch to night mode" : "Switch to day mode"}
-      title={theme === "light" ? "Night mode" : "Day mode"}
+      aria-label={theme === "light" ? t("switchToNight") : t("switchToDay")}
+      title={theme === "light" ? t("nightMode") : t("dayMode")}
     >
       {theme === "light" ? (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

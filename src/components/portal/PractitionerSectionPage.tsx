@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Leaf } from "@/components/ui/Leaf";
 import { Breadcrumb } from "@/components/apothecary/Breadcrumb";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
@@ -23,13 +26,15 @@ export function PractitionerSectionPage({
   intro,
   children,
 }: PractitionerSectionPageProps) {
+  const t = useTranslations("portal.practitioner");
+
   return (
     <>
       <Leaf>
         <div className="measure-wide section-page__header">
           <Breadcrumb
             items={[
-              { label: "Practitioner Portal", href: "/portal/practitioner" },
+              { label: t("portal"), href: "/portal/practitioner" },
               { label: breadcrumbLabel },
             ]}
           />
@@ -42,7 +47,7 @@ export function PractitionerSectionPage({
             </aside>
             <div className="section-page__intro">
               <PageIntro
-                section="Practitioner Portal"
+                section={t("portal")}
                 folio={folio}
                 title={title}
                 lede={lede}

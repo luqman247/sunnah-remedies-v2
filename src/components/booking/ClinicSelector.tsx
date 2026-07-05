@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import type { Clinic } from "@/lib/booking/types";
 
 interface ClinicSelectorProps {
@@ -10,12 +11,14 @@ interface ClinicSelectorProps {
 }
 
 export function ClinicSelector({ clinics, value, onChange }: ClinicSelectorProps) {
+  const t = useTranslations("booking.steps");
+
   return (
     <div className="booking-step">
-      <p className="booking-step__label">Step 2</p>
-      <h2 className="booking-step__title">Choose Clinic</h2>
+      <p className="booking-step__label">{t("step2")}</p>
+      <h2 className="booking-step__title">{t("chooseClinic")}</h2>
 
-      <div className="selection-grid selection-grid--three" role="radiogroup" aria-label="Clinic location">
+      <div className="selection-grid selection-grid--three" role="radiogroup" aria-label={t("clinicLocationAria")}>
         {clinics.map((clinic) => (
           <motion.button
             key={clinic.id}

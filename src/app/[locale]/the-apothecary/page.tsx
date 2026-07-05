@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { Leaf } from "@/components/ui/Leaf";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
 import { PageIntro } from "@/components/ui/PageIntro";
@@ -13,11 +14,13 @@ import {
   InstitutionalDivider,
 } from "@/components/editorial/Editorial";
 
-export const metadata: Metadata = {
-  title: "The Apothecary",
-  description:
-    "A dispensary where each remedy carries a monograph: historical context, Prophetic reference, traditional use, stated limits, and provenance.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("theApothecary", "/the-apothecary");
+}
 
 export default async function ApothecaryPage({
   params,

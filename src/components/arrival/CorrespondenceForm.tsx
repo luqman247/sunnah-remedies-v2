@@ -8,6 +8,7 @@
 "use client";
 
 import { useState, useRef, type FormEvent } from "react";
+import { useTranslations } from "next-intl";
 
 interface CorrespondenceContent {
   heading: string;
@@ -22,6 +23,8 @@ interface CorrespondenceFormProps {
 }
 
 export function CorrespondenceForm({ content }: CorrespondenceFormProps) {
+  const tForm = useTranslations("form");
+  const tArrival = useTranslations("arrival.correspondence");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "validating" | "error" | "success">("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -33,7 +36,7 @@ export function CorrespondenceForm({ content }: CorrespondenceFormProps) {
 
     if (!email || !email.includes("@") || !email.includes(".")) {
       setStatus("error");
-      setErrorMessage("That doesn\u2019t look like an email address.");
+      setErrorMessage(tForm("validation.email"));
       inputRef.current?.focus();
       return;
     }
@@ -48,14 +51,14 @@ export function CorrespondenceForm({ content }: CorrespondenceFormProps) {
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
         setStatus("error");
-        setErrorMessage(data.error || "Something went wrong. Please try again.");
+        setErrorMessage(data.error || tForm("error"));
         return;
       }
 
       setStatus("success");
     } catch {
       setStatus("error");
-      setErrorMessage("Unable to reach the server. Please try again later.");
+      setErrorMessage(tForm("serverError"));
     }
   }
 
@@ -80,7 +83,7 @@ export function CorrespondenceForm({ content }: CorrespondenceFormProps) {
 
       <form onSubmit={handleSubmit} noValidate>
         <label htmlFor="correspondence-email" className="sr-only">
-          Email address
+          {tArrival("emailLabel")}
         </label>
         <input
           ref={inputRef}
@@ -113,7 +116,7 @@ export function CorrespondenceForm({ content }: CorrespondenceFormProps) {
           className="correspondence-submit"
           disabled={status === "validating"}
         >
-          {status === "validating" ? "Requesting\u2026" : "Request correspondence"}
+          {status === "validating" ? tArrival("requesting") : tArrival("submit")}
         </button>
       </form>
 

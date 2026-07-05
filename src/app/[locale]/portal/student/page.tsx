@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { Leaf } from "@/components/ui/Leaf";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
@@ -10,10 +11,13 @@ import { studentPortal } from "@/lib/navigation/student-portal";
 import { requireStudentPortal } from "@/lib/auth/portal-guard";
 import { getStudentDashboard } from "@/modules/student/dashboard";
 
-export const metadata: Metadata = {
-  title: "Digital Campus",
-  description: "Your scholarly workspace during study",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("portal.student", "/portal/student");
+}
 
 export default async function StudentDashboardPage({
   params,

@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Leaf } from "@/components/ui/Leaf";
 import { Breadcrumb } from "@/components/apothecary/Breadcrumb";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
@@ -23,13 +26,15 @@ export function JourneySectionPage({
   intro,
   children,
 }: JourneySectionPageProps) {
+  const t = useTranslations("journeys");
+
   return (
     <>
       <Leaf>
         <div className="measure-wide section-page__header">
           <Breadcrumb
             items={[
-              { label: "Sacred Journeys", href: "/sacred-journeys" },
+              { label: t("title"), href: "/sacred-journeys" },
               { label: breadcrumbLabel },
             ]}
           />
@@ -38,7 +43,7 @@ export function JourneySectionPage({
               <DepartmentNav department={sacredJourneys} currentHref={currentHref} />
             </aside>
             <div className="section-page__intro">
-              <PageIntro section="Sacred Journeys" folio={folio} title={title} lede={lede}>
+              <PageIntro section={t("title")} folio={folio} title={title} lede={lede}>
                 {intro}
               </PageIntro>
             </div>

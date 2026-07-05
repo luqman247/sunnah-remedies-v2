@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { JourneyView } from "@/components/journeys/JourneyView";
 import { getJourneyBySlug } from "@/sanity/lib/fetch";
 import { journeyToSacredJourney } from "@/sanity/lib/adapters";
 
-export const metadata: Metadata = {
-  title: "Umrah",
-  description: "Educational pilgrimage in which rites are taught through sourced seminars and guided preparation.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("sacredJourneys.umrah", "/sacred-journeys/umrah");
+}
 
 export default async function UmrahPage({
   params,

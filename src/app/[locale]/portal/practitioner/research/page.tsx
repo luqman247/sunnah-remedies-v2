@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { PractitionerSectionPage } from "@/components/portal/PractitionerSectionPage";
 import { ListingRow } from "@/components/ui/Attestation";
 import { getResearchPublications } from "@/sanity/lib/practitioner-fetch";
 
-export const metadata: Metadata = {
-  title: "Research library",
-  description: "Publications and institutional research briefings",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("portal.practitioner.research", "/portal/practitioner/research");
+}
 
 export default async function ResearchPage({
   params,

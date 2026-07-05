@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface SourceMarkProps {
   siglum: string;
@@ -46,9 +47,11 @@ export function Specimen({
   source,
   standing,
 }: SpecimenProps) {
+  const t = useTranslations("attestation");
+
   return (
-    <aside className="specimen" aria-label="Attestation record specimen">
-      <span className="specimen__tab">Record specimen</span>
+    <aside className="specimen" aria-label={t("specimenAriaLabel")}>
+      <span className="specimen__tab">{t("recordSpecimen")}</span>
       <p className="type-title specimen__statement">{statement}</p>
       {transliteration && (
         <p className="type-body specimen__transliteration">{transliteration}</p>
@@ -56,19 +59,19 @@ export function Specimen({
       <hr className="hairline" />
       <dl className="specimen__dl">
         <div>
-          <dt className="type-micro specimen__dt">Hadith grade</dt>
+          <dt className="type-micro specimen__dt">{t("hadithGrade")}</dt>
           <dd className="type-body specimen__dd">
             <span className="specimen__grade-dot" aria-hidden="true" />
             {grade}
           </dd>
         </div>
         <div>
-          <dt className="type-micro specimen__dt">Primary source</dt>
+          <dt className="type-micro specimen__dt">{t("primarySource")}</dt>
           <dd className="type-body specimen__dd">{source}</dd>
         </div>
         {standing && (
           <div>
-            <dt className="type-micro specimen__dt">Scholarly standing</dt>
+            <dt className="type-micro specimen__dt">{t("scholarlyStanding")}</dt>
             <dd className="type-body specimen__dd">{standing}</dd>
           </div>
         )}

@@ -1,4 +1,7 @@
+"use client";
+
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import type { Department } from "@/lib/navigation/site-structure";
 
 interface DepartmentNavProps {
@@ -7,8 +10,10 @@ interface DepartmentNavProps {
 }
 
 export function DepartmentNav({ department, currentHref }: DepartmentNavProps) {
+  const t = useTranslations("departmentNav");
+
   return (
-    <nav className="dept-nav" aria-label={`${department.label} sections`}>
+    <nav className="dept-nav" aria-label={t("sectionsAriaLabel", { department: department.label })}>
       <p className="type-eyebrow dept-nav__label">{department.label}</p>
       <ol className="dept-nav__list">
         {department.sections.map((section) => {

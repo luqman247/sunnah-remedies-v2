@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { StudentSectionPage } from "@/components/portal/StudentSectionPage";
 import { getHijamaDiploma } from "@/lib/content/academy";
 
-export const metadata: Metadata = {
-  title: "Calendar",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("portal.student.calendar", "/portal/student/calendar");
+}
 
 export default async function CalendarPage({
   params,

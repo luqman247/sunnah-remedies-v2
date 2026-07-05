@@ -11,14 +11,30 @@
     "navigation": "Navigation",
     "closeNavigation": "Luk navigation",
     "ariaMenu": "Hovednavigation",
-    "ariaLanguage": "Skift sprog"
+    "ariaLanguage": "Skift sprog",
+    "ariaPrimary": "Primær"
   },
   "footer": {
     "tagline": "Institut for Profetisk Medicin",
     "foundingStatement": "Forskning, klinisk praksis og naturlig terapi under ét tag",
     "closing": "Viden før handel. Tjeneste før profit. Tillid før vækst",
     "colophon": "Sunnah Remedies · Grundlagt MMXXV · Helbredelse er fra Allah · midlet er et redskab",
-    "requestConsultation": "Anmod om en konsultation"
+    "requestConsultation": "Anmod om en konsultation",
+    "dailyReflectionAria": "Daglig refleksion",
+    "preFooterImageAlt": "Forskningstbord — manuskripter, instrumenter og naturlige prøver arrangeret til fagligt studium"
+  },
+  "theme": {
+    "nightMode": "Nattilstand",
+    "dayMode": "Dagtilstand",
+    "switchToNight": "Skift til nattilstand",
+    "switchToDay": "Skift til dagtilstand"
+  },
+  "commerce": {
+    "payment": {
+      "failed": "Betaling mislykkedes",
+      "processing": "Behandler…",
+      "submit": "Gennemfør betaling"
+    }
   },
   "common": {
     "readMore": "Læs mere",
@@ -27,7 +43,8 @@
     "backTo": "Tilbage til {page}",
     "loading": "Indlæser",
     "error": "Noget gik galt",
-    "notFound": "Ikke fundet"
+    "notFound": "Ikke fundet",
+    "tableOfContents": "Indholdsfortegnelse"
   },
   "notFound": {
     "heading": "KORRIDOREN FORTSÆTTER IKKE HER",
@@ -41,6 +58,7 @@
   "breadcrumbs": {
     "home": "Hjem",
     "ariaLabel": "Du er her",
+    "ariaLabelNav": "Brødkrumme",
     "theInstitution": "Institutionen"
   },
   "form": {
@@ -53,6 +71,7 @@
     "sending": "Sender…",
     "success": "Tak — vi vender tilbage hurtigst muligt",
     "error": "Noget gik galt. Prøv venligst igen",
+    "serverError": "Kunne ikke nå serveren. Prøv igen om lidt",
     "validation": {
       "required": "Dette felt er påkrævet",
       "email": "Indtast venligst en gyldig e-mailadresse",
@@ -60,8 +79,113 @@
     }
   },
   "search": {
-    "placeholder": "Søg…",
-    "noResults": "Ingen resultater for “{query}”"
+    "placeholder": "Søg efter midler, tilstande, hadith, kurser…",
+    "ariaLabel": "Sitesøgning",
+    "inputAriaLabel": "Søg i institutionen",
+    "searching": "Søger…",
+    "resultsSummary": "{count} resultater på {ms} ms",
+    "noResults": "Ingen resultater for “{query}”",
+    "tryDifferent": "Prøv en anden stavemåde, eller gå videre via navigationen ovenfor",
+    "askDirectly": "Eller skriv direkte til os"
+  },
+  "ai": {
+    "header": "Instituttets forskningsassistent",
+    "placeholder": "Spørg instituttet",
+    "emptyState": "Stil et spørgsmål om Profetisk Medicin, midler, ingredienser eller ethvert emne, instituttet dækker",
+    "inputAriaLabel": "Spørg instituttet",
+    "submitAriaLabel": "Send spørgsmål",
+    "submit": "Spørg",
+    "error": "Der opstod en fejl. Prøv igen",
+    "emergencyWarning": "Hvis du er i umiddelbar fare, kontakt alarmcentralen nu",
+    "relatedTopics": "Relaterede emner",
+    "evidenceProvenance": "Evidensoprindelse",
+    "furtherReading": "Videre læsning",
+    "bookConsultation": "Book en konsultation",
+    "viewCourses": "Se kurser",
+    "learnMore": "Læs mere",
+    "confidence": "Sikkerhed: {percent}%",
+    "sources": "{count, plural, one {# kilde} other {# kilder}}",
+    "categories": {
+      "QURAN": "Koranhenvisning",
+      "SUNNAH": "Profetisk tradition",
+      "CLASSICAL": "Klassisk forskning",
+      "CONTEMPORARY": "Samtidig forskning",
+      "RESEARCH": "Videnskabelig forskning",
+      "TRADITION": "Traditionel praksis",
+      "INSTITUTIONAL": "Institutionel vejledning"
+    }
+  },
+  "portal": {
+    "memberSignIn": {
+      "email": "E-mail",
+      "password": "Adgangskode",
+      "signIn": "Log ind",
+      "signingIn": "Logger ind…",
+      "credentialsError": "Vi kunne ikke bekræfte disse oplysninger. Prøv igen",
+      "serverError": "Kunne ikke nå serveren. Prøv igen om lidt"
+    },
+    "enrol": {
+      "button": "Tilmeld dette kursus",
+      "enrolling": "Tilmelder…",
+      "failed": "Tilmelding mislykkedes",
+      "unable": "Kunne ikke gennemføre tilmeldingen"
+    },
+    "lesson": {
+      "complete": "Markér lektion som gennemført",
+      "recording": "Registrerer…",
+      "markedComplete": "Lektion markeret som gennemført"
+    },
+    "student": {
+      "digitalCampus": "Digitalt campus"
+    },
+    "practitioner": {
+      "portal": "Behandlerportal"
+    }
+  },
+  "editorial": {
+    "readingTime": "{minutes} min læsning",
+    "references": "Referencer",
+    "link": "[link]",
+    "backToCitation": "Tilbage til citation {number}",
+    "reference": "Reference {number}",
+    "backToReference": "Tilbage til reference {number}",
+    "footnote": "Fodnote {number}",
+    "figureCaption": "Fig. {number}. {caption}",
+    "aboutAuthor": "Om {name}"
+  },
+  "revelation": {
+    "translation": "Oversættelse",
+    "scholarlyNotes": "Faglige noter",
+    "editorialNote": "Redaktionel note",
+    "classicalReferences": "Klassiske referencer",
+    "modernContext": "Moderne kontekst",
+    "types": {
+      "quran": "Den ædle Koran",
+      "hadith": "Profetisk tradition"
+    }
+  },
+  "media": {
+    "gallery": "Galleri",
+    "viewImage": "Vis {alt}",
+    "imageNumber": "billede {number}",
+    "lightbox": "Billedvisning",
+    "closeLightbox": "Luk billedvisning",
+    "previousImage": "Forrige billede",
+    "nextImage": "Næste billede",
+    "playVideo": "Afspil video",
+    "videoPoster": "Videoplakat",
+    "view360ComingSoon": "360°-visning kommer snart",
+    "view360": "360°-visning: {alt}"
+  },
+  "attestation": {
+    "specimenAriaLabel": "Attestationspost — eksempel",
+    "recordSpecimen": "Posteksempel",
+    "hadithGrade": "Hadith-grad",
+    "primarySource": "Primær kilde",
+    "scholarlyStanding": "Faglig status"
+  },
+  "departmentNav": {
+    "sectionsAriaLabel": "{department} sektioner"
   },
   "apothecary": {
     "title": "Apoteket",
@@ -72,6 +196,25 @@
     "laboratoryVerification": "Laboratoriebekræftelse",
     "faqs": "Ofte stillede spørgsmål",
     "counter": "Disken",
+    "addToCounter": {
+      "added": "{name} er tilføjet til disken",
+      "reviewItem": "Gennemgå vareoplysninger",
+      "addButton": "Tilføj til disken"
+    },
+    "monographLedger": {
+      "ariaLabel": "Middeludleveringsoversigt",
+      "label": "Skabsudlevering",
+      "unavailable": "I øjeblikket ikke tilgængelig",
+      "contactDispensary": "Kontakt udleveringen",
+      "readBeforeOrder": "Læs monografien før bestilling"
+    },
+    "relatedRemedies": {
+      "title": "Relaterede midler",
+      "srHeading": "Relaterede middelmonografier"
+    },
+    "monographToc": {
+      "ariaLabel": "Monografi indholdsfortegnelse"
+    },
     "dispensation": {
       "title": "Udlevering",
       "intro": "Dette middel udleveres fra skabet og præsenteres ikke som en detailvare. Beløbet nedenfor dækker forberedelse, emballage og levering, og vises efter monografien så evidensen kan læses først",
@@ -124,7 +267,19 @@
       "customerSupport": "Kundesupport",
       "attributionRevelation": "Allah siger",
       "attributionHadith": "Profeten ﷺ sagde",
-      "attributionClassical": "Klassiske autoriteter registrerer"
+      "attributionClassical": "Klassiske autoriteter registrerer",
+      "evidenceInformed": "Evidensinformeret",
+      "frequentlyAsked": "Almindelige spørgsmål",
+      "relatedRemediesSection": "Relaterede midler",
+      "academyLessons": "Akademilektioner",
+      "knowledgeLibrarySection": "Vidensbiblioteket",
+      "pathways": "Videre studier og praksis",
+      "dispensationSection": "Udlevering",
+      "pullQuoteDocumentation": "Hvert middel dokumenteres til kilde. Vi angiver hvad vi ved, navngiver hvad vi ikke ved, og udleverer midler med klare grænser",
+      "photoBlackSeed": "En lærds forskningsbord med botanisk tidsskrift om Nigella sativa, pressede eksemplarer og sorte frø",
+      "photoHoney": "Gylden honning hældt fra en træske i et glas kar, ved siden af tørret timian",
+      "photoOliveOil": "Premium olivenolie i et glaskar ved siden af modne oliven og olivenblade på vejrbidt træ",
+      "photoSenna": "Tørrede senna-bælg og blade arrangeret på elfenbenfarvet linned ved siden af et keramisk apoteksglas"
     }
   },
   "academy": {
@@ -157,6 +312,15 @@
       "diploma": "Hijāma Diplom",
       "sendApplication": "Send ansøgning",
       "reviewFirst": "Gennemgå programmet først"
+    },
+    "programmeContents": {
+      "ariaLabel": "Program indholdsfortegnelse"
+    },
+    "facilityGallery": {
+      "clinicalSuite": "Det kliniske lokale — en behandler forbereder sterilt kopningsudstyr i et roligt behandlingsrum",
+      "readingRoom": "Læsesalen — et fagligt bibliotek med indbundne bind og studieborde",
+      "seminarHall": "Seminarsalen — studerende studerer primære kilder under fakultetsvejledning",
+      "clinicalInstruments": "Kliniske instrumenter — sterile kopningsglas, lancetter og forberedelsesmaterialer"
     },
     "programmeView": {
       "section": "Akademiet",
@@ -209,7 +373,12 @@
       "application": "Ansøgning",
       "enrolment": "Indskrivning",
       "enrolmentIntro": "Gennemgå det fulde program før indsendelse. Hver ansøgning vurderes på akademisk parathed og klinisk egnethed",
-      "sendApplication": "Send ansøgning"
+      "sendApplication": "Send ansøgning",
+      "pullQuoteSupervised": "Dette er ikke et forkortet onlinekursus. Det er et superviseret program med offentliggjorte vurderingskriterier og fakultetsgodkendelse først efter demonstreret kompetence",
+      "pullQuoteTeacher": "Læreren navngives før emnet. Kæden angives før pensum. Vurderingskriterier offentliggøres før indskrivning åbner",
+      "facultyPortraitSenior": "Fakultetsmedlem — senior behandler og lærd",
+      "facultyPortraitClinical": "Fakultetsmedlem — klinisk behandler",
+      "clinicalPracticeAlt": "En klinisk behandler forbereder sterilt kopningsudstyr i et professionelt behandlingsrum"
     }
   },
   "journeys": {
@@ -219,6 +388,27 @@
     "gallery": "Galleri",
     "itineraries": "Rejseplaner",
     "faqs": "Ofte stillede spørgsmål",
+    "journeyLedger": {
+      "ariaLabel": "Rejseregistreringsoversigt",
+      "upcomingDeparture": "Kommende afrejse"
+    },
+    "journeyToc": {
+      "ariaLabel": "Rejse indholdsfortegnelse"
+    },
+    "interestForm": {
+      "successMessage": "Din interesse er registreret. Vi vender tilbage hurtigst muligt",
+      "registerInterest": "Tilmeld interesse"
+    },
+    "galleryAlts": {
+      "grovePath": "Gammel olivenlundsti — stensti gennem terrasserede skråninger ved daggry",
+      "lodge": "Herberget — historisk stenarkitektur med varmt lanternelys i tusmørke",
+      "press": "Olivenpressen — traditionel olieproduktion fra forfædrenes lunde",
+      "ridge": "Kammen — pilgrimme der går gennem gammelt landskab i gylden time",
+      "desertWalk": "Ørkenvandringen — et åbent landskab af sand og himmel ved daggry",
+      "camp": "Aftenlejren — et stille samlingssted under ly",
+      "stars": "Nattehimmel over landskabet — refleksion og stilhed",
+      "host": "Værten — et samlingssted for ledsagelse og fælles måltider"
+    },
     "view": {
       "section": "Hellige Rejser",
       "guidedJourney": "Guidet uddannelsesrejse",
@@ -265,7 +455,12 @@
       "registration": "Registrering",
       "registerInterest": "Tilmeld din interesse",
       "registrationIntro": "Dette er ikke en booking. Hver registrering gennemgås gennem læsning, samtale og egnethedsundersøgelse hvor det er relevant, før placering bekræftes.",
-      "reviewRegistration": "Gennemgå registreringsforløb"
+      "reviewRegistration": "Gennemgå registreringsforløb",
+      "photoUmrah": "Gammel islamisk arkitektur i tusmørke — en stenbue med lanterner der kaster varmt lys",
+      "photoOliveGrove": "Pilgrimme der nærmer sig Profetens Moské i Madinah ved daggry",
+      "photoDesertWay": "Pilgrimme der går over marmorgården mod den grønne kuppel ved daggry",
+      "pullQuoteTravel": "Vi rejser for at lære, ikke for at se. Rejsen er indad før den er udad",
+      "pullQuotePreparation": "Forberedelse begynder uger før afrejse. Sindet forberedes før bagagen"
     },
     "registrationForm": {
       "labelName": "Fulde navn",
@@ -292,7 +487,22 @@
   "knowledge": {
     "title": "Vidensbiblioteket",
     "articles": "Artikler",
-    "topics": "Emner"
+    "topics": "Emner",
+    "relatedHeading": "Relateret",
+    "relations": {
+      "relatedArticles": "Relaterede artikler",
+      "relatedTopics": "Relaterede emner",
+      "relatedRemedies": "Relaterede midler",
+      "relatedProgrammes": "Relaterede programmer",
+      "relatedJourneys": "Relaterede rejser",
+      "relatedConditions": "Relaterede tilstande",
+      "relatedIngredients": "Relaterede ingredienser",
+      "relatedHadith": "Relaterede hadith",
+      "relatedScholars": "Relaterede lærde",
+      "relatedSources": "Relaterede kilder",
+      "relatedCourses": "Relaterede kurser",
+      "relatedConsultations": "Relaterede konsultationer"
+    }
   },
   "consultations": {
     "title": "Kliniske Konsultationer",
@@ -332,10 +542,97 @@
       "medicalConditions": "Eventuelle medicinske tilstande?",
       "optional": "valgfrit",
       "consentText": "Jeg forstår, at Hijama muligvis ikke er egnet for alle, og accepterer konsultationsprocessen"
+    },
+    "steps": {
+      "step1": "Trin 1",
+      "step2": "Trin 2",
+      "step3": "Trin 3",
+      "step4": "Trin 4",
+      "choosePractitioner": "Vælg behandler",
+      "chooseClinic": "Vælg klinik",
+      "chooseDate": "Vælg dato",
+      "chooseTime": "Vælg tidspunkt",
+      "practitionerGenderAria": "Behandlerkøn",
+      "clinicLocationAria": "Kliniklokation",
+      "availableDatesAria": "Tilgængelige datoer",
+      "availableTimesAria": "Tilgængelige tidspunkter",
+      "malePractitioner": "Mandlig behandler",
+      "femalePractitioner": "Kvindelig behandler"
+    },
+    "summary": {
+      "ariaLabel": "Aftaleoversigt",
+      "label": "Aftaleoversigt",
+      "practitioner": "Behandler",
+      "clinic": "Klinik",
+      "date": "Dato",
+      "time": "Tidspunkt",
+      "duration": "Varighed",
+      "price": "Pris",
+      "submitAria": "Book min aftale",
+      "submit": "Book min aftale"
     }
   },
   "seasonal": {
-    "greeting": "Sæsonhilsen"
+    "greeting": "Sæsonhilsen",
+    "calendarAriaLabel": "Institutionel kalender",
+    "next": "Næste: {title}",
+    "currentSeason": "Aktuel sæson: {label}",
+    "seasons": {
+      "ramadan": {
+        "label": "Ramaḍān",
+        "greeting": "Måneden for tålmodighed og måneden hvori Koranen blev åbenbaret",
+        "reflection": "Instituttet går ind i sin mest ærbødige sæson — handel sat til side, det hellige ført frem"
+      },
+      "hajj": {
+        "label": "Hajj-dagene",
+        "greeting": "Årets bedste dage, hvorpå solen står op",
+        "reflection": "Hellige Rejser-fællesskabet samles — forberedelse, formål og omsorgspligten"
+      },
+      "dhul-hijjah": {
+        "label": "Dhūl Ḥijjah",
+        "greeting": "Den hellige pilgrimsmåned",
+        "reflection": "De første ti dage — ingen gerninger er Allah kærere end dem udført i disse dage"
+      },
+      "rabi-al-awwal": {
+        "label": "Rabīʿ al-Awwal",
+        "greeting": "Profetens fødselsmåned — ṣallā Allāhu ʿalayhi wa sallam",
+        "reflection": "Traditionen vi bevarer og praktiserer har sin oprindelse i barmhjertighed sendt til alle verdener"
+      },
+      "muharram": {
+        "label": "Muḥarram",
+        "greeting": "Den hellige måned — et nyt år for fællesskabet",
+        "reflection": "Et nyt hijrī-år begynder — institutionen fornyer sin pagt om viden og tjeneste"
+      }
+    },
+    "events": {
+      "new-year": {
+        "title": "Det nye hijrī-år"
+      },
+      "mawlid": {
+        "title": "Profetmåneden"
+      },
+      "spring-planting": {
+        "title": "Plantningen"
+      },
+      "annual-lecture": {
+        "title": "Den årlige forelæsning"
+      },
+      "ramadan-programme": {
+        "title": "Ramaḍān-programmet"
+      },
+      "annual-conference": {
+        "title": "Den årlige konference"
+      },
+      "harvest": {
+        "title": "Høsten"
+      },
+      "hajj-season": {
+        "title": "Hellige Rejser-sæsonen"
+      },
+      "ijaza-ceremony": {
+        "title": "Ijāzah-ceremonien"
+      }
+    }
   },
   "draft": {
     "active": "Kladdevisning aktiv",
@@ -349,7 +646,12 @@
     "enter": "Gå ind",
     "authorityStamp": "AUTORITET",
     "authorityHeading": "Autoritet",
-    "figurePending": "tal afventer"
+    "figurePending": "tal afventer",
+    "correspondence": {
+      "requesting": "Anmoder…",
+      "submit": "Anmod om korrespondance",
+      "emailLabel": "E-mailadresse"
+    }
   },
   "plate": {
     "toBeCommissioned": "SKAL BESTILLES",
@@ -385,5 +687,382 @@
     "evening": "Aften",
     "ariaLabel": "Læsetilstand",
     "legend": "Vælg læsetilstand"
+  },
+  "pages": {
+    "home": {
+      "title": "Sunnah Remedies — Institut for Profetisk Medicin",
+      "description": "Verdens førende institut for Profetisk Medicin — forskning, klinisk behandling og naturlig terapi under ét tag"
+    },
+    "calendar": {
+      "title": "Det institutionelle år",
+      "description": "Instituttets årlige rytme — ceremonier, sæsoner, sammenkomster og havens gang"
+    },
+    "charter": {
+      "title": "Grundlæggelsescharteren",
+      "description": "Institutionens forfatningstekst — syv artikler der regulerer Sunnah Remedies' virke"
+    },
+    "consultations": {
+      "title": "Book en Hijama-session",
+      "description": "Book din Hijama-aftale (våd kopning) med en kvalificeret behandler på en af vores klinikker i London, Aarhus eller Riyadh"
+    },
+    "correspondence": {
+      "title": "Korrespondance"
+    },
+    "exhibitions": {
+      "title": "Udstillinger",
+      "description": "Det digitale museum — udstillinger om Profetisk Medicin og den store islamiske helbredelsestradition, præsenteret med faglig omhu og ærbødighed"
+    },
+    "institute": {
+      "title": "Instituttet",
+      "description": "Sunnah Remedies Institut — et moderne bimāristān for bevarelse, studium, praksis, undervisning og ærlig afprøvning af Profetisk Medicin"
+    },
+    "knowledgeLibrary": {
+      "title": "Vidensbiblioteket · Sunnah Remedies",
+      "description": "Institutionens udgivelsesprogram — monografier, forskningsnoter og patientvejledninger om Profetisk Medicin, udgivet med citation, gradering og klare grænser"
+    },
+    "membership": {
+      "accessDenied": {
+        "title": "Adgang ikke givet"
+      },
+      "signIn": {
+        "title": "Medlemslogin"
+      }
+    },
+    "portal": {
+      "practitioner": {
+        "title": "Behandlerportal",
+        "description": "Kliniske protokoller, efteruddannelse, credentials og praksisressourcer",
+        "certificates": {
+          "title": "Certifikater",
+          "description": "Kursus- og begivenhedscredentials"
+        },
+        "credentials": {
+          "title": "Digitale credentials",
+          "description": "Verificerbare badges og behandlerverifikationsstatus"
+        },
+        "cpd": {
+          "title": "Efteruddannelseslog",
+          "description": "Registrering af løbende faglig udvikling"
+        },
+        "downloads": {
+          "title": "Downloads",
+          "description": "Skabeloner, patientressourcer og behandlingsvejledninger"
+        },
+        "layout": {
+          "title": "Behandlerportal"
+        },
+        "profile": {
+          "title": "Professionel profil",
+          "description": "Praksisomfang og registreringsoplysninger"
+        },
+        "protocols": {
+          "title": "Kliniske protokoller",
+          "description": "Fakultetsgennemgåede kliniske protokoller for verificerede behandlere"
+        },
+        "research": {
+          "title": "Forskningsbibliotek",
+          "description": "Publikationer og institutionelle forskningsbriefinger"
+        },
+        "saved": {
+          "title": "Gemte ressourcer",
+          "description": "Private bogmærker i behandlerportalen"
+        },
+        "updates": {
+          "title": "Praksisopdateringer",
+          "description": "Kliniske meddelelser og fakultetsnoter til behandlere"
+        }
+      },
+      "student": {
+        "title": "Digitalt campus",
+        "description": "Dit faglige arbejdsrum under studiet",
+        "assignments": {
+          "title": "Opgaver"
+        },
+        "calendar": {
+          "title": "Kalender"
+        },
+        "certificates": {
+          "title": "Certifikater"
+        },
+        "courses": {
+          "title": "Mine kurser"
+        },
+        "layout": {
+          "title": "Digitalt campus"
+        },
+        "revision": {
+          "title": "Repetition"
+        },
+        "saved": {
+          "title": "Gemte ressourcer"
+        },
+        "tutor": {
+          "title": "AI-vejleder"
+        }
+      }
+    },
+    "press": {
+      "title": "Forlaget",
+      "description": "Instituttets forlag — faglige udgaver, patientvejledninger og fine artefakter, udgivet langsomt og varigt frem for hurtigt og engangs"
+    },
+    "research": {
+      "title": "Forskningscenter",
+      "description": "Instituttets bro til moderne medicin — afprøvning af Profetisk Medicin ærligt mod den bedste tilgængelige evidens, hverken smigrende eller forræderisk"
+    },
+    "sacredJourneys": {
+      "title": "Hellige Rejser",
+      "description": "Uddannelsespilgrimsrejse med forberedelse, læsning, fakultetsledsagelse og klar vejledning. Vi rejser for at lære, ikke for at se",
+      "accommodation": {
+        "title": "Indkvartering",
+        "description": "Logi valgt for nærhed, sikkerhed og praktisk egnethed"
+      },
+      "companionship": {
+        "title": "Ledsagelse",
+        "description": "Gruppestørrelse, adab og disciplineret rejse i fællesskab"
+      },
+      "educationalSessions": {
+        "title": "Uddannelsessessioner",
+        "description": "Seminarer, feltstudier og kredse leveret efter en offentliggjort struktur"
+      },
+      "faqs": {
+        "title": "Ofte stillede spørgsmål",
+        "description": "Registrering, sikkerhed, udsættelse og institutionelle grænser"
+      },
+      "flightGuidance": {
+        "title": "Flyvejledning",
+        "description": "Flykoordinationsvejledning for programankomster og afgange"
+      },
+      "gallery": {
+        "title": "Galleri",
+        "description": "Fotografi af steder, stier og arkitektur mødt på programmet"
+      },
+      "healthGuidance": {
+        "title": "Sundhedsvejledning",
+        "description": "Oplysning, fitness, miljøeksponering og kriterier for udsættelse af rejse"
+      },
+      "itineraries": {
+        "title": "Rejseplaner",
+        "description": "Dag-for-dag uddannelsesplaner offentliggjort før afrejse"
+      },
+      "packing": {
+        "title": "Pakkevejledning",
+        "description": "Programpakkevejledning der dækker klima, adab og institutionelle forsyninger"
+      },
+      "policies": {
+        "title": "Politikker",
+        "description": "Afbestilling, adfærd og forsikringsstandarder angivet tydeligt"
+      },
+      "preparation": {
+        "title": "Forberedelse",
+        "description": "Læsning, sundhedsforberedelse, dokumenter og tidslinje før rejse"
+      },
+      "reading": {
+        "title": "Læseliste",
+        "description": "Tildelte tekster der skal gennemføres før afrejse"
+      },
+      "reflectionJournals": {
+        "title": "Refleksionsjournaler",
+        "description": "Tildelte refleksionsprompts knyttet til seminarer og læsning"
+      },
+      "registration": {
+        "title": "Registrering",
+        "description": "Tilmeld din interesse. Placering følger samtale og læsegennemgang"
+      },
+      "umrah": {
+        "title": "Umrah",
+        "description": "Uddannelsespilgrimsrejse hvor ritualer undervises gennem kildebaserede seminarer og vejledt forberedelse"
+      }
+    },
+    "theAcademy": {
+      "title": "Akademiet",
+      "description": "Klinisk uddannelse i Profetisk Medicin og Hijama-diplomet — med citation, supervision og uafhængig vurdering",
+      "assessment": {
+        "title": "Vurdering",
+        "description": "Skriftlige opgaver, klinisk logbog og OSCE-vurdering"
+      },
+      "certification": {
+        "title": "Certificering",
+        "description": "Certificeringens omfang og angivne grænser"
+      },
+      "clinicalEthics": {
+        "title": "Klinisk praksis og etik"
+      },
+      "clinicalStandards": {
+        "title": "Kliniske standarder",
+        "description": "Kontraindikationer, teknikstandarder og infektionskontrol"
+      },
+      "courseHandbook": {
+        "title": "Kurshåndbog",
+        "description": "Semesterdatoer, fremmødekrav, adfærd og gebyrer"
+      },
+      "curriculum": {
+        "title": "Pensum",
+        "description": "Pensummoduler med kilder og praktiske komponenter"
+      },
+      "enrolment": {
+        "title": "Indskrivning",
+        "description": "Ansøgningsforløb og formular til Hijāma-diplomet"
+      },
+      "entryRequirements": {
+        "title": "Optagelseskrav",
+        "description": "Optagelseskvalifikationer, sikkerhedstjek og samtaleproces"
+      },
+      "equipment": {
+        "title": "Udstyrsliste",
+        "description": "Udstyrsansvar for studerende og akademiets forsyning"
+      },
+      "facilities": {
+        "title": "Faciliteter",
+        "description": "Klinisk lokale, læsesal og seminarundervisningsrum"
+      },
+      "faculty": {
+        "title": "Fakultet",
+        "description": "Navngivet fakultet, undervisningslinje og akademisk ansvarlighed"
+      },
+      "faqs": {
+        "title": "Spørgsmål",
+        "description": "Spørgsmål om anerkendelse, sikkerhed, fremmøde og gebyrer"
+      },
+      "foundations": {
+        "title": "Grundlaget for Profetisk Medicin"
+      },
+      "gallery": {
+        "title": "Galleri",
+        "description": "Fotografi af undervisnings-, kliniske og faglige rum"
+      },
+      "graduatePathways": {
+        "title": "Kandidatforløb",
+        "description": "Forløb efter certificering beskrevet uden karrieregarantier"
+      },
+      "learningOutcomes": {
+        "title": "Læringsmål",
+        "description": "Vurderede kompetencer for Hijāma-diplomet"
+      },
+      "materiaMedica": {
+        "title": "Materia Medica"
+      },
+      "policies": {
+        "title": "Politikker",
+        "description": "Afbestillings-, adfærds- og klinisk ansvarspolitikker"
+      },
+      "practicalSessions": {
+        "title": "Praktiske sessioner",
+        "description": "Superviseret klinisk tidsplan for Hijāma-diplomet"
+      },
+      "studentGuide": {
+        "title": "Studentervejledning",
+        "description": "Vejledning fra indskrivning til certificering"
+      },
+      "testimonials": {
+        "title": "Kandidatattestationer",
+        "description": "Kandidatattestationer offentliggjort med samtykke"
+      }
+    },
+    "theApothecary": {
+      "title": "Apoteket",
+      "description": "En udlevering hvor hvert middel bærer en monografi: historisk kontekst, profetisk reference, traditionel brug, angivne grænser og oprindelse",
+      "catalogue": {
+        "title": "Produktkatalog",
+        "description": "Det ordnede skab med midler sporet til kilde"
+      },
+      "counter": {
+        "title": "Disken"
+      },
+      "faqs": {
+        "title": "Ofte stillede spørgsmål",
+        "description": "Spørgsmål om udlevering, oprindelse og angivne grænser"
+      },
+      "ingredients": {
+        "title": "Ingrediensbibliotek",
+        "description": "Simple midler og præparater med botanisk identitet og traditionel status"
+      },
+      "laboratoryVerification": {
+        "title": "Laboratoriebekræftelse",
+        "description": "Uafhængig analyse med batchregistreringer og certifikater"
+      },
+      "monographs": {
+        "title": "Produktmonografier",
+        "description": "Faglige middelregistreringer med kilde før pris og grænser før mål"
+      },
+      "orderConfirmation": {
+        "title": "Ordre bekræftet — Sunnah Remedies"
+      },
+      "qualityStandards": {
+        "title": "Kvalitetsstandarder",
+        "description": "Hvordan institutionen vælger, opbevarer og udleverer midler"
+      }
+    },
+    "theRegister": {
+      "title": "Registeret",
+      "description": "Tekster, midler og kilder indekseret efter grad og afdeling"
+    },
+    "search": {
+      "title": "Søg",
+      "description": "Find midler, tilstande, forskning, kurser, hadith og faglige artikler på tværs af hele institutionen",
+      "heading": "Søg i institutionen",
+      "popularHeading": "POPULÆRE SØGNINGER",
+      "popularTerms": [
+        "Sort frø",
+        "Honning",
+        "Hijama",
+        "Senna",
+        "Fordøjelseshelbred",
+        "Profetisk faste",
+        "Olivenolie",
+        "Immunstøtte"
+      ]
+    }
+  },
+  "homepage": {
+    "skipToContent": "Spring til indhold",
+    "departmentsStamp": "AFDELINGERNE",
+    "departmentsHeading": "Afdelingerne",
+    "correspondenceStamp": "KORRESPONDANCE",
+    "correspondenceHeading": "Korrespondance",
+    "departmentsNavAria": "Afdelinger",
+    "about": "Om",
+    "contact": "Kontakt",
+    "footerColophon": "Sunnah Remedies · Institut for Profetisk Medicin",
+    "eyebrow": "GRUNDLAGT ——— · INSTITUT FOR PROFETISK MEDICIN",
+    "arrivalEnglish": "Profettraditionens medicin, holdt levende",
+    "standfirst": "En institution for bevarelse og ansvarlig formidling af profetisk medicin — forankret i primærkildeforskning, laboratoriebekræftelse, klinisk ansvarlighed og tydelige grænser",
+    "enterLabel": "Gå ind i institutionen",
+    "enterHref": "#departments",
+    "traditionStamp": "OM TRADITIONEN",
+    "traditionStandfirst": "Hvad er denne disciplin, og hvorfor kræver den en institution?",
+    "traditionBody0": "Profetisk Medicin er ikke folkemedicin, ikke alternativ wellness, ikke en brandmulighed. Det er en modtaget videnskab — overleveret gennem autentificerede kæder, afprøvet mod observerbar evidens og begrænset af de grænser dens egne kilder angiver",
+    "traditionBody1": "Denne institution eksisterer fordi disciplinen fortjener samme stringens som enhver etableret medicinsk tradition: verificerbar forskning, klinisk governance, gennemsigtig oprindelse og patientværdighed ved hvert møde",
+    "pullQuoteText": "Helbredelse er fra Allah; midlet er et redskab",
+    "pullQuoteAttribution": "Profetisk lære",
+    "pullQuoteSource": "Ṣaḥīḥ al-Bukhārī",
+    "thresholdPurpose": "Tærsklen — indgang til institutionen",
+    "thresholdComposition": "Bred etableringsoptagelse, stærk arkitektur, menneskelig tilstedeværelse antydet ikke centreret",
+    "thresholdLens": "35mm, dyb skarphed",
+    "thresholdLighting": "Sen eftermiddag, retningsbestemt varme",
+    "thresholdMood": "Gravitet",
+    "thresholdAlt": "Lærde hænder der gennemgår et illumineret manuskript om Profetisk medicin ved glaskar med ravolie og sort frø",
+    "authorityYears": "Praksisår",
+    "authorityStudents": "Uddannede studerende",
+    "authorityCountries": "Lande betjent",
+    "authorityPublications": "Publikationer",
+    "correspondenceHeadingText": "Modtag institutionens skrift",
+    "correspondenceBody": "Lejlighedsvis korrespondance om forskning, nye monografier og programmeddelelser. Intet løfte om frekvens; intet salgsfremmende indhold",
+    "correspondencePlaceholder": "din@email.adresse",
+    "correspondenceConsent": "Du modtager institutionel korrespondance via e-mail. Afmeld når som helst ved at svare eller bruge linket",
+    "correspondenceSuccess": "Anmodet — korrespondance følger",
+    "institutionStatement": "Viden før handel. Tjeneste før profit. Tillid før vækst. Institutionen eksisterer for næste generation",
+    "deptKnowledgeStandfirst": "Den åbne hylde — monografier, forskningsnoter og patientvejledninger, alle graderede og citerede",
+    "deptKnowledgePlatePurpose": "Læsesal med faglige tekster",
+    "deptKnowledgePlateAlt": "En faglig læsesal med åbne manuskripter og naturligt lys",
+    "deptAcademyStandfirst": "Klinisk uddannelse i Hijama og profetisk terapi, struktureret efter isnād",
+    "deptAcademyPlatePurpose": "Undervisningslokale med fakultet og studerende",
+    "deptAcademyPlateAlt": "Studerende i et fagligt klasseværelse der studerer anatomiske diagrammer og medicinske tekster under naturligt lys",
+    "deptApothecaryStandfirst": "Et skab af præparater, hver dokumenteret til kilde før udlevering",
+    "deptApothecaryPlatePurpose": "Udleveringsskabe med ravkar",
+    "deptApothecaryPlateAlt": "Et apoteksudleveringsskab med ravglas kar af honning og olier på patinerede træhylder",
+    "deptJourneysStandfirst": "Uddannelsespilgrimsrejse til de hellige lande — forberedelse går forud for afrejse, formål før rejseplan. Hver rejse bærer en læseliste, en fakultetsledsager og en klar erklæring om vanskelighed",
+    "deptJourneysPlatePurpose": "Masjid an-Nabawi i gylden time — stille gårdsplads og grøn kuppel",
+    "deptJourneysPlateAlt": "Masjid an-Nabawi i gylden time — varm marmorgårdsplads, grøn kuppel og fjerne pilgrimme i stille refleksion",
+    "jsonLdDescription": "Et institut for Profetisk Medicin med forskning, klinisk behandling og naturlig terapi"
   }
 }

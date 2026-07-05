@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
 import { Link } from "@/i18n/navigation";
 import { setRequestLocale } from "next-intl/server";
-import type { AppLocale } from "@/i18n/locales";
 import { knowledgeLibrary, getAllArticles, knowledgeTopics } from "@/sanity/lib/fetch";
 import { DepartmentHero } from "@/components/department/DepartmentHero";
 import { DepartmentStatement } from "@/components/department/DepartmentStatement";
@@ -16,18 +17,13 @@ import { Reveal } from "@/components/arrival/Reveal";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
 import "@/components/department/department.css";
 
-export const metadata: Metadata = {
-  title: "Knowledge Library · Sunnah Remedies",
-  description:
-    "The institution's publishing programme — monographs, research notes, and patient guides on Prophetic Medicine, published with citation, grading, and clear limits.",
-  openGraph: {
-    title: "Knowledge Library · Sunnah Remedies",
-    description:
-      "Open scholarship on Prophetic Medicine — graded references, cited sources, stated limits.",
-    type: "website",
-    siteName: "Sunnah Remedies",
-  },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("knowledgeLibrary", "/knowledge-library");
+}
 
 export default async function KnowledgeLibraryPage({
   params,

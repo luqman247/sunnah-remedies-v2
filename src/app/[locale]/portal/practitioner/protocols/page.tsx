@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { PractitionerSectionPage } from "@/components/portal/PractitionerSectionPage";
 import { ListingRow } from "@/components/ui/Attestation";
 import { getClinicalProtocols } from "@/sanity/lib/practitioner-fetch";
 
-export const metadata: Metadata = {
-  title: "Clinical protocols",
-  description: "Faculty-reviewed clinical protocols for verified practitioners",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("portal.practitioner.protocols", "/portal/practitioner/protocols");
+}
 
 function formatCategory(category?: string) {
   if (!category) return "Clinical";

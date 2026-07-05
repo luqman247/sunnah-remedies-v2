@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { Remedy } from "@/lib/content/types";
 import { formatProvenance } from "@/lib/content/remedies";
@@ -8,13 +11,15 @@ interface RelatedRemediesProps {
 }
 
 export function RelatedRemedies({ remedies }: RelatedRemediesProps) {
+  const t = useTranslations("apothecary.relatedRemedies");
+
   if (remedies.length === 0) return null;
 
   return (
     <section id="related-remedies" className="monograph-section" aria-labelledby="related-remedies-heading">
-      <SectionLabel>Related remedies</SectionLabel>
+      <SectionLabel>{t("title")}</SectionLabel>
       <h2 id="related-remedies-heading" className="sr-only">
-        Related remedy monographs
+        {t("srHeading")}
       </h2>
       {remedies.map((r) => (
         <Link key={r.slug} href={`/the-apothecary/${r.slug}`} className="ruled-row">

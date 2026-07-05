@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { Leaf } from "@/components/ui/Leaf";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { Link } from "@/i18n/navigation";
 
-export const metadata: Metadata = {
-  title: "Access not granted",
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("membership.accessDenied", "/membership/access-denied");
+}
 
 export default async function AccessDeniedPage({
   params,

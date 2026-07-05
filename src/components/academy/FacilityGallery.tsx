@@ -1,30 +1,36 @@
+"use client";
+
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import type { GalleryItem } from "@/lib/content/academy/types";
 
-const galleryPhotography: Record<string, { src: string; alt: string }> = {
-  "clinical-suite": {
-    src: "/photography/clinical-practice.jpg",
-    alt: "The clinical suite — a practitioner preparing sterile equipment in the treatment room",
-  },
-  "reading-room": {
-    src: "/photography/reading-room.jpg",
-    alt: "The reading room — a scholarly library with open texts, brass lamps, and bound volumes",
-  },
-  "seminar-hall": {
-    src: "/photography/academy-learning.jpg",
-    alt: "The seminar hall — students studying anatomical charts under natural light",
-  },
-  instruments: {
-    src: "/photography/clinical-practice.jpg",
-    alt: "Clinical instruments — sterile cupping cups arranged on a treatment tray",
-  },
+const galleryPhotoIds = ["clinical-suite", "reading-room", "seminar-hall", "instruments"] as const;
+
+const galleryPhotoKeys: Record<(typeof galleryPhotoIds)[number], "clinicalSuite" | "readingRoom" | "seminarHall" | "clinicalInstruments"> = {
+  "clinical-suite": "clinicalSuite",
+  "reading-room": "readingRoom",
+  "seminar-hall": "seminarHall",
+  instruments: "clinicalInstruments",
+};
+
+const galleryPhotoSrc: Record<(typeof galleryPhotoIds)[number], string> = {
+  "clinical-suite": "/photography/clinical-practice.jpg",
+  "reading-room": "/photography/reading-room.jpg",
+  "seminar-hall": "/photography/academy-learning.jpg",
+  instruments: "/photography/clinical-practice.jpg",
 };
 
 export function FacilityGallery({ items }: { items: GalleryItem[] }) {
+  const t = useTranslations("academy.facilityGallery");
+
   return (
     <div className="facility-gallery">
       {items.map((item) => {
-        const photo = galleryPhotography[item.id];
+        const photoId = galleryPhotoIds.find((id) => id === item.id);
+        const photo = photoId
+          ? { src: galleryPhotoSrc[photoId], alt: t(galleryPhotoKeys[photoId]) }
+          : undefined;
+
         return (
           <figure key={item.id} className="facility-gallery__item">
             {photo ? (

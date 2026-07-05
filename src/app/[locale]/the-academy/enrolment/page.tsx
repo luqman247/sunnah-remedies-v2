@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { AcademySectionPage } from "@/components/academy/AcademySectionPage";
 import { EnrolmentForm } from "@/components/academy/EnrolmentForm";
 import { EnrolmentJourney } from "@/components/academy/EnrolmentJourney";
@@ -8,10 +9,13 @@ import { getHijamaDiploma } from "@/lib/content/academy";
 import { getProgrammeBySlug } from "@/sanity/lib/fetch";
 import { programmeToAcademyProgramme } from "@/sanity/lib/adapters";
 
-export const metadata: Metadata = {
-  title: "Enrolment",
-  description: "Application journey and form for the Hijāma Diploma.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("theAcademy.enrolment", "/the-academy/enrolment");
+}
 
 export default async function EnrolmentPage({
   params,

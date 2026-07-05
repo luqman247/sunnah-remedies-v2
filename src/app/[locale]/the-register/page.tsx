@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { getAllProducts } from "@/sanity/lib/fetch";
 import { productToRemedy } from "@/sanity/lib/adapters";
 import { RegisterClient } from "./RegisterClient";
 
-export const metadata: Metadata = {
-  title: "The Register",
-  description: "Texts, remedies, and sources indexed by grade and department.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("theRegister", "/the-register");
+}
 
 export default async function RegisterPage({
   params,

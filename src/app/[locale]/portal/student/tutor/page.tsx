@@ -1,15 +1,20 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { StudentSectionPage } from "@/components/portal/StudentSectionPage";
 import { InstitutionalAssistant } from "@/components/ai/InstitutionalAssistant";
 import { requireStudentPortal } from "@/lib/auth/portal-guard";
 import { memberHasCapability } from "@/lib/auth/member-session";
 import { getEnrolments } from "@/modules/student/enrolments";
 
-export const metadata: Metadata = {
-  title: "AI Tutor",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("portal.student.tutor", "/portal/student/tutor");
+}
 
 export default async function TutorPage({
   params,

@@ -13,17 +13,6 @@ import { Leaf } from "@/components/ui/Leaf";
 import { EditorialPhoto, PullQuote } from "@/components/editorial/Editorial";
 import type { AcademyProgramme } from "@/lib/content/academy/types";
 
-const facultyPortraits: Record<number, { src: string; alt: string }> = {
-  0: {
-    src: "/photography/faculty-portrait-1.jpg",
-    alt: "Faculty member — senior practitioner and scholar",
-  },
-  1: {
-    src: "/photography/faculty-portrait-2.jpg",
-    alt: "Faculty member — clinical practitioner",
-  },
-};
-
 interface ProgrammeViewProps {
   programme: AcademyProgramme;
 }
@@ -45,6 +34,17 @@ function PolicyBlocks({ items }: { items: { title: string; body: string[] }[] })
 
 export async function ProgrammeView({ programme }: ProgrammeViewProps) {
   const t = await getTranslations("academy.programmeView");
+
+  const facultyPortraits: Record<number, { src: string; alt: string }> = {
+    0: {
+      src: "/photography/faculty-portrait-1.jpg",
+      alt: t("facultyPortraitSenior"),
+    },
+    1: {
+      src: "/photography/faculty-portrait-2.jpg",
+      alt: t("facultyPortraitClinical"),
+    },
+  };
 
   return (
     <>
@@ -85,7 +85,7 @@ export async function ProgrammeView({ programme }: ProgrammeViewProps) {
 
       <EditorialPhoto
         src="/photography/clinical-practice.jpg"
-        alt="A clinical practitioner preparing sterile cupping equipment in a professional treatment room"
+        alt={t("clinicalPracticeAlt")}
         aspect="landscape"
         fullBleed
         caption={t("editorialCaption")}
@@ -94,7 +94,7 @@ export async function ProgrammeView({ programme }: ProgrammeViewProps) {
       <Leaf variant="grave">
         <div className="measure grave-block">
           <PullQuote
-            text="This is not an abbreviated online course. It is a supervised programme with published assessment criteria and faculty sign-off only after demonstrated competency"
+            text={t("pullQuoteSupervised")}
             dark
           />
         </div>
@@ -174,9 +174,7 @@ export async function ProgrammeView({ programme }: ProgrammeViewProps) {
             </section>
 
             <div className="monograph-section" style={{ marginBottom: "var(--s6)" }}>
-              <PullQuote
-                text="The teacher is named before the subject. The chain is stated before the curriculum. Assessment criteria are published before enrolment opens"
-              />
+              <PullQuote text={t("pullQuoteTeacher")} />
             </div>
 
             <section id="practical" className="monograph-section">

@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { PractitionerSectionPage } from "@/components/portal/PractitionerSectionPage";
 import { Link } from "@/i18n/navigation";
 import { getPractitionerAnnouncements } from "@/sanity/lib/practitioner-fetch";
 
-export const metadata: Metadata = {
-  title: "Practice updates",
-  description: "Clinical announcements and faculty notices for practitioners",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("portal.practitioner.updates", "/portal/practitioner/updates");
+}
 
 export default async function UpdatesPage({
   params,

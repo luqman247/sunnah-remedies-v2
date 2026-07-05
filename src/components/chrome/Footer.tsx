@@ -1,5 +1,8 @@
+"use client";
+
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { brandContext, brandAlt } from "@/lib/brand";
 import {
   getRevelationForDay,
@@ -12,14 +15,15 @@ interface PreFooterProps {
 }
 
 export function PreFooter({ action }: PreFooterProps) {
+  const t = useTranslations("footer");
   const entry = getRevelationForDay();
 
   return (
-    <section className="pre-footer" aria-label="Daily reflection">
+    <section className="pre-footer" aria-label={t("dailyReflectionAria")}>
       <div className="pre-footer__image">
         <Image
           src="/photography/prophetic-medicine-research-table.jpg"
-          alt="Oak research table with leather-bound Arabic manuscripts, amber apothecary bottles, olive leaves, black seed, mortar and pestle, and brass magnifying glass in warm natural light"
+          alt={t("preFooterImageAlt")}
           fill
           sizes="100vw"
           quality={75}
@@ -39,7 +43,7 @@ export function PreFooter({ action }: PreFooterProps) {
             href={action?.href || "/consultations"}
             className="quiet-link quiet-link--dark"
           >
-            {action?.label || "Request a consultation"}
+            {action?.label || t("requestConsultation")}
           </Link>
         </div>
       </div>
@@ -56,6 +60,8 @@ interface FooterProps {
 }
 
 export function Footer({ columns, closingStatement, colophon, tagline, foundingStatement }: FooterProps) {
+  const t = useTranslations("footer");
+
   return (
     <footer className="footer">
       <div className="measure-wide footer__grid">
@@ -73,10 +79,10 @@ export function Footer({ columns, closingStatement, colophon, tagline, foundingS
             }}
           />
           <p className="footer__tagline">
-            {tagline || "Institute of Prophetic Medicine"}
+            {tagline || t("tagline")}
           </p>
           <p className="type-small footer__founding">
-            {foundingStatement || "Scholarship, clinical practice, and natural therapeutics under one house — structured for continuity, governed by restraint"}
+            {foundingStatement || t("foundingStatement")}
           </p>
         </div>
 
@@ -105,10 +111,10 @@ export function Footer({ columns, closingStatement, colophon, tagline, foundingS
         {/* ——— Closing ——— */}
         <div className="footer__closing">
           <p className="footer__closing-text">
-            {closingStatement || "Knowledge before commerce. Service before profit. Trust before growth."}
+            {closingStatement || t("closing")}
           </p>
           <p className="type-folio footer__colophon">
-            {colophon || "Sunnah Remedies · Est. MMXXV · Healing is from Allah · the remedy is a means"}
+            {colophon || t("colophon")}
           </p>
         </div>
       </div>

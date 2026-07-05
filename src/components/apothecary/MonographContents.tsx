@@ -1,36 +1,44 @@
-export const monographSections = [
-  { id: "institutional-summary", label: "Institutional summary" },
-  { id: "historical-context", label: "Historical use" },
-  { id: "prophetic-tradition", label: "Prophetic tradition" },
-  { id: "traditional-scholarship", label: "Traditional scholarship" },
-  { id: "traditional-usage", label: "Traditional usage" },
-  { id: "evidence-informed", label: "Evidence-informed" },
-  { id: "provenance", label: "Origin and harvesting" },
-  { id: "laboratory-verification", label: "Laboratory verification" },
-  { id: "quality-assurance", label: "Quality assurance" },
-  { id: "storage", label: "Storage" },
-  { id: "preparation", label: "Preparation" },
-  { id: "suggested-use", label: "Suggested use" },
-  { id: "contraindications", label: "Contraindications" },
-  { id: "photography", label: "Photography" },
-  { id: "packaging", label: "Packaging" },
-  { id: "shipping", label: "Shipping" },
-  { id: "returns", label: "Returns" },
-  { id: "customer-support", label: "Customer support" },
-  { id: "frequently-asked", label: "Common questions" },
-  { id: "related-remedies", label: "Related remedies" },
-  { id: "academy-lessons", label: "Academy lessons" },
-  { id: "knowledge-library", label: "Knowledge Library" },
-  { id: "pathways", label: "Further study and practice" },
-  { id: "dispensation", label: "Dispensation" },
-];
+"use client";
+
+import { useTranslations } from "next-intl";
 
 export function MonographContents() {
+  const t = useTranslations("apothecary.monograph");
+  const tCommon = useTranslations("common");
+  const tToc = useTranslations("apothecary.monographToc");
+
+  const sections = [
+    { id: "institutional-summary", label: t("institutionalSummary") },
+    { id: "historical-context", label: t("historicalUse") },
+    { id: "prophetic-tradition", label: t("propheticTradition") },
+    { id: "traditional-scholarship", label: t("traditionalScholarship") },
+    { id: "traditional-usage", label: t("traditionalUsage") },
+    { id: "evidence-informed", label: t("evidenceInformed") },
+    { id: "provenance", label: t("provenance") },
+    { id: "laboratory-verification", label: t("laboratoryVerification") },
+    { id: "quality-assurance", label: t("qualityAssurance") },
+    { id: "storage", label: t("storage") },
+    { id: "preparation", label: t("preparation") },
+    { id: "suggested-use", label: t("suggestedUse") },
+    { id: "contraindications", label: t("contraindications") },
+    { id: "photography", label: t("photographyGuidance") },
+    { id: "packaging", label: t("packaging") },
+    { id: "shipping", label: t("shipping") },
+    { id: "returns", label: t("returns") },
+    { id: "customer-support", label: t("customerSupport") },
+    { id: "frequently-asked", label: t("frequentlyAsked") },
+    { id: "related-remedies", label: t("relatedRemediesSection") },
+    { id: "academy-lessons", label: t("academyLessons") },
+    { id: "knowledge-library", label: t("knowledgeLibrarySection") },
+    { id: "pathways", label: t("pathways") },
+    { id: "dispensation", label: t("dispensationSection") },
+  ];
+
   return (
-    <nav className="monograph-contents" aria-label="Monograph table of contents">
-      <p className="type-eyebrow monograph-contents__label">Table of contents</p>
+    <nav className="monograph-contents" aria-label={tToc("ariaLabel")}>
+      <p className="type-eyebrow monograph-contents__label">{tCommon("tableOfContents")}</p>
       <ol className="monograph-contents__list">
-        {monographSections.map(({ id, label }) => (
+        {sections.map(({ id, label }) => (
           <li key={id}>
             <a href={`#${id}`} className="monograph-contents__link">
               {label}

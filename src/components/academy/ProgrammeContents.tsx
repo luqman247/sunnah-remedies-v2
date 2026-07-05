@@ -1,29 +1,38 @@
-const sections = [
-  { id: "overview", label: "Overview" },
-  { id: "outcomes", label: "Learning outcomes" },
-  { id: "curriculum", label: "Curriculum" },
-  { id: "practical", label: "Practical sessions" },
-  { id: "faculty", label: "Faculty" },
-  { id: "facilities", label: "Facilities" },
-  { id: "clinical-standards", label: "Clinical standards" },
-  { id: "assessment", label: "Assessment" },
-  { id: "certification", label: "Certification" },
-  { id: "entry", label: "Entry requirements" },
-  { id: "equipment", label: "Equipment" },
-  { id: "handbook", label: "Course handbook" },
-  { id: "guide", label: "Student guide" },
-  { id: "gallery", label: "Gallery" },
-  { id: "testimonials", label: "Graduate attestations" },
-  { id: "pathways", label: "Graduate pathways" },
-  { id: "faq", label: "Common questions" },
-  { id: "policies", label: "Policies" },
-  { id: "enrolment", label: "Send application" },
-];
+"use client";
+
+import { useTranslations } from "next-intl";
 
 export function ProgrammeContents() {
+  const t = useTranslations("academy.programmeView");
+  const tCommon = useTranslations("common");
+  const tContents = useTranslations("academy.programmeContents");
+  const tMonograph = useTranslations("apothecary.monograph");
+
+  const sections = [
+    { id: "overview", label: t("overview") },
+    { id: "outcomes", label: t("outcomesLabel") },
+    { id: "curriculum", label: t("curriculum") },
+    { id: "practical", label: t("practicalLabel") },
+    { id: "faculty", label: t("faculty") },
+    { id: "facilities", label: t("facilities") },
+    { id: "clinical-standards", label: t("clinicalStandards") },
+    { id: "assessment", label: t("assessment") },
+    { id: "certification", label: t("certification") },
+    { id: "entry", label: t("entryRequirements") },
+    { id: "equipment", label: t("equipment") },
+    { id: "handbook", label: t("courseHandbook") },
+    { id: "guide", label: t("studentGuide") },
+    { id: "gallery", label: t("gallery") },
+    { id: "testimonials", label: t("graduateAttestations") },
+    { id: "pathways", label: t("graduatePathways") },
+    { id: "faq", label: tMonograph("frequentlyAsked") },
+    { id: "policies", label: t("policies") },
+    { id: "enrolment", label: t("sendApplication") },
+  ];
+
   return (
-    <nav className="monograph-contents programme-contents" aria-label="Programme table of contents">
-      <p className="type-eyebrow monograph-contents__label">Table of contents</p>
+    <nav className="monograph-contents programme-contents" aria-label={tContents("ariaLabel")}>
+      <p className="type-eyebrow monograph-contents__label">{tCommon("tableOfContents")}</p>
       <ol className="monograph-contents__list">
         {sections.map(({ id, label }) => (
           <li key={id}>

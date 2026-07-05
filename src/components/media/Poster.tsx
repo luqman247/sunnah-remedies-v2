@@ -5,6 +5,9 @@
  * Used when video is deferred (poster-first strategy, ADR-7).
  */
 
+"use client";
+
+import { useTranslations } from "next-intl";
 import { EditorialImage } from "./EditorialImage";
 
 interface PosterProps {
@@ -18,6 +21,8 @@ interface PosterProps {
 }
 
 export function Poster({ publicId, src, alt, aspect, priority, onPlay, blurDataUrl }: PosterProps) {
+  const t = useTranslations("media");
+
   return (
     <div style={{ position: "relative", aspectRatio: aspect || "16/9" }}>
       <EditorialImage
@@ -34,7 +39,7 @@ export function Poster({ publicId, src, alt, aspect, priority, onPlay, blurDataU
         <button
           type="button"
           onClick={onPlay}
-          aria-label="Play video"
+          aria-label={t("playVideo")}
           style={{
             position: "absolute",
             inset: 0,

@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { Leaf } from "@/components/ui/Leaf";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { QuietLink } from "@/components/ui/Links";
 import { getInstitutionSettings } from "@/sanity/lib/fetch";
 
-export const metadata: Metadata = {
-  title: "Correspondence",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("correspondence", "/correspondence");
+}
 
 export default async function CorrespondencePage({
   params,

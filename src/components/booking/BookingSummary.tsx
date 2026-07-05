@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
 import type { BookingSummaryData } from "@/lib/booking/types";
 
 interface BookingSummaryProps {
@@ -10,33 +11,36 @@ interface BookingSummaryProps {
   onSubmit: () => void;
 }
 
-function formatDate(date: Date | null): string {
-  if (!date) return "";
-  return date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-  });
-}
-
 function capitalize(str: string | null): string {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 export function BookingSummary({ data, canSubmit, submitting, onSubmit }: BookingSummaryProps) {
+  const locale = useLocale();
+  const t = useTranslations("booking.summary");
+
+  const formatDate = (date: Date | null): string => {
+    if (!date) return "";
+    return date.toLocaleDateString(locale, {
+      day: "numeric",
+      month: "long",
+    });
+  };
+
   const items = [
-    { label: "Practitioner", value: capitalize(data.practitioner) },
-    { label: "Clinic", value: data.clinicName },
-    { label: "Date", value: data.date ? formatDate(data.date) : null },
-    { label: "Time", value: data.time },
-    { label: "Duration", value: data.duration },
-    { label: "Price", value: data.practitioner ? data.price : null, isPrice: true },
+    { label: t("practitioner"), value: capitalize(data.practitioner) },
+    { label: t("clinic"), value: data.clinicName },
+    { label: t("date"), value: data.date ? formatDate(data.date) : null },
+    { label: t("time"), value: data.time },
+    { label: t("duration"), value: data.duration },
+    { label: t("price"), value: data.practitioner ? data.price : null, isPrice: true },
   ];
 
   return (
-    <aside className="booking-summary" aria-label="Appointment summary">
+    <aside className="booking-summary" aria-label={t("ariaLabel")}>
       <div className="booking-summary__inner">
-        <p className="booking-summary__label">Appointment Summary</p>
+        <p className="booking-summary__label">{t("label")}</p>
 
         <dl className="booking-summary__list">
           <AnimatePresence mode="popLayout">
@@ -65,9 +69,9 @@ export function BookingSummary({ data, canSubmit, submitting, onSubmit }: Bookin
           className={`booking-cta ${submitting ? "booking-cta--loading" : ""}`}
           disabled={!canSubmit || submitting}
           onClick={onSubmit}
-          aria-label="Book my appointment"
+          aria-label={t("submitAria")}
         >
-          Book My Appointment
+          {t("submit")}
         </button>
       </div>
     </aside>

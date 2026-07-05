@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Related Entities Module — Internal linking from the knowledge graph.
  *
@@ -7,6 +9,7 @@
  */
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export interface RelatedItem {
   title: string;
@@ -90,44 +93,41 @@ export interface RelatedSectionProps {
   }[];
 }
 
-const RELATION_LABELS: Record<string, string> = {
-  treats: "Related Conditions",
-  treatedBy: "Possible Treatments",
-  containsIngredient: "Key Ingredients",
-  evidencedBy: "Supporting Research",
-  citedIn: "Referenced In",
-  contraindicatedIn: "Contraindications",
-  partOfBodySystem: "Body System",
-  taughtIn: "Related Courses",
-  relatedTo: "Related",
-  preparedBy: "Preparation",
-  authoredBy: "Authors",
-  reviewedBy: "Reviewed By",
-  referencedIn: "Citations",
+type RelationMessageKey =
+  | "relations.relatedConditions"
+  | "relations.relatedRemedies"
+  | "relations.relatedIngredients"
+  | "relations.relatedSources"
+  | "relations.relatedHadith"
+  | "relations.relatedTopics"
+  | "relations.relatedCourses"
+  | "relations.relatedScholars";
+
+const RELATION_TYPE_KEYS: Record<string, RelationMessageKey> = {
+  treats: "relations.relatedConditions",
+  treatedBy: "relations.relatedRemedies",
+  containsIngredient: "relations.relatedIngredients",
+  evidencedBy: "relations.relatedSources",
+  citedIn: "relations.relatedHadith",
+  contraindicatedIn: "relations.relatedConditions",
+  partOfBodySystem: "relations.relatedTopics",
+  taughtIn: "relations.relatedCourses",
+  relatedTo: "relations.relatedTopics",
+  preparedBy: "relations.relatedRemedies",
+  authoredBy: "relations.relatedScholars",
+  reviewedBy: "relations.relatedScholars",
+  referencedIn: "relations.relatedSources",
 };
 
 export function RelatedSection({ relationships }: RelatedSectionProps) {
+  const t = useTranslations("knowledge");
+
   if (!relationships || relationships.length === 0) return null;
 
-  // Group by relation type, sort by strength
-  const grouped: Record<string, RelatedItem[]> = {};
-  for (const rel of relationships) {
-    if (!rel.target || !rel.target.slug) continue;
-    const key = rel.relationType;
-    if (!grouped[key]) grouped[key] = [];
-    grouped[key].push({
-      title: rel.target.title,
-      slug: rel.target.slug,
-      type: rel.target.type,
-    });
-  }
-
-  // Sort within each group by strength
   const sortedRelationships = [...relationships].sort(
     (a, b) => (b.strength || 5) - (a.strength || 5)
   );
 
-  // Rebuild grouped with sorted order
   const sortedGrouped: Record<string, RelatedItem[]> = {};
   for (const rel of sortedRelationships) {
     if (!rel.target || !rel.target.slug) continue;
@@ -142,6 +142,12 @@ export function RelatedSection({ relationships }: RelatedSectionProps) {
     }
   }
 
+  function relationLabel(relType: string): string {
+    const key = RELATION_TYPE_KEYS[relType];
+    if (key) return t(key);
+    return relType;
+  }
+
   return (
     <section className="leaf" aria-labelledby="related-heading">
       <div className="measure-wide">
@@ -150,12 +156,12 @@ export function RelatedSection({ relationships }: RelatedSectionProps) {
           className="type-title"
           style={{ marginBottom: "var(--s5)" }}
         >
-          Related
+          {t("relatedHeading")}
         </h2>
         {Object.entries(sortedGrouped).map(([relType, items]) => (
           <RelatedModule
             key={relType}
-            title={RELATION_LABELS[relType] || relType}
+            title={relationLabel(relType)}
             items={items}
           />
         ))}

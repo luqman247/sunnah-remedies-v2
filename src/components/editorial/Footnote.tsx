@@ -1,7 +1,11 @@
+"use client";
+
 /**
  * Footnote — numbered footnote with back-reference (Ch. 3.2).
  * Renders in the mono/small style with an anchor link back to the reference point.
  */
+
+import { useTranslations } from "next-intl";
 
 interface FootnoteProps {
   id: string;
@@ -10,6 +14,8 @@ interface FootnoteProps {
 }
 
 export function Footnote({ id, number, children }: FootnoteProps) {
+  const t = useTranslations("editorial");
+
   return (
     <li
       id={`fn-${id}`}
@@ -20,7 +26,7 @@ export function Footnote({ id, number, children }: FootnoteProps) {
       {children}
       <a
         href={`#fnref-${id}`}
-        aria-label={`Back to reference ${number}`}
+        aria-label={t("backToReference", { number })}
         style={{
           marginInlineStart: "0.5em",
           color: "var(--brass)",
@@ -40,12 +46,14 @@ interface FootnoteRefProps {
 }
 
 export function FootnoteRef({ id, number }: FootnoteRefProps) {
+  const t = useTranslations("editorial");
+
   return (
     <sup>
       <a
         id={`fnref-${id}`}
         href={`#fn-${id}`}
-        aria-label={`Footnote ${number}`}
+        aria-label={t("footnote", { number })}
         className="type-folio-v2"
         style={{ color: "var(--brass)", textDecoration: "none" }}
       >

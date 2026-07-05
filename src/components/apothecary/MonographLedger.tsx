@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { Remedy } from "@/lib/content/types";
 import { formatPrice } from "@/lib/content/remedies";
@@ -10,10 +11,12 @@ interface MonographLedgerProps {
 }
 
 export function MonographLedger({ remedy }: MonographLedgerProps) {
+  const t = useTranslations("apothecary.monographLedger");
+
   return (
-    <aside className="monograph-ledger" aria-label="Remedy dispensation summary">
+    <aside className="monograph-ledger" aria-label={t("ariaLabel")}>
       <div className="monograph-ledger__inner">
-        <p className="type-eyebrow monograph-ledger__label">Cabinet dispensation</p>
+        <p className="type-eyebrow monograph-ledger__label">{t("label")}</p>
         <p className="type-title monograph-ledger__name">{remedy.name}</p>
         <p className="type-micro monograph-ledger__measure">{remedy.volume}</p>
 
@@ -25,16 +28,16 @@ export function MonographLedger({ remedy }: MonographLedgerProps) {
           </>
         ) : (
           <p className="type-body">
-            Currently unavailable.{" "}
+            {t("unavailable")}{" "}
             <Link href="/correspondence" className="quiet-link">
-              Contact the dispensary
+              {t("contactDispensary")}
             </Link>
           </p>
         )}
 
         <p className="type-small monograph-ledger__note">
           <Link href="#dispensation" className="quiet-link">
-            Read the monograph before ordering
+            {t("readBeforeOrder")}
           </Link>
         </p>
       </div>

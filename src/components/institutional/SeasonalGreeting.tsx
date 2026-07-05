@@ -1,18 +1,24 @@
+import { getLocale, getTranslations } from "next-intl/server";
 import { getCurrentSeason, getHijriDate } from "@/lib/calendar/seasons";
 
 /**
  * SeasonalGreeting — a quiet, reverent acknowledgment of the current sacred season.
  * Renders only during major seasons. Never promotional, never urgent.
- * "The whole register deepens" — this is that deepening made visible.
  */
-export function SeasonalGreeting() {
-  const { season, label, greeting, reflection } = getCurrentSeason();
-  const hijriDate = getHijriDate();
+export async function SeasonalGreeting() {
+  const locale = await getLocale();
+  const t = await getTranslations("seasonal");
+  const { season } = getCurrentSeason();
+  const hijriDate = getHijriDate(locale);
 
   if (season === "standard") return null;
 
+  const label = t(`seasons.${season}.label`);
+  const greeting = t(`seasons.${season}.greeting`);
+  const reflection = t(`seasons.${season}.reflection`);
+
   return (
-    <aside className="seasonal-greeting" aria-label={`Current season: ${label}`}>
+    <aside className="seasonal-greeting" aria-label={t("currentSeason", { label })}>
       <div className="seasonal-greeting__inner">
         <span className="seasonal-greeting__season type-eyebrow">{label}</span>
         {greeting && (

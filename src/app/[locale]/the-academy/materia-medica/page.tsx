@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { Leaf } from "@/components/ui/Leaf";
 import { PageIntro, SectionLabel } from "@/components/ui/PageIntro";
 import { GoLink } from "@/components/ui/Links";
@@ -10,9 +11,13 @@ import { remedies as staticRemedies } from "@/lib/content/remedies";
 import { getAllProducts } from "@/sanity/lib/fetch";
 import { productToRemedy } from "@/sanity/lib/adapters";
 
-export const metadata: Metadata = {
-  title: "The Materia Medica",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("theAcademy.materiaMedica", "/the-academy/materia-medica");
+}
 
 export default async function MateriaMedicaPage({
   params,

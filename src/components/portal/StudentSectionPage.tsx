@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Leaf } from "@/components/ui/Leaf";
 import { Breadcrumb } from "@/components/apothecary/Breadcrumb";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
@@ -25,8 +28,9 @@ export function StudentSectionPage({
   intro,
   children,
 }: StudentSectionPageProps) {
+  const t = useTranslations("portal.student");
   const crumbs = breadcrumbItems ?? [
-    { label: "Digital Campus", href: "/portal/student" },
+    { label: t("digitalCampus"), href: "/portal/student" },
     { label: breadcrumbLabel },
   ];
 
@@ -40,7 +44,7 @@ export function StudentSectionPage({
               <DepartmentNav department={studentPortal} currentHref={currentHref} />
             </aside>
             <div className="section-page__intro">
-              <PageIntro section="Digital Campus" folio={folio} title={title} lede={lede}>
+              <PageIntro section={t("digitalCampus")} folio={folio} title={title} lede={lede}>
                 {intro}
               </PageIntro>
             </div>

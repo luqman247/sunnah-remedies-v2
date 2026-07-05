@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { RegistrationJourney } from "@/components/journeys/RegistrationJourney";
 import { RegistrationForm } from "@/components/journeys/RegistrationForm";
@@ -8,10 +9,13 @@ import { SectionLabel } from "@/components/ui/PageIntro";
 import { getJourneyBySlug } from "@/sanity/lib/fetch";
 import { journeyInstitution } from "@/lib/content/journeys";
 
-export const metadata: Metadata = {
-  title: "Registration",
-  description: "Register your interest. Placement follows interview and reading review.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("sacredJourneys.registration", "/sacred-journeys/registration");
+}
 
 export default async function RegistrationPage({
   params,

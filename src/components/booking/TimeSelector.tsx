@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import type { TimeSlot } from "@/lib/booking/types";
 
 interface TimeSelectorProps {
@@ -10,12 +11,14 @@ interface TimeSelectorProps {
 }
 
 export function TimeSelector({ slots, value, onChange }: TimeSelectorProps) {
+  const t = useTranslations("booking.steps");
+
   return (
     <div className="booking-step">
-      <p className="booking-step__label">Step 4</p>
-      <h2 className="booking-step__title">Choose Time</h2>
+      <p className="booking-step__label">{t("step4")}</p>
+      <h2 className="booking-step__title">{t("chooseTime")}</h2>
 
-      <div className="time-grid" role="listbox" aria-label="Available times">
+      <div className="time-grid" role="listbox" aria-label={t("availableTimesAria")}>
         {slots.map((slot) => (
           <motion.button
             key={slot.time}

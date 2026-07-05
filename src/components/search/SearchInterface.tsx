@@ -8,7 +8,9 @@
  */
 
 import { useState, useCallback, useRef, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link, useRouter } from "@/i18n/navigation";
 import type { SearchResult, SearchHit } from "@/lib/search/engine";
 
 const DEBOUNCE_MS = 300;
@@ -16,6 +18,7 @@ const DEBOUNCE_MS = 300;
 export function SearchInterface() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const t = useTranslations("search");
   const initialQuery = searchParams.get("q") || "";
 
   const [query, setQuery] = useState(initialQuery);
@@ -57,14 +60,14 @@ export function SearchInterface() {
   }, [initialQuery, performSearch]);
 
   return (
-    <div role="search" aria-label="Site search">
+    <div role="search" aria-label={t("ariaLabel")}>
       <div style={{ position: "relative" }}>
         <input
           type="search"
           value={query}
           onChange={(e) => handleInput(e.target.value)}
-          placeholder="Search remedies, conditions, hadith, courses..."
-          aria-label="Search the institution"
+          placeholder={t("placeholder")}
+          aria-label={t("inputAriaLabel")}
           autoComplete="off"
           style={{
             width: "100%",
@@ -89,16 +92,15 @@ export function SearchInterface() {
               fontSize: "var(--step--1)",
             }}
           >
-            Searching...
+            {t("searching")}
           </span>
         )}
       </div>
 
-      {/* Results */}
       {results && (
         <div aria-live="polite" style={{ marginTop: "var(--s5)" }}>
           <p className="type-small" style={{ color: "var(--muted)", marginBottom: "var(--s4)" }}>
-            {results.totalHits} results in {results.processingTimeMs}ms
+            {t("resultsSummary", { count: results.totalHits, ms: results.processingTimeMs })}
           </p>
 
           {results.hits.length > 0 ? (
@@ -129,17 +131,16 @@ export function SearchInterface() {
               ))}
             </div>
           ) : (
-            // Zero-result path: graceful recovery per §7.4
             <div style={{ textAlign: "center", padding: "var(--s7) 0" }}>
               <p className="type-body" style={{ marginBottom: "var(--s4)" }}>
-                No results found for &ldquo;{results.query}&rdquo;
+                {t("noResults", { query: results.query })}
               </p>
               <p className="type-body" style={{ color: "var(--muted)", marginBottom: "var(--s5)" }}>
-                Try a different spelling, or browse the institution through the navigation above
+                {t("tryDifferent")}
               </p>
-              <a href="/correspondence" className="quiet-link">
-                Or ask us directly &rarr;
-              </a>
+              <Link href="/correspondence" className="quiet-link">
+                {t("askDirectly")} →
+              </Link>
             </div>
           )}
         </div>

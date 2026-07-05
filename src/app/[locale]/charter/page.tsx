@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { Leaf } from "@/components/ui/Leaf";
 import { PageIntro } from "@/components/ui/PageIntro";
 import {
@@ -11,11 +12,13 @@ import {
 import { PortableText } from "@portabletext/react";
 import { getCharter } from "@/sanity/lib/fetch";
 
-export const metadata: Metadata = {
-  title: "The Founding Charter",
-  description:
-    "The constitutional text of the institution — seven articles governing how Sunnah Remedies conducts itself.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("charter", "/charter");
+}
 
 export default async function CharterPage({
   params,

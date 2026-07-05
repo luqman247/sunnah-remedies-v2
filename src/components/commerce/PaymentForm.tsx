@@ -10,6 +10,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import {
   Elements,
   PaymentElement,
@@ -68,6 +69,7 @@ function PaymentForm({
   onError,
   returnUrl,
 }: Omit<PaymentFormProps, "clientSecret">) {
+  const t = useTranslations("commerce.payment");
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -88,8 +90,8 @@ function PaymentForm({
       });
 
       if (error) {
-        setMessage(error.message ?? "Payment failed");
-        onError?.(error.message ?? "Payment failed");
+        setMessage(error.message ?? t("failed"));
+        onError?.(error.message ?? t("failed"));
       } else if (paymentIntent?.status === "succeeded") {
         setMessage(null);
         onSuccess?.(paymentIntent.id);
@@ -97,7 +99,7 @@ function PaymentForm({
 
       setIsProcessing(false);
     },
-    [stripe, elements, returnUrl, onSuccess, onError]
+    [stripe, elements, returnUrl, onSuccess, onError, t]
   );
 
   return (
@@ -132,7 +134,7 @@ function PaymentForm({
           opacity: isProcessing ? 0.7 : 1,
         }}
       >
-        {isProcessing ? "Processing…" : "Complete payment"}
+        {isProcessing ? t("processing") : t("submit")}
       </button>
     </form>
   );

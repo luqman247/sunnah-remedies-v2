@@ -1,23 +1,19 @@
 import type { Metadata } from "next";
+import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
 import { Link } from "@/i18n/navigation";
 import { setRequestLocale } from "next-intl/server";
-import type { AppLocale } from "@/i18n/locales";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
 import { WayForward } from "@/components/ui/WayForward";
 import { getInstitutionSettings } from "@/sanity/lib/fetch";
 
-export const metadata: Metadata = {
-  title: "Research Centre",
-  description:
-    "The Institute's bridge to modern medicine — testing Prophetic Medicine honestly against the best available evidence, neither flattering it nor betraying it.",
-  openGraph: {
-    title: "Research Centre · Sunnah Remedies",
-    description:
-      "Honest evidence, stated uncertainty, acknowledged divergence.",
-    type: "website",
-    siteName: "Sunnah Remedies",
-  },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("research", "/research");
+}
 
 export default async function ResearchPage({
   params,

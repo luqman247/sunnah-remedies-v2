@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { ListingRow } from "@/components/ui/Attestation";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
 import { apothecary } from "@/sanity/lib/fetch";
 import { ingredients, ingredientLibraryIntro } from "@/lib/content/sections/apothecary";
 
-export const metadata: Metadata = {
-  title: "Ingredient Library",
-  description: "Simples and preparations with botanical identity and traditional standing.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("theApothecary.ingredients", "/the-apothecary/ingredients");
+}
 
 export default async function IngredientsPage({
   params,

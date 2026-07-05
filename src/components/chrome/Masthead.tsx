@@ -69,7 +69,7 @@ export function Masthead({ navItems }: MastheadProps) {
             />
           </Link>
 
-          <nav className="masthead-nav" aria-label="Primary">
+          <nav className="masthead-nav" aria-label={t("ariaPrimary")}>
             {departments.map((dept) => (
               <Link
                 key={dept.href}
@@ -113,7 +113,7 @@ export function Masthead({ navItems }: MastheadProps) {
         className={`mobile-nav-panel ${menuOpen ? "is-open" : ""}`}
         role="dialog"
         aria-modal="true"
-        aria-label="Site navigation"
+        aria-label={t("ariaMenu")}
         hidden={!menuOpen}
       >
         <button

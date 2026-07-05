@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useCounter } from "@/context/CounterContext";
 
@@ -10,15 +11,16 @@ interface AddToCounterProps {
 }
 
 export function AddToCounter({ slug, name }: AddToCounterProps) {
+  const t = useTranslations("apothecary.addToCounter");
   const { addItem } = useCounter();
   const [confirmed, setConfirmed] = useState(false);
 
   if (confirmed) {
     return (
       <p className="counter-confirmation" role="status">
-        {name} has been added to the counter.{" "}
+        {t("added", { name })}{" "}
         <Link href="/the-apothecary/counter" className="quiet-link">
-          Review item details
+          {t("reviewItem")}
         </Link>
       </p>
     );
@@ -33,7 +35,7 @@ export function AddToCounter({ slug, name }: AddToCounterProps) {
         setConfirmed(true);
       }}
     >
-      Add to counter
+      {t("addButton")}
     </button>
   );
 }

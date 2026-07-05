@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { AcademySectionPage } from "@/components/academy/AcademySectionPage";
 import { FaqSection } from "@/components/apothecary/MonographExtras";
 import { getHijamaDiploma } from "@/lib/content/academy";
 import { getProgrammeBySlug } from "@/sanity/lib/fetch";
 import { programmeToAcademyProgramme } from "@/sanity/lib/adapters";
 
-export const metadata: Metadata = {
-  title: "Questions",
-  description: "Questions on recognition, safety, attendance, and fees.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("theAcademy.faqs", "/the-academy/faqs");
+}
 
 export default async function AcademyFaqsPage({
   params,

@@ -1,30 +1,39 @@
-const sections = [
-  { id: "meaning", label: "Meaning" },
-  { id: "preparation", label: "Preparation" },
-  { id: "reading", label: "Reading" },
-  { id: "packing", label: "Packing" },
-  { id: "flights", label: "Flight guidance" },
-  { id: "accommodation", label: "Accommodation" },
-  { id: "learning", label: "Learning" },
-  { id: "sessions", label: "Educational sessions" },
-  { id: "itinerary", label: "Daily itinerary" },
-  { id: "companionship", label: "Companionship" },
-  { id: "guidance", label: "Guidance" },
-  { id: "reflection", label: "Reflection journals" },
-  { id: "health", label: "Health guidance" },
-  { id: "safety", label: "Safety" },
-  { id: "organisation", label: "Organisation" },
-  { id: "scholars", label: "Scholars" },
-  { id: "gallery", label: "Gallery" },
-  { id: "faq", label: "Common questions" },
-  { id: "policies", label: "Policies" },
-  { id: "registration", label: "Registration" },
-];
+"use client";
+
+import { useTranslations } from "next-intl";
 
 export function JourneyContents() {
+  const t = useTranslations("journeys.view");
+  const tCommon = useTranslations("common");
+  const tToc = useTranslations("journeys.journeyToc");
+  const tMonograph = useTranslations("apothecary.monograph");
+
+  const sections = [
+    { id: "meaning", label: t("meaning") },
+    { id: "preparation", label: t("preparation") },
+    { id: "reading", label: t("reading") },
+    { id: "packing", label: t("packing") },
+    { id: "flights", label: t("flightGuidance") },
+    { id: "accommodation", label: t("accommodation") },
+    { id: "learning", label: t("learning") },
+    { id: "sessions", label: t("educationalSessions") },
+    { id: "itinerary", label: t("dailyItinerary") },
+    { id: "companionship", label: t("companionship") },
+    { id: "guidance", label: t("guidance") },
+    { id: "reflection", label: t("reflectionJournals") },
+    { id: "health", label: t("healthGuidance") },
+    { id: "safety", label: t("safety") },
+    { id: "organisation", label: t("organisation") },
+    { id: "scholars", label: t("scholarsAndGuides") },
+    { id: "gallery", label: t("gallery") },
+    { id: "faq", label: tMonograph("frequentlyAsked") },
+    { id: "policies", label: t("policies") },
+    { id: "registration", label: t("registration") },
+  ];
+
   return (
-    <nav className="monograph-contents" aria-label="Journey table of contents">
-      <p className="type-eyebrow monograph-contents__label">Table of contents</p>
+    <nav className="monograph-contents" aria-label={tToc("ariaLabel")}>
+      <p className="type-eyebrow monograph-contents__label">{tCommon("tableOfContents")}</p>
       <ol className="monograph-contents__list">
         {sections.map(({ id, label }) => (
           <li key={id}>

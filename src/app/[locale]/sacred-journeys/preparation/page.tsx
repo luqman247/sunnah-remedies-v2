@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { JourneySectionPage } from "@/components/journeys/JourneySectionPage";
 import { PreparationTimeline } from "@/components/journeys/JourneyInstitutionBlocks";
 import { getJourneyBySlug } from "@/sanity/lib/fetch";
 import { journeyInstitution } from "@/lib/content/journeys";
 
-export const metadata: Metadata = {
-  title: "Preparation",
-  description: "Reading, health preparation, documents, and timeline before travel.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("sacredJourneys.preparation", "/sacred-journeys/preparation");
+}
 
 export default async function PreparationPage({
   params,

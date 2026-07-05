@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
+import { setRequestLocale } from "next-intl/server";
 import { AcademySectionPage } from "@/components/academy/AcademySectionPage";
 import { FacilityGallery } from "@/components/academy/FacilityGallery";
 import { getHijamaDiploma } from "@/lib/content/academy";
 import { getProgrammeBySlug } from "@/sanity/lib/fetch";
 import { programmeToAcademyProgramme } from "@/sanity/lib/adapters";
 
-export const metadata: Metadata = {
-  title: "Gallery",
-  description: "Photography of teaching, clinical, and scholarly spaces.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("theAcademy.gallery", "/the-academy/gallery");
+}
 
 export default async function AcademyGalleryPage({
   params,

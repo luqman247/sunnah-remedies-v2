@@ -1,8 +1,11 @@
+"use client";
+
 /**
  * Figure — numbered editorial figure with caption (Ch. 3.2).
  * Wraps an image/diagram in a <figure> with a numbered <figcaption>.
  */
 
+import { useTranslations } from "next-intl";
 import { EditorialImage } from "@/components/media/EditorialImage";
 
 interface FigureProps {
@@ -17,8 +20,9 @@ interface FigureProps {
 }
 
 export function Figure({ number, publicId, src, alt, caption, credit, aspect, sizes }: FigureProps) {
+  const t = useTranslations("editorial");
   const captionId = `figure-${number || "unnumbered"}`;
-  const fullCaption = number ? `Fig. ${number}. ${caption}` : caption;
+  const fullCaption = number ? t("figureCaption", { number, caption }) : caption;
 
   return (
     <figure

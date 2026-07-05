@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+import type { AppLocale } from "@/i18n/locales";
+import { pageMetadata } from "@/lib/i18n/page-metadata";
 /**
  * Order confirmation page — post-checkout return from Shopify.
  *
@@ -7,13 +10,15 @@
  * @see Phase 4 Part 2, Spec 03 §3.6
  */
 
-import { Metadata } from "next";
 import { colors } from "@/lib/tokens";
 
-export const metadata: Metadata = {
-  title: "Order Confirmed — Sunnah Remedies",
-  robots: { index: false },
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: AppLocale }>;
+}): Promise<Metadata> {
+  return pageMetadata("theApothecary.orderConfirmation", "/the-apothecary/order-confirmation");
+}
 
 export default function OrderConfirmationPage() {
   return (

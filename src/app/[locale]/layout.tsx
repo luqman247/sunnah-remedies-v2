@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { localeById } from "@/i18n/locales";
 import { CounterProvider } from "@/context/CounterContext";
@@ -70,6 +70,7 @@ export default async function LocaleLayout({
   const { season } = getCurrentSeason();
   const { draftMode } = await import("next/headers");
   const isDraft = (await draftMode()).isEnabled;
+  const tDraft = isDraft ? await getTranslations({ locale, namespace: "draft" }) : null;
 
   return (
     <html
@@ -93,11 +94,11 @@ export default async function LocaleLayout({
         />
       </head>
       <body>
-        {isDraft && (
+        {isDraft && tDraft && (
           <div style={{ background: "#1a1a2e", color: "#e8d5b7", padding: "8px 16px", fontSize: "12px", fontFamily: "monospace", textAlign: "center" }}>
-            Draft Preview Active &mdash;{" "}
+            {tDraft("active")} &mdash;{" "}
             <a href="/api/draft/disable" style={{ color: "#c9a961", textDecoration: "underline" }}>
-              Exit preview
+              {tDraft("exit")}
             </a>
           </div>
         )}

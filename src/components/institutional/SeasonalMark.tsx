@@ -1,3 +1,6 @@
+"use client";
+
+import { useLocale, useTranslations } from "next-intl";
 import { getCurrentSeason, getHijriDate, getNextEvent } from "@/lib/calendar/seasons";
 import { Link } from "@/i18n/navigation";
 
@@ -7,19 +10,24 @@ import { Link } from "@/i18n/navigation";
  * Always links to the institutional calendar.
  */
 export function SeasonalMark() {
-  const { season, label, greeting } = getCurrentSeason();
-  const hijriDate = getHijriDate();
+  const locale = useLocale();
+  const t = useTranslations("seasonal");
+  const { season } = getCurrentSeason();
+  const hijriDate = getHijriDate(locale);
   const nextEvent = getNextEvent();
 
   if (season === "standard") {
     if (!hijriDate) return null;
+    const nextTitle = nextEvent
+      ? t(`events.${nextEvent.id}.title` as "events.new-year.title")
+      : "";
     return (
-      <div className="seasonal-mark" aria-label="Institutional calendar">
+      <div className="seasonal-mark" aria-label={t("calendarAriaLabel")}>
         <Link href="/calendar" className="seasonal-mark__link">
           <span className="seasonal-mark__date type-folio">{hijriDate}</span>
           {nextEvent && (
             <span className="seasonal-mark__next type-folio">
-              Next: {nextEvent.title}
+              {t("next", { title: nextTitle })}
             </span>
           )}
         </Link>
@@ -27,10 +35,13 @@ export function SeasonalMark() {
     );
   }
 
+  const label = t(`seasons.${season}.label`);
+  const greeting = t(`seasons.${season}.greeting`);
+
   return (
     <div
       className="seasonal-mark seasonal-mark--active"
-      aria-label={`Current season: ${label}`}
+      aria-label={t("currentSeason", { label })}
     >
       <Link href="/calendar" className="seasonal-mark__link">
         <span className="seasonal-mark__season type-eyebrow">{label}</span>

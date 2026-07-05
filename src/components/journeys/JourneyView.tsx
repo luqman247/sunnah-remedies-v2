@@ -11,21 +11,6 @@ import { Leaf } from "@/components/ui/Leaf";
 import { EditorialPhoto, PullQuote } from "@/components/editorial/Editorial";
 import type { SacredJourney } from "@/lib/content/journeys/types";
 
-const journeyPhotography: Record<string, { src: string; alt: string }> = {
-  umrah: {
-    src: "/photography/architecture-twilight.jpg",
-    alt: "Ancient Islamic architecture at twilight — a stone archway with lanterns casting warm light",
-  },
-  "olive-grove": {
-    src: "/photography/sacred-journeys-hero.jpg",
-    alt: "Pilgrims approaching the Prophet's Mosque in Madinah at dawn",
-  },
-  "desert-way": {
-    src: "/photography/sacred-journeys-hero.jpg",
-    alt: "Pilgrims walking across the marble courtyard toward the green dome at dawn",
-  },
-};
-
 interface JourneyViewProps {
   journey: SacredJourney;
 }
@@ -42,6 +27,22 @@ function ProseList({ items }: { items: string[] }) {
 
 export async function JourneyView({ journey }: JourneyViewProps) {
   const t = await getTranslations("journeys.view");
+
+  const journeyPhotography: Record<string, { src: string; alt: string }> = {
+    umrah: {
+      src: "/photography/architecture-twilight.jpg",
+      alt: t("photoUmrah"),
+    },
+    "olive-grove": {
+      src: "/photography/sacred-journeys-hero.jpg",
+      alt: t("photoOliveGrove"),
+    },
+    "desert-way": {
+      src: "/photography/sacred-journeys-hero.jpg",
+      alt: t("photoDesertWay"),
+    },
+  };
+
   const photo = journeyPhotography[journey.slug];
 
   return (
@@ -163,9 +164,7 @@ export async function JourneyView({ journey }: JourneyViewProps) {
             </section>
 
             <div className="monograph-section" style={{ marginBottom: "var(--s6)" }}>
-              <PullQuote
-                text="We travel to learn, not to see. The journey is inward before it is outward"
-              />
+              <PullQuote text={t("pullQuoteTravel")} />
             </div>
 
             <section id="sessions" className="monograph-section">
@@ -218,9 +217,7 @@ export async function JourneyView({ journey }: JourneyViewProps) {
             </section>
 
             <div className="monograph-section" style={{ marginBottom: "var(--s6)" }}>
-              <PullQuote
-                text="Preparation begins weeks before departure. The mind is prepared before the luggage"
-              />
+              <PullQuote text={t("pullQuotePreparation")} />
             </div>
 
             <section id="reflection" className="monograph-section">

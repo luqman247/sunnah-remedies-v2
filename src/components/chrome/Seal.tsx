@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { brand, brandAlt } from "@/lib/brand";
 
 type SealSize = "full" | "mid" | "small";
@@ -18,6 +21,7 @@ interface SealProps {
 }
 
 export function Seal({ size = "small", linked = true, className = "", variant = "primary" }: SealProps) {
+  const t = useTranslations("notFound");
   const { width, height, heightStyle } = dimensions[size];
   const src = variant === "reversed" ? brand.icon.ivoryReversed : brand.icon.primary;
   const clearSpace = size === "small" ? "0.75rem" : "1.5rem";
@@ -52,7 +56,7 @@ export function Seal({ size = "small", linked = true, className = "", variant = 
 
   if (linked) {
     return (
-      <Link href="/" aria-label="Return to the threshold">
+      <Link href="/" aria-label={t("returnHome")}>
         {wrapper}
       </Link>
     );

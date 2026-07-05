@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Media360 — future seam for 360° imagery (Ch. 13).
  *
@@ -6,6 +8,8 @@
  * activates when content exists.
  */
 
+import { useTranslations } from "next-intl";
+
 interface Media360Props {
   publicId?: string;
   alt: string;
@@ -13,6 +17,8 @@ interface Media360Props {
 }
 
 export function Media360({ publicId, alt, fallbackSrc }: Media360Props) {
+  const t = useTranslations("media");
+
   if (!publicId) {
     return (
       <div
@@ -27,7 +33,7 @@ export function Media360({ publicId, alt, fallbackSrc }: Media360Props) {
         }}
       >
         <span className="type-caption" style={{ color: "var(--ink-soft)" }}>
-          360° view coming soon
+          {t("view360ComingSoon")}
         </span>
       </div>
     );
@@ -35,7 +41,7 @@ export function Media360({ publicId, alt, fallbackSrc }: Media360Props) {
 
   return (
     <div
-      aria-label={`360° view: ${alt}`}
+      aria-label={t("view360", { alt })}
       style={{ aspectRatio: "1/1", position: "relative", overflow: "hidden" }}
     >
       {/* Cloudinary 360 spin viewer will be integrated here */}
