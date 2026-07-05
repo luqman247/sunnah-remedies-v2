@@ -10,8 +10,9 @@ import { DepartmentSection } from "@/components/department/DepartmentSection";
 import {
   DepartmentFeature,
   DepartmentFeatureLink,
-  DepartmentPullQuote,
 } from "@/components/department/DepartmentFeature";
+import { RotatingDepartmentPullQuote } from "@/components/department/RotatingDepartmentPullQuote";
+import { libraryDeclarations } from "@/lib/content/sections/library-declarations";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
 import { Reveal } from "@/components/arrival/Reveal";
 import { DepartmentNav } from "@/components/ui/DepartmentNav";
@@ -168,8 +169,9 @@ export default async function KnowledgeLibraryPage({
       <Reveal>
         <DepartmentSection numeral={articles.length > 0 ? "V" : "IV"} variant="deep">
           <div className="dept-measure">
-            <DepartmentPullQuote
-              text="The shelf is open because scholarship that is hidden serves no one"
+            <RotatingDepartmentPullQuote
+              statements={libraryDeclarations}
+              interval={15000}
             />
           </div>
         </DepartmentSection>

@@ -13,6 +13,8 @@ import {
   PullQuote,
   InstitutionalDivider,
 } from "@/components/editorial/Editorial";
+import { RotatingPullQuote } from "@/components/editorial/RotatingPullQuote";
+import { apothecaryDeclarations } from "@/lib/content/sections/apothecary-declarations";
 
 export async function generateMetadata({
   params,
@@ -135,8 +137,9 @@ export default async function ApothecaryPage({
 
       <Leaf variant="grave">
         <div className="measure grave-block">
-          <PullQuote
-            text="Knowledge before measure. We dispense means and state limits plainly"
+          <RotatingPullQuote
+            statements={apothecaryDeclarations}
+            interval={15000}
             dark
           />
         </div>

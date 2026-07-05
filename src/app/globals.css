@@ -2450,6 +2450,22 @@ a {
   max-width: var(--measure-reading);
 }
 
+.pull-quote--rotating .pull-quote__text {
+  opacity: 0;
+  transition: opacity 1.4s cubic-bezier(0.16, 0.6, 0.4, 1);
+}
+
+.pull-quote--rotating-visible .pull-quote__text {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pull-quote--rotating .pull-quote__text {
+    transition: none;
+    opacity: 1;
+  }
+}
+
 .pull-quote__attribution {
   font-family: var(--font-utility), system-ui, sans-serif;
   font-size: 0.62rem;

@@ -19,6 +19,8 @@ import {
   InstitutionalDivider,
   EditorialPhoto,
 } from "@/components/editorial/Editorial";
+import { RotatingPullQuote } from "@/components/editorial/RotatingPullQuote";
+import { academyDeclarations } from "@/lib/content/sections/academy-declarations";
 
 export async function generateMetadata({
   params,
@@ -136,8 +138,9 @@ export default async function AcademyPage({
 
       <Leaf variant="grave">
         <div className="measure grave-block">
-          <PullQuote
-            text="Held to the standard of scholarship and clinical responsibility"
+          <RotatingPullQuote
+            statements={academyDeclarations}
+            interval={15000}
             dark
           />
         </div>
