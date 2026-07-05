@@ -1,0 +1,38 @@
+---
+description: Sunnah Remedies identity — luxury, editorial, institutional; never SaaS or generic templates
+alwaysApply: true
+---
+
+# Sunnah Remedies identity
+
+**Scope: Sunnah Remedies v2.0 only.** This rule applies exclusively to this project.
+
+Every implementation must reinforce the Sunnah Remedies identity.
+
+## Design should feel
+
+- Luxury
+- Editorial
+- Academic
+- Clinical
+- Islamic
+- Minimal
+- Timeless
+
+## Never
+
+- Imitate SaaS dashboards.
+- Imitate generic Tailwind templates.
+- Use excessive gradients, shadows, or animations.
+
+## Standard
+
+Every page should feel like a premium institution rather than an app.
+
+## Binding context
+
+Applies alongside global rules in `~/.cursor/rules/` — especially `design-decision-gate.mdc`, `Sunnah-Remedies-Design-Manual.md`, and `Photography-Art-Direction-Manual.md`. When they conflict, the more restrictive rule wins.
+
+## Approved exception
+
+The Threshold hero superlative — *The world's leading institute of Prophetic Medicine* — is retained by explicit decision. Do not remove or soften it unless the user asks.
