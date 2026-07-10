@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
-    "seed:danish-cms": "npx tsx scripts/seed-danish-cms.ts"
+    "seed:danish-cms": "npx tsx scripts/seed-danish-cms.ts",
+    "migrate:static-remedies": "npx tsx scripts/migrate-static-remedies.ts"
   },
   "engines": {
     "node": ">=20"

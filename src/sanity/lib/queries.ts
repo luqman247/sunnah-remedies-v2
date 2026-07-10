@@ -177,34 +177,95 @@ export const homepageQuery = groq`
 
 /* ── Apothecary ─────────────────────────────────────────────────── */
 
+/** Public catalogue: never drafts/archived/discontinued; respect visibility flag. */
+const publicProductFilter = `
+  _type == "product"
+  && language == $language
+  && !(_id in path("drafts.**"))
+  && visibleInApothecary != false
+  && (!defined(status) || status in ["active", "coming-soon", "out-of-stock"])
+`;
+
+const libraryAssetProjection = `{
+  _id,
+  title,
+  alt,
+  cloudinary,
+  image { ..., asset-> }
+}`;
+
+const productListProjection = `
+  _id,
+  slug,
+  name,
+  transliteration,
+  botanicalName,
+  nature,
+  institutionalSummary,
+  folio,
+  "mainImage": mainImage { ..., asset-> },
+  "primaryLibraryImage": primaryLibraryImage->${libraryAssetProjection},
+  volume,
+  price,
+  salePrice,
+  currency,
+  priceNote,
+  inStock,
+  stockStatus,
+  status,
+  featured,
+  featuredPriority,
+  visibleInApothecary,
+  purchaseFraming,
+  futureShopifyProductId,
+  commerce
+`;
+
 export const allProductsQuery = groq`
-  *[_type == "product" && language == $language && !(_id in path("drafts.**"))] | order(orderRank) {
-    _id,
-    slug,
-    name,
-    transliteration,
-    botanicalName,
-    nature,
-    institutionalSummary,
-    folio,
-    "mainImage": mainImage { ..., asset-> },
-    volume,
-    price,
-    priceNote,
-    inStock,
-    futureShopifyProductId
+  *[${publicProductFilter}] | order(coalesce(featuredPriority, 99) asc, orderRank asc) {
+    ${productListProjection}
   }
 `;
 
 export const productBySlugQuery = groq`
-  *[_type == "product" && slug.current == $slug && language == $language][0] {
+  *[${publicProductFilter} && slug.current == $slug][0] {
     ...,
     mainImage { ..., asset-> },
+    "primaryLibraryImage": primaryLibraryImage->${libraryAssetProjection},
     gallery[] { ..., asset-> },
+    mediaGallery[] {
+      ...,
+      "libraryAsset": libraryAsset->${libraryAssetProjection},
+      image { ..., asset-> }
+    },
+    "libraryVideos": libraryVideos[]->{
+      _id,
+      title,
+      cloudinary,
+      poster { ..., asset-> }
+    },
+    productVideos[] {
+      ...,
+      "libraryVideo": libraryVideo->{
+        _id,
+        title,
+        cloudinary
+      }
+    },
     propheticReferences[],
-    "relatedProducts": relatedProducts[]->{ _id, slug, name, nature, mainImage { ..., asset-> } },
+    "relatedProducts": relatedProducts[]->{
+      _id,
+      slug,
+      name,
+      nature,
+      status,
+      visibleInApothecary,
+      mainImage { ..., asset-> },
+      "primaryLibraryImage": primaryLibraryImage->${libraryAssetProjection}
+    },
     "ingredients": ingredients[]->{ _id, slug, name, botanicalName },
     seo,
+    aiDraft,
     ${translationSiblings}
   }
 `;

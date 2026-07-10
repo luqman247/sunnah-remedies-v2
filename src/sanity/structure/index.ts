@@ -1,4 +1,4 @@
-import type { StructureBuilder } from "sanity/structure";
+import type { StructureBuilder, StructureResolver } from "sanity/structure";
 
 function languageGroupedList(
   S: StructureBuilder,
@@ -52,7 +52,25 @@ function languageGroupedList(
     );
 }
 
-export const structure = (S: StructureBuilder) =>
+function productStatusList(
+  S: StructureBuilder,
+  title: string,
+  filter: string,
+  ordering: { field: string; direction: "asc" | "desc" }[] = [
+    { field: "name", direction: "asc" },
+  ],
+) {
+  return S.listItem()
+    .title(title)
+    .child(
+      S.documentList()
+        .title(title)
+        .filter(filter)
+        .defaultOrdering(ordering),
+    );
+}
+
+export const structure: StructureResolver = (S) =>
   S.list()
     .title("Sunnah Remedies")
     .items([
@@ -89,17 +107,185 @@ export const structure = (S: StructureBuilder) =>
 
       S.divider(),
 
-      // ── The Apothecary ──
+      // ── The Apothecary (Product Manager) ──
       S.listItem()
         .title("The Apothecary")
         .child(
           S.list()
             .title("The Apothecary")
             .items([
-              languageGroupedList(S, "Products", "product"),
-              languageGroupedList(S, "Collections", "collection"),
+              languageGroupedList(S, "All Products", "product"),
+              S.divider(),
+              productStatusList(
+                S,
+                "Active Products",
+                '_type == "product" && status == "active"',
+                [
+                  { field: "orderRank", direction: "asc" },
+                  { field: "name", direction: "asc" },
+                ],
+              ),
+              productStatusList(
+                S,
+                "Draft Products",
+                '_type == "product" && status == "draft"',
+              ),
+              productStatusList(
+                S,
+                "Coming Soon",
+                '_type == "product" && status == "coming-soon"',
+              ),
+              productStatusList(
+                S,
+                "Out of Stock",
+                '_type == "product" && (status == "out-of-stock" || stockStatus == "out-of-stock")',
+              ),
+              productStatusList(
+                S,
+                "Archived",
+                '_type == "product" && status == "archived"',
+              ),
+              productStatusList(
+                S,
+                "Featured Products",
+                '_type == "product" && featured == true',
+                [
+                  { field: "featuredPriority", direction: "asc" },
+                  { field: "name", direction: "asc" },
+                ],
+              ),
+              productStatusList(
+                S,
+                "Visible in Apothecary",
+                '_type == "product" && visibleInApothecary != false && status == "active"',
+                [
+                  { field: "orderRank", direction: "asc" },
+                  { field: "name", direction: "asc" },
+                ],
+              ),
+              S.divider(),
               languageGroupedList(S, "Categories", "category"),
+              languageGroupedList(S, "Collections", "collection"),
               languageGroupedList(S, "Ingredients", "ingredient"),
+              languageGroupedList(S, "Certifications", "certification"),
+              languageGroupedList(S, "Brands", "brand"),
+              S.divider(),
+              S.listItem()
+                .title("Media Library")
+                .child(
+                  S.list()
+                    .title("Media Library")
+                    .items([
+                      S.listItem()
+                        .title("All images")
+                        .child(
+                          S.documentTypeList("mediaAsset").title("All images"),
+                        ),
+                      S.listItem()
+                        .title("Product images")
+                        .child(
+                          S.documentList()
+                            .title("Product images")
+                            .filter('_type == "mediaAsset" && assetClass == "product"')
+                            .defaultOrdering([{ field: "title", direction: "asc" }]),
+                        ),
+                      S.listItem()
+                        .title("Apothecary tagged")
+                        .child(
+                          S.documentList()
+                            .title("Apothecary tagged")
+                            .filter('_type == "mediaAsset" && "pillar:apothecary" in tags')
+                            .defaultOrdering([{ field: "title", direction: "asc" }]),
+                        ),
+                      S.listItem()
+                        .title("Final only")
+                        .child(
+                          S.documentList()
+                            .title("Final images")
+                            .filter('_type == "mediaAsset" && status == "final"')
+                            .defaultOrdering([{ field: "title", direction: "asc" }]),
+                        ),
+                      S.listItem()
+                        .title("Briefs (placeholders)")
+                        .child(
+                          S.documentList()
+                            .title("Briefs")
+                            .filter('_type == "mediaAsset" && status == "brief"')
+                            .defaultOrdering([{ field: "title", direction: "asc" }]),
+                        ),
+                      S.listItem()
+                        .title("QC pending")
+                        .child(
+                          S.documentList()
+                            .title("QC pending")
+                            .filter('_type == "mediaAsset" && qcStatus == "pending"')
+                            .defaultOrdering([{ field: "title", direction: "asc" }]),
+                        ),
+                      S.listItem()
+                        .title("Missing alt text")
+                        .child(
+                          S.documentList()
+                            .title("Missing alt text")
+                            .filter(
+                              '_type == "mediaAsset" && decorative != true && !defined(alt)',
+                            )
+                            .defaultOrdering([{ field: "title", direction: "asc" }]),
+                        ),
+                      S.divider(),
+                      S.listItem()
+                        .title("All videos")
+                        .child(
+                          S.documentTypeList("videoAsset").title("All videos"),
+                        ),
+                      S.listItem()
+                        .title("Apothecary videos")
+                        .child(
+                          S.documentList()
+                            .title("Apothecary videos")
+                            .filter(
+                              '_type == "videoAsset" && "pillar:apothecary" in tags',
+                            )
+                            .defaultOrdering([{ field: "title", direction: "asc" }]),
+                        ),
+                      S.listItem()
+                        .title("Player mode (needs poster)")
+                        .child(
+                          S.documentList()
+                            .title("Player videos")
+                            .filter('_type == "videoAsset" && mode == "player"')
+                            .defaultOrdering([{ field: "title", direction: "asc" }]),
+                        ),
+                      S.divider(),
+                      S.listItem()
+                        .title("Audio assets")
+                        .child(
+                          S.documentTypeList("audioAsset").title("Audio assets"),
+                        ),
+                    ]),
+                ),
+              S.listItem()
+                .title("Shopify join status")
+                .child(
+                  S.list()
+                    .title("Shopify join status")
+                    .items([
+                      productStatusList(
+                        S,
+                        "Linked to Shopify",
+                        '_type == "product" && defined(commerce.shopifyProductId)',
+                      ),
+                      productStatusList(
+                        S,
+                        "Reference only",
+                        '_type == "product" && purchaseFraming == "reference-only"',
+                      ),
+                      productStatusList(
+                        S,
+                        "Needs Shopify link",
+                        '_type == "product" && purchaseFraming != "reference-only" && !defined(commerce.shopifyProductId)',
+                      ),
+                    ]),
+                ),
             ]),
         ),
 

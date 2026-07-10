@@ -1,3 +1,10 @@
+/**
+ * Collection — editorial framing for a range.
+ * Distinct from Shopify commerce collections (membership is a Shopify fact).
+ *
+ * @see Phase 4 Part 2, Spec 09 §9.6
+ */
+
 import { defineField, defineType } from "sanity";
 
 export const collection = defineType({
@@ -8,6 +15,7 @@ export const collection = defineType({
     { name: "editorial", title: "Editorial", default: true },
     { name: "commerce", title: "Commerce" },
     { name: "curation", title: "Curation" },
+    { name: "seo", title: "SEO" },
   ],
   fields: [
     defineField({
@@ -47,15 +55,29 @@ export const collection = defineType({
       group: "editorial",
       options: { hotspot: true },
       fields: [
-        defineField({ name: "alt", title: "Alt Text", type: "string" }),
+        defineField({
+          name: "alt",
+          title: "Alt Text",
+          type: "string",
+          validation: (rule) => rule.required(),
+        }),
       ],
     }),
     defineField({
       name: "products",
-      title: "Products",
+      title: "Products (editorial list)",
       type: "array",
       group: "editorial",
       of: [{ type: "reference", to: [{ type: "product" }] }],
+      description:
+        "Optional editorial list. Live commerce membership comes from Shopify via the collection reference — do not treat this as the full shop catalogue.",
+    }),
+    defineField({
+      name: "faqs",
+      title: "FAQs",
+      type: "array",
+      group: "editorial",
+      of: [{ type: "faqItem" }],
     }),
 
     // ── Commerce ──
@@ -64,7 +86,8 @@ export const collection = defineType({
       title: "Shopify Collection Reference",
       type: "object",
       group: "commerce",
-      description: "Optional link to a Shopify commerce collection for live membership.",
+      description:
+        "Optional link to a Shopify commerce collection for live membership. Membership is a Shopify fact.",
       fields: [
         defineField({
           name: "shopifyCollectionId",
@@ -74,7 +97,7 @@ export const collection = defineType({
             rule.custom((value) => {
               if (!value) return true;
               if (!/^gid:\/\/shopify\/Collection\/\d+$/.test(value)) {
-                return "Must be a valid Shopify Collection GID.";
+                return "Must be a valid Shopify Collection GID (gid://shopify/Collection/{digits}).";
               }
               return true;
             }),
@@ -83,6 +106,7 @@ export const collection = defineType({
           name: "handle",
           title: "Handle",
           type: "string",
+          description: "Convenience handle. Collection ID is authoritative.",
         }),
       ],
     }),
@@ -94,14 +118,18 @@ export const collection = defineType({
       type: "array",
       group: "curation",
       of: [{ type: "reference", to: [{ type: "product" }] }],
-      description: "Editorially featured items (curation layered on Shopify membership).",
+      description:
+        "Editorially featured items (curation layered on Shopify membership).",
+      validation: (rule) =>
+        rule.max(6).warning("Prefer at most six featured products."),
     }),
     defineField({
       name: "season",
       title: "Season Window",
       type: "seasonWindow",
       group: "curation",
-      description: "Editorial time-bounding for seasonal collections.",
+      description:
+        "Editorial time-bounding for seasonal collections — never for manufactured urgency.",
     }),
     defineField({
       name: "curationNote",
@@ -109,34 +137,43 @@ export const collection = defineType({
       type: "text",
       group: "curation",
       rows: 3,
-      description: "Internal note on the honest logic of the grouping.",
-    }),
-    defineField({
-      name: "faqs",
-      title: "FAQs",
-      type: "array",
-      group: "editorial",
-      of: [
-        {
-          type: "object",
-          fields: [
-            defineField({ name: "question", title: "Question", type: "string", validation: (rule) => rule.required() }),
-            defineField({ name: "answer", title: "Answer", type: "array", of: [{ type: "block" }], validation: (rule) => rule.required() }),
-            defineField({ name: "order", title: "Order", type: "number" }),
-          ],
-          preview: { select: { title: "question" } },
-        },
-      ],
+      description:
+        "Internal note on the honest logic of the grouping (tradition/use — never margin).",
     }),
 
     defineField({
       name: "seo",
       title: "SEO",
       type: "seo",
-      group: "editorial",
+      group: "seo",
     }),
   ],
   preview: {
-    select: { title: "name", media: "image" },
+    select: {
+      title: "name",
+      media: "image",
+      shopifyId: "shopifyCollectionRef.shopifyCollectionId",
+      seasonal: "season.isSeasonal",
+    },
+    prepare({ title, media, shopifyId, seasonal }) {
+      const linked = typeof shopifyId === "string" && shopifyId.length > 0;
+      return {
+        title: title || "Untitled collection",
+        subtitle: [
+          linked ? "Shopify linked" : "Editorial only",
+          seasonal ? "Seasonal" : null,
+        ]
+          .filter(Boolean)
+          .join(" · "),
+        media,
+      };
+    },
   },
+  orderings: [
+    {
+      title: "Name",
+      name: "nameAsc",
+      by: [{ field: "name", direction: "asc" }],
+    },
+  ],
 });

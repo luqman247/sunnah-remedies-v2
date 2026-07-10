@@ -209,7 +209,7 @@ export async function getProductBySlug(slug: string, locale: string = DEFAULT_LO
 
 export async function getProductSlugs(): Promise<{ slug: string; language: string }[]> {
   const sanity = await safeFetch<{ slug: { current: string }; language: string }[]>(
-    `*[_type == "product" && !(_id in path("drafts.**"))]{ slug, language }`,
+    `*[_type == "product" && !(_id in path("drafts.**")) && visibleInApothecary != false && (!defined(status) || status in ["active", "coming-soon", "out-of-stock"])]{ slug, language }`,
     {},
     DEFAULT_LOCALE,
     false,
@@ -251,6 +251,9 @@ function remedyToProduct(r: Remedy): Product {
     price: r.price,
     priceNote: r.priceNote,
     inStock: r.inStock,
+    status: "active",
+    visibleInApothecary: true,
+    currency: "GBP",
     faq: r.faq,
     academyLessons: r.academyLessons.map(l => ({ label: l.title, href: l.href })),
     knowledgeLibrary: r.knowledgeLibrary.map(l => ({ label: l.title, href: l.href })),

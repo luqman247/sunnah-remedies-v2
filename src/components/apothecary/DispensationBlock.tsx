@@ -25,7 +25,9 @@ export async function DispensationBlock({ remedy }: DispensationBlockProps) {
         </div>
         <div>
           <dt className="type-micro dispensation-block__dt">{t("fee")}</dt>
-          <dd className="type-title dispensation-block__dd">{formatPrice(remedy.price)}</dd>
+          <dd className="type-title dispensation-block__dd">
+            {formatPrice(remedy.price, remedy.currency || "GBP")}
+          </dd>
         </div>
         <div>
           <dt className="type-micro dispensation-block__dt">{t("delivery")}</dt>

@@ -19,13 +19,30 @@ export default defineType({
     defineField({
       name: "cloudinary",
       title: "Cloudinary Audio",
-      type: "object",
-      fields: [
-        defineField({ name: "public_id", title: "Public ID", type: "string" }),
-        defineField({ name: "secure_url", title: "Secure URL", type: "url" }),
-        defineField({ name: "format", title: "Format", type: "string" }),
-        defineField({ name: "duration", title: "Duration (seconds)", type: "number" }),
-      ],
+      type: "cloudinaryRef",
+    }),
+    defineField({
+      name: "originalFilename",
+      title: "Original Filename",
+      type: "string",
+    }),
+    defineField({
+      name: "fileSizeBytes",
+      title: "File Size (bytes)",
+      type: "number",
+      validation: (rule) => rule.min(0).integer(),
+    }),
+    defineField({
+      name: "uploadedAt",
+      title: "Upload Date",
+      type: "datetime",
+    }),
+    defineField({
+      name: "tags",
+      title: "Tags",
+      type: "array",
+      of: [{ type: "string" }],
+      options: { layout: "tags" },
     }),
     defineField({
       name: "transcript",

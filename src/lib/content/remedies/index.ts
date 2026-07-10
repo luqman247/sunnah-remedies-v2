@@ -28,7 +28,13 @@ export function formatProvenance(remedy: Remedy): string {
   return `${primary.grade} · ${primary.source.split(" · ")[0]}`;
 }
 
-export function formatPrice(amount: number): string {
+export function formatPrice(
+  amount: number,
+  currency: "GBP" | "DKK" = "GBP",
+): string {
+  if (currency === "DKK") {
+    return `${amount} kr`;
+  }
   return `£${amount}`;
 }
 

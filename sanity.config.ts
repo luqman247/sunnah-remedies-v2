@@ -6,6 +6,15 @@ import { languageFilter } from "@sanity/language-filter";
 import { schemaTypes } from "./src/sanity/schemas";
 import { structure } from "./src/sanity/structure";
 import { OperationsOverview } from "./src/sanity/tools/operations-overview";
+import { ApothecaryOverview } from "./src/sanity/tools/apothecary-overview";
+import { MediaLibraryOverview } from "./src/sanity/tools/media-library-overview";
+import {
+  resolveProductActions,
+  resolveProductBadges,
+  resolveProductProductionUrl,
+  resolveProductTemplates,
+} from "./src/sanity/lib/product-studio";
+import { resolveMediaActions } from "./src/sanity/actions/mediaActions";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "your-project-id";
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
@@ -22,6 +31,8 @@ const TRANSLATABLE_TYPES = [
   "collection",
   "category",
   "ingredient",
+  "brand",
+  "certification",
   "programme",
   "faculty",
   "journey",
@@ -66,10 +77,31 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+    templates: (prev) => resolveProductTemplates(prev),
+  },
+
+  document: {
+    actions: (prev, context) => {
+      const withProducts = resolveProductActions(prev, context);
+      return resolveMediaActions(withProducts, context.schemaType);
+    },
+    badges: (prev, context) => resolveProductBadges(prev, context),
+    productionUrl: async (prev, context) =>
+      resolveProductProductionUrl(prev, context),
   },
 
   tools: (prev) => [
     ...prev,
+    {
+      name: "apothecary",
+      title: "Apothecary",
+      component: ApothecaryOverview,
+    },
+    {
+      name: "media-library",
+      title: "Media Library",
+      component: MediaLibraryOverview,
+    },
     {
       name: "operations",
       title: "Operations",

@@ -1,13 +1,13 @@
 /**
  * Commerce reference — the join key between Sanity editorial and Shopify commerce.
  *
- * This object maps a Sanity product to its Shopify counterpart.
  * Price, availability, and stock are NEVER stored here — only the join key.
  *
  * @see Phase 4 Part 2, Spec 09 §9.4
  */
 
 import { defineField, defineType } from "sanity";
+import { ShopifyProductIdInput } from "@/sanity/components/ShopifyProductIdInput";
 
 export const commerceReference = defineType({
   name: "commerceReference",
@@ -18,7 +18,9 @@ export const commerceReference = defineType({
       name: "shopifyProductId",
       title: "Shopify Product ID",
       type: "string",
-      description: "The Shopify Global ID (GID). Selected via lookup, never typed manually.",
+      description:
+        "Authoritative Shopify Global ID (GID). Selected or pasted from Admin — never invented.",
+      components: { input: ShopifyProductIdInput },
       validation: (rule) =>
         rule.custom((value) => {
           if (!value) return true;
@@ -32,14 +34,16 @@ export const commerceReference = defineType({
       name: "shopifyHandle",
       title: "Shopify Handle",
       type: "string",
-      description: "Convenience handle for URL lookup. Mutable — never the sole key.",
+      description:
+        "Convenience handle for URL lookup. Mutable — never the sole join key. ID is authoritative.",
     }),
     defineField({
       name: "variantMap",
       title: "Variant Map",
       type: "array",
       of: [{ type: "variantReference" }],
-      description: "Maps editorially-known variants to Shopify variant GIDs.",
+      description:
+        "Maps editorially known variants to Shopify variant GIDs. Price and stock stay in Shopify.",
     }),
     defineField({
       name: "status",
@@ -63,4 +67,24 @@ export const commerceReference = defineType({
       description: "Diagnostic — set by webhook sync.",
     }),
   ],
+  preview: {
+    select: {
+      title: "shopifyHandle",
+      id: "shopifyProductId",
+      status: "status",
+    },
+    prepare({ title, id, status }) {
+      const linked = typeof id === "string" && id.length > 0;
+      return {
+        title: title || (linked ? "Shopify product" : "No Shopify link"),
+        subtitle: [
+          linked ? "Linked" : "Unlinked",
+          status ? String(status) : null,
+          linked ? String(id) : null,
+        ]
+          .filter(Boolean)
+          .join(" · "),
+      };
+    },
+  },
 });

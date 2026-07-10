@@ -6,8 +6,7 @@ import { ListingRow } from "@/components/ui/Attestation";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { SectionLabel } from "@/components/ui/PageIntro";
 import { apothecary } from "@/sanity/lib/fetch";
-import { getAllProducts } from "@/sanity/lib/fetch";
-import { productToRemedy } from "@/sanity/lib/adapters";
+import { listPublicRemedies } from "@/lib/apothecary/service";
 import { formatProvenance } from "@/lib/content/remedies";
 
 export async function generateMetadata({
@@ -25,8 +24,7 @@ export default async function MonographsPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const products = await getAllProducts(locale);
-  const remedies = products.map(productToRemedy);
+  const remedies = await listPublicRemedies(locale);
 
   return (
     <SectionPage

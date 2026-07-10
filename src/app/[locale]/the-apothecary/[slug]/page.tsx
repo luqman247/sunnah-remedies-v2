@@ -3,8 +3,11 @@ import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
 import { RemedyMonograph } from "@/components/apothecary/RemedyMonograph";
-import { getProductBySlug, getProductSlugs } from "@/sanity/lib/fetch";
-import { productToRemedy } from "@/sanity/lib/adapters";
+import { getProductSlugs } from "@/sanity/lib/fetch";
+import {
+  getPublicRemedyBySlug,
+  resolveRelatedRemedies,
+} from "@/lib/apothecary/service";
 
 interface PageProps {
   params: Promise<{ slug: string; locale: AppLocale }>;
@@ -17,20 +20,20 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug, locale } = await params;
-  const product = await getProductBySlug(slug, locale);
-  if (!product) return { title: "Remedy monograph" };
+  const remedy = await getPublicRemedyBySlug(slug, locale);
+  if (!remedy) return { title: "Remedy monograph" };
   return {
-    title: product.name,
-    description: product.seo?.metaDescription || product.institutionalSummary,
+    title: remedy.name,
+    description: remedy.institutionalSummary || remedy.nature,
   };
 }
 
 export default async function RemedyPage({ params }: PageProps) {
   const { slug, locale } = await params;
   setRequestLocale(locale);
-  const product = await getProductBySlug(slug, locale);
-  if (!product) notFound();
+  const remedy = await getPublicRemedyBySlug(slug, locale);
+  if (!remedy) notFound();
 
-  const remedy = productToRemedy(product);
-  return <RemedyMonograph remedy={remedy} />;
+  const related = await resolveRelatedRemedies(remedy, locale);
+  return <RemedyMonograph remedy={remedy} related={related} />;
 }

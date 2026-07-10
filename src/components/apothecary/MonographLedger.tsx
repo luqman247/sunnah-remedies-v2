@@ -22,7 +22,9 @@ export function MonographLedger({ remedy }: MonographLedgerProps) {
 
         {remedy.inStock ? (
           <>
-            <p className="monograph-ledger__fee">{formatPrice(remedy.price)}</p>
+            <p className="monograph-ledger__fee">
+              {formatPrice(remedy.price, remedy.currency || "GBP")}
+            </p>
             <p className="type-small monograph-ledger__delivery">{remedy.priceNote}</p>
             <AddToCounter slug={remedy.slug} name={remedy.name} />
           </>

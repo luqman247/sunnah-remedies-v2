@@ -181,17 +181,7 @@ export const ingredient = defineType({
       title: "FAQs",
       type: "array",
       group: "connections",
-      of: [
-        {
-          type: "object",
-          fields: [
-            defineField({ name: "question", title: "Question", type: "string", validation: (rule) => rule.required() }),
-            defineField({ name: "answer", title: "Answer", type: "array", of: [{ type: "block" }], validation: (rule) => rule.required() }),
-            defineField({ name: "order", title: "Order", type: "number" }),
-          ],
-          preview: { select: { title: "question" } },
-        },
-      ],
+      of: [{ type: "faqItem" }],
     }),
 
     // ── Media ──
@@ -252,6 +242,25 @@ export const ingredient = defineType({
     }),
   ],
   preview: {
-    select: { title: "name", subtitle: "botanicalName", media: "image" },
+    select: {
+      title: "name",
+      botanicalName: "botanicalName",
+      arabicName: "arabicName",
+      media: "image",
+    },
+    prepare({ title, botanicalName, arabicName, media }) {
+      return {
+        title: title || "Untitled ingredient",
+        subtitle: [botanicalName, arabicName].filter(Boolean).join(" · "),
+        media,
+      };
+    },
   },
+  orderings: [
+    {
+      title: "Name",
+      name: "nameAsc",
+      by: [{ field: "name", direction: "asc" }],
+    },
+  ],
 });

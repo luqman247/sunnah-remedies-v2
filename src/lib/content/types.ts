@@ -81,8 +81,17 @@ export interface Remedy {
 
   volume: string;
   price: number;
+  salePrice?: number;
+  currency?: "GBP" | "DKK";
   priceNote: string;
   inStock: boolean;
+
+  /** CMS-resolved primary / editorial image for public pages */
+  imageSrc?: string | null;
+  imageAlt?: string;
+  videoUrl?: string | null;
+  featured?: boolean;
+  featuredPriority?: number;
 }
 
 export interface CounterItem {

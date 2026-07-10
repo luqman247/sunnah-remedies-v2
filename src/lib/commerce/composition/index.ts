@@ -164,7 +164,7 @@ function mapEditorialToProductView(
     institutionalSummary: editorial.institutionalSummary,
     folio: editorial.folio,
     commerce,
-    purchaseFraming: (editorial as ProductWithCommerce).purchaseFraming ?? "standard",
+    purchaseFraming: editorial.purchaseFraming ?? "standard",
     mainImage: editorial.mainImage ? mapImage(editorial.mainImage) : undefined,
     gallery: editorial.gallery?.map(mapImage),
     historicalContext: editorial.historicalContext,
@@ -222,7 +222,7 @@ function mapEditorialToCardView(
     mainImage: editorial.mainImage ? mapImage(editorial.mainImage) : undefined,
     volume: editorial.volume,
     priceNote: editorial.priceNote,
-    purchaseFraming: (editorial as ProductWithCommerce).purchaseFraming ?? "standard",
+    purchaseFraming: editorial.purchaseFraming ?? "standard",
     commerce,
   };
 }
@@ -231,12 +231,11 @@ function mapCommerceToView(
   shopify: ProductCommerce,
   editorial: Product
 ): ProductCommerceView {
-  const variantMap = (editorial as ProductWithCommerce).commerce?.variantMap ?? [];
+  const variantMap = editorial.commerce?.variantMap ?? [];
 
   const variants: ProductVariantView[] = shopify.variants.map((v) => {
     const editorialMapping = variantMap.find(
-      (vm: { shopifyVariantId: string; label: string; sanityKey: string }) =>
-        vm.shopifyVariantId === v.id
+      (vm) => vm.shopifyVariantId === v.id
     );
     return mapVariantToView(v, editorialMapping);
   });
@@ -278,17 +277,5 @@ function mapImage(img: { asset?: { url?: string; _ref?: string }; alt?: string }
 }
 
 function getShopifyHandle(product: Product): string | null {
-  const extended = product as ProductWithCommerce;
-  return extended.commerce?.shopifyHandle ?? null;
-}
-
-interface ProductWithCommerce extends Product {
-  purchaseFraming?: "standard" | "education-first" | "reference-only";
-  commerce?: {
-    shopifyProductId?: string;
-    shopifyHandle?: string;
-    variantMap?: Array<{ label: string; sanityKey: string; shopifyVariantId: string }>;
-    status?: string;
-    lastSyncedAt?: string;
-  };
+  return product.commerce?.shopifyHandle ?? null;
 }

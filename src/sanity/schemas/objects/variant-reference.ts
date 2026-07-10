@@ -50,6 +50,20 @@ export const variantReference = defineType({
     }),
   ],
   preview: {
-    select: { title: "label", subtitle: "sanityKey" },
+    select: {
+      title: "label",
+      sanityKey: "sanityKey",
+      shopifyVariantId: "shopifyVariantId",
+    },
+    prepare({ title, sanityKey, shopifyVariantId }) {
+      const linked =
+        typeof shopifyVariantId === "string" && shopifyVariantId.length > 0;
+      return {
+        title: title || "Untitled variant",
+        subtitle: [sanityKey, linked ? "GID linked" : "Missing GID"]
+          .filter(Boolean)
+          .join(" · "),
+      };
+    },
   },
 });

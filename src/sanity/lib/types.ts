@@ -127,16 +127,96 @@ export interface FooterSettings extends SanityDocument {
 
 /* ── Product ────────────────────────────────────────────────────── */
 
+export type PurchaseFraming = "standard" | "education-first" | "reference-only";
+
+export type ProductPublicationStatus =
+  | "draft"
+  | "active"
+  | "coming-soon"
+  | "out-of-stock"
+  | "discontinued"
+  | "archived";
+
+export type StockStatus =
+  | "in-stock"
+  | "low-stock"
+  | "out-of-stock"
+  | "backorder"
+  | "unavailable";
+
+export interface VariantReference {
+  label: string;
+  sanityKey: string;
+  shopifyVariantId: string;
+}
+
+export interface CommerceReference {
+  shopifyProductId?: string;
+  shopifyHandle?: string;
+  variantMap?: VariantReference[];
+  status?: "active" | "draft" | "archived";
+  lastSyncedAt?: string;
+}
+
+export interface CloudinaryRef {
+  public_id?: string;
+  secure_url?: string;
+  format?: string;
+  width?: number;
+  height?: number;
+  bytes?: number;
+  duration?: number;
+  resource_type?: "image" | "video" | "raw";
+}
+
+export interface LibraryMediaAsset {
+  _id?: string;
+  title?: string;
+  alt?: string;
+  cloudinary?: CloudinaryRef;
+  image?: SanityImage;
+}
+
+export interface ProductAiDraft {
+  reviewStatus?: "none" | "review-required" | "approved" | "rejected";
+  shortDescription?: string;
+  fullDescription?: unknown;
+  generatedAt?: string;
+  provider?: string;
+  notes?: string;
+}
+
 export interface Product extends SanityDocument {
   name: string;
   slug: SanitySlug;
+  internalName?: string;
+  subtitle?: string;
   transliteration?: string;
   botanicalName?: string;
   nature?: string;
   institutionalSummary?: string;
   folio?: string;
+  sku?: string;
+  barcode?: string;
+  productType?: string;
   mainImage?: SanityImage;
+  primaryLibraryImage?: LibraryMediaAsset;
   gallery?: SanityImage[];
+  mediaGallery?: {
+    libraryAsset?: LibraryMediaAsset;
+    image?: SanityImage;
+    role?: string;
+    alt?: string;
+  }[];
+  libraryVideos?: {
+    _id?: string;
+    title?: string;
+    cloudinary?: CloudinaryRef;
+  }[];
+  productVideos?: {
+    libraryVideo?: { cloudinary?: CloudinaryRef; title?: string };
+    url?: string;
+  }[];
   historicalContext?: string[];
   propheticReferences?: PropheticReference[];
   traditionalScholarship?: string[];
@@ -154,16 +234,31 @@ export interface Product extends SanityDocument {
   contraindications?: string[];
   volume?: string;
   price?: number;
+  salePrice?: number;
+  compareAtPrice?: number;
+  currency?: "GBP" | "DKK";
   priceNote?: string;
   inStock?: boolean;
+  stockStatus?: StockStatus;
+  stockQuantity?: number;
+  status?: ProductPublicationStatus;
+  featured?: boolean;
+  featuredPriority?: number;
+  orderRank?: number;
+  visibleInApothecary?: boolean;
+  /** @deprecated Use commerce.shopifyProductId. */
   futureShopifyProductId?: string;
+  purchaseFraming?: PurchaseFraming;
+  commerce?: CommerceReference;
   relatedProducts?: Product[];
   ingredients?: Ingredient[];
+  primaryIngredient?: Ingredient;
   academyLessons?: InternalLink[];
   knowledgeLibrary?: InternalLink[];
   pathways?: InternalLink[];
   faq?: { question: string; answer: string }[];
   seo?: SeoFields;
+  aiDraft?: ProductAiDraft;
 }
 
 export interface Ingredient extends SanityDocument {

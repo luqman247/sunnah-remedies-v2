@@ -23,35 +23,28 @@ import {
 import { Leaf } from "@/components/ui/Leaf";
 import { EditorialPhoto, PullQuote } from "@/components/editorial/Editorial";
 import type { Remedy, PropheticReference } from "@/lib/content/types";
-import { getRelatedRemedies, primaryReference } from "@/lib/content/remedies";
+import { primaryReference } from "@/lib/content/remedies";
+import { FALLBACK_PHOTOGRAPHY } from "@/lib/apothecary/media";
 
 interface RemedyMonographProps {
   remedy: Remedy;
+  related?: Remedy[];
 }
 
-export async function RemedyMonograph({ remedy }: RemedyMonographProps) {
+export async function RemedyMonograph({
+  remedy,
+  related = [],
+}: RemedyMonographProps) {
   const t = await getTranslations("apothecary.monograph");
-  const related = getRelatedRemedies(remedy.slug);
   const primary = primaryReference(remedy);
 
-  const remedyPhotography: Record<string, { src: string; alt: string }> = {
-    "black-seed-oil": {
-      src: "/photography/black-seed-editorial.jpg",
-      alt: t("photoBlackSeed"),
-    },
-    honey: {
-      src: "/photography/honey-editorial.jpg",
-      alt: t("photoHoney"),
-    },
-    "olive-oil": {
-      src: "/photography/olive-oil-editorial.jpg",
-      alt: t("photoOliveOil"),
-    },
-    senna: {
-      src: "/photography/senna-editorial.jpg",
-      alt: t("photoSenna"),
-    },
-  };
+  const editorialSrc =
+    remedy.imageSrc || FALLBACK_PHOTOGRAPHY[remedy.slug]?.src || null;
+  const editorialAlt =
+    remedy.imageAlt ||
+    FALLBACK_PHOTOGRAPHY[remedy.slug]?.alt ||
+    remedy.figureAlt ||
+    remedy.name;
 
   function attributionPhrase(ref: PropheticReference): string {
     if (ref.attribution === "revelation") return t("attributionRevelation");
@@ -73,7 +66,9 @@ export async function RemedyMonograph({ remedy }: RemedyMonographProps) {
           />
           <div className="monograph-header__grid">
             <div className="monograph-header__text">
-              <p className="type-micro monograph-header__folio">{t("folioPrefix")} · {remedy.folio}</p>
+              <p className="type-micro monograph-header__folio">
+                {t("folioPrefix")} · {remedy.folio}
+              </p>
               <h1 className="page-intro__title">{remedy.name}</h1>
               <p className="monograph-header__meta">
                 <em>{remedy.transliteration}</em>
@@ -92,14 +87,31 @@ export async function RemedyMonograph({ remedy }: RemedyMonographProps) {
         </div>
       </Leaf>
 
-      {remedyPhotography[remedy.slug] && (
+      {editorialSrc && (
         <EditorialPhoto
-          src={remedyPhotography[remedy.slug].src}
-          alt={remedyPhotography[remedy.slug].alt}
+          src={editorialSrc}
+          alt={editorialAlt}
           aspect="landscape"
           fullBleed
           caption={`${remedy.name} — ${t("editorialPhotography")}`}
         />
+      )}
+
+      {remedy.videoUrl && (
+        <Leaf>
+          <div className="measure-wide">
+            <video
+              controls
+              playsInline
+              preload="metadata"
+              src={remedy.videoUrl}
+              style={{ width: "100%", maxHeight: "70vh", background: "var(--ink)" }}
+              aria-label={`${remedy.name} video`}
+            >
+              <track kind="captions" />
+            </video>
+          </div>
+        </Leaf>
       )}
 
       <Leaf variant="inset">
@@ -109,9 +121,14 @@ export async function RemedyMonograph({ remedy }: RemedyMonographProps) {
           </aside>
 
           <article className="monograph-layout__reading measure">
-            <section id="institutional-summary" className="monograph-section monograph-plaque">
+            <section
+              id="institutional-summary"
+              className="monograph-section monograph-plaque"
+            >
               <SectionLabel>{t("institutionalSummary")}</SectionLabel>
-              <p className="type-body-l monograph-plaque__text">{remedy.institutionalSummary}</p>
+              <p className="type-body-l monograph-plaque__text">
+                {remedy.institutionalSummary}
+              </p>
             </section>
 
             <MonographSection id="historical-context" title={t("historicalUse")}>
@@ -146,7 +163,10 @@ export async function RemedyMonograph({ remedy }: RemedyMonographProps) {
               )}
             </MonographSection>
 
-            <MonographSection id="traditional-scholarship" title={t("traditionalScholarship")}>
+            <MonographSection
+              id="traditional-scholarship"
+              title={t("traditionalScholarship")}
+            >
               <MonographProse paragraphs={remedy.traditionalScholarship} />
             </MonographSection>
 
@@ -169,7 +189,10 @@ export async function RemedyMonograph({ remedy }: RemedyMonographProps) {
               <MonographList items={remedy.provenance.harvesting} />
             </MonographSection>
 
-            <MonographSection id="laboratory-verification" title={t("laboratoryVerification")}>
+            <MonographSection
+              id="laboratory-verification"
+              title={t("laboratoryVerification")}
+            >
               <MonographList items={remedy.laboratoryVerification} />
             </MonographSection>
 

@@ -11,8 +11,16 @@ import type { Product, Programme, Journey } from "./types";
 import type { Remedy, PropheticReference } from "@/lib/content/types";
 import type { AcademyProgramme } from "@/lib/content/academy/types";
 import type { SacredJourney } from "@/lib/content/journeys/types";
+import {
+  resolveProductImage,
+  resolveProductVideoUrl,
+} from "@/lib/apothecary/media";
 
 export function productToRemedy(p: Product): Remedy {
+  const image = resolveProductImage(p);
+  const displayPrice =
+    typeof p.salePrice === "number" && p.salePrice > 0 ? p.salePrice : p.price || 0;
+
   return {
     slug: p.slug?.current || p._id,
     name: p.name,
@@ -22,7 +30,7 @@ export function productToRemedy(p: Product): Remedy {
     institutionalSummary: p.institutionalSummary || "",
     folio: p.folio || "",
     figure: inferFigure(p.slug?.current || ""),
-    figureAlt: p.mainImage?.alt || "",
+    figureAlt: image.alt || p.mainImage?.alt || "",
     historicalContext: p.historicalContext || [],
     propheticReferences: (p.propheticReferences || []) as PropheticReference[],
     traditionalScholarship: p.traditionalScholarship || [],
@@ -48,14 +56,41 @@ export function productToRemedy(p: Product): Remedy {
     returns: [],
     customerSupport: [],
     faq: p.faq || [],
-    relatedRemedies: (p.relatedProducts || []).map(r => r.slug?.current || r._id),
-    academyLessons: (p.academyLessons || []).map(l => ({ title: l.label, href: l.href, note: "" })),
-    knowledgeLibrary: (p.knowledgeLibrary || []).map(l => ({ title: l.label, href: l.href, note: "" })),
-    pathways: (p.pathways || []).map(pw => ({ label: pw.label, href: pw.href, department: "Academy" as const })),
+    relatedRemedies: (p.relatedProducts || [])
+      .filter(
+        (r) =>
+          r.visibleInApothecary !== false &&
+          r.status !== "draft" &&
+          r.status !== "archived" &&
+          r.status !== "discontinued",
+      )
+      .map((r) => r.slug?.current || r._id),
+    academyLessons: (p.academyLessons || []).map((l) => ({
+      title: l.label,
+      href: l.href,
+      note: "",
+    })),
+    knowledgeLibrary: (p.knowledgeLibrary || []).map((l) => ({
+      title: l.label,
+      href: l.href,
+      note: "",
+    })),
+    pathways: (p.pathways || []).map((pw) => ({
+      label: pw.label,
+      href: pw.href,
+      department: "Academy" as const,
+    })),
     volume: p.volume || "",
-    price: p.price || 0,
+    price: displayPrice,
+    salePrice: p.salePrice,
+    currency: p.currency || "GBP",
     priceNote: p.priceNote || "",
     inStock: p.inStock ?? true,
+    imageSrc: image.src,
+    imageAlt: image.alt,
+    videoUrl: resolveProductVideoUrl(p),
+    featured: Boolean(p.featured),
+    featuredPriority: p.featuredPriority,
   };
 }
 

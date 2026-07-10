@@ -14,19 +14,24 @@ import { revalidatePath } from "next/cache";
 const REVALIDATION_SECRET = process.env.REVALIDATION_SECRET;
 
 const TYPE_ROUTE_MAP: Record<string, string[]> = {
-  product: ["/the-apothecary"],
-  article: ["/knowledge-library"],
-  programme: ["/the-academy"],
-  journey: ["/sacred-journeys"],
-  ingredient: ["/knowledge/ingredient", "/the-apothecary"],
-  condition: ["/knowledge/condition"],
-  bodySystem: ["/knowledge/bodySystem"],
-  hadith: ["/knowledge/hadith"],
-  quranReferenceDoc: ["/knowledge/quranReference"],
-  researchPaper: ["/knowledge/research"],
-  scholar: ["/knowledge/scholar"],
-  faculty: ["/the-academy/faculty"],
-  reference: ["/knowledge/citations"],
+  product: ["/the-apothecary", "/dk/the-apothecary"],
+  article: ["/knowledge-library", "/dk/knowledge-library"],
+  programme: ["/the-academy", "/dk/the-academy"],
+  journey: ["/sacred-journeys", "/dk/sacred-journeys"],
+  ingredient: [
+    "/knowledge/ingredient",
+    "/the-apothecary",
+    "/dk/knowledge/ingredient",
+    "/dk/the-apothecary",
+  ],
+  condition: ["/knowledge/condition", "/dk/knowledge/condition"],
+  bodySystem: ["/knowledge/bodySystem", "/dk/knowledge/bodySystem"],
+  hadith: ["/knowledge/hadith", "/dk/knowledge/hadith"],
+  quranReferenceDoc: ["/knowledge/quranReference", "/dk/knowledge/quranReference"],
+  researchPaper: ["/knowledge/research", "/dk/knowledge/research"],
+  scholar: ["/knowledge/scholar", "/dk/knowledge/scholar"],
+  faculty: ["/the-academy/faculty", "/dk/the-academy/faculty"],
+  reference: ["/knowledge/citations", "/dk/knowledge/citations"],
 };
 
 export async function POST(request: NextRequest) {
