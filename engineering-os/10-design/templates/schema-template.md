@@ -1,0 +1,107 @@
+# Document Metadata
+
+Document Type:
+
+Version:
+
+Status:
+
+Owner:
+
+Author(s):
+
+Created:
+
+Last Updated:
+
+Review Date:
+
+Related Documents:
+
+Related ADRs:
+
+Related Milestone:
+
+# Schema Documentation
+
+Schema Name
+
+Document Type
+
+Owner
+
+---
+
+# Purpose
+
+---
+
+# Relationships
+
+---
+
+# Fields
+
+Name
+
+Type
+
+Required
+
+Validation
+
+Description
+
+---
+
+# Preview
+
+---
+
+# Validation Rules
+
+---
+
+# Publishing Workflow
+
+---
+
+# Related Queries
+
+---
+
+# Related Components
+
+---
+
+# Example Document
+
+---
+
+# Migration Notes
+
+---
+
+Version
+
+---
+
+# Change History
+
+| Version | Date | Author | Summary |
+
+|----------|------|--------|---------|
+
+---
+
+# Approval
+
+Reviewer:
+
+Approved By:
+
+Approval Date:
+
+---
+
+© Sunnah Remedies Engineering System

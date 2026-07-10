@@ -1,0 +1,131 @@
+# Prompt Versioning Standard
+
+## Purpose
+
+Manage prompt evolution over time while preserving compatibility and traceability.
+
+Prompts should evolve in the same disciplined manner as software.
+
+---
+
+# Version Format
+
+Major.Minor.Patch
+
+Examples:
+
+1.0.0
+
+1.1.0
+
+1.1.1
+
+2.0.0
+
+---
+
+# Version Rules
+
+Major
+
+Breaking structural changes.
+
+Minor
+
+New capabilities.
+
+Patch
+
+Corrections and wording improvements.
+
+---
+
+# Every Prompt Must Include
+
+Version
+
+Author
+
+Owner
+
+Status
+
+Created
+
+Last Updated
+
+Compatible Engineering Handbook Version
+
+---
+
+# Status Values
+
+Draft
+
+Review
+
+Approved
+
+Deprecated
+
+Archived
+
+---
+
+# Change History
+
+Every prompt should include:
+
+| Version | Date | Author | Changes |
+
+|---------|------|--------|---------|
+
+---
+
+# Review Process
+
+Draft
+
+↓
+
+Review
+
+↓
+
+Approval
+
+↓
+
+Publication
+
+↓
+
+Continuous Improvement
+
+---
+
+# Principles Summary
+
+1. Prompts are version-controlled assets.
+2. Every change should be traceable.
+3. Preserve compatibility where practical.
+4. Archive rather than delete.
+5. Maintain a documented history.
+
+Version: 1.0
+
+---
+
+## Document Metadata
+
+**Document Type:** Standard
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Sunnah Remedies Engineering
+**Review Cycle:** Every 6 months
+
+## Change History
+
+| Version | Date | Summary |
+|---------|------|---------|
+| 1.0.0 | Initial Release | Migrated and standardised into the Engineering Operating System |

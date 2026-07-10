@@ -1,0 +1,122 @@
+# Verification Prompts
+
+> Purpose
+
+Verification is the process of proving that engineering work satisfies the standards defined in the Engineering Handbook.
+
+Verification occurs after implementation and before deployment.
+
+No feature is complete until it has been successfully verified.
+
+---
+
+## Verification Philosophy
+
+Verification exists to:
+
+- Ensure correctness.
+- Protect production.
+- Prevent regressions.
+- Improve confidence.
+- Maintain architectural integrity.
+
+Verification is evidence—not opinion.
+
+---
+
+## Standard Verification Pipeline
+
+Implementation Complete
+
+↓
+
+Repository Review
+
+↓
+
+Code Review
+
+↓
+
+Build
+
+↓
+
+Type Check
+
+↓
+
+Lint
+
+↓
+
+Automated Testing
+
+↓
+
+Development Server
+
+↓
+
+Browser Verification
+
+↓
+
+Performance Review
+
+↓
+
+Accessibility Review
+
+↓
+
+Security Review
+
+↓
+
+SEO Review
+
+↓
+
+Documentation Review
+
+↓
+
+Verification Report
+
+↓
+
+Ready for Deployment
+
+---
+
+## Prompt Library
+
+- Verification
+- Code Review
+- Testing
+- Deployment Review
+- Performance Review
+- Security Review
+- Accessibility Review
+- SEO Review
+
+Version: 1.0
+
+Status: Approved
+
+---
+
+## Document Metadata
+
+**Document Type:** Prompt
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Sunnah Remedies Engineering
+**Review Cycle:** Every 6 months
+
+## Change History
+
+| Version | Date | Summary |
+|---------|------|---------|
+| 1.0.0 | Initial Release | Migrated and standardised into the Engineering Operating System |

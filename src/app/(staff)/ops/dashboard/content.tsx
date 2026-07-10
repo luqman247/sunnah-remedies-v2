@@ -43,7 +43,7 @@ export function DashboardContent() {
   if (loading) {
     return (
       <div className="text-center py-12">
-        <p className="font-[family-name:var(--font-body)] text-sm text-[#0E3B2E]/50">
+        <p className="font-[family-name:var(--font-body)] text-sm text-emerald/50">
           Loading institutional data
         </p>
       </div>
@@ -161,19 +161,19 @@ export function DashboardContent() {
                     ? "border-[#8A4B3B]/30 bg-[#8A4B3B]/5"
                     : alert.severity === "warning"
                     ? "border-[#96763F]/30 bg-[#96763F]/5"
-                    : "border-[#0E3B2E]/10"
+                    : "border-emerald/10"
                 }`}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <p className="font-[family-name:var(--font-utility)] text-xs font-medium text-[#0E3B2E]">
+                    <p className="font-[family-name:var(--font-utility)] text-xs font-medium text-emerald">
                       {alert.title}
                     </p>
-                    <p className="font-[family-name:var(--font-body)] text-xs text-[#0E3B2E]/60 mt-0.5">
+                    <p className="font-[family-name:var(--font-body)] text-xs text-emerald/60 mt-0.5">
                       {alert.message}
                     </p>
                   </div>
-                  <span className="font-[family-name:var(--font-utility)] text-[10px] uppercase tracking-wider text-[#0E3B2E]/40 whitespace-nowrap">
+                  <span className="font-[family-name:var(--font-utility)] text-[10px] uppercase tracking-wider text-emerald/40 whitespace-nowrap">
                     {new Date(alert.createdAt).toLocaleDateString("en-GB")}
                   </span>
                 </div>
@@ -189,10 +189,10 @@ export function DashboardContent() {
 function DashboardSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section>
-      <h2 className="font-[family-name:var(--font-utility)] text-xs font-medium uppercase tracking-[0.15em] text-[#0E3B2E]/50 mb-3">
+      <h2 className="font-[family-name:var(--font-utility)] text-xs font-medium uppercase tracking-[0.15em] text-emerald/50 mb-3">
         {title}
       </h2>
-      <div className="border-t border-[#0E3B2E]/10 pt-4">{children}</div>
+      <div className="border-t border-emerald/10 pt-4">{children}</div>
     </section>
   );
 }
@@ -211,19 +211,19 @@ function MetricCard({
   return (
     <div
       className={`p-3 border ${
-        alert ? "border-[#8A4B3B]/30 bg-[#8A4B3B]/5" : "border-[#0E3B2E]/10"
+        alert ? "border-[#8A4B3B]/30 bg-[#8A4B3B]/5" : "border-emerald/10"
       }`}
     >
-      <p className="font-[family-name:var(--font-utility)] text-[10px] uppercase tracking-wider text-[#0E3B2E]/50">
+      <p className="font-[family-name:var(--font-utility)] text-[10px] uppercase tracking-wider text-emerald/50">
         {label}
       </p>
       <p className={`font-[family-name:var(--font-display)] text-xl font-light mt-1 ${
-        alert ? "text-[#8A4B3B]" : "text-[#0E3B2E]"
+        alert ? "text-[#8A4B3B]" : "text-emerald"
       }`}>
         {value}
       </p>
       {detail && (
-        <p className="font-[family-name:var(--font-body)] text-[10px] text-[#0E3B2E]/40 mt-0.5">
+        <p className="font-[family-name:var(--font-body)] text-[10px] text-emerald/40 mt-0.5">
           {detail}
         </p>
       )}
@@ -240,11 +240,11 @@ function StatusCard({
   status: string;
   detail?: string;
 }) {
-  const statusColor = status === "healthy" ? "#0E3B2E" : status === "degraded" ? "#96763F" : "#8A4B3B";
+  const statusColor = status === "healthy" ? "emerald" : status === "degraded" ? "#96763F" : "#8A4B3B";
 
   return (
-    <div className="p-3 border border-[#0E3B2E]/10">
-      <p className="font-[family-name:var(--font-utility)] text-[10px] uppercase tracking-wider text-[#0E3B2E]/50">
+    <div className="p-3 border border-emerald/10">
+      <p className="font-[family-name:var(--font-utility)] text-[10px] uppercase tracking-wider text-emerald/50">
         {label}
       </p>
       <div className="flex items-center gap-2 mt-1">
@@ -260,7 +260,7 @@ function StatusCard({
         </span>
       </div>
       {detail && (
-        <p className="font-[family-name:var(--font-body)] text-[10px] text-[#0E3B2E]/40 mt-0.5">
+        <p className="font-[family-name:var(--font-body)] text-[10px] text-emerald/40 mt-0.5">
           {detail}
         </p>
       )}

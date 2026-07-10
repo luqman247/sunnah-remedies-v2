@@ -81,11 +81,7 @@ export const brandContext = {
 
 /* ── Brand colours (from guidelines) ───────────────────────────── */
 
-export const brandColors = {
-  deepEmerald: "#0E3B2E",
-  antiqueGold: "#C7A25A",
-  warmIvory: "#F6F3EE",
-} as const;
+export { brandColors } from "@/config/theme";
 
 /* ── Alt text ──────────────────────────────────────────────────── */
 

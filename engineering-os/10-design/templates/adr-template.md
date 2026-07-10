@@ -1,0 +1,213 @@
+# Document Metadata
+
+Document Type:
+
+Version:
+
+Status:
+
+Owner:
+
+Author(s):
+
+Created:
+
+Last Updated:
+
+Review Date:
+
+Related Documents:
+
+Related ADRs:
+
+Related Milestone:
+
+# Document Metadata
+
+Document Type:
+
+Version:
+
+Status:
+
+Owner:
+
+Author(s):
+
+Created:
+
+Last Updated:
+
+Review Date:
+
+Related Documents:
+
+Related ADRs:
+
+Related Milestone:
+
+Architecture Decision Record (ADR)
+
+## Metadata
+
+ADR Number:
+
+Title:
+
+Status:
+
+Date:
+
+Author(s):
+
+Decision Owner:
+
+Related ADRs:
+
+Related Documents:
+
+---
+
+# Executive Summary
+
+A concise summary of the decision.
+
+---
+
+# Context
+
+Background information explaining why this decision is necessary.
+
+---
+
+# Problem Statement
+
+Describe the problem being solved.
+
+---
+
+# Goals
+
+- Goal 1
+- Goal 2
+- Goal 3
+
+---
+
+# Constraints
+
+Technical, business, legal, operational or architectural constraints.
+
+---
+
+# Options Considered
+
+## Option A
+
+Advantages
+
+Disadvantages
+
+---
+
+## Option B
+
+Advantages
+
+Disadvantages
+
+---
+
+## Option C
+
+Advantages
+
+Disadvantages
+
+---
+
+# Decision
+
+Describe the chosen solution.
+
+---
+
+# Rationale
+
+Explain why this option was selected.
+
+---
+
+# Consequences
+
+Positive
+
+Negative
+
+Short Term
+
+Long Term
+
+---
+
+# Risks
+
+Risk
+
+Likelihood
+
+Impact
+
+Mitigation
+
+---
+
+# Implementation Notes
+
+Dependencies
+
+Migration
+
+Rollback
+
+---
+
+# Success Criteria
+
+How success will be measured.
+
+---
+
+# Review
+
+Approved By
+
+Approval Date
+
+Next Review Date
+
+---
+
+Version
+
+---
+
+# Change History
+
+| Version | Date | Author | Summary |
+
+|----------|------|--------|---------|
+
+---
+
+# Approval
+
+Reviewer:
+
+Approved By:
+
+Approval Date:
+
+---
+
+© Sunnah Remedies Engineering System

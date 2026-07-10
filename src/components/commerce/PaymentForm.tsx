@@ -10,6 +10,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { brandColors } from "@/config/theme";
 import { useTranslations } from "next-intl";
 import {
   Elements,
@@ -44,7 +45,7 @@ export function PaymentFormWrapper({
     appearance: {
       theme: "stripe",
       variables: {
-        colorPrimary: "#0E3B2E",
+        colorPrimary: brandColors.deepEmerald,
         colorBackground: "#FAFAF8",
         colorText: "#2C2C2C",
         fontFamily: "var(--font-sans), system-ui, sans-serif",
@@ -125,7 +126,7 @@ function PaymentForm({
           marginTop: "24px",
           width: "100%",
           padding: "14px 24px",
-          backgroundColor: "#0E3B2E",
+          backgroundColor: brandColors.deepEmerald,
           color: "#FAFAF8",
           border: "none",
           fontSize: "14px",

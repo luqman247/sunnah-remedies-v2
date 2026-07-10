@@ -36,10 +36,10 @@ export default function OpsIndexPage() {
   return (
     <article>
       <header className="mb-8">
-        <h1 className="font-[family-name:var(--font-display)] text-2xl font-light text-[#0E3B2E] mb-2">
+        <h1 className="font-[family-name:var(--font-display)] text-2xl font-light text-emerald mb-2">
           Operational Forms
         </h1>
-        <p className="font-[family-name:var(--font-body)] text-sm text-[#0E3B2E]/70 leading-relaxed">
+        <p className="font-[family-name:var(--font-body)] text-sm text-emerald/70 leading-relaxed">
           Record operational events. Each submission is timestamped and attributed
         </p>
       </header>
@@ -49,12 +49,12 @@ export default function OpsIndexPage() {
           <a
             key={form.href}
             href={form.href}
-            className="block p-4 border border-[#0E3B2E]/10 hover:border-[#0E3B2E]/25 transition-colors"
+            className="block p-4 border border-emerald/10 hover:border-emerald/25 transition-colors"
           >
-            <h2 className="font-[family-name:var(--font-utility)] text-sm font-medium text-[#0E3B2E]">
+            <h2 className="font-[family-name:var(--font-utility)] text-sm font-medium text-emerald">
               {form.title}
             </h2>
-            <p className="font-[family-name:var(--font-body)] text-xs text-[#0E3B2E]/60 mt-0.5">
+            <p className="font-[family-name:var(--font-body)] text-xs text-emerald/60 mt-0.5">
               {form.description}
             </p>
           </a>

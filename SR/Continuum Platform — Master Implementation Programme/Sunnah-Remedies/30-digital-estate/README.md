@@ -1,0 +1,2 @@
+# 30 · Digital Estate
+The website and digital-product programme (institutional rebuild, Phases 1–9). `standards/` binds all work; other folders are phase specifications: `experience/` (Ph 3, 5), `commerce/` (Ph 4), `intelligence/` (Ph 6–7), `operations/` (Ph 8), `community/` (Ph 9), `audits/` (Ph 2, 6 evidence). Read the standards before any implementation; verify against `standards/institutional-review-checklist.md`.

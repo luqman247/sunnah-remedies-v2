@@ -1,0 +1,151 @@
+# Good Example — ProductCard Component
+
+## Purpose
+
+Display one product consistently throughout the Sunnah Remedies platform.
+
+---
+
+# Responsibilities
+
+Display:
+
+- Product image
+- Product name
+- Product subtitle
+- Price
+- Certification badges
+- Rating
+- CTA button
+
+---
+
+# Does NOT
+
+Fetch products.
+
+Manage cart.
+
+Handle checkout.
+
+Manage authentication.
+
+Perform filtering.
+
+Call APIs.
+
+---
+
+# Data Source
+
+Sanity Product Document
+
+↓
+
+ProductService
+
+↓
+
+ProductCard
+
+---
+
+# Accessibility
+
+Semantic HTML.
+
+Keyboard accessible.
+
+Alt text.
+
+Focus states.
+
+Colour contrast.
+
+Responsive.
+
+---
+
+# Responsive Behaviour
+
+Desktop
+
+4-column grid
+
+Tablet
+
+2-column grid
+
+Mobile
+
+1-column grid
+
+---
+
+# Performance
+
+Optimised images.
+
+Lazy loading.
+
+Responsive images.
+
+Minimal JavaScript.
+
+Server Components where possible.
+
+---
+
+# Why This Is Good
+
+Single Responsibility.
+
+Reusable.
+
+Easy to maintain.
+
+Easy to test.
+
+Consistent UI.
+
+Strong typing.
+
+Accessible.
+
+Scalable.
+
+---
+
+# Used In
+
+Homepage
+
+Apothecary
+
+Collections
+
+Related Products
+
+Search Results
+
+Recommendations
+
+Recently Viewed
+
+Wishlist
+
+---
+
+## Document Metadata
+
+**Document Type:** Example (Good)
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Sunnah Remedies Engineering
+**Review Cycle:** Annual
+
+## Change History
+
+| Version | Date | Summary |
+|---------|------|---------|
+| 1.0.0 | Initial Release | Migrated and standardised into the Engineering Operating System |

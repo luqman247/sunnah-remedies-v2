@@ -1,0 +1,35 @@
+# Decision Log Prompt
+
+Document an engineering or product decision.
+
+Include:
+
+- Decision
+- Date
+- Owner
+- Reason
+- Impact
+- Related ADR
+- Related Milestone
+- Alternatives Considered
+- Outcome
+
+The Decision Log should provide a chronological history of important project decisions.
+
+Keep entries concise but informative.
+
+---
+
+## Document Metadata
+
+**Document Type:** Prompt
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Sunnah Remedies Engineering
+**Review Cycle:** Every 6 months
+
+## Change History
+
+| Version | Date | Summary |
+|---------|------|---------|
+| 1.0.0 | Initial Release | Migrated and standardised into the Engineering Operating System |

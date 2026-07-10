@@ -1,0 +1,98 @@
+# Example — Good System Design
+
+This example demonstrates a high-quality system design document.
+
+---
+
+## Executive Summary
+
+Design a scalable product catalogue using Sanity as the single source of truth.
+
+---
+
+## Business Goals
+
+- Editors manage products.
+- No hardcoded products.
+- Support multilingual content.
+- Future marketplace support.
+
+---
+
+## Architecture
+
+Frontend
+
+↓
+
+Services
+
+↓
+
+GROQ Queries
+
+↓
+
+Sanity
+
+↓
+
+Cloudinary
+
+---
+
+## Modules
+
+Apothecary
+
+Search
+
+Collections
+
+Ingredients
+
+Checkout
+
+---
+
+## Risks
+
+Content migration.
+
+---
+
+## Trade-offs
+
+Greater flexibility.
+
+Additional CMS complexity.
+
+---
+
+## Why This Is Good
+
+✓ Clear
+
+✓ Modular
+
+✓ Scalable
+
+✓ Documented
+
+✓ Measurable
+
+---
+
+## Document Metadata
+
+**Document Type:** Example (Good)
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Sunnah Remedies Engineering
+**Review Cycle:** Annual
+
+## Change History
+
+| Version | Date | Summary |
+|---------|------|---------|
+| 1.0.0 | Initial Release | Migrated and standardised into the Engineering Operating System |

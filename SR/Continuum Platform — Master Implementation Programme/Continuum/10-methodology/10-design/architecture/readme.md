@@ -1,0 +1,75 @@
+# Architecture Prompts
+
+> Purpose
+
+Architecture prompts define how new systems, features, modules, and technologies should be designed before implementation begins.
+
+Architecture is the foundation of every engineering decision.
+
+Implementation should never begin without a documented architectural plan.
+
+---
+
+# Architecture Philosophy
+
+Architecture should be:
+
+- Simple
+- Modular
+- Scalable
+- Secure
+- Performant
+- Maintainable
+- Extensible
+- Well documented
+
+Every architectural decision should support the long-term vision of the Sunnah Remedies platform.
+
+---
+
+# Engineering Principles
+
+Every architecture prompt must:
+
+- Read the Engineering Handbook.
+- Read the Enterprise Architecture.
+- Review existing ADRs.
+- Audit the current implementation.
+- Evaluate multiple approaches.
+- Recommend the simplest viable solution.
+- Consider long-term maintainability.
+- Consider performance, accessibility, security, and SEO.
+- Produce implementation-ready documentation.
+
+---
+
+# Prompt Library
+
+- System Design
+- Feature Specification
+- Architecture Review
+- Repository Audit
+- CMS Blueprint
+- Module Design
+- Technology Evaluation
+- Decision Proposal
+
+Version: 1.0
+
+Status: Approved
+
+---
+
+## Document Metadata
+
+**Document Type:** Architecture
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Sunnah Remedies Engineering
+**Review Cycle:** Every 6 months
+
+## Change History
+
+| Version | Date | Summary |
+|---------|------|---------|
+| 1.0.0 | Initial Release | Migrated and standardised into the Engineering Operating System |

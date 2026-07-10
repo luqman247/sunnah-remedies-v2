@@ -1,0 +1,108 @@
+# Planning Prompts
+
+> Purpose
+
+Planning transforms ideas into structured engineering work.
+
+Every implementation should begin with a documented plan.
+
+Planning prompts exist to:
+
+- Define priorities.
+- Reduce uncertainty.
+- Improve engineering predictability.
+- Prevent scope creep.
+- Align engineering with business goals.
+
+Planning should occur before architecture and implementation.
+
+---
+
+## Planning Philosophy
+
+Planning should be:
+
+- Strategic
+- Incremental
+- Evidence-based
+- Measurable
+- Architecture-driven
+- Maintainable
+
+Good planning reduces technical debt.
+
+---
+
+## Planning Workflow
+
+Business Objective
+
+↓
+
+Project Audit
+
+↓
+
+Roadmap
+
+↓
+
+Milestone Planning
+
+↓
+
+Dependency Analysis
+
+↓
+
+Risk Analysis
+
+↓
+
+Execution Plan
+
+↓
+
+Architecture
+
+↓
+
+Implementation
+
+↓
+
+Verification
+
+---
+
+## Prompt Library
+
+- Milestone Planning
+- Execution Plan
+- Roadmap
+- Risk Analysis
+- Dependency Analysis
+- Project Audit
+- Sprint Planning
+- Feature Prioritisation
+- Project Health
+
+Version: 1.0
+
+Status: Approved
+
+---
+
+## Document Metadata
+
+**Document Type:** Planning
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Sunnah Remedies Engineering
+**Review Cycle:** Quarterly
+
+## Change History
+
+| Version | Date | Summary |
+|---------|------|---------|
+| 1.0.0 | Initial Release | Migrated and standardised into the Engineering Operating System |

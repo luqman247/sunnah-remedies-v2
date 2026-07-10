@@ -1,0 +1,71 @@
+# Documentation Prompts
+
+> Purpose
+
+Documentation is a core engineering discipline. It preserves architectural knowledge, supports collaboration, improves maintainability, and enables future engineers—human or AI—to understand the platform without relying on tribal knowledge.
+
+Documentation should evolve alongside the codebase.
+
+---
+
+# Documentation Philosophy
+
+Documentation should be:
+
+- Accurate
+- Concise
+- Complete
+- Version Controlled
+- Easy to Navigate
+- Continuously Updated
+
+Documentation explains **why**, not just **what**.
+
+---
+
+# Engineering Principles
+
+Every documentation prompt must:
+
+- Follow the Engineering Handbook.
+- Use approved terminology from the Glossary.
+- Reference relevant ADRs.
+- Link related documents.
+- Include version information.
+- Record assumptions.
+- Record trade-offs.
+- Remain implementation-aware.
+- Avoid duplication.
+
+---
+
+# Prompt Library
+
+- ADR
+- Engineering Handbook
+- Module README
+- Schema Documentation
+- Release Notes
+- Decision Log
+- API Documentation
+- Changelog
+
+Version: 1.0
+
+Status: Approved
+
+---
+
+## Document Metadata
+
+**Document Type:** Prompt
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Sunnah Remedies Engineering
+**Review Cycle:** Every 6 months
+
+## Change History
+
+| Version | Date | Summary |
+|---------|------|---------|
+| 1.0.0 | Initial Release | Migrated and standardised into the Engineering Operating System |

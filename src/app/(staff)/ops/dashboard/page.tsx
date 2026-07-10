@@ -11,10 +11,10 @@ export default function DashboardPage() {
   return (
     <article>
       <header className="mb-8">
-        <h1 className="font-[family-name:var(--font-display)] text-2xl font-light text-[#0E3B2E] mb-2">
+        <h1 className="font-[family-name:var(--font-display)] text-2xl font-light text-emerald mb-2">
           Institutional Dashboard
         </h1>
-        <p className="font-[family-name:var(--font-body)] text-sm text-[#0E3B2E]/70 leading-relaxed">
+        <p className="font-[family-name:var(--font-body)] text-sm text-emerald/70 leading-relaxed">
           Real-time overview of the institution
         </p>
       </header>

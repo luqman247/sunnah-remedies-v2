@@ -65,30 +65,30 @@ export default function TemperatureLogPage() {
   return (
     <article>
       <nav className="mb-6">
-        <a href="/ops" className="font-[family-name:var(--font-utility)] text-xs text-[#0E3B2E]/50 hover:text-[#0E3B2E]/80 transition-colors">
+        <a href="/ops" className="font-[family-name:var(--font-utility)] text-xs text-emerald/50 hover:text-emerald/80 transition-colors">
           &larr; Operations
         </a>
       </nav>
 
       <header className="mb-6">
-        <h1 className="font-[family-name:var(--font-display)] text-xl font-light text-[#0E3B2E] mb-1">
+        <h1 className="font-[family-name:var(--font-display)] text-xl font-light text-emerald mb-1">
           Temperature Log
         </h1>
-        <p className="font-[family-name:var(--font-body)] text-xs text-[#0E3B2E]/60">
+        <p className="font-[family-name:var(--font-body)] text-xs text-emerald/60">
           Record storage temperatures at each location. Flag any out-of-range readings
         </p>
       </header>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {readings.map((reading, index) => (
-          <div key={index} className="p-3 border border-[#0E3B2E]/10 space-y-2">
+          <div key={index} className="p-3 border border-emerald/10 space-y-2">
             <div className="flex gap-2">
               <input
                 type="text"
                 placeholder="Location (e.g. Fridge 1)"
                 value={reading.location}
                 onChange={(e) => updateReading(index, "location", e.target.value)}
-                className="flex-1 px-2 py-1.5 border border-[#0E3B2E]/15 bg-white text-sm text-[#0E3B2E] placeholder:text-[#0E3B2E]/30 focus:outline-none focus:ring-1 focus:ring-[#0E3B2E]/30 focus:border-[#0E3B2E]/40"
+                className="flex-1 px-2 py-1.5 border border-emerald/15 bg-white text-sm text-emerald placeholder:text-emerald/30 focus:outline-none focus:ring-1 focus:ring-emerald/30 focus:border-emerald/40"
               />
               <input
                 type="number"
@@ -96,16 +96,16 @@ export default function TemperatureLogPage() {
                 placeholder="°C"
                 value={reading.temperature !== 0 ? reading.temperature || "" : "0"}
                 onChange={(e) => updateReading(index, "temperature", parseFloat(e.target.value) || 0)}
-                className="w-20 px-2 py-1.5 border border-[#0E3B2E]/15 bg-white text-sm text-[#0E3B2E] text-center focus:outline-none focus:ring-1 focus:ring-[#0E3B2E]/30 focus:border-[#0E3B2E]/40"
+                className="w-20 px-2 py-1.5 border border-emerald/15 bg-white text-sm text-emerald text-center focus:outline-none focus:ring-1 focus:ring-emerald/30 focus:border-emerald/40"
               />
             </div>
             <div className="flex items-center justify-between">
-              <label className="flex items-center gap-2 font-[family-name:var(--font-utility)] text-xs text-[#0E3B2E]/70">
+              <label className="flex items-center gap-2 font-[family-name:var(--font-utility)] text-xs text-emerald/70">
                 <input
                   type="checkbox"
                   checked={reading.withinRange}
                   onChange={(e) => updateReading(index, "withinRange", e.target.checked)}
-                  className="accent-[#0E3B2E]"
+                  className="accent-emerald"
                 />
                 Within acceptable range
               </label>
@@ -113,7 +113,7 @@ export default function TemperatureLogPage() {
                 <button
                   type="button"
                   onClick={() => removeReading(index)}
-                  className="font-[family-name:var(--font-utility)] text-[10px] text-[#0E3B2E]/40 hover:text-red-700 transition-colors"
+                  className="font-[family-name:var(--font-utility)] text-[10px] text-emerald/40 hover:text-red-700 transition-colors"
                 >
                   Remove
                 </button>
@@ -125,20 +125,20 @@ export default function TemperatureLogPage() {
         <button
           type="button"
           onClick={addReading}
-          className="w-full py-2 border border-dashed border-[#0E3B2E]/20 font-[family-name:var(--font-utility)] text-xs text-[#0E3B2E]/50 hover:text-[#0E3B2E]/80 hover:border-[#0E3B2E]/40 transition-colors"
+          className="w-full py-2 border border-dashed border-emerald/20 font-[family-name:var(--font-utility)] text-xs text-emerald/50 hover:text-emerald/80 hover:border-emerald/40 transition-colors"
         >
           + Add reading
         </button>
 
         <div>
-          <label className="block font-[family-name:var(--font-utility)] text-xs font-medium text-[#0E3B2E]/70 mb-1">
+          <label className="block font-[family-name:var(--font-utility)] text-xs font-medium text-emerald/70 mb-1">
             Notes (optional)
           </label>
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             rows={2}
-            className="w-full px-2 py-1.5 border border-[#0E3B2E]/15 bg-white text-sm text-[#0E3B2E] placeholder:text-[#0E3B2E]/30 focus:outline-none focus:ring-1 focus:ring-[#0E3B2E]/30 focus:border-[#0E3B2E]/40 resize-none"
+            className="w-full px-2 py-1.5 border border-emerald/15 bg-white text-sm text-emerald placeholder:text-emerald/30 focus:outline-none focus:ring-1 focus:ring-emerald/30 focus:border-emerald/40 resize-none"
             placeholder="Any exceptions or actions taken…"
           />
         </div>
@@ -147,7 +147,7 @@ export default function TemperatureLogPage() {
           <p
             role="status"
             aria-live="polite"
-            className={`font-[family-name:var(--font-utility)] text-xs ${result.success ? "text-[#0E3B2E]" : "text-red-700"}`}
+            className={`font-[family-name:var(--font-utility)] text-xs ${result.success ? "text-emerald" : "text-red-700"}`}
           >
             {result.success ? "✓ Recorded successfully" : `Error: ${result.error}`}
           </p>
@@ -156,7 +156,7 @@ export default function TemperatureLogPage() {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full py-2 bg-[#0E3B2E] text-white font-[family-name:var(--font-utility)] text-xs font-medium tracking-wide uppercase hover:bg-[#0E3B2E]/90 focus:outline-none focus:ring-2 focus:ring-[#0E3B2E]/50 focus:ring-offset-2 transition-colors disabled:opacity-50"
+          className="w-full py-2 bg-emerald text-white font-[family-name:var(--font-utility)] text-xs font-medium tracking-wide uppercase hover:bg-emerald/90 focus:outline-none focus:ring-2 focus:ring-emerald/50 focus:ring-offset-2 transition-colors disabled:opacity-50"
         >
           {submitting ? "Recording…" : "Record temperatures"}
         </button>

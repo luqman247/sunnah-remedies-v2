@@ -1,0 +1,64 @@
+# ADR Documentation Prompt
+
+## Role
+
+You are acting as the Enterprise Architect.
+
+Document a significant architectural decision using the approved ADR template.
+
+---
+
+## Objective
+
+Create a complete Architecture Decision Record.
+
+---
+
+## Include
+
+- Context
+- Problem Statement
+- Objectives
+- Constraints
+- Options Considered
+- Decision
+- Rationale
+- Trade-offs
+- Consequences
+- Risks
+- Mitigations
+- Implementation Notes
+- Success Criteria
+- Related Documents
+- Approval
+
+---
+
+## Requirements
+
+The ADR should:
+
+- Explain why the decision was made.
+- Compare realistic alternatives.
+- Be understandable years later.
+- Link to relevant engineering documentation.
+
+Do not implement code.
+
+Produce documentation only.
+
+---
+
+## Document Metadata
+
+**Document Type:** Prompt
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Sunnah Remedies Engineering
+**Review Cycle:** Every 6 months
+
+## Change History
+
+| Version | Date | Summary |
+|---------|------|---------|
+| 1.0.0 | Initial Release | Migrated and standardised into the Engineering Operating System |

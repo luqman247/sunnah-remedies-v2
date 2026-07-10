@@ -1,0 +1,104 @@
+# Good Example — ProductCard Component
+
+## Purpose
+
+Display a product consistently across the Sunnah Remedies Apothecary.
+
+---
+
+## Responsibility
+
+The ProductCard component is responsible only for presentation.
+
+It displays:
+
+- Product Image
+- Product Name
+- Product Category
+- Price
+- Certifications
+- Rating
+- Call To Action
+
+---
+
+## What This Component DOES
+
+✓ Display product information.
+
+✓ Display badges.
+
+✓ Display pricing.
+
+✓ Link to product page.
+
+---
+
+## What This Component DOES NOT Do
+
+✗ Fetch products.
+
+✗ Call APIs.
+
+✗ Process payments.
+
+✗ Manage cart state.
+
+✗ Perform filtering.
+
+✗ Manage authentication.
+
+---
+
+## Why This Is Good
+
+Single Responsibility Principle.
+
+Reusable across:
+
+- Homepage
+- Apothecary
+- Collections
+- Related Products
+- Search Results
+
+---
+
+## Design Principles
+
+- Accessible
+- Responsive
+- Reusable
+- Typed
+- Small
+- Easy to test
+
+---
+
+## Engineering Score
+
+Maintainability ⭐⭐⭐⭐⭐
+
+Reusability ⭐⭐⭐⭐⭐
+
+Readability ⭐⭐⭐⭐⭐
+
+Accessibility ⭐⭐⭐⭐⭐
+
+Performance ⭐⭐⭐⭐⭐
+
+---
+
+## Document Metadata
+
+**Document Type:** Example (Good)
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Sunnah Remedies Engineering
+**Review Cycle:** Annual
+
+## Change History
+
+| Version | Date | Summary |
+|---------|------|---------|
+| 1.0.0 | Initial Release | Migrated and standardised into the Engineering Operating System |

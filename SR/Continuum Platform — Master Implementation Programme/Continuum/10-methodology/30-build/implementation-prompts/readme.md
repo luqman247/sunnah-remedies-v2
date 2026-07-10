@@ -1,0 +1,69 @@
+# Implementation Prompts
+
+> Purpose
+
+These prompts guide AI through the implementation phase of the Sunnah Remedies Engineering System.
+
+Implementation begins only after:
+
+- Engineering Proposal approved
+- Feature Specification completed
+- Architecture reviewed
+- ADR approved (if required)
+
+Implementation prompts are designed to produce production-ready software while maintaining consistency with the Engineering Handbook.
+
+---
+
+## Engineering Principles
+
+Every implementation must:
+
+- Read the Engineering Handbook.
+- Read the Enterprise Architecture.
+- Read the relevant ADRs.
+- Audit the existing implementation.
+- Stay within approved scope.
+- Follow Repository Structure.
+- Follow Naming Conventions.
+- Follow Coding Standards.
+- Use existing components where possible.
+- Avoid duplication.
+- Update documentation.
+- Verify implementation.
+- Produce a Verification Report.
+
+Implementation is not complete until verification succeeds.
+
+---
+
+## Prompt Library
+
+- Feature Implementation
+- Milestone Audit
+- Bug Fix
+- Refactor
+- Migration
+- Schema Implementation
+- Component Implementation
+- API Implementation
+- UI Enhancement
+- Database Migration
+
+Version: 1.0
+
+---
+
+## Document Metadata
+
+**Document Type:** Prompt
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Sunnah Remedies Engineering
+**Review Cycle:** Every 6 months
+
+## Change History
+
+| Version | Date | Summary |
+|---------|------|---------|
+| 1.0.0 | Initial Release | Migrated and standardised into the Engineering Operating System |

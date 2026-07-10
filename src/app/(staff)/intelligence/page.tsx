@@ -36,7 +36,7 @@ export default async function IntelligenceDashboard() {
         margin: "0 auto",
         padding: "2rem",
         fontFamily: "var(--font-utility, monospace)",
-        color: "var(--color-text, #F6F3EE)",
+        color: "var(--color-text, warm-ivory)",
         backgroundColor: "var(--color-surface, #111122)",
         minHeight: "100vh",
       }}

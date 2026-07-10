@@ -50,7 +50,7 @@ function SignInForm() {
       <div>
         <label
           htmlFor="email"
-          className="block font-[family-name:var(--font-utility)] text-xs font-medium text-[#0E3B2E]/70 mb-1"
+          className="block font-[family-name:var(--font-utility)] text-xs font-medium text-emerald/70 mb-1"
         >
           Email
         </label>
@@ -62,14 +62,14 @@ function SignInForm() {
           required
           autoComplete="email"
           aria-describedby={error ? "sign-in-error" : undefined}
-          className="w-full px-3 py-2 border border-[#0E3B2E]/15 bg-white text-sm text-[#0E3B2E] placeholder:text-[#0E3B2E]/30 focus:outline-none focus:ring-1 focus:ring-[#0E3B2E]/30 focus:border-[#0E3B2E]/40 transition-colors"
+          className="w-full px-3 py-2 border border-emerald/15 bg-white text-sm text-emerald placeholder:text-emerald/30 focus:outline-none focus:ring-1 focus:ring-emerald/30 focus:border-emerald/40 transition-colors"
         />
       </div>
 
       <div>
         <label
           htmlFor="password"
-          className="block font-[family-name:var(--font-utility)] text-xs font-medium text-[#0E3B2E]/70 mb-1"
+          className="block font-[family-name:var(--font-utility)] text-xs font-medium text-emerald/70 mb-1"
         >
           Password
         </label>
@@ -81,7 +81,7 @@ function SignInForm() {
           required
           autoComplete="current-password"
           aria-describedby={error ? "sign-in-error" : undefined}
-          className="w-full px-3 py-2 border border-[#0E3B2E]/15 bg-white text-sm text-[#0E3B2E] placeholder:text-[#0E3B2E]/30 focus:outline-none focus:ring-1 focus:ring-[#0E3B2E]/30 focus:border-[#0E3B2E]/40 transition-colors"
+          className="w-full px-3 py-2 border border-emerald/15 bg-white text-sm text-emerald placeholder:text-emerald/30 focus:outline-none focus:ring-1 focus:ring-emerald/30 focus:border-emerald/40 transition-colors"
         />
       </div>
 
@@ -99,7 +99,7 @@ function SignInForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-2 bg-[#0E3B2E] text-white font-[family-name:var(--font-utility)] text-xs font-medium tracking-wide uppercase hover:bg-[#0E3B2E]/90 focus:outline-none focus:ring-2 focus:ring-[#0E3B2E]/50 focus:ring-offset-2 transition-colors disabled:opacity-50"
+        className="w-full py-2 bg-emerald text-white font-[family-name:var(--font-utility)] text-xs font-medium tracking-wide uppercase hover:bg-emerald/90 focus:outline-none focus:ring-2 focus:ring-emerald/50 focus:ring-offset-2 transition-colors disabled:opacity-50"
       >
         {loading ? "Signing in…" : "Sign in"}
       </button>
@@ -109,13 +109,13 @@ function SignInForm() {
 
 export default function SignInPage() {
   return (
-    <div className="min-h-screen bg-[#F6F3EE] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[warm-ivory] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <header className="text-center mb-8">
-          <p className="font-[family-name:var(--font-utility)] text-xs font-medium tracking-widest uppercase text-[#0E3B2E]/50 mb-2">
+          <p className="font-[family-name:var(--font-utility)] text-xs font-medium tracking-widest uppercase text-emerald/50 mb-2">
             Sunnah Remedies
           </p>
-          <h1 className="font-[family-name:var(--font-display)] text-xl font-light text-[#0E3B2E]">
+          <h1 className="font-[family-name:var(--font-display)] text-xl font-light text-emerald">
             Staff Access
           </h1>
         </header>
@@ -125,7 +125,7 @@ export default function SignInPage() {
         </Suspense>
 
         <footer className="mt-8 text-center">
-          <p className="font-[family-name:var(--font-utility)] text-[10px] text-[#0E3B2E]/30">
+          <p className="font-[family-name:var(--font-utility)] text-[10px] text-emerald/30">
             Internal use only. Contact the Head of Systems for access
           </p>
         </footer>

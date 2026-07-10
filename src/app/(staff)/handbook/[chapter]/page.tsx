@@ -42,7 +42,7 @@ export default async function ChapterPage({ params }: PageProps) {
       <nav className="mb-8">
         <a
           href="/handbook"
-          className="font-[family-name:var(--font-utility)] text-xs text-[#0E3B2E]/50 hover:text-[#0E3B2E]/80 transition-colors"
+          className="font-[family-name:var(--font-utility)] text-xs text-emerald/50 hover:text-emerald/80 transition-colors"
         >
           &larr; All chapters
         </a>
@@ -53,11 +53,11 @@ export default async function ChapterPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: html }}
       />
 
-      <nav className="mt-12 pt-8 border-t border-[#0E3B2E]/10 flex justify-between">
+      <nav className="mt-12 pt-8 border-t border-emerald/10 flex justify-between">
         {prevChapter ? (
           <a
             href={`/handbook/${prevChapter.slug}`}
-            className="font-[family-name:var(--font-utility)] text-xs text-[#0E3B2E]/60 hover:text-[#0E3B2E] transition-colors"
+            className="font-[family-name:var(--font-utility)] text-xs text-emerald/60 hover:text-emerald transition-colors"
           >
             &larr; Ch {prevChapter.number}
           </a>
@@ -67,7 +67,7 @@ export default async function ChapterPage({ params }: PageProps) {
         {nextChapter ? (
           <a
             href={`/handbook/${nextChapter.slug}`}
-            className="font-[family-name:var(--font-utility)] text-xs text-[#0E3B2E]/60 hover:text-[#0E3B2E] transition-colors"
+            className="font-[family-name:var(--font-utility)] text-xs text-emerald/60 hover:text-emerald transition-colors"
           >
             Ch {nextChapter.number} &rarr;
           </a>

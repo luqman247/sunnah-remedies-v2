@@ -13,7 +13,7 @@
   font-family: var(--font-body);
   font-size: 0.9375rem;
   line-height: 1.7;
-  color: #0e3b2e;
+  color: var(--emerald);
 }
 
 .handbook-content .handbook-h1 {
@@ -22,7 +22,7 @@
   font-weight: 300;
   margin-top: 0;
   margin-bottom: 0.75rem;
-  color: #0e3b2e;
+  color: var(--emerald);
 }
 
 .handbook-content .handbook-h2 {
@@ -31,7 +31,7 @@
   font-weight: 400;
   margin-top: 2.5rem;
   margin-bottom: 0.5rem;
-  color: #0e3b2e;
+  color: var(--emerald);
 }
 
 .handbook-content .handbook-h3 {
@@ -42,7 +42,7 @@
   text-transform: uppercase;
   margin-top: 2rem;
   margin-bottom: 0.5rem;
-  color: #0e3b2e;
+  color: var(--emerald);
   opacity: 0.7;
 }
 
@@ -87,7 +87,7 @@
 }
 
 .handbook-content .handbook-blockquote {
-  border-left: 2px solid #0e3b2e20;
+  border-left: 2px solid var(--emerald)20;
   padding-left: 1rem;
   margin: 1.5rem 0;
   font-style: italic;
@@ -100,7 +100,7 @@
 
 .handbook-content .handbook-hr {
   border: none;
-  border-top: 1px solid #0e3b2e10;
+  border-top: 1px solid var(--emerald)10;
   margin: 2rem 0;
 }
 
@@ -119,38 +119,38 @@
 .handbook-content .handbook-table th {
   text-align: left;
   padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid #0e3b2e20;
+  border-bottom: 1px solid var(--emerald)20;
   font-weight: 500;
   font-size: 0.6875rem;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  color: #0e3b2e;
+  color: var(--emerald);
   opacity: 0.6;
 }
 
 .handbook-content .handbook-table td {
   padding: 0.4rem 0.75rem;
-  border-bottom: 1px solid #0e3b2e08;
+  border-bottom: 1px solid var(--emerald)08;
   vertical-align: top;
 }
 
 .handbook-content .handbook-code {
   font-family: var(--font-utility);
   font-size: 0.8125rem;
-  background: #0e3b2e08;
+  background: var(--emerald)08;
   padding: 0.1em 0.35em;
   border-radius: 2px;
 }
 
 .handbook-content .handbook-link {
-  color: #0e3b2e;
+  color: var(--emerald);
   text-decoration: underline;
   text-underline-offset: 2px;
-  text-decoration-color: #0e3b2e30;
+  text-decoration-color: var(--emerald)30;
 }
 
 .handbook-content .handbook-link:hover {
-  text-decoration-color: #0e3b2e;
+  text-decoration-color: var(--emerald);
 }
 
 .handbook-content strong {

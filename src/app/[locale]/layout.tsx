@@ -1,3 +1,4 @@
+import { fontVariables } from "@/app/fonts";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -14,41 +15,6 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AnalyticsProvider } from "../../../analytics/lib/provider";
 import { ConsentBanner } from "../../../analytics/lib/consent-banner";
-import {
-  Amiri,
-  Fraunces,
-  Newsreader,
-  IBM_Plex_Mono,
-} from "next/font/google";
-
-const fraunces = Fraunces({
-  subsets: ["latin", "latin-ext"],
-  axes: ["opsz", "SOFT", "WONK"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const newsreader = Newsreader({
-  subsets: ["latin", "latin-ext"],
-  style: ["normal", "italic"],
-  variable: "--font-body",
-  display: "swap",
-});
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-utility",
-  display: "swap",
-});
-
-const amiri = Amiri({
-  subsets: ["arabic", "latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  variable: "--font-arabic",
-  display: "swap",
-});
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -76,7 +42,7 @@ export default async function LocaleLayout({
     <html
       lang={cfg.htmlLang}
       dir={cfg.dir}
-      className={`${fraunces.variable} ${newsreader.variable} ${plexMono.variable} ${amiri.variable}`}
+      className={fontVariables}
       data-season={season !== "standard" ? season : undefined}
       suppressHydrationWarning
     >
