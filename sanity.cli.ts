@@ -1,8 +1,13 @@
 import { defineCliConfig } from "sanity/cli";
+import { getSanityDataset, getSanityProjectId } from "./src/sanity/env";
 
 export default defineCliConfig({
   api: {
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "your-project-id",
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+    projectId: getSanityProjectId(),
+    dataset: getSanityDataset(),
+  },
+  studioHost: "sunnah-remedies",
+  deployment: {
+    appId: "lbp9vdqznmr79oory9nqibek",
   },
 });

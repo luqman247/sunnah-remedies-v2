@@ -15,9 +15,10 @@ import {
   resolveProductTemplates,
 } from "./src/sanity/lib/product-studio";
 import { resolveMediaActions } from "./src/sanity/actions/mediaActions";
+import { getSanityDataset, getSanityProjectId } from "./src/sanity/env";
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "your-project-id";
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
+const projectId = getSanityProjectId();
+const dataset = getSanityDataset();
 
 const SUPPORTED_LANGUAGES = [
   { id: "en", title: "English" },
