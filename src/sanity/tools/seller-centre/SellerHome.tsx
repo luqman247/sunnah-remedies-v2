@@ -108,7 +108,10 @@ export function SellerHome({ onNavigate }: SellerHomeProps) {
   }, [client]);
 
   useEffect(() => {
-    void load();
+    const timer = window.setTimeout(() => {
+      void load();
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, [load]);
 
   const summary: Summary = useMemo(() => {
@@ -259,6 +262,18 @@ export function SellerHome({ onNavigate }: SellerHomeProps) {
       ["Preview Draft", () => preview(row)],
     ];
 
+    if (row.status === "draft" || row.visibleInApothecary === false) {
+      actions.push([
+        "Resume Draft",
+        () =>
+          onNavigate({
+            kind: "add",
+            draftId: stripDraftId(row._id),
+            step: 2,
+          }),
+      ]);
+    }
+
     if (row.status === "archived") {
       actions.push(["Restore", () => void runAction(row, "restore")]);
       actions.push(["Open Advanced Editor", () => openAdvanced(row)]);
@@ -347,9 +362,8 @@ export function SellerHome({ onNavigate }: SellerHomeProps) {
           <p style={s.eyebrow}>The Apothecary</p>
           <h1 style={s.title}>Apothecary Seller Centre</h1>
           <p style={s.lede}>
-            Add products, set prices, manage images, and publish with a calm
-            guided workflow. Advanced scholarship fields remain available when
-            you need them
+            Add Product: Details → Media → Generate Content → Price → Preview.
+            Advanced scholarship fields remain available when you need them
           </p>
         </div>
         <button

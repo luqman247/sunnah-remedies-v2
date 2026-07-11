@@ -99,6 +99,55 @@ Media Library owns metadata; Cloudinary owns delivery; products reference librar
 
 Guide: `docs/apothecary/PRODUCT_MANAGEMENT_GUIDE.md`
 
+### Milestone 2 — Seller Centre draft workflow (2026-07-11)
+
+Stopped before publish / final production verification per instruction.
+
+**Test product:** Seller Centre Flow Test — Do Not Buy  
+**Canonical id:** `product-seller-centre-flow-test-do-not-buy-mrfpw4wn` (draft only)
+
+| Step | Result |
+| --- | --- |
+| Resume Draft | Actions → Resume Draft hydrates wizard from Sanity |
+| Upload + reorder images | Second gallery image + Up/Down reorder |
+| Video + poster | External URL + poster upload; review shows Gallery 2 · Video 1 |
+| AI generate + Accept section | Blocked locally — `AI_ADMIN_TOKEN` / `SANITY_STUDIO_AI_ADMIN_TOKEN` absent; `POST /api/apothecary/generate-content` → 401 |
+| Preview Draft | Monograph opens with Draft Preview Active |
+| Remains private | Absent from `/the-apothecary` catalogue; public slug triggers not-found (dev soft 404 UI) |
+| Quick Edit price + image | Main image replaced; price saved to £32 via **Save price** |
+| Advanced Editor | Same document: `/studio/structure/...;product-seller-centre-flow-test-do-not-buy-mrfpw4wn` |
+| `npm run type-check` | Pass |
+| Seller Centre eslint | Pass (0 warnings) |
+| `npm run build` | Pass |
+
+**Not run (Milestone 3+):** publish, public catalogue appearance after publish, EN/DA published content, unpublish, archive, genuine HTTP 404 after removal.
+
+### Milestone 3 — gate (steps 1–6, awaiting publish approval) — 2026-07-11
+
+**Product:** Apothecary Verification Product — Do Not Buy  
+**Canonical id:** `product-apothecary-verification-preview` (draft, Hidden)  
+**Slug:** `apothecary-verification-product`
+
+| Step | Result |
+| --- | --- |
+| 1. Seller Centre | Opened `/studio/apothecary-manager` |
+| 2. Edit / Resume | Draft listed; Resume Draft + required fields confirmed (£12, image, summary) |
+| 3. Required fields | Name, slug, price, primary image, short description present |
+| 4. AI generate | **Blocked** — no `AI_ADMIN_TOKEN` in `.env.local`; UI shows Unauthorized; API 401 |
+| 5. Preview while Draft+Hidden | Preview Draft → Draft Preview Active; £12; institutional summary visible |
+| 6. Absent from catalogue | `/the-apothecary` does not list the product (including under Draft Mode) |
+| 7. Publish | **Awaiting explicit approval** |
+
+Security (pre-publish):
+
+| Check | Result |
+| --- | --- |
+| AI no/bad auth | 401 |
+| Draft no/bad secret | 401 |
+| Catalogue HTML secrets | None |
+| Public slug without Draft Mode | Not-found UI (`NEXT_HTTP_ERROR_FALLBACK;404`; Next soft 200 in dev) |
+| `type-check` / Seller Centre eslint / `build` | Pass |
+
 ## 14. Known limitations
 
 - Counter / payment checkout still incomplete.
@@ -118,4 +167,8 @@ generation, public visibility filters, migration script, and editor guide.
 
 ## 16. Suggested next milestone
 
-Complete Shopify checkout join for shoppable products; remove static remedy fallback after all monographs are live in Sanity; wire batch/inventory operations UI; Danish product translation review queue.
+**Milestone 3 (in progress):** awaiting explicit approval to publish `product-apothecary-verification-preview`, then catalogue/detail round-trips, EN/DA, unpublish, archive, genuine HTTP 404, cleanup.
+
+Add `AI_ADMIN_TOKEN` + `SANITY_STUDIO_AI_ADMIN_TOKEN` + model key to `.env.local` before AI Accept-section can pass. Add `REVALIDATION_SECRET` for webhook auth verification (route returns 400 without `_type` when secret unset).
+
+Then: Shopify checkout join; remove static remedy fallback after monographs are live; Danish translation review queue.

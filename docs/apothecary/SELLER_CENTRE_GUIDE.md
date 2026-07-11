@@ -12,15 +12,27 @@ Sanity remains the single source of truth. The Seller Centre writes to the same 
 
 1. Open **Apothecary Seller Centre** (first tool in Studio).
 2. Press **Add Product**.
-3. Complete the five steps:
-   1. Product details (name, category, type, size, origin, ingredients, intended use, brand, SKU)
-   2. Images and video
-   3. AI content (optional — always review)
-   4. Price and availability
-   5. Review and publish
+3. Follow the journey:
+   1. **Details** — name, category, type, size, origin, ingredients, intended use, brand, SKU
+   2. **Media** — primary image, gallery, video and poster
+   3. **Generate Content** — optional AI draft; always review and accept sections
+   4. **Price** — price, stock, availability
+   5. **Preview** — private Draft Mode preview (publish remains optional)
 4. Press **Save Draft** at any time. Progress is also kept in this browser if you refresh.
 
+The normal path ends at **Preview Draft**. Publish only when you are ready for the public catalogue.
+
 The slug is generated from the product name. Edit it before first publication.
+
+---
+
+## How to resume a draft
+
+From the product list: **Actions → Resume Draft**.
+
+This reopens the guided workflow on the same Sanity Product document (hydrated from the draft), starting at Images and video so you can continue media and content work without starting over.
+
+**Edit** opens Quick Edit for routine field changes. **Resume Draft** continues the five-step wizard.
 
 ---
 
@@ -58,10 +70,12 @@ On step 3:
 1. Confirm the factual fields from step 1.
 2. Press **Generate Product Content**.
 3. Review the proposal beside your draft.
-4. Use **Accept all**, **Accept** on a section, or **Reject**.
+4. Use **Accept all**, **Accept section** on a single field, or **Reject**.
 5. Optional refinements: shorter, more detailed, more premium, more educational, SEO, FAQs, alt text, Danish translation.
 
 AI drafts are labelled **AI draft — review required**. They never publish automatically and must not invent medical claims, certifications, hadith, or provenance.
+
+Requires `AI_ADMIN_TOKEN` / `SANITY_STUDIO_AI_ADMIN_TOKEN` and a configured model key in the environment.
 
 ---
 
@@ -81,8 +95,9 @@ This opens a private Draft Mode preview. Unpublished and Hidden products can be 
 ## How to change a price
 
 1. From the product list, open **Actions → Edit**.
-2. Change the price field, or press **Change Price**.
-3. Press **Publish Changes** when ready (or leave as draft).
+2. Change the price field.
+3. Press **Save price** (or leave the field — blur also saves).
+4. Press **Publish Changes** when ready (or leave as draft).
 
 ---
 
@@ -126,7 +141,7 @@ From the product list: **Actions → Archive**. Confirm the prompt. Products are
 - Quick Edit: open **Advanced Settings**, then **Open full Advanced Editor**
 - Product document action: **Open in Seller Centre** returns you to the simplified workflow
 
-Use the Advanced Editor for scholarship fields, research links, complex references, and specialist metadata.
+Use the Advanced Editor for scholarship fields, research links, complex references, and specialist metadata. It opens the same canonical Product document (`product-{slug}` / draft twin).
 
 ---
 

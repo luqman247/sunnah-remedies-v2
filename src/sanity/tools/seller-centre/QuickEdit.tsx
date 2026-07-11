@@ -24,6 +24,7 @@ import {
   publishRequirements,
   statusLabel,
   stripDraftId,
+  toDraftId,
 } from "./utils";
 
 interface QuickEditProps {
@@ -127,8 +128,11 @@ export function QuickEdit({ documentId, onNavigate }: QuickEditProps) {
     setBusy(true);
     setError(null);
     try {
-      const next = await client.patch(doc._id).set(fields).commit();
-      setDoc((prev) => (prev ? { ...prev, ...next } : prev));
+      const draftId = toDraftId(doc._id);
+      const next = await client.patch(draftId).set(fields).commit();
+      setDoc((prev) =>
+        prev ? { ...prev, ...next, _id: draftId } : prev,
+      );
       setMessage("Saved");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Save failed");
@@ -533,18 +537,43 @@ export function QuickEdit({ documentId, onNavigate }: QuickEditProps) {
 
         <label style={s.field}>
           <span style={s.label}>Price</span>
-          <input
-            style={s.input}
-            type="number"
-            value={doc.price ?? ""}
-            onChange={(e) =>
-              setDoc({
-                ...doc,
-                price: e.target.value === "" ? undefined : Number(e.target.value),
-              })
-            }
-            onBlur={() => void patch({ price: doc.price })}
-          />
+          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+            <input
+              style={{ ...s.input, flex: 1 }}
+              type="number"
+              value={doc.price ?? ""}
+              onChange={(e) => {
+                const price =
+                  e.target.value === "" ? undefined : Number(e.target.value);
+                setDoc({ ...doc, price });
+              }}
+              onBlur={(e) => {
+                const price =
+                  e.currentTarget.value === ""
+                    ? undefined
+                    : Number(e.currentTarget.value);
+                void patch({ price });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  const price =
+                    e.currentTarget.value === ""
+                      ? undefined
+                      : Number(e.currentTarget.value);
+                  void patch({ price });
+                }
+              }}
+            />
+            <button
+              type="button"
+              style={s.secondaryBtn}
+              disabled={busy}
+              onClick={() => void patch({ price: doc.price })}
+            >
+              Save price
+            </button>
+          </div>
           <span style={s.help}>
             Current {formatMoney(doc.price, doc.currency)}
             {typeof doc.salePrice === "number"

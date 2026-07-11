@@ -51,11 +51,11 @@ interface AddProductWizardProps {
 }
 
 const STEPS = [
-  "Product details",
-  "Images and video",
-  "AI content",
-  "Price and availability",
-  "Review and publish",
+  "Details",
+  "Media",
+  "Generate Content",
+  "Price",
+  "Preview",
 ] as const;
 
 const PRODUCT_TYPES = [
@@ -163,10 +163,7 @@ export function AddProductWizard({
 
   // Prefer Sanity draft when resuming a known product id
   useEffect(() => {
-    if (!resumeDraftId) {
-      setHydrating(false);
-      return;
-    }
+    if (!resumeDraftId) return;
     let cancelled = false;
     void (async () => {
       try {
@@ -179,6 +176,7 @@ export function AddProductWizard({
         setContent(hydrated.content);
         setPricing(hydrated.pricing);
         setSlugTouched(true);
+        setStep(initialStep);
         setDirty(true);
         setMessage("Loaded draft from Sanity");
         clearWizardPersistence();
@@ -191,7 +189,7 @@ export function AddProductWizard({
     return () => {
       cancelled = true;
     };
-  }, [client, resumeDraftId]);
+  }, [client, resumeDraftId, initialStep]);
 
   useEffect(() => {
     if (!dirty && !details.name.trim()) return;
@@ -520,10 +518,10 @@ export function AddProductWizard({
         ← Back to Seller Centre
       </button>
       <p style={{ ...s.eyebrow, marginTop: "1rem" }}>Add Product</p>
-      <h1 style={s.title}>Guided product workflow</h1>
+      <h1 style={s.title}>Add Product</h1>
       <p style={s.lede}>
-        Enter facts first. AI may draft copy for review. Nothing publishes until
-        you press Publish
+        Details → Media → Generate Content → Price → Preview. Nothing is public
+        until you publish
       </p>
 
       {hydrating ? <p style={s.help}>Loading your Sanity draft…</p> : null}
@@ -1296,6 +1294,10 @@ export function AddProductWizard({
 
       {step === 5 ? (
         <section style={s.card}>
+          <p style={{ ...s.eyebrow, marginBottom: "0.75rem" }}>Preview</p>
+          <p style={{ ...s.help, marginTop: 0 }}>
+            Check the monograph privately. Publish only when you are satisfied
+          </p>
           <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
             {images[0]?.url ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -1333,10 +1335,18 @@ export function AddProductWizard({
             </div>
           ) : (
             <p style={{ ...s.help, marginTop: "1rem", color: "#3d5a3d" }}>
-              Required fields look complete
+              Ready to preview. Publish remains optional
             </p>
           )}
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem", marginTop: "1.25rem" }}>
+            <button
+              type="button"
+              style={s.primaryBtn}
+              disabled={busy || !details.slug.trim()}
+              onClick={previewDraft}
+            >
+              Preview Draft
+            </button>
             <button
               type="button"
               style={s.secondaryBtn}
@@ -1348,14 +1358,6 @@ export function AddProductWizard({
             <button
               type="button"
               style={s.secondaryBtn}
-              disabled={busy}
-              onClick={previewDraft}
-            >
-              Preview Draft
-            </button>
-            <button
-              type="button"
-              style={s.primaryBtn}
               disabled={busy || missing.length > 0}
               onClick={() => void persist("publish")}
             >
@@ -1466,7 +1468,7 @@ export function AddProductWizard({
               disabled={busy || hydrating}
               onClick={() => void goToStep(Math.min(5, step + 1))}
             >
-              Continue
+              Continue to {STEPS[step]}
             </button>
           ) : null}
         </div>
