@@ -9,6 +9,7 @@ import { structure } from "./src/sanity/structure";
 import { OperationsOverview } from "./src/sanity/tools/operations-overview";
 import { ApothecaryOverview } from "./src/sanity/tools/apothecary-overview";
 import { MediaLibraryOverview } from "./src/sanity/tools/media-library-overview";
+import { ApothecarySellerCentre } from "./src/sanity/tools/seller-centre";
 import {
   resolveProductActions,
   resolveProductBadges,
@@ -121,6 +122,11 @@ export default defineConfig({
   },
 
   tools: (prev) => [
+    {
+      name: "apothecary-manager",
+      title: "Apothecary Seller Centre",
+      component: ApothecarySellerCentre,
+    },
     ...prev,
     {
       name: "apothecary",

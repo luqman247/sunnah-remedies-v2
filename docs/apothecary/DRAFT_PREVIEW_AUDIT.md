@@ -1,33 +1,36 @@
-# Apothecary draft preview — Phase 0 audit
+# Draft Preview Audit — Apothecary
 
-## Canonical public routes (from code)
+## Root cause of the original 404
 
-| Locale | Sanity `language` | Public path |
-| --- | --- | --- |
-| English (default) | `en` | `/the-apothecary/{slug}` |
-| Danish | `da` | `/dk/the-apothecary/{slug}` |
+Preview opened `/the-apothecary/[slug]` (or Draft Mode) while the product page still used **published-only** GROQ and visibility filters. Draft and Hidden products were excluded, so `notFound()` ran even when Draft Mode was enabled.
 
-Source: `src/i18n/locales.ts` (en prefix `""`, da prefix `/dk`), `productActions.productPublicPath`, `product-studio.resolveProductProductionUrl`.
+Contributing factors:
 
-## Why draft preview returns 404 (multiple causes)
+1. Public GROQ filter excludes drafts and `visibleInApothecary == false`
+2. Service layer re-checked public visibility
+3. Fetch path did not switch to `previewClient` / drafts perspective under Draft Mode
+4. English Draft Mode is more reliable on `/en/the-apothecary/...` than the unprefixed public path
 
-1. **Public GROQ filter** (`productBySlugQuery`) excludes draft documents, non-public statuses, and `visibleInApothecary == false`.
-2. **Service layer** (`getPublicRemedyBySlug` → `isPubliclyVisibleProduct`) rejects draft/hidden even if a document were returned.
-3. **Fetch always uses published client** — `safeFetch` never switches to `previewClient` when Next.js Draft Mode is enabled.
-4. **Draft Mode enable works in isolation** (`/api/draft`) and the layout shows a banner, but the product page never uses draft-aware data.
-5. **Local env gap** — `.env.local` lacked `SANITY_PREVIEW_SECRET` / `SANITY_API_TOKEN`, so Studio preview URLs often opened the raw public path without Draft Mode, and draft perspective could not authenticate.
+## Fix (current architecture)
 
-Not primarily a wrong locale route when Studio builds `/the-apothecary/...` for English.
+1. `GET /api/draft` validates `SANITY_PREVIEW_SECRET`, enables Draft Mode, redirects to locale-correct path with optional `previewId`
+2. `GET /api/draft/disable` exits Draft Mode
+3. Product page uses `getRemedyForPage` → `getProductBySlugForPage`
+4. When Draft Mode is on: authenticated `previewClient` + preview GROQ (drafts + hidden allowed)
+5. When Draft Mode is off: unchanged public queries and visibility rules
+6. Presentation tool maps Product → frontend route
+7. Seller Centre and document action **Preview Draft** use `buildProductDraftPreviewUrl`
 
-## Phase 1 verification (local)
+## Canonical routes
 
-| Check | Result |
-| --- | --- |
-| Public `/en/the-apothecary/apothecary-verification-product` | Soft 404 UI — product copy not shown |
-| Catalogue | Does not list verification product |
-| `GET /api/draft` wrong secret | 401 |
-| `GET /api/draft` valid secret → `/en/...` | 307 + Draft Mode cookie; page 200 with draft content + banner |
-| Public catalogue filter unchanged | Still excludes draft/hidden |
+| Locale | Public | Draft Mode redirect |
+|--------|--------|---------------------|
+| English (default) | `/the-apothecary/{slug}` | `/en/the-apothecary/{slug}` |
+| Danish | `/dk/the-apothecary/{slug}` | `/dk/the-apothecary/{slug}` |
 
-Test document (draft, hidden): `drafts.product-apothecary-verification-preview`  
-Slug: `apothecary-verification-product`
+## Required env
+
+- `SANITY_PREVIEW_SECRET` (server)
+- `SANITY_STUDIO_PREVIEW_SECRET` (same value, Studio)
+- `SANITY_API_TOKEN` (preview perspective)
+- `SANITY_STUDIO_SITE_URL` / `NEXT_PUBLIC_SITE_URL`

@@ -1,0 +1,21 @@
+{
+  "createdAt": "2026-07-11T00:27:59.764Z",
+  "studioVersion": "6.3.0",
+  "version": 3,
+  "workspaces": [
+    {
+      "basePath": "/studio",
+      "dataset": "production",
+      "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect width=\"32\" height=\"32\" rx=\"2\" fill=\"#2927aa\"></rect><text x=\"50%\" y=\"50%\" text-anchor=\"middle\" alignment-baseline=\"middle\" fill=\"hsla(241, 63%, 81%, 1)\" style=\"font-family:Inter, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Liberation Sans&quot;, Helvetica, Arial, system-ui, sans-serif;font-weight:500;font-size:13px;transform:translateY(1px)\">SR</text></svg>",
+      "mediaLibrary": {
+        "enabled": false,
+        "__internal": {}
+      },
+      "name": "sunnah-remedies",
+      "projectId": "u106t68x",
+      "schema": "2bc08b21.create-schema.json",
+      "title": "Sunnah Remedies — Editorial Studio",
+      "tools": "3efc5974.create-tools.json"
+    }
+  ]
+}

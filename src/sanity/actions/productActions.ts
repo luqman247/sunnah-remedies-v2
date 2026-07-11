@@ -151,6 +151,46 @@ export const ToggleFeaturedProductAction: DocumentActionComponent = (props) => {
   };
 };
 
+export const HideProductAction: DocumentActionComponent = (props) => {
+  const { patch } = useDocumentOperation(props.id, props.type);
+  const product = currentProduct(props);
+  const alreadyHidden = product.visibleInApothecary === false;
+
+  if (product.status === "archived") return null;
+
+  return {
+    label: alreadyHidden ? "Show in Apothecary" : "Hide Product",
+    disabled: isPatchDisabled(patch.disabled),
+    title: alreadyHidden
+      ? "Set visible in Apothecary (still respects status)"
+      : "Hide from the public catalogue without archiving",
+    onHandle: () => {
+      patch.execute([
+        {
+          set: {
+            visibleInApothecary: alreadyHidden,
+          },
+        },
+      ]);
+      props.onComplete();
+    },
+  };
+};
+
+export const OpenSellerCentreAction: DocumentActionComponent = (props) => {
+  const id = props.id.replace(/^drafts\./, "");
+
+  return {
+    label: "Open in Seller Centre",
+    title: "Open the simplified Apothecary Seller Centre for this product",
+    onHandle: () => {
+      const base = `${window.location.origin}/studio/apothecary-manager`;
+      window.location.assign(`${base}?edit=${encodeURIComponent(id)}`);
+      props.onComplete();
+    },
+  };
+};
+
 /**
  * Preview Draft — enables Next.js Draft Mode and opens the locale-correct
  * monograph. Works for unpublished and Hidden products without publishing.
@@ -158,7 +198,10 @@ export const ToggleFeaturedProductAction: DocumentActionComponent = (props) => {
 export const PreviewDraftProductAction: DocumentActionComponent = (props) => {
   const product = currentProduct(props);
   const path = productPublicPath(product);
-  const previewUrl = buildProductDraftPreviewUrl(product);
+  const previewUrl = buildProductDraftPreviewUrl({
+    ...product,
+    _id: props.id,
+  });
 
   return {
     label: "Preview Draft",
@@ -184,11 +227,13 @@ export const PreviewDraftProductAction: DocumentActionComponent = (props) => {
 export const PreviewProductAction = PreviewDraftProductAction;
 
 export const PRODUCT_DOCUMENT_ACTIONS = [
+  PreviewDraftProductAction,
+  OpenSellerCentreAction,
+  HideProductAction,
   ArchiveProductAction,
   RestoreProductAction,
   SetActiveProductAction,
   ToggleFeaturedProductAction,
-  PreviewDraftProductAction,
 ] as const;
 
 export {

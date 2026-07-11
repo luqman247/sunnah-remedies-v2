@@ -39,6 +39,7 @@ export interface ProductContentDraft {
   productStory?: string;
   sourcingParagraph?: string;
   howToUse?: string;
+  storageGuidance?: string;
   faqs?: { question: string; answer: string }[];
   seoTitle?: string;
   metaDescription?: string;
@@ -84,7 +85,7 @@ function buildUserMessage(input: ProductContentInput): string {
 
   const actionInstructions: Record<ProductContentAction, string> = {
     generate_description:
-      "Generate shortDescription (1-2 sentences), fullDescription (2-4 short paragraphs as a single string with newlines), keyQualities (3-5 strings), productStory, sourcingParagraph, howToUse.",
+      "Generate shortDescription (1-2 sentences), fullDescription (2-4 short paragraphs as a single string with newlines), keyQualities (3-5 strings), productStory, sourcingParagraph, howToUse, storageGuidance (brief factual storage note only from supplied facts), faqs (2-3), seoTitle, metaDescription, altTextSuggestions (2-3).",
     make_shorter: "Rewrite existing copy shorter while preserving facts. Return shortDescription and fullDescription.",
     make_detailed: "Expand existing copy with more editorial detail without inventing evidence. Return shortDescription and fullDescription.",
     make_clinical: "Rewrite in a more clinical, precise institutional voice. Return shortDescription and fullDescription.",
@@ -100,7 +101,7 @@ function buildUserMessage(input: ProductContentInput): string {
 Action: ${input.action}
 ${actionInstructions[input.action]}
 
-Return JSON with any of: shortDescription, fullDescription, keyQualities, productStory, sourcingParagraph, howToUse, faqs, seoTitle, metaDescription, altTextSuggestions, warnings (array of strings noting limits or missing facts).`;
+Return JSON with any of: shortDescription, fullDescription, keyQualities, productStory, sourcingParagraph, howToUse, storageGuidance, faqs, seoTitle, metaDescription, altTextSuggestions, warnings (array of strings noting limits or missing facts).`;
 }
 
 export async function generateProductContent(
@@ -146,6 +147,8 @@ export async function generateProductContent(
     sourcingParagraph:
       typeof parsed.sourcingParagraph === "string" ? parsed.sourcingParagraph : undefined,
     howToUse: typeof parsed.howToUse === "string" ? parsed.howToUse : undefined,
+    storageGuidance:
+      typeof parsed.storageGuidance === "string" ? parsed.storageGuidance : undefined,
     faqs: Array.isArray(parsed.faqs)
       ? (parsed.faqs as { question?: string; answer?: string }[])
           .filter((f) => f.question && f.answer)
