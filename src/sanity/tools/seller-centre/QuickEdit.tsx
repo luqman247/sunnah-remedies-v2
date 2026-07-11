@@ -13,6 +13,7 @@ import * as s from "./styles";
 import {
   imageRef,
   publishProductDocument,
+  unpublishProductDocument,
   uploadImageAsset,
 } from "./document";
 import {
@@ -76,6 +77,9 @@ export function QuickEdit({ documentId, onNavigate }: QuickEditProps) {
   const [message, setMessage] = useState<string | null>(null);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [fullDescription, setFullDescription] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
+  const [videoTitle, setVideoTitle] = useState("Product video");
+  const [showVideoForm, setShowVideoForm] = useState(false);
 
   useEffect(() => {
     void (async () => {
@@ -197,11 +201,12 @@ export function QuickEdit({ documentId, onNavigate }: QuickEditProps) {
   }
 
   async function addExternalVideo() {
-    if (!doc) return;
-    const url = window.prompt("Approved external video URL");
-    if (!url?.trim()) return;
-    const title = window.prompt("Video title", "Product video") || "Product video";
+    if (!doc || !videoUrl.trim()) {
+      setError("Enter an approved video URL");
+      return;
+    }
     setBusy(true);
+    setError(null);
     try {
       await client
         .patch(doc._id)
@@ -209,8 +214,8 @@ export function QuickEdit({ documentId, onNavigate }: QuickEditProps) {
         .append("productVideos", [
           {
             _key: newKey("vid"),
-            title,
-            externalUrl: url.trim(),
+            title: videoTitle.trim() || "Product video",
+            externalUrl: videoUrl.trim(),
             autoplay: false,
             muted: true,
             controls: true,
@@ -219,6 +224,9 @@ export function QuickEdit({ documentId, onNavigate }: QuickEditProps) {
         ])
         .commit();
       setMessage("Video added");
+      setVideoUrl("");
+      setVideoTitle("Product video");
+      setShowVideoForm(false);
       const refreshed = await client.fetch(`*[_id == $id][0]{ productVideos }`, {
         id: doc._id,
       });
@@ -227,6 +235,57 @@ export function QuickEdit({ documentId, onNavigate }: QuickEditProps) {
       );
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not add video");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function unpublishProduct() {
+    if (!doc) return;
+    if (
+      !window.confirm(
+        `Unpublish “${doc.name}”? It will leave the public catalogue but remain editable as a draft`,
+      )
+    ) {
+      return;
+    }
+    setBusy(true);
+    setError(null);
+    try {
+      await unpublishProductDocument(client, doc._id);
+      setMessage("Unpublished — hidden from the public catalogue");
+      onNavigate({ kind: "home" });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unpublish failed");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function archiveProduct() {
+    if (!doc) return;
+    if (
+      !window.confirm(
+        `Archive “${doc.name}”? It will leave the public catalogue`,
+      )
+    ) {
+      return;
+    }
+    setBusy(true);
+    setError(null);
+    try {
+      await client
+        .patch(doc._id)
+        .set({
+          status: "archived",
+          visibleInApothecary: false,
+          featured: false,
+        })
+        .commit();
+      setMessage("Archived");
+      onNavigate({ kind: "home" });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Archive failed");
     } finally {
       setBusy(false);
     }
@@ -326,17 +385,6 @@ export function QuickEdit({ documentId, onNavigate }: QuickEditProps) {
       {error ? <p style={s.errorText}>{error}</p> : null}
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", margin: "1rem 0" }}>
-        <button
-          type="button"
-          style={s.secondaryBtn}
-          onClick={() => {
-            const next = window.prompt("New regular price", String(doc.price ?? ""));
-            if (next == null || next === "") return;
-            void patch({ price: Number(next) });
-          }}
-        >
-          Change Price
-        </button>
         <label style={s.secondaryBtn}>
           Replace Main Image
           <input
@@ -355,8 +403,12 @@ export function QuickEdit({ documentId, onNavigate }: QuickEditProps) {
             onChange={(e) => void addGalleryImage(e.target.files?.[0])}
           />
         </label>
-        <button type="button" style={s.secondaryBtn} onClick={() => void addExternalVideo()}>
-          Add Video
+        <button
+          type="button"
+          style={s.secondaryBtn}
+          onClick={() => setShowVideoForm((v) => !v)}
+        >
+          {showVideoForm ? "Cancel video" : "Add Video"}
         </button>
         <button
           type="button"
@@ -385,7 +437,53 @@ export function QuickEdit({ documentId, onNavigate }: QuickEditProps) {
         >
           Publish Changes
         </button>
+        <button
+          type="button"
+          style={s.secondaryBtn}
+          disabled={busy}
+          onClick={() => void unpublishProduct()}
+        >
+          Unpublish
+        </button>
+        <button
+          type="button"
+          style={s.secondaryBtn}
+          disabled={busy}
+          onClick={() => void archiveProduct()}
+        >
+          Archive
+        </button>
       </div>
+
+      {showVideoForm ? (
+        <section style={{ ...s.card, marginBottom: "1rem" }}>
+          <label style={s.field}>
+            <span style={s.label}>Approved external video URL</span>
+            <input
+              style={s.input}
+              value={videoUrl}
+              onChange={(e) => setVideoUrl(e.target.value)}
+              placeholder="https://"
+            />
+          </label>
+          <label style={s.field}>
+            <span style={s.label}>Video title</span>
+            <input
+              style={s.input}
+              value={videoTitle}
+              onChange={(e) => setVideoTitle(e.target.value)}
+            />
+          </label>
+          <button
+            type="button"
+            style={s.primaryBtn}
+            disabled={busy}
+            onClick={() => void addExternalVideo()}
+          >
+            Save video
+          </button>
+        </section>
+      ) : null}
 
       <section style={s.card}>
         <label style={s.field}>

@@ -5,7 +5,7 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { SellerView } from "./types";
 import { SellerHome } from "./SellerHome";
 import { AddProductWizard } from "./AddProductWizard";
@@ -31,21 +31,9 @@ function initialViewFromLocation(): SellerView {
 }
 
 export function ApothecarySellerCentre() {
-  const [view, setView] = useState<SellerView>({ kind: "home" });
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setView(initialViewFromLocation());
-    setReady(true);
-  }, []);
-
-  if (!ready) {
-    return (
-      <div style={{ padding: "2rem", fontFamily: "system-ui, sans-serif", color: "#6b6560" }}>
-        Opening Seller Centre…
-      </div>
-    );
-  }
+  const [view, setView] = useState<SellerView>(() =>
+    typeof window === "undefined" ? { kind: "home" } : initialViewFromLocation(),
+  );
 
   if (view.kind === "add") {
     return (

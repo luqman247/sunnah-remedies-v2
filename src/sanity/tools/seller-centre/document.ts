@@ -182,6 +182,213 @@ export async function publishProductDocument(
   }
 }
 
+/**
+ * Soft unpublish — keep the document, hide from the public catalogue.
+ * Prefer Archive when the product should leave the working list.
+ */
+export async function unpublishProductDocument(
+  client: SanityClient,
+  documentId: string,
+): Promise<void> {
+  const id = stripDraftId(documentId);
+  const draftId = toDraftId(id);
+  const published = await client.fetch<Record<string, unknown> | null>(
+    `*[_id == $id][0]`,
+    { id },
+  );
+  const existingDraft = await client.fetch<Record<string, unknown> | null>(
+    `*[_id == $id][0]`,
+    { id: draftId },
+  );
+
+  const source = existingDraft || published;
+  if (!source) throw new Error("Product not found");
+
+  const next = {
+    ...source,
+    _id: draftId,
+    _type: "product",
+    status: "draft",
+    visibleInApothecary: false,
+    featured: false,
+  };
+  delete (next as { _rev?: string })._rev;
+
+  await client.createOrReplace(next as { _id: string; _type: string });
+  if (published) {
+    // Remove the published document so public queries cannot see it
+    try {
+      await client.delete(id);
+    } catch {
+      // If delete fails, published doc may already be gone
+    }
+  }
+}
+
+export type HydratedWizardState = {
+  details: WizardDetails;
+  images: WizardMediaImage[];
+  videos: WizardVideo[];
+  content: AcceptedContent;
+  pricing: WizardPricing;
+  publishedId: string;
+};
+
+/** Load a Sanity product into wizard form state (draft preferred). */
+export async function hydrateWizardFromSanity(
+  client: SanityClient,
+  documentId: string,
+): Promise<HydratedWizardState | null> {
+  const id = stripDraftId(documentId);
+  const doc = await client.fetch<{
+    _id: string;
+    name?: string;
+    slug?: { current?: string };
+    nature?: string;
+    volume?: string;
+    sku?: string;
+    productType?: string;
+    provenanceOrigin?: string[];
+    traditionalUsage?: string[];
+    subtitle?: string;
+    institutionalSummary?: string;
+    historicalContext?: string[];
+    keyQualities?: string[];
+    suggestedUse?: string[];
+    storage?: string[];
+    faq?: { question?: string; answer?: string }[];
+    seo?: { metaTitle?: string; metaDescription?: string };
+    price?: number;
+    salePrice?: number;
+    currency?: string;
+    stockStatus?: WizardPricing["stockStatus"];
+    stockQuantity?: number;
+    lowStockThreshold?: number;
+    allowBackorder?: boolean;
+    estimatedDispatchTime?: string;
+    featured?: boolean;
+    status?: string;
+    brand?: { _ref?: string };
+    category?: { _ref?: string };
+    mainImage?: { alt?: string; asset?: { _id?: string; url?: string } };
+    gallery?: Array<{
+      _key?: string;
+      alt?: string;
+      asset?: { _id?: string; url?: string };
+    }>;
+    productVideos?: Array<{
+      _key?: string;
+      title?: string;
+      caption?: string;
+      externalUrl?: string;
+      libraryVideo?: { _id?: string };
+      poster?: { asset?: { _id?: string; url?: string } };
+    }>;
+  } | null>(
+    `*[_id in [$id, $draft]]|order(_updatedAt desc)[0]{
+      ...,
+      mainImage{alt, asset->{_id, url}},
+      gallery[]{_key, alt, asset->{_id, url}},
+      productVideos[]{
+        _key, title, caption, externalUrl,
+        "libraryVideo": libraryVideo->{_id},
+        poster{asset->{_id, url}}
+      },
+      brand{_ref},
+      category{_ref}
+    }`,
+    { id, draft: toDraftId(id) },
+  );
+
+  if (!doc) return null;
+
+  const images: WizardMediaImage[] = [];
+  if (doc.mainImage?.asset?._id) {
+    images.push({
+      _key: newKey("img"),
+      assetId: doc.mainImage.asset._id,
+      url: doc.mainImage.asset.url || "",
+      alt: doc.mainImage.alt || "",
+      isPrimary: true,
+    });
+  }
+  for (const g of doc.gallery || []) {
+    if (!g.asset?._id) continue;
+    images.push({
+      _key: g._key || newKey("img"),
+      assetId: g.asset._id,
+      url: g.asset.url || "",
+      alt: g.alt || "",
+      isPrimary: images.length === 0,
+    });
+  }
+
+  const videos: WizardVideo[] = (doc.productVideos || []).map((v) => ({
+    _key: v._key || newKey("vid"),
+    title: v.title || "Product video",
+    caption: v.caption || "",
+    externalUrl: v.externalUrl,
+    libraryVideoId: v.libraryVideo?._id,
+    posterAssetId: v.poster?.asset?._id,
+    posterUrl: v.poster?.asset?.url,
+    autoplay: false as const,
+    controls: true as const,
+  }));
+
+  const fullDescription = (doc.historicalContext || []).join("\n\n");
+  const sourcing =
+    (doc.historicalContext || []).length > 1
+      ? (doc.historicalContext || []).slice(1).join("\n\n")
+      : "";
+
+  return {
+    publishedId: id,
+    details: {
+      name: doc.name || "",
+      slug: doc.slug?.current || "",
+      categoryId: doc.category?._ref || "",
+      productType: doc.productType || "remedy",
+      volume: doc.volume || "",
+      origin: (doc.provenanceOrigin || [])[0] || "",
+      ingredientsText: (doc.traditionalUsage || [])[0] || "",
+      intendedUse: doc.nature || "",
+      brandId: doc.brand?._ref || "",
+      sku: doc.sku || "",
+    },
+    images,
+    videos,
+    content: {
+      subtitle: doc.subtitle || "",
+      shortDescription: doc.institutionalSummary || "",
+      fullDescription,
+      keyQualities: doc.keyQualities || [],
+      sourcingParagraph: sourcing,
+      howToUse: (doc.suggestedUse || [])[0] || "",
+      storageGuidance: (doc.storage || [])[0] || "",
+      faqs: (doc.faq || [])
+        .filter((f) => f.question && f.answer)
+        .map((f) => ({ question: f.question!, answer: f.answer! })),
+      seoTitle: doc.seo?.metaTitle || "",
+      metaDescription: doc.seo?.metaDescription || "",
+    },
+    pricing: {
+      price: typeof doc.price === "number" ? doc.price : "",
+      salePrice: typeof doc.salePrice === "number" ? doc.salePrice : "",
+      currency: doc.currency === "DKK" ? "DKK" : "GBP",
+      stockStatus: doc.stockStatus || "in-stock",
+      stockQuantity:
+        typeof doc.stockQuantity === "number" ? doc.stockQuantity : "",
+      lowStockThreshold:
+        typeof doc.lowStockThreshold === "number" ? doc.lowStockThreshold : 5,
+      comingSoon: doc.status === "coming-soon",
+      allowBackorder: Boolean(doc.allowBackorder),
+      estimatedDispatchTime: doc.estimatedDispatchTime || "",
+      visibleInApothecary: false,
+      featured: Boolean(doc.featured),
+    },
+  };
+}
+
 export async function uploadImageAsset(
   client: SanityClient,
   file: File,

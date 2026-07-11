@@ -3,7 +3,12 @@
  */
 
 import { buildProductDraftPreviewUrl } from "@/sanity/lib/product-preview";
-import type { AcceptedContent, PublicationStatus, SellerProductRow } from "./types";
+import type {
+  AcceptedContent,
+  PublicationStatus,
+  SellerProductRow,
+  StockStatus,
+} from "./types";
 
 export function slugify(input: string): string {
   return input
@@ -62,11 +67,45 @@ export function statusLabel(status?: PublicationStatus): string {
   }
 }
 
+export function stockLabel(stock?: StockStatus | string): string {
+  switch (stock) {
+    case "in-stock":
+      return "In stock";
+    case "low-stock":
+      return "Low stock";
+    case "out-of-stock":
+      return "Out of stock";
+    case "backorder":
+      return "Backorder";
+    case "unavailable":
+      return "Unavailable";
+    default:
+      return stock || "—";
+  }
+}
+
 export function visibilityLabel(row: SellerProductRow): string {
   if (row.status === "archived") return "Archived";
   if (row.visibleInApothecary === false) return "Hidden";
   if (row.status === "draft") return "Hidden";
   return "Visible";
+}
+
+/** True when AI review, price, or short copy still needs attention */
+export function needsAttention(row: SellerProductRow): boolean {
+  return (
+    row.aiDraft?.reviewStatus === "review-required" ||
+    (row.status === "active" && typeof row.price !== "number") ||
+    !row.institutionalSummary?.trim()
+  );
+}
+
+export function isHiddenProduct(row: SellerProductRow): boolean {
+  return (
+    row.visibleInApothecary === false ||
+    row.status === "draft" ||
+    row.status === "archived"
+  );
 }
 
 export function languageCompletion(row: SellerProductRow): string {

@@ -16,6 +16,11 @@ const nextConfig: NextConfig = {
       process.env.SANITY_STUDIO_SITE_URL ||
       process.env.NEXT_PUBLIC_SITE_URL ||
       "",
+    // Studio AI actions (Seller Centre Generate Content) — editors only
+    SANITY_STUDIO_AI_ADMIN_TOKEN:
+      process.env.SANITY_STUDIO_AI_ADMIN_TOKEN ||
+      process.env.AI_ADMIN_TOKEN ||
+      "",
   },
   images: {
     remotePatterns: [

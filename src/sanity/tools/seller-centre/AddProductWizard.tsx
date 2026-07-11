@@ -6,6 +6,7 @@
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useClient } from "sanity";
+import { useRouter } from "sanity/router";
 import type { SanityClient } from "sanity";
 import type {
   AcceptedContent,
@@ -20,6 +21,7 @@ import type {
 import * as s from "./styles";
 import {
   buildProductId,
+  hydrateWizardFromSanity,
   publishProductDocument,
   saveWizardDraft,
   uploadImageAsset,
@@ -33,6 +35,8 @@ import {
   productPreviewUrl,
   publishRequirements,
   slugify,
+  stockLabel,
+  stripDraftId,
 } from "./utils";
 import {
   clearWizardPersistence,
@@ -99,6 +103,7 @@ export function AddProductWizard({
   resumeDraftId,
 }: AddProductWizardProps) {
   const client = useClient({ apiVersion: "2024-01-01" }) as SanityClient;
+  const router = useRouter();
   const restored = typeof window !== "undefined" ? loadWizardPersistence() : null;
   const [step, setStep] = useState(restored?.step || initialStep);
   const [details, setDetails] = useState<WizardDetails>(
@@ -118,15 +123,18 @@ export function AddProductWizard({
     restored?.pricing || emptyPricing,
   );
   const [showVariants, setShowVariants] = useState(false);
+  const [showRefine, setShowRefine] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [variantNote, setVariantNote] = useState(restored?.variantNote || "");
   const [publishedId, setPublishedId] = useState<string | null>(
     resumeDraftId || restored?.publishedId || null,
   );
   const [uploadPct, setUploadPct] = useState<number | null>(null);
   const [busy, setBusy] = useState(false);
+  const [hydrating, setHydrating] = useState(Boolean(resumeDraftId));
   const [dirty, setDirty] = useState(Boolean(restored?.details.name));
   const [message, setMessage] = useState<string | null>(
-    restored?.details.name
+    restored?.details.name && !resumeDraftId
       ? "Recovered your previous draft from this browser"
       : null,
   );
@@ -152,6 +160,38 @@ export function AddProductWizard({
       );
     })();
   }, [client]);
+
+  // Prefer Sanity draft when resuming a known product id
+  useEffect(() => {
+    if (!resumeDraftId) {
+      setHydrating(false);
+      return;
+    }
+    let cancelled = false;
+    void (async () => {
+      try {
+        const hydrated = await hydrateWizardFromSanity(client, resumeDraftId);
+        if (cancelled || !hydrated) return;
+        setPublishedId(hydrated.publishedId);
+        setDetails(hydrated.details);
+        setImages(hydrated.images);
+        setVideos(hydrated.videos);
+        setContent(hydrated.content);
+        setPricing(hydrated.pricing);
+        setSlugTouched(true);
+        setDirty(true);
+        setMessage("Loaded draft from Sanity");
+        clearWizardPersistence();
+      } catch {
+        // Keep localStorage recovery if Sanity hydrate fails
+      } finally {
+        if (!cancelled) setHydrating(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [client, resumeDraftId]);
 
   useEffect(() => {
     if (!dirty && !details.name.trim()) return;
@@ -486,6 +526,10 @@ export function AddProductWizard({
         you press Publish
       </p>
 
+      {hydrating ? <p style={s.help}>Loading your Sanity draft…</p> : null}
+      {message ? <p style={{ ...s.help, color: "#3d5a3d" }}>{message}</p> : null}
+      {error ? <p style={s.errorText}>{error}</p> : null}
+
       <div style={s.stepRail} aria-label="Workflow steps">
         {STEPS.map((label, index) => {
           const n = index + 1;
@@ -507,9 +551,6 @@ export function AddProductWizard({
           );
         })}
       </div>
-
-      {message ? <p style={{ ...s.help, color: "#3d5a3d" }}>{message}</p> : null}
-      {error ? <p style={s.errorText}>{error}</p> : null}
 
       {step === 1 ? (
         <section style={s.card}>
@@ -572,7 +613,10 @@ export function AddProductWizard({
               onChange={(e) => setDetails((d) => ({ ...d, origin: e.target.value }))}
             />
           </Field>
-          <Field label="Ingredient or ingredients" help="Comma-separated factual names">
+          <Field
+            label="Ingredient or ingredients"
+            help="Comma-separated factual names. Stored as usage notes until you link Ingredient records in the Advanced Editor"
+          >
             <input
               style={s.input}
               value={details.ingredientsText}
@@ -875,29 +919,13 @@ export function AddProductWizard({
             >
               Generate Product Content
             </button>
-            <button type="button" style={s.secondaryBtn} disabled={busy || !proposal} onClick={() => void generateAi("make_shorter")}>
-              Make shorter
-            </button>
-            <button type="button" style={s.secondaryBtn} disabled={busy || !proposal} onClick={() => void generateAi("make_detailed")}>
-              Make more detailed
-            </button>
-            <button type="button" style={s.secondaryBtn} disabled={busy || !proposal} onClick={() => void generateAi("make_editorial")}>
-              Make more premium
-            </button>
-            <button type="button" style={s.secondaryBtn} disabled={busy || !proposal} onClick={() => void generateAi("make_clinical")}>
-              Make more educational
-            </button>
-            <button type="button" style={s.secondaryBtn} disabled={busy || !proposal} onClick={() => void generateAi("translate_da")}>
-              Translate to Danish
-            </button>
-            <button type="button" style={s.secondaryBtn} disabled={busy} onClick={() => void generateAi("improve_seo")}>
-              Improve SEO
-            </button>
-            <button type="button" style={s.secondaryBtn} disabled={busy} onClick={() => void generateAi("generate_faqs")}>
-              Generate FAQs
-            </button>
-            <button type="button" style={s.secondaryBtn} disabled={busy} onClick={() => void generateAi("generate_alt_text")}>
-              Suggest image alt text
+            <button
+              type="button"
+              style={s.secondaryBtn}
+              disabled={busy || !proposal}
+              onClick={() => setShowRefine((v) => !v)}
+            >
+              {showRefine ? "Hide refinements" : "Refine draft"}
             </button>
             <button type="button" style={s.secondaryBtn} disabled={!proposal} onClick={acceptAllProposal}>
               Accept all
@@ -906,6 +934,34 @@ export function AddProductWizard({
               Reject
             </button>
           </div>
+          {showRefine ? (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "0.75rem" }}>
+              <button type="button" style={s.secondaryBtn} disabled={busy || !proposal} onClick={() => void generateAi("make_shorter")}>
+                Make shorter
+              </button>
+              <button type="button" style={s.secondaryBtn} disabled={busy || !proposal} onClick={() => void generateAi("make_detailed")}>
+                Make more detailed
+              </button>
+              <button type="button" style={s.secondaryBtn} disabled={busy || !proposal} onClick={() => void generateAi("make_editorial")}>
+                Make more premium
+              </button>
+              <button type="button" style={s.secondaryBtn} disabled={busy || !proposal} onClick={() => void generateAi("make_clinical")}>
+                Make more educational
+              </button>
+              <button type="button" style={s.secondaryBtn} disabled={busy || !proposal} onClick={() => void generateAi("translate_da")}>
+                Translate to Danish
+              </button>
+              <button type="button" style={s.secondaryBtn} disabled={busy} onClick={() => void generateAi("improve_seo")}>
+                Improve SEO
+              </button>
+              <button type="button" style={s.secondaryBtn} disabled={busy} onClick={() => void generateAi("generate_faqs")}>
+                Generate FAQs
+              </button>
+              <button type="button" style={s.secondaryBtn} disabled={busy} onClick={() => void generateAi("generate_alt_text")}>
+                Suggest image alt text
+              </button>
+            </div>
+          ) : null}
           <p style={{ ...s.help, marginTop: "0.75rem" }}>
             AI draft — review required. Never invents medical claims, certifications,
             hadith, or provenance
@@ -1257,7 +1313,7 @@ export function AddProductWizard({
               <p style={s.help}>
                 Gallery {images.length} · Video {videos.length} ·{" "}
                 {pricing.currency} {pricing.price === "" ? "—" : pricing.price} ·{" "}
-                {pricing.stockStatus}
+                {stockLabel(pricing.stockStatus)}
               </p>
               <p style={s.help}>
                 Category{" "}
@@ -1312,15 +1368,65 @@ export function AddProductWizard({
               type="button"
               style={s.ghostBtn}
               onClick={() => {
-                if (publishedId) {
-                  onNavigate({ kind: "edit", documentId: `drafts.${publishedId}` });
-                } else {
-                  window.alert("Save a draft first to open the editor");
+                if (!publishedId) {
+                  window.alert("Save a draft first to open the Advanced Editor");
+                  return;
                 }
+                router.navigateIntent("edit", {
+                  id: stripDraftId(publishedId),
+                  type: "product",
+                });
               }}
             >
               Open Advanced Editor
             </button>
+          </div>
+          <div style={{ marginTop: "1.25rem" }}>
+            <button
+              type="button"
+              style={s.secondaryBtn}
+              onClick={() => setShowAdvanced((v) => !v)}
+            >
+              {showAdvanced ? "Hide Advanced Settings" : "Advanced Settings"}
+            </button>
+            {showAdvanced ? (
+              <div style={{ marginTop: "0.75rem" }}>
+                <p style={s.help}>
+                  SKU, SEO and specialist fields. Routine selling does not require these —
+                  open the full Advanced Editor for scholarship and ingredient links
+                </p>
+                <Field label="SKU">
+                  <input
+                    style={s.input}
+                    value={details.sku}
+                    onChange={(e) => {
+                      markDirty();
+                      setDetails((d) => ({ ...d, sku: e.target.value }));
+                    }}
+                  />
+                </Field>
+                <Field label="SEO title">
+                  <input
+                    style={s.input}
+                    value={content.seoTitle}
+                    onChange={(e) => {
+                      markDirty();
+                      setContent((c) => ({ ...c, seoTitle: e.target.value }));
+                    }}
+                  />
+                </Field>
+                <Field label="Meta description">
+                  <textarea
+                    style={{ ...s.input, minHeight: 80 }}
+                    value={content.metaDescription}
+                    onChange={(e) => {
+                      markDirty();
+                      setContent((c) => ({ ...c, metaDescription: e.target.value }));
+                    }}
+                  />
+                </Field>
+              </div>
+            ) : null}
           </div>
         </section>
       ) : null}
@@ -1331,6 +1437,7 @@ export function AddProductWizard({
           justifyContent: "space-between",
           marginTop: "1.25rem",
           gap: "0.75rem",
+          flexWrap: "wrap",
         }}
       >
         <button
@@ -1341,16 +1448,28 @@ export function AddProductWizard({
         >
           Back
         </button>
-        {step < 5 ? (
-          <button
-            type="button"
-            style={s.primaryBtn}
-            disabled={busy}
-            onClick={() => void goToStep(Math.min(5, step + 1))}
-          >
-            Continue
-          </button>
-        ) : null}
+        <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
+          {step < 5 ? (
+            <button
+              type="button"
+              style={s.secondaryBtn}
+              disabled={busy || !details.name.trim()}
+              onClick={() => void persist("draft")}
+            >
+              Save Draft
+            </button>
+          ) : null}
+          {step < 5 ? (
+            <button
+              type="button"
+              style={s.primaryBtn}
+              disabled={busy || hydrating}
+              onClick={() => void goToStep(Math.min(5, step + 1))}
+            >
+              Continue
+            </button>
+          ) : null}
+        </div>
       </div>
     </div>
   );

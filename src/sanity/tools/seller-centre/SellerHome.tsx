@@ -12,14 +12,18 @@ import type { RefOption, SellerProductRow, SellerView } from "./types";
 import * as s from "./styles";
 import {
   formatMoney,
+  isHiddenProduct,
   languageCompletion,
+  needsAttention,
+  newKey,
   productPreviewUrl,
   statusLabel,
+  stockLabel,
   stripDraftId,
   toDraftId,
   visibilityLabel,
 } from "./utils";
-import { publishProductDocument } from "./document";
+import { publishProductDocument, unpublishProductDocument } from "./document";
 
 interface SellerHomeProps {
   onNavigate: (view: SellerView) => void;
@@ -67,10 +71,12 @@ export function SellerHome({ onNavigate }: SellerHomeProps) {
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [visibilityFilter, setVisibilityFilter] = useState("all");
   const [stockFilter, setStockFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [collectionFilter, setCollectionFilter] = useState("all");
   const [languageFilter, setLanguageFilter] = useState("all");
+  const [attentionOnly, setAttentionOnly] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState<string | null>(null);
 
@@ -120,12 +126,7 @@ export function SellerHome({ onNavigate }: SellerHomeProps) {
       (r) =>
         r.status === "out-of-stock" || r.stockStatus === "out-of-stock",
     ).length;
-    const attention = rows.filter(
-      (r) =>
-        r.aiDraft?.reviewStatus === "review-required" ||
-        (r.status === "active" && typeof r.price !== "number") ||
-        !r.institutionalSummary,
-    ).length;
+    const attention = rows.filter((r) => needsAttention(r)).length;
     return { live, draft, hidden, outOfStock, attention };
   }, [rows]);
 
@@ -134,6 +135,8 @@ export function SellerHome({ onNavigate }: SellerHomeProps) {
     return rows.filter((r) => {
       if (q && !(r.name || "").toLowerCase().includes(q)) return false;
       if (statusFilter !== "all" && r.status !== statusFilter) return false;
+      if (visibilityFilter === "hidden" && !isHiddenProduct(r)) return false;
+      if (visibilityFilter === "visible" && isHiddenProduct(r)) return false;
       if (stockFilter !== "all" && r.stockStatus !== stockFilter) return false;
       if (categoryFilter !== "all" && r.category?._id !== categoryFilter) {
         return false;
@@ -141,6 +144,7 @@ export function SellerHome({ onNavigate }: SellerHomeProps) {
       if (collectionFilter !== "all" && r.collection?._id !== collectionFilter) {
         return false;
       }
+      if (attentionOnly && !needsAttention(r)) return false;
       if (languageFilter === "incomplete" && r.institutionalSummary?.trim()) {
         return false;
       }
@@ -155,10 +159,12 @@ export function SellerHome({ onNavigate }: SellerHomeProps) {
     rows,
     search,
     statusFilter,
+    visibilityFilter,
     stockFilter,
     categoryFilter,
     collectionFilter,
     languageFilter,
+    attentionOnly,
   ]);
 
   async function runAction(
@@ -179,10 +185,7 @@ export function SellerHome({ onNavigate }: SellerHomeProps) {
         ) {
           return;
         }
-        await client
-          .patch(row._id)
-          .set({ status: "draft", visibleInApothecary: false })
-          .commit();
+        await unpublishProductDocument(client, row._id);
       } else if (action === "hide") {
         await client.patch(row._id).set({ visibleInApothecary: false }).commit();
       } else if (action === "archive") {
@@ -207,8 +210,11 @@ export function SellerHome({ onNavigate }: SellerHomeProps) {
           (await client.fetch(`*[_id == $id][0]`, { id: row._id })) ||
           (await client.fetch(`*[_id == $id][0]`, { id: toDraftId(id) }));
         if (!source) throw new Error("Could not load product to duplicate");
-        const copyId = `product-copy-${Date.now().toString(36)}`;
-        const { _id: _omit, _rev: _r, ...rest } = source as Record<string, unknown>;
+        const copyId = `product-copy-${newKey("dup")}`;
+        const slugSuffix = newKey("s").slice(-4);
+        const rest = { ...(source as Record<string, unknown>) };
+        delete rest._id;
+        delete rest._rev;
         await client.create({
           ...rest,
           _id: toDraftId(copyId),
@@ -216,7 +222,7 @@ export function SellerHome({ onNavigate }: SellerHomeProps) {
           name: `${row.name || "Product"} (copy)`,
           slug: {
             _type: "slug",
-            current: `${row.slug?.current || "product"}-copy-${Date.now().toString(36).slice(-4)}`,
+            current: `${row.slug?.current || "product"}-copy-${slugSuffix}`,
           },
           status: "draft",
           visibleInApothecary: false,
@@ -278,31 +284,51 @@ export function SellerHome({ onNavigate }: SellerHomeProps) {
       label: "Live Products",
       value: summary.live,
       hint: "Active and visible",
-      onClick: () => setStatusFilter("active"),
+      onClick: () => {
+        setStatusFilter("active");
+        setVisibilityFilter("visible");
+        setAttentionOnly(false);
+      },
     },
     {
       label: "Draft Products",
       value: summary.draft,
       hint: "Not yet live",
-      onClick: () => setStatusFilter("draft"),
+      onClick: () => {
+        setStatusFilter("draft");
+        setVisibilityFilter("all");
+        setAttentionOnly(false);
+      },
     },
     {
       label: "Hidden Products",
       value: summary.hidden,
       hint: "Draft, hidden or archived",
-      onClick: () => setStatusFilter("draft"),
+      onClick: () => {
+        setStatusFilter("all");
+        setVisibilityFilter("hidden");
+        setAttentionOnly(false);
+      },
     },
     {
       label: "Out of Stock",
       value: summary.outOfStock,
       hint: "Unavailable to dispense",
-      onClick: () => setStockFilter("out-of-stock"),
+      onClick: () => {
+        setStockFilter("out-of-stock");
+        setAttentionOnly(false);
+      },
     },
     {
       label: "Needs Attention",
       value: summary.attention,
       hint: "AI review, price or copy",
-      onClick: () => setLanguageFilter("incomplete"),
+      onClick: () => {
+        setStatusFilter("all");
+        setVisibilityFilter("all");
+        setLanguageFilter("all");
+        setAttentionOnly(true);
+      },
     },
   ];
 
@@ -507,7 +533,7 @@ export function SellerHome({ onNavigate }: SellerHomeProps) {
                           </div>
                         ) : null}
                       </td>
-                      <td style={s.td}>{row.stockStatus || "—"}</td>
+                      <td style={s.td}>{stockLabel(row.stockStatus)}</td>
                       <td style={s.td}>{statusLabel(row.status)}</td>
                       <td style={s.td}>{visibilityLabel(row)}</td>
                       <td style={s.td}>
