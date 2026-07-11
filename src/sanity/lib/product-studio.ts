@@ -16,30 +16,20 @@ import {
   PRODUCT_AI_DOCUMENT_ACTIONS,
 } from "@/sanity/actions/productActions";
 import { PRODUCT_DOCUMENT_BADGES } from "@/sanity/badges/productBadges";
+import {
+  buildProductDraftPreviewUrl,
+  productPublicPath,
+  siteOriginForPreview,
+} from "@/sanity/lib/product-preview";
 
 const PRODUCT_TYPES = new Set(["product"]);
 
 type ProductLike = SanityDocumentLike & {
+  _id?: string;
   _type?: string;
   slug?: { current?: string };
   language?: string;
 };
-
-function siteOrigin(): string {
-  return (
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    process.env.SANITY_STUDIO_SITE_URL ||
-    "http://localhost:3000"
-  );
-}
-
-function previewSecret(): string | undefined {
-  return (
-    process.env.SANITY_STUDIO_PREVIEW_SECRET ||
-    process.env.NEXT_PUBLIC_SANITY_PREVIEW_SECRET ||
-    undefined
-  );
-}
 
 export function resolveProductActions(
   prev: DocumentActionComponent[],
@@ -47,7 +37,6 @@ export function resolveProductActions(
 ): DocumentActionComponent[] {
   if (!PRODUCT_TYPES.has(context.schemaType)) return prev;
 
-  // Prefer archive over hard delete for catalogue safety
   const withoutDelete = prev.filter((action) => action.action !== "delete");
   return [
     ...withoutDelete,
@@ -71,19 +60,13 @@ export async function resolveProductProductionUrl(
   const doc = context.document as ProductLike | undefined;
   if (!doc || doc._type !== "product") return prev;
 
-  const slug = doc.slug?.current;
-  if (!slug) return prev;
+  const withId = { ...doc, _id: doc._id };
+  const draftUrl = buildProductDraftPreviewUrl(withId);
+  if (draftUrl) return draftUrl;
 
-  const prefix = doc.language === "da" ? "/dk" : "";
-  const path = `${prefix}/the-apothecary/${slug}`;
-  const origin = siteOrigin().replace(/\/$/, "");
-  const secret = previewSecret();
-
-  if (secret) {
-    return `${origin}/api/draft?secret=${encodeURIComponent(secret)}&slug=${encodeURIComponent(path)}`;
-  }
-
-  return `${origin}${path}`;
+  const path = productPublicPath(withId);
+  if (!path) return prev;
+  return `${siteOriginForPreview()}${path}`;
 }
 
 export function resolveProductTemplates(prev: Template[]): Template[] {

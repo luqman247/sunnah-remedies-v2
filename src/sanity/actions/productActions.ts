@@ -12,8 +12,14 @@ import {
   type DocumentActionComponent,
   type DocumentActionProps,
 } from "sanity";
+import {
+  buildProductDraftPreviewUrl,
+  productPublicPath,
+  siteOriginForPreview,
+} from "@/sanity/lib/product-preview";
 
 type ProductFields = {
+  _id?: string;
   status?: string;
   featured?: boolean;
   visibleInApothecary?: boolean;
@@ -23,30 +29,8 @@ type ProductFields = {
 };
 
 function currentProduct(props: DocumentActionProps): ProductFields {
-  return (props.draft || props.published || {}) as ProductFields;
-}
-
-function siteOrigin(): string {
-  return (
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    process.env.SANITY_STUDIO_SITE_URL ||
-    (typeof window !== "undefined" ? window.location.origin : "http://localhost:3000")
-  );
-}
-
-function previewSecret(): string | undefined {
-  return (
-    process.env.SANITY_STUDIO_PREVIEW_SECRET ||
-    process.env.NEXT_PUBLIC_SANITY_PREVIEW_SECRET ||
-    undefined
-  );
-}
-
-function productPublicPath(product: ProductFields): string | null {
-  const slug = product.slug?.current;
-  if (!slug) return null;
-  const prefix = product.language === "da" ? "/dk" : "";
-  return `${prefix}/the-apothecary/${slug}`;
+  const base = (props.draft || props.published || {}) as ProductFields;
+  return { ...base, _id: props.id };
 }
 
 function isPatchDisabled(disabled: unknown): boolean {
@@ -167,38 +151,44 @@ export const ToggleFeaturedProductAction: DocumentActionComponent = (props) => {
   };
 };
 
-export const PreviewProductAction: DocumentActionComponent = (props) => {
+/**
+ * Preview Draft — enables Next.js Draft Mode and opens the locale-correct
+ * monograph. Works for unpublished and Hidden products without publishing.
+ */
+export const PreviewDraftProductAction: DocumentActionComponent = (props) => {
   const product = currentProduct(props);
   const path = productPublicPath(product);
-  const secret = previewSecret();
+  const previewUrl = buildProductDraftPreviewUrl(product);
 
   return {
-    label: "Preview on site",
+    label: "Preview Draft",
     disabled: !path,
-    title: path
-      ? "Open the product page (draft mode when preview secret is configured)"
-      : "Add a slug before previewing",
+    title: previewUrl
+      ? "Open a private draft preview (not publicly visible)"
+      : path
+        ? "Configure SANITY_STUDIO_PREVIEW_SECRET (same value as SANITY_PREVIEW_SECRET)"
+        : "Add a slug before previewing",
     onHandle: () => {
       if (!path) {
         props.onComplete();
         return;
       }
-      const origin = siteOrigin().replace(/\/$/, "");
-      const url = secret
-        ? `${origin}/api/draft?secret=${encodeURIComponent(secret)}&slug=${encodeURIComponent(path)}`
-        : `${origin}${path}`;
+      const url = previewUrl || `${siteOriginForPreview()}${path}`;
       window.open(url, "_blank", "noopener,noreferrer");
       props.onComplete();
     },
   };
 };
 
+/** @deprecated Prefer PreviewDraftProductAction */
+export const PreviewProductAction = PreviewDraftProductAction;
+
 export const PRODUCT_DOCUMENT_ACTIONS = [
   ArchiveProductAction,
   RestoreProductAction,
   SetActiveProductAction,
   ToggleFeaturedProductAction,
-  PreviewProductAction,
+  PreviewDraftProductAction,
 ] as const;
 
 export {

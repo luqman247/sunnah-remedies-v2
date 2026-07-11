@@ -7,7 +7,7 @@
  * back to the default locale (English).
  */
 
-import { client } from "./client";
+import { client, previewClient } from "./client";
 import { DEFAULT_LOCALE } from "@/i18n/locales";
 import {
   homepageQuery,
@@ -16,6 +16,8 @@ import {
   institutionSettingsQuery,
   allProductsQuery,
   productBySlugQuery,
+  productPreviewBySlugQuery,
+  productPreviewByIdQuery,
   allProgrammesQuery,
   programmeBySlugQuery,
   allJourneysQuery,
@@ -205,6 +207,57 @@ export async function getProductBySlug(slug: string, locale: string = DEFAULT_LO
   }
   const staticRemedy = getStaticRemedy(slug);
   return staticRemedy ? remedyToProduct(staticRemedy) : null;
+}
+
+/**
+ * Product fetch for monograph pages.
+ * When Next.js Draft Mode is enabled, uses the authenticated preview client
+ * and preview GROQ (drafts + hidden allowed). Public path unchanged otherwise.
+ */
+export async function getProductBySlugForPage(
+  slug: string,
+  locale: string = DEFAULT_LOCALE,
+  options?: { documentId?: string },
+): Promise<Product | null> {
+  const { draftMode } = await import("next/headers");
+  const isDraftPreview = (await draftMode()).isEnabled;
+
+  if (!isDraftPreview) {
+    return getProductBySlug(slug, locale);
+  }
+
+  if (!process.env.SANITY_API_TOKEN) {
+    console.error(
+      "[apothecary preview] SANITY_API_TOKEN is required to preview drafts",
+    );
+    return null;
+  }
+
+  try {
+    const languages = locale === DEFAULT_LOCALE ? [locale] : [locale, DEFAULT_LOCALE];
+
+    for (const language of languages) {
+      const bySlug = await previewClient.fetch<Product | null>(
+        productPreviewBySlugQuery,
+        { slug, language },
+      );
+      if (bySlug) return bySlug;
+    }
+
+    if (options?.documentId) {
+      const id = options.documentId.replace(/^drafts\./, "");
+      const byId = await previewClient.fetch<Product | null>(
+        productPreviewByIdQuery,
+        { id },
+      );
+      if (byId) return byId;
+    }
+
+    return null;
+  } catch (error) {
+    console.error("[apothecary preview] fetch failed", error);
+    return null;
+  }
 }
 
 export async function getProductSlugs(): Promise<{ slug: string; language: string }[]> {

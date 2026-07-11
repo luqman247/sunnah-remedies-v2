@@ -1,12 +1,18 @@
+/**
+ * GET /api/draft/disable — exit Draft Mode.
+ * Optional ?redirect=/path to return to a specific page (defaults to /).
+ */
+
 import { draftMode } from "next/headers";
 import { redirect } from "next/navigation";
+import { NextRequest } from "next/server";
 
-/**
- * Disables Draft Mode and redirects to homepage.
- * Called when an editor wants to exit preview.
- */
-export async function GET() {
+export async function GET(request: NextRequest) {
   const draft = await draftMode();
   draft.disable();
-  redirect("/");
+
+  const target = request.nextUrl.searchParams.get("redirect") || "/";
+  const safe =
+    target.startsWith("/") && !target.startsWith("//") ? target : "/";
+  redirect(safe);
 }

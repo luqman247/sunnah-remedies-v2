@@ -1,6 +1,7 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
+import { presentationTool } from "sanity/presentation";
 import { documentInternationalization } from "@sanity/document-internationalization";
 import { languageFilter } from "@sanity/language-filter";
 import { schemaTypes } from "./src/sanity/schemas";
@@ -16,9 +17,23 @@ import {
 } from "./src/sanity/lib/product-studio";
 import { resolveMediaActions } from "./src/sanity/actions/mediaActions";
 import { getSanityDataset, getSanityProjectId } from "./src/sanity/env";
+import { productPresentationLocations } from "./src/sanity/lib/presentation";
 
 const projectId = getSanityProjectId();
 const dataset = getSanityDataset();
+
+const previewOrigin = (
+  process.env.SANITY_STUDIO_SITE_URL ||
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  "http://localhost:3000"
+).replace(/\/$/, "");
+
+const studioPreviewSecret =
+  process.env.SANITY_STUDIO_PREVIEW_SECRET || process.env.SANITY_PREVIEW_SECRET || "";
+
+const draftModeEnablePath = studioPreviewSecret
+  ? `/api/draft?secret=${encodeURIComponent(studioPreviewSecret)}`
+  : "/api/draft";
 
 const SUPPORTED_LANGUAGES = [
   { id: "en", title: "English" },
@@ -60,6 +75,20 @@ export default defineConfig({
 
   plugins: [
     structureTool({ structure }),
+    presentationTool({
+      previewUrl: {
+        initial: previewOrigin,
+        previewMode: {
+          enable: draftModeEnablePath,
+          shareAccess: true,
+        },
+      },
+      resolve: {
+        locations: {
+          product: productPresentationLocations,
+        },
+      },
+    }),
     documentInternationalization({
       supportedLanguages: SUPPORTED_LANGUAGES,
       schemaTypes: TRANSLATABLE_TYPES,

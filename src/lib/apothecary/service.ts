@@ -2,10 +2,16 @@
  * Apothecary product service — single composition entry for public pages.
  *
  * Sanity is the source of truth for editable product content.
- * Only publicly visible products are returned (never drafts/archived).
+ * Public paths never return drafts/archived/hidden products.
+ * Draft Mode (secure preview) may return those for authenticated editors only.
  */
 
-import { getAllProducts, getProductBySlug } from "@/sanity/lib/fetch";
+import { draftMode } from "next/headers";
+import {
+  getAllProducts,
+  getProductBySlug,
+  getProductBySlugForPage,
+} from "@/sanity/lib/fetch";
 import { productToRemedy } from "@/sanity/lib/adapters";
 import type { Product } from "@/sanity/lib/types";
 import type { Remedy } from "@/lib/content/types";
@@ -42,6 +48,24 @@ export async function getPublicRemedyBySlug(
   return productToRemedy(product);
 }
 
+/**
+ * Monograph page resolver — public rules by default; Draft Mode bypasses
+ * visibility so editors can preview unpublished / hidden products.
+ */
+export async function getRemedyForPage(
+  slug: string,
+  locale: string,
+  options?: { documentId?: string },
+): Promise<{ remedy: Remedy; isPreview: boolean } | null> {
+  const isPreview = (await draftMode()).isEnabled;
+  const product = await getProductBySlugForPage(slug, locale, options);
+  if (!product) return null;
+
+  if (!isPreview && !isPubliclyVisibleProduct(product)) return null;
+
+  return { remedy: productToRemedy(product), isPreview };
+}
+
 export async function listFeaturedRemedies(
   locale: string,
   limit = 3,
@@ -63,6 +87,6 @@ export async function resolveRelatedRemedies(
   const all = await listPublicRemedies(locale);
   const bySlug = new Map(all.map((r) => [r.slug, r]));
   return remedy.relatedRemedies
-    .map((slug) => bySlug.get(slug))
+    .map((relatedSlug) => bySlug.get(relatedSlug))
     .filter((r): r is Remedy => Boolean(r));
 }

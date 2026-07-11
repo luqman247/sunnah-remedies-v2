@@ -1,31 +1,84 @@
+/**
+ * GET /api/draft
+ *
+ * Enables Next.js Draft Mode after validating a server-side preview secret.
+ * Used by Sanity Studio “Preview Draft” for unpublished / hidden products.
+ *
+ * Query params:
+ * - secret (required) — must match SANITY_PREVIEW_SECRET
+ * - slug — full path (/en/the-apothecary/x or /dk/the-apothecary/x) or bare slug
+ * - locale — en | da (optional; inferred from path or defaults to en)
+ * - id — Sanity product document id without drafts. prefix (optional)
+ */
+
 import { draftMode } from "next/headers";
 import { redirect } from "next/navigation";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { productDraftPreviewPath } from "@/sanity/lib/product-preview";
 
-/**
- * Draft Mode API — enables Sanity preview.
- *
- * Usage from Sanity Studio or browser:
- *   GET /api/draft?secret=YOUR_SECRET&slug=/the-apothecary/honey
- *
- * Enables Next.js Draft Mode and redirects to the target page,
- * which will then use the previewClient to fetch unpublished drafts.
- */
-export async function GET(request: NextRequest) {
+export const runtime = "nodejs";
+
+function resolveRedirectPath(request: NextRequest): string {
   const { searchParams } = request.nextUrl;
-  const secret = searchParams.get("secret");
-  const slug = searchParams.get("slug") || "/";
+  const rawSlug = searchParams.get("slug") || "";
+  const localeParam = searchParams.get("locale");
+  const id = searchParams.get("id")?.replace(/^drafts\./, "") || undefined;
+  const language = localeParam === "da" ? "da" : "en";
 
-  if (!process.env.SANITY_PREVIEW_SECRET) {
-    return new Response("Preview secret not configured", { status: 500 });
+  let path = rawSlug.trim();
+
+  if (!path || path === "/") {
+    const bare = searchParams.get("productSlug");
+    if (bare) {
+      path =
+        productDraftPreviewPath({
+          slug: bare,
+          language,
+        }) || "/";
+    } else {
+      path = "/";
+    }
   }
 
-  if (secret !== process.env.SANITY_PREVIEW_SECRET) {
-    return new Response("Invalid preview secret", { status: 401 });
+  // Bare product slug → locale-aware draft path
+  if (path && !path.startsWith("/")) {
+    path =
+      productDraftPreviewPath({
+        slug: path,
+        language,
+      }) || `/${path}`;
+  }
+
+  // Legacy unprefixed English public path → explicit /en for Draft Mode
+  if (path.startsWith("/the-apothecary/") && !path.startsWith("/dk/")) {
+    path = `/en${path}`;
+  }
+
+  if (id) {
+    const joiner = path.includes("?") ? "&" : "?";
+    path = `${path}${joiner}previewId=${encodeURIComponent(id)}`;
+  }
+
+  return path || "/";
+}
+
+export async function GET(request: NextRequest) {
+  const secret = request.nextUrl.searchParams.get("secret");
+  const expected = process.env.SANITY_PREVIEW_SECRET;
+
+  if (!expected) {
+    return NextResponse.json(
+      { error: "Preview secret not configured" },
+      { status: 500 },
+    );
+  }
+
+  if (!secret || secret !== expected) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const draft = await draftMode();
   draft.enable();
 
-  redirect(slug);
+  redirect(resolveRedirectPath(request));
 }

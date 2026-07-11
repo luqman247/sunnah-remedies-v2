@@ -270,6 +270,106 @@ export const productBySlugQuery = groq`
   }
 `;
 
+/**
+ * Draft / Presentation preview — no public visibility filter.
+ * Must only be used with an authenticated preview client + Draft Mode.
+ * Includes never-published drafts (drafts.* ids) via perspective.
+ */
+export const productPreviewBySlugQuery = groq`
+  *[
+    _type == "product"
+    && language == $language
+    && slug.current == $slug
+    && !(_id in path("drafts.**"))
+  ][0] {
+    ...,
+    mainImage { ..., asset-> },
+    "primaryLibraryImage": primaryLibraryImage->${libraryAssetProjection},
+    gallery[] { ..., asset-> },
+    mediaGallery[] {
+      ...,
+      "libraryAsset": libraryAsset->${libraryAssetProjection},
+      image { ..., asset-> }
+    },
+    "libraryVideos": libraryVideos[]->{
+      _id,
+      title,
+      cloudinary,
+      poster { ..., asset-> }
+    },
+    productVideos[] {
+      ...,
+      "libraryVideo": libraryVideo->{
+        _id,
+        title,
+        cloudinary
+      }
+    },
+    propheticReferences[],
+    "relatedProducts": relatedProducts[]->{
+      _id,
+      slug,
+      name,
+      nature,
+      status,
+      visibleInApothecary,
+      mainImage { ..., asset-> },
+      "primaryLibraryImage": primaryLibraryImage->${libraryAssetProjection}
+    },
+    "ingredients": ingredients[]->{ _id, slug, name, botanicalName },
+    seo,
+    aiDraft,
+    ${translationSiblings}
+  }
+`;
+
+/** Fallback when a document exists only as drafts.* and perspective does not overlay. */
+export const productPreviewByIdQuery = groq`
+  *[
+    _type == "product"
+    && (_id == $id || _id == "drafts." + $id)
+  ] | order(_updatedAt desc) [0] {
+    ...,
+    mainImage { ..., asset-> },
+    "primaryLibraryImage": primaryLibraryImage->${libraryAssetProjection},
+    gallery[] { ..., asset-> },
+    mediaGallery[] {
+      ...,
+      "libraryAsset": libraryAsset->${libraryAssetProjection},
+      image { ..., asset-> }
+    },
+    "libraryVideos": libraryVideos[]->{
+      _id,
+      title,
+      cloudinary,
+      poster { ..., asset-> }
+    },
+    productVideos[] {
+      ...,
+      "libraryVideo": libraryVideo->{
+        _id,
+        title,
+        cloudinary
+      }
+    },
+    propheticReferences[],
+    "relatedProducts": relatedProducts[]->{
+      _id,
+      slug,
+      name,
+      nature,
+      status,
+      visibleInApothecary,
+      mainImage { ..., asset-> },
+      "primaryLibraryImage": primaryLibraryImage->${libraryAssetProjection}
+    },
+    "ingredients": ingredients[]->{ _id, slug, name, botanicalName },
+    seo,
+    aiDraft,
+    ${translationSiblings}
+  }
+`;
+
 /* ── Academy ────────────────────────────────────────────────────── */
 
 export const allProgrammesQuery = groq`
