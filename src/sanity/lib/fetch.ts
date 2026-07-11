@@ -234,6 +234,17 @@ export async function getProductBySlugForPage(
   }
 
   try {
+    // Prefer explicit document id (Studio Preview Draft always sends it).
+    // Handles never-published drafts and duplicate-slug edge cases.
+    if (options?.documentId) {
+      const id = options.documentId.replace(/^drafts\./, "");
+      const byId = await previewClient.fetch<Product | null>(
+        productPreviewByIdQuery,
+        { id },
+      );
+      if (byId) return byId;
+    }
+
     const languages = locale === DEFAULT_LOCALE ? [locale] : [locale, DEFAULT_LOCALE];
 
     for (const language of languages) {
@@ -242,15 +253,6 @@ export async function getProductBySlugForPage(
         { slug, language },
       );
       if (bySlug) return bySlug;
-    }
-
-    if (options?.documentId) {
-      const id = options.documentId.replace(/^drafts\./, "");
-      const byId = await previewClient.fetch<Product | null>(
-        productPreviewByIdQuery,
-        { id },
-      );
-      if (byId) return byId;
     }
 
     return null;

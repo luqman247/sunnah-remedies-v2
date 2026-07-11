@@ -15,7 +15,6 @@ import {
 import {
   buildProductDraftPreviewUrl,
   productPublicPath,
-  siteOriginForPreview,
 } from "@/sanity/lib/product-preview";
 
 type ProductFields = {
@@ -212,12 +211,13 @@ export const PreviewDraftProductAction: DocumentActionComponent = (props) => {
         ? "Configure SANITY_STUDIO_PREVIEW_SECRET (same value as SANITY_PREVIEW_SECRET)"
         : "Add a slug before previewing",
     onHandle: () => {
-      if (!path) {
+      // Never fall back to the public monograph URL — draft/hidden products
+      // would open a 404 and look like preview is broken.
+      if (!previewUrl) {
         props.onComplete();
         return;
       }
-      const url = previewUrl || `${siteOriginForPreview()}${path}`;
-      window.open(url, "_blank", "noopener,noreferrer");
+      window.open(previewUrl, "_blank", "noopener,noreferrer");
       props.onComplete();
     },
   };

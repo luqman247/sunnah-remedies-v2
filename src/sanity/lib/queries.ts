@@ -278,10 +278,10 @@ export const productBySlugQuery = groq`
 export const productPreviewBySlugQuery = groq`
   *[
     _type == "product"
-    && language == $language
+    && (language == $language || !defined(language))
     && slug.current == $slug
     && !(_id in path("drafts.**"))
-  ][0] {
+  ] | order(select(language == $language => 0, 1) asc, _updatedAt desc) [0] {
     ...,
     mainImage { ..., asset-> },
     "primaryLibraryImage": primaryLibraryImage->${libraryAssetProjection},

@@ -18,7 +18,8 @@ export const previewClient = createClient({
   dataset,
   apiVersion,
   useCdn: false,
-  perspective: "previewDrafts",
+  // Authenticated drafts perspective — never ship this client to the browser
+  perspective: "drafts",
   token: process.env.SANITY_API_TOKEN,
 });
 

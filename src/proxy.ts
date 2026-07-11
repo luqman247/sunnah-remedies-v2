@@ -15,7 +15,7 @@ const STRIP_PARAMS = new Set([
   "gclid", "fbclid", "ref", "mc_cid", "mc_eid",
 ]);
 
-export default function middleware(req: NextRequest) {
+export default function proxy(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
   const url = req.nextUrl.clone();
   let shouldRedirect = false;
