@@ -42,6 +42,46 @@ ADR-style running log, scoped to Dhikr architecture decisions only. Format follo
 **Decision**: no dhikr content — Arabic text, translation, transliteration, grading, repetition count, or audio — is published until it clears the full review pipeline defined in [03-authenticity-and-scholarly-review-policy.md](03-authenticity-and-scholarly-review-policy.md).
 **Rationale**: this is the load-bearing decision underneath the entire pack. [20-risk-register.md](20-risk-register.md) (R-01) identifies unreviewed-content publication as the single most severe risk this feature carries. The `reviewStatus` gating in [04](04-dhikr-content-schema.md)/[12](12-sanity-integration-plan.md) and the release-blocking test in [17-test-and-validation-plan.md](17-test-and-validation-plan.md) exist specifically to enforce this decision technically, not just as policy on paper.
 
+## ADR-007 — Dhikr schemas live under `documents/dhikr/`
+
+**Status**: Decided (Phase 2 implementation)
+**Decision**: `dhikrItem` and `dhikrCategory` are defined under `src/sanity/schemas/documents/dhikr/`, a new subfolder, registered in `src/sanity/schemas/index.ts` in a dedicated "Dhikr" section. Neither is added to the custom Studio desk structure (`src/sanity/structure/index.ts`).
+**Rationale**: matches the per-department subfolder convention already used for `apothecary/`, `academy/`, `journeys/`, `clinical/`. Not adding desk-structure entries matches the precedent set by `clinicalProtocol`/`practitionerResource`, which also rely on Sanity's default document listing rather than custom placement.
+**Resolves**: OD-04.
+
+## ADR-008 — Reuse `sourceReference` and `boardApproval` instead of bespoke fields
+
+**Status**: Decided (Phase 2 implementation)
+**Decision**: `dhikrItem.sourceReferences` is `array of sourceReference` (the existing object). `dhikrItem.boardApprovals` is `array of boardApproval` (the existing object), requiring both a `scholarly`-board and an `editorial`-board entry, each `approved: true`, before `reviewStatus` can reach `published`.
+**Rationale**: repository inspection during Phase 2 found `sourceReference` already encodes citation + hadith grading + the "unverified attribution" rule, and `boardApproval` already has "Scholarly Review Board" and "Editorial" as board options — both are strictly better fits than the `sourceCitation`/`gradingNote`/`reviewerId`/`reviewDate` fields originally proposed in [04-dhikr-content-schema.md](04-dhikr-content-schema.md), which is updated to match. This directly satisfies "extend existing validation patterns instead of creating a parallel validation system."
+**Compatibility check performed**: both objects' fields (`board`, `approved` on `boardApproval`; `citation`, `hadithGrading`, `verifiedStatus` on `sourceReference`) were inspected directly before use, not assumed from names alone. Both cleanly support the Dhikr requirement — no incompatible field was needed.
+
+## ADR-009 — Dual-field EN/DA localisation on `dhikrItem`, provisional
+
+**Status**: Decided, provisional — subject to review before the mature multilingual content model is finalised
+**Decision**: `dhikrItem`/`dhikrCategory` use dual fields on one document (`titleEn`/`titleDa`, `translationEn`/`translationDa`) rather than the site's dominant one-document-per-`language` pattern (used by `product`, `programme`, `journey`, `article`).
+**Rationale**: this is deliberate and Dhikr-specific, not an oversight or a change to the wider repository localisation model. `arabicText` must be stored exactly once per item and never duplicated between an English record and a Danish record — splitting into sibling documents-per-language would require copying (or cross-referencing) `arabicText` and `sourceReferences` across two documents, recreating the exact "two Arabics could drift" risk that the authoritative-source rule in [03](03-authenticity-and-scholarly-review-policy.md) exists to prevent.
+**Scope of the deviation**: this affects `dhikrItem`/`dhikrCategory` only. No other schema, and no part of `src/i18n/`, was changed.
+
+## ADR-010 — Publication eligibility is a compound rule, defined once
+
+**Status**: Decided (Phase 2 implementation)
+**Decision**: "publicly eligible" is `reviewStatus == "published"` **AND** `arabicText`/`translationEn`/`translationDa` present **AND** at least one `sourceReference` **AND** an approved `scholarly` board approval **AND** an approved `editorial` board approval — never `reviewStatus == "published"` alone. This rule is defined exactly once, in `src/sanity/lib/dhikr-publication-gate.ts` (a GROQ fragment plus a logically-identical TypeScript predicate), and reused by the public query, the Studio publish-time validators, and the test suite.
+**Rationale**: makes the safeguard architectural rather than dependent on a developer remembering to repeat a filter correctly in multiple places. Directly supersedes the earlier, weaker design (a bare `reviewStatus == "published"` filter mirroring `clinicalProtocolsQuery`'s simpler `== "approved"` gate) once it was clear the Dhikr policy in [03](03-authenticity-and-scholarly-review-policy.md) requires both review roles independently, not just a status string.
+**Verified compatible**: `boardApprovals` and `sourceReferences` are inline object arrays (not references requiring dereferencing), so the identical condition is expressible in both GROQ (server/query-time) and Sanity's synchronous validation context (write-time) without divergence.
+
+## ADR-011 — Internal review route reuses the existing `(staff)` gate, not a new one
+
+**Status**: Decided (Phase 2 implementation)
+**Decision**: the internal prototype lives at `src/app/(staff)/dhikr-review/page.tsx`, added to `middleware.ts`'s existing `authMiddleware`-gated pathname list alongside `/handbook`, `/ops`, `/intelligence`. It uses the plain `(staff)` layout styling, not `DepartmentHero`/`DepartmentSection`. Its data access uses `previewClient` (draft-visible) via a new, physically separate `src/sanity/lib/dhikr-fetch.ts` module, never the shared public `fetch.ts`.
+**Rationale**: `(staff)` is already a genuinely access-controlled (NextAuth), non-indexed route group with proven siblings — reusing it is stronger than inventing a new "unlisted" convention, and was confirmed correct against `next.config.ts` (no rewrites) and a full production build, which shows `/dhikr-review` resolving exactly as expected alongside the other staff routes. `DepartmentHero`/`DepartmentSection` were not reused because they assume the `[locale]` layout's fonts/providers, which `(staff)` deliberately does not share (separate root layout) — reusing them would have created the provider/font coupling the brief asked to avoid.
+
+## ADR-012 — `scripts/validate-schema.ts` is not the right validation target
+
+**Status**: Decided (Phase 2 implementation)
+**Decision**: Dhikr schema/gating tests were added as `tests/dhikr/*.test.ts` (following the `tests/ai/`/`tests/community/` `assert()`-based convention), not as an extension of `scripts/validate-schema.ts`.
+**Rationale**: repository inspection confirmed that script validates SEO/JSON-LD structured data (product/article/medical/course schemas) — an unrelated domain to Sanity document-schema or publish-gating correctness. [12](12-sanity-integration-plan.md) and [17](17-test-and-validation-plan.md), which originally assumed otherwise, are corrected.
+
 ---
 
 ## Open decisions (not yet resolved by this architecture pack)
@@ -51,7 +91,7 @@ ADR-style running log, scoped to Dhikr architecture decisions only. Format follo
 | OD-01 | Final category taxonomy naming and count (currently draft) | [05-category-taxonomy.md](05-category-taxonomy.md) | Blocks finalising `dhikrCategory` content, not engineering scaffolding |
 | OD-02 | Whether counter state persists across sessions ("today's count") or resets each session | [07-repeat-counter-specification.md](07-repeat-counter-specification.md) | Blocks Phase 4 implementation detail, not Phase 4 start |
 | OD-03 | Whether individual dhikr items carry rich structured data (e.g. Article-style), or omit item-level structured data in v1 | [14-seo-and-sharing.md](14-seo-and-sharing.md) | Blocks Phase 6 SEO polish, not launch itself |
-| OD-04 | Exact Sanity schema subfolder grouping for `dhikrItem`/`dhikrCategory` | [12-sanity-integration-plan.md](12-sanity-integration-plan.md) | Blocks Phase 1 implementation detail only |
+| ~~OD-04~~ | ~~Exact Sanity schema subfolder grouping for `dhikrItem`/`dhikrCategory`~~ | Resolved by **ADR-007** below | — |
 
 These remain open by design — resolving them is an editorial/engineering-lead decision at implementation time, not something this architecture pack should pre-decide without that input.
 

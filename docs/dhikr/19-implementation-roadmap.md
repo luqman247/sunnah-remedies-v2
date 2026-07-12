@@ -12,9 +12,16 @@ Phased so each phase is independently testable and reversible — no phase requi
 
 ## Phase 1 — Schema & CMS scaffolding
 
-- Deliverable: `dhikrItem`/`dhikrCategory` Sanity schemas per [04](04-dhikr-content-schema.md) and [12](12-sanity-integration-plan.md), with `reviewStatus` field enforced.
-- Test gate: schema validation extended in `scripts/validate-schema.ts` (per [17](17-test-and-validation-plan.md)); confirm no query path can surface non-`published` items.
-- Reversible: yes — schema with zero populated content carries no publishing risk; can be removed cleanly if scope changes.
+**Status: complete** (verified 2026-07-12, branch `feature/dhikr-architecture`).
+
+- Deliverable: `dhikrItem`/`dhikrCategory` Sanity schemas at `src/sanity/schemas/documents/dhikr/`, registered in `schemas/index.ts`, per [04](04-dhikr-content-schema.md) and [12](12-sanity-integration-plan.md). `reviewStatus` enforced via a custom validator (not just the Studio dropdown).
+- Test gate, as actually verified:
+  - Schema/gating tests in `tests/dhikr/` (not `scripts/validate-schema.ts` — see [17](17-test-and-validation-plan.md) for the correction) — both files pass via `npx tsx`.
+  - `npx tsc --noEmit -p tsconfig.json` — clean (pre-existing, unrelated `.next/` stale-cache errors excluded; confirmed via `git status` these are not part of this change).
+  - `npx next build` — succeeds; route manifest confirms `/dhikr-review` resolves correctly, staff-gated, alongside `/handbook`/`/ops`/`/intelligence`.
+  - `npm run lint` (`next lint`) — could not run: no `eslint.config.js` has ever existed in this repository (confirmed via `git log -p -- package.json`), a pre-existing, unrelated gap. Not fixed, per scope restriction against modifying scripts/dependencies to force a prototype to pass.
+  - Confirmed no query path can surface a non-`published` item: `dhikrItemsPublicEligibleQuery` requires the full compound eligibility rule (see ADR-010 in [21](21-decision-log.md)), not `reviewStatus == "published"` alone.
+- Reversible: yes — schema with zero populated content carries no publishing risk; every change is additive (see completion report for the full file list).
 
 ## Phase 2 — Content sourcing & scholarly review (editorial track, parallel to engineering)
 

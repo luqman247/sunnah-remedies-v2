@@ -1,27 +1,48 @@
 # 17 — Test & Validation Plan
 
-## Approach
+**Status: partially implemented in Phase 2.** The schema-gating tests below exist and pass; the reader-experience tests (counter, memorisation, accessibility, localisation, audio, Arabic rendering) remain planned for Phase 3+ since no reader UI exists yet.
 
-Extend existing test/validation infrastructure rather than building a parallel one: `scripts/validate-schema.ts` for structured-data/schema validation, and the existing `tests/` directory structure (`tests/ai/`, `tests/community/`) as the precedent for where Dhikr-specific test suites would live (see [00-existing-system-audit.md](00-existing-system-audit.md)). No test files are created by this document.
+## Correction from the original plan
 
-## Test categories, once implementation begins
+The original plan said to extend `scripts/validate-schema.ts`. Repository inspection confirmed that script validates **SEO/JSON-LD structured data**, an unrelated domain — it was not modified. The correct, already-established precedent is the plain `assert()`-based test files in `tests/ai/`, `tests/community/` (e.g. `permission-resolver.test.ts`), run via `npx tsx`. Both new Dhikr test files follow this convention exactly.
 
-| Category | What it verifies | Extends | Related risk(s) — see [20-risk-register.md](20-risk-register.md) |
-|---|---|---|---|
-| Content-gating tests | An item with `reviewStatus` below `published` never renders on a public route | New `tests/dhikr/` suite, following existing `tests/` layout | R-01 |
-| Schema validation | `dhikrItem`/`dhikrCategory` documents conform to the shape in [04-dhikr-content-schema.md](04-dhikr-content-schema.md) | `scripts/validate-schema.ts` (see [12-sanity-integration-plan.md](12-sanity-integration-plan.md)) | R-01 |
-| Counter mechanism tests | Increment/reset behave per [07-repeat-counter-specification.md](07-repeat-counter-specification.md); reset requires confirmation | New `tests/dhikr/` suite | R-06 |
-| Memorisation state tests | State transitions and local-storage persistence per [08-memorisation-system.md](08-memorisation-system.md) | New `tests/dhikr/` suite | R-06 |
-| Accessibility tests | Keyboard operability, `lang`/`dir` attribution, ARIA live-region announcements, no-autoplay, per [15-accessibility-requirements.md](15-accessibility-requirements.md) | New `tests/dhikr/` suite, automated where tooling allows plus manual screen-reader pass | R-07 |
-| Localisation tests | EN/DA UI strings resolve correctly; Arabic renders unaffected by locale switch, per [13-localisation-plan.md](13-localisation-plan.md) | Existing i18n test conventions, if any exist at implementation time | R-04 |
-| Audio-text consistency check | Recitation audio matches its item's reviewed text; an item's audio never goes live ahead of its own audio-review clearance, per [10-audio-review-and-delivery.md](10-audio-review-and-delivery.md) | New `tests/dhikr/` suite | R-03 |
-| Arabic rendering tests | Diacritics render correctly, `dir="rtl"`/`lang="ar"` applied correctly, no image-of-text fallback, per [09-arabic-content-presentation.md](09-arabic-content-presentation.md) | New `tests/dhikr/` suite | R-04 |
+## Implemented tests (Phase 2)
+
+`tests/dhikr/dhikr-schema-shape.test.ts` — static schema-shape checks (inspects the schema definition objects and validation-rule wiring; no live Sanity dataset):
+- schema type registration (`dhikrItem`, `dhikrCategory` present in `schemaTypes`)
+- exact allowed `reviewStatus` values, behaviourally verified by invoking the custom validator with each valid value and one invalid value
+- default review state (`sourced`)
+- `audioAsset`/`sourceReferences`/`boardApprovals` reuse the existing object/document types, not bespoke duplicates
+- no content field is pre-populated
+- `dhikrCategory` has no separate publication workflow
+- placeholder register contains only allowed fields, no Arabic script, matches the 12 slots in [18](18-v1-content-register.md)
+
+Risk mapping: **R-01**.
+
+`tests/dhikr/dhikr-review-status-gating.test.ts` — behavioural tests calling the actual predicate/validator functions with constructed documents (plus two clearly-labelled static source/string-inspection checks; no live dataset or HTTP request anywhere in the file):
+- `reviewStatus: "approved"` is **not** publicly eligible; only `"published"` is (with all other conditions also met)
+- publication blocked when any mandatory field (`arabicText`, `translationEn`, `translationDa`, `sourceReferences`) is absent
+- publication blocked without required approvals, including the specific case of **one** approval of either kind alone (both required, independently)
+- the Studio publish-time validators (`governance.ts`) enforce the identical rule as the canonical predicate — no drift
+- `[static check]` the public query interpolates the canonical `DHIKR_ELIGIBILITY_GROQ` constant rather than a hand-copied filter
+- `[static check]` the internal-preview query applies no `reviewStatus` filter
+- `[static check]` `/dhikr-review` is present in `middleware.ts`'s auth-gated pathname list
+
+Risk mapping: **R-01**.
 
 ## Content-safety validation specific to this feature
 
-Because publish-gating is the single highest-risk technical failure mode for this feature (unreviewed religious content going live by accident — see [12](12-sanity-integration-plan.md) and [20-risk-register.md](20-risk-register.md)), the content-gating test category above is release-blocking: no Dhikr release should ship without an automated test proving `reviewStatus != published` items are unreachable from public routes.
+The content-gating rule is release-blocking: no Dhikr release should ship without an automated test proving `reviewStatus != "published"` items — and items missing mandatory fields or required approvals even at `"published"` — are unreachable from public routes. Both implemented test files exist specifically to prove this ahead of any real content or public route.
 
-## What this document does not do
+## Test categories still planned (Phase 3+, not yet implemented)
 
-- Does not write any test file.
-- Does not specify a test framework choice beyond following whatever the existing `tests/` directory already uses.
+| Category | What it verifies | Related risk(s) — see [20-risk-register.md](20-risk-register.md) |
+|---|---|---|
+| Counter mechanism tests | Increment/reset behave per [07](07-repeat-counter-specification.md); reset requires confirmation | R-06 |
+| Memorisation state tests | State transitions and local-storage persistence per [08](08-memorisation-system.md) | R-06 |
+| Accessibility tests | Keyboard operability, `lang`/`dir` attribution, ARIA live-region announcements, no-autoplay, per [15](15-accessibility-requirements.md) | R-07 |
+| Localisation tests | EN/DA UI strings resolve correctly; Arabic renders unaffected by locale switch, per [13](13-localisation-plan.md) | R-04 |
+| Audio-text consistency check | Recitation audio matches its item's reviewed text; audio never outpaces its item's own review clearance, per [10](10-audio-review-and-delivery.md) | R-03 |
+| Arabic rendering tests | Diacritics render correctly, `dir="rtl"`/`lang="ar"` applied correctly, no image-of-text fallback, per [09](09-arabic-content-presentation.md) | R-04 |
+
+These require a reader UI that doesn't exist yet (see [19-implementation-roadmap.md](19-implementation-roadmap.md), Phase 3), so they remain planned, not implemented.

@@ -53,7 +53,8 @@ export default function middleware(req: NextRequest) {
   if (
     pathname.startsWith("/handbook") ||
     pathname.startsWith("/ops") ||
-    pathname.startsWith("/intelligence")
+    pathname.startsWith("/intelligence") ||
+    pathname.startsWith("/dhikr-review")
   ) {
     return (authMiddleware as (req: NextRequest) => NextResponse)(req);
   }

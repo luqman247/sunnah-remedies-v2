@@ -1,4 +1,5 @@
 import { groq } from "next-sanity";
+import { DHIKR_ELIGIBILITY_GROQ } from "./dhikr-publication-gate";
 
 /**
  * Translation siblings projection — reusable fragment for hreflang.
@@ -484,5 +485,63 @@ export const practitionerAnnouncementsQuery = groq`
     link,
     startDate,
     endDate
+  }
+`;
+
+/* ── Dhikr (prototype — see docs/dhikr/) ───────────────────────────
+ *
+ * dhikrItemsPublicEligibleQuery is the ONLY query any public route may
+ * ever use for Dhikr content. It applies DHIKR_ELIGIBILITY_GROQ, the
+ * single canonical rule defined in ./dhikr-publication-gate.ts — not a
+ * hand-repeated filter. No public route consumes it yet (see
+ * docs/dhikr/11-route-and-component-map.md); it exists now so the gate
+ * itself can be proven correct and tested (docs/dhikr/17, R-01).
+ *
+ * dhikrItemsInternalPreviewQuery and dhikrCategoriesInternalQuery apply
+ * NO eligibility filter and must never be imported by a route under
+ * src/app/[locale]/. They exist only for src/sanity/lib/dhikr-fetch.ts,
+ * consumed by the staff-only src/app/(staff)/dhikr-review page.
+ */
+
+// Projection is deliberately minimal: only fields intended for future public
+// rendering. No reviewStatus, boardApprovals, sourceReferences, reviewer
+// identity, or editorial note is ever projected here — even though the
+// filter guarantees reviewStatus == "published" for every row, that is
+// workflow state, not public content, and has no rendering purpose.
+export const dhikrItemsPublicEligibleQuery = groq`
+  *[_type == "dhikrItem" && ${DHIKR_ELIGIBILITY_GROQ}] | order(order asc) {
+    _id,
+    titleEn,
+    titleDa,
+    "categoryName": category->nameEn,
+    order
+  }
+`;
+
+/** Staff-only. Applies no eligibility filter — do not expose these results publicly. */
+export const dhikrItemsInternalPreviewQuery = groq`
+  *[_type == "dhikrItem"] | order(order asc) {
+    _id,
+    titleEn,
+    titleDa,
+    "categoryName": category->nameEn,
+    order,
+    reviewStatus,
+    "hasArabicText": defined(arabicText) && arabicText != "",
+    "hasTranslationEn": defined(translationEn) && translationEn != "",
+    "hasTranslationDa": defined(translationDa) && translationDa != "",
+    "sourceReferenceCount": count(sourceReferences),
+    "hasScholarlyApproval": count(boardApprovals[board == "scholarly" && approved == true]) > 0,
+    "hasEditorialApproval": count(boardApprovals[board == "editorial" && approved == true]) > 0
+  }
+`;
+
+/** Staff-only. Category labels are organisational, not gated (see docs/dhikr/05, dhikr-category.ts). */
+export const dhikrCategoriesInternalQuery = groq`
+  *[_type == "dhikrCategory"] | order(order asc) {
+    _id,
+    nameEn,
+    nameDa,
+    order
   }
 `;
