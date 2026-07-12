@@ -6,6 +6,7 @@
 "use client";
 
 import {
+  useClient,
   useDocumentOperation,
   type DocumentActionComponent,
   type DocumentActionProps,
@@ -63,13 +64,18 @@ function blocksToPlainText(blocks: unknown): string {
     .join("\n\n");
 }
 
-async function callGenerateApi(body: Record<string, unknown>) {
-  const token = process.env.SANITY_STUDIO_AI_ADMIN_TOKEN || "";
+async function callGenerateApi(
+  body: Record<string, unknown>,
+  sanityToken: string,
+) {
+  if (!sanityToken) {
+    throw new Error("Sign in to Sanity Studio to generate AI drafts");
+  }
   const response = await fetch("/api/apothecary/generate-content", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${sanityToken}`,
     },
     body: JSON.stringify(body),
   });
@@ -96,6 +102,7 @@ async function callGenerateApi(body: Record<string, unknown>) {
 }
 
 export const GenerateProductAiAction: DocumentActionComponent = (props) => {
+  const client = useClient({ apiVersion: "2024-01-01" });
   const { patch } = useDocumentOperation(props.id, props.type);
   const product = currentDoc(props);
 
@@ -105,15 +112,19 @@ export const GenerateProductAiAction: DocumentActionComponent = (props) => {
     disabled: !product.name || Boolean(patch.disabled),
     onHandle: async () => {
       try {
-        const { draft } = await callGenerateApi({
-          name: product.name,
-          category: product.nature,
-          formatOrSize: product.volume,
-          language: product.language === "da" ? "da" : "en",
-          existingShortDescription: product.institutionalSummary,
-          existingFullDescription: product.nature,
-          action: "generate_description",
-        });
+        const sanityToken = client.config().token || "";
+        const { draft } = await callGenerateApi(
+          {
+            name: product.name,
+            category: product.nature,
+            formatOrSize: product.volume,
+            language: product.language === "da" ? "da" : "en",
+            existingShortDescription: product.institutionalSummary,
+            existingFullDescription: product.nature,
+            action: "generate_description",
+          },
+          sanityToken,
+        );
 
         const fullParts = [
           draft.fullDescription,

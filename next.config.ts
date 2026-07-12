@@ -4,22 +4,13 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  // Inline Studio-only preview vars into the client bundle so document
-  // actions (Preview Draft) can build /api/draft URLs. Same pattern as
-  // sanity.config.ts presentationTool — editors with Studio access only.
+  // Do not inline privileged secrets (AI admin tokens, preview secrets) into
+  // the client/Studio bundle. Studio auth uses the editor's Sanity session
+  // token, validated server-side. Site origin alone is safe to expose.
   env: {
-    SANITY_STUDIO_PREVIEW_SECRET:
-      process.env.SANITY_STUDIO_PREVIEW_SECRET ||
-      process.env.SANITY_PREVIEW_SECRET ||
-      "",
     SANITY_STUDIO_SITE_URL:
       process.env.SANITY_STUDIO_SITE_URL ||
       process.env.NEXT_PUBLIC_SITE_URL ||
-      "",
-    // Studio AI actions (Seller Centre Generate Content) — editors only
-    SANITY_STUDIO_AI_ADMIN_TOKEN:
-      process.env.SANITY_STUDIO_AI_ADMIN_TOKEN ||
-      process.env.AI_ADMIN_TOKEN ||
       "",
   },
   images: {

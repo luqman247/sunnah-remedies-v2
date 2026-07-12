@@ -10,6 +10,7 @@ import { getGenerationProvider } from "@/ai/generation/provider";
 import { assembleSystemPrompt } from "@/ai/prompts";
 import { parseQuery, hybridSearch } from "@/ai/retrieval/hybrid";
 import { checkRateLimit } from "@/ai/gateway/rate-limit";
+import { authorizeSanityStudioEditor } from "@/lib/apothecary/studio-auth";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -27,16 +28,12 @@ type EditorialAction =
 
 export async function POST(request: NextRequest) {
   try {
-    const authHeader = request.headers.get("authorization");
-    const expectedToken = process.env.AI_ADMIN_TOKEN;
-
-    if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const auth = await authorizeSanityStudioEditor(request);
+    if (!auth.ok) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
-    const clientIp =
-      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-    const rateCheck = checkRateLimit(`editorial-${clientIp}`, true);
+    const rateCheck = checkRateLimit(`editorial-${auth.userId}`, true);
     if (!rateCheck.allowed) {
       return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
     }

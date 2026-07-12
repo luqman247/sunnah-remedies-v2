@@ -2,7 +2,7 @@
  * Seller Centre helpers — slug, SKU, preview URLs, money formatting.
  */
 
-import { buildProductDraftPreviewUrl } from "@/sanity/lib/product-preview";
+import { requestProductDraftPreview } from "@/sanity/lib/product-preview";
 import type {
   AcceptedContent,
   PublicationStatus,
@@ -114,14 +114,34 @@ export function languageCompletion(row: SellerProductRow): string {
   return hasCopy ? `${lang} · ready` : `${lang} · incomplete`;
 }
 
-export function productPreviewUrl(
+/**
+ * Open an authenticated draft preview. Requires the Studio user's Sanity token.
+ */
+export async function openProductPreview(
   row: Pick<SellerProductRow, "slug" | "language"> & { _id?: string },
-): string | null {
-  return buildProductDraftPreviewUrl({
-    _id: row._id,
-    slug: row.slug,
-    language: row.language,
+  sanityToken: string,
+): Promise<void> {
+  if (!row._id) {
+    throw new Error("Save the product before previewing");
+  }
+  const slug =
+    typeof row.slug === "string" ? row.slug : row.slug?.current || undefined;
+  const { redirectTo } = await requestProductDraftPreview({
+    documentId: row._id,
+    slug,
+    locale: row.language,
+    sanityToken,
   });
+  const origin =
+    typeof window !== "undefined" ? window.location.origin : "";
+  window.open(`${origin}${redirectTo}`, "_blank", "noopener,noreferrer");
+}
+
+/** @deprecated Use openProductPreview — secret-in-URL preview is retired. */
+export function productPreviewUrl(
+  _row: Pick<SellerProductRow, "slug" | "language"> & { _id?: string },
+): string | null {
+  return null;
 }
 
 export function emptyAcceptedContent(): AcceptedContent {
@@ -163,13 +183,16 @@ export function publishRequirements(input: {
 
 export async function callProductAi(
   body: Record<string, unknown>,
+  sanityToken: string,
 ): Promise<Record<string, unknown>> {
-  const token = process.env.SANITY_STUDIO_AI_ADMIN_TOKEN || "";
+  if (!sanityToken) {
+    throw new Error("Sign in to Sanity Studio to generate AI drafts");
+  }
   const response = await fetch("/api/apothecary/generate-content", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${sanityToken}`,
     },
     body: JSON.stringify(body),
   });

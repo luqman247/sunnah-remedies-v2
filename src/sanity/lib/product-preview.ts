@@ -4,6 +4,10 @@
  * Canonical routes (from i18n):
  * - English (default): /the-apothecary/{slug}
  * - Danish:            /dk/the-apothecary/{slug}
+ *
+ * Draft Mode is enabled only via authenticated server routes:
+ * - POST /api/apothecary/preview (Studio user bearer)
+ * - GET /api/draft-mode/enable (Presentation short-lived secrets)
  */
 
 export type ProductPreviewFields = {
@@ -47,36 +51,78 @@ export function siteOriginForPreview(): string {
   return (
     process.env.NEXT_PUBLIC_SITE_URL ||
     process.env.SANITY_STUDIO_SITE_URL ||
-    (typeof window !== "undefined" ? window.location.origin : "http://localhost:3000")
+    (typeof window !== "undefined" ? window.location.origin : "")
   ).replace(/\/$/, "");
 }
 
-export function studioPreviewSecret(): string | undefined {
-  return (
-    process.env.SANITY_STUDIO_PREVIEW_SECRET ||
-    process.env.SANITY_PREVIEW_SECRET ||
-    undefined
-  );
-}
-
 /**
- * Build the Draft Mode enable URL for a product.
- * Requires a preview secret; returns null if secret or slug is missing.
+ * Build the monograph path for an already-authenticated Draft Mode session.
+ * Does not include secrets. Prefer `openProductDraftPreview` from Studio tools.
  */
-export function buildProductDraftPreviewUrl(
+export function buildProductDraftPreviewPath(
   product: ProductPreviewFields,
 ): string | null {
   const path = productDraftPreviewPath(product);
-  const secret = studioPreviewSecret();
-  if (!path || !secret) return null;
+  if (!path) return null;
+  const id = product._id?.replace(/^drafts\./, "");
+  if (!id) return path;
+  const joiner = path.includes("?") ? "&" : "?";
+  return `${path}${joiner}previewId=${encodeURIComponent(id)}`;
+}
 
-  const origin = siteOriginForPreview();
-  const params = new URLSearchParams({
-    secret,
-    slug: path,
+/**
+ * @deprecated Secret-in-URL preview is retired. Use openProductDraftPreview /
+ * POST /api/apothecary/preview instead. Returns null so callers cannot open
+ * an insecure enable URL.
+ */
+export function buildProductDraftPreviewUrl(
+  _product: ProductPreviewFields,
+): string | null {
+  return null;
+}
+
+/**
+ * Initiate Draft Mode via the authenticated preview API, then open the page.
+ * `sanityToken` must be the current Studio user's token from useClient().
+ */
+export async function requestProductDraftPreview(options: {
+  documentId: string;
+  slug?: string;
+  locale?: string;
+  sanityToken: string;
+}): Promise<{ redirectTo: string }> {
+  if (!options.sanityToken) {
+    throw new Error("Sign in to Sanity Studio to preview drafts");
+  }
+  if (!options.documentId) {
+    throw new Error("documentId is required");
+  }
+
+  const response = await fetch("/api/apothecary/preview", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${options.sanityToken}`,
+    },
+    body: JSON.stringify({
+      documentId: options.documentId,
+      slug: options.slug,
+      locale: options.locale,
+    }),
   });
-  if (product.language) params.set("locale", product.language);
-  if (product._id) params.set("id", product._id.replace(/^drafts\./, ""));
 
-  return `${origin}/api/draft?${params.toString()}`;
+  const payload = (await response.json().catch(() => ({}))) as {
+    error?: string;
+    redirectTo?: string;
+  };
+
+  if (!response.ok) {
+    throw new Error(payload.error || `Preview failed (${response.status})`);
+  }
+  if (!payload.redirectTo) {
+    throw new Error("Preview did not return a redirect path");
+  }
+
+  return { redirectTo: payload.redirectTo };
 }

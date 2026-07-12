@@ -10,6 +10,8 @@ import type {
   WizardPricing,
   WizardVideo,
 } from "./types";
+import type { ListingComposerState } from "./listing-types";
+import { emptyComposerState } from "./listing-types";
 import { newKey, stripDraftId, toDraftId } from "./utils";
 
 export function buildProductId(slug: string): string {
@@ -402,5 +404,136 @@ export async function uploadImageAsset(
   return {
     assetId: asset._id,
     url: asset.url || "",
+  };
+}
+
+/* ── Listing Centre composer (Milestone 1 — no media writes) ── */
+
+export function composerToDocumentFields(state: ListingComposerState) {
+  const keywords = state.seoKeywords
+    .split(",")
+    .map((k) => k.trim())
+    .filter(Boolean);
+
+  return {
+    _type: "product" as const,
+    language: state.language,
+    name: state.name.trim(),
+    slug: { _type: "slug" as const, current: state.slug.trim() },
+    subtitle: state.subtitle.trim() || undefined,
+    institutionalSummary: state.institutionalSummary.trim() || undefined,
+    price: state.price === "" ? undefined : Number(state.price),
+    salePrice: state.salePrice === "" ? undefined : Number(state.salePrice),
+    currency: state.currency,
+    volume: state.volume.trim() || undefined,
+    stockStatus: state.stockStatus,
+    estimatedDispatchTime: state.estimatedDispatchTime.trim() || undefined,
+    inStock:
+      state.stockStatus === "in-stock" || state.stockStatus === "low-stock",
+    seo: {
+      metaTitle: state.seoTitle.trim() || undefined,
+      metaDescription: state.seoDescription.trim() || undefined,
+      keywords: keywords.length ? keywords : undefined,
+    },
+    // Milestone 1: never write media fields here.
+    // Public image SoT remains mainImage / primaryLibraryImage (later milestone).
+    status: "draft" as const,
+    visibleInApothecary: false,
+    featured: Boolean(state.featured),
+    purchaseFraming: "standard" as const,
+    taxBehaviour: "inclusive" as const,
+  };
+}
+
+export async function saveComposerDraft(
+  client: SanityClient,
+  state: ListingComposerState,
+): Promise<string> {
+  if (!state.name.trim()) throw new Error("Product name is required");
+  if (!state.slug.trim()) throw new Error("Slug is required");
+
+  const publishedId = state.documentId
+    ? stripDraftId(state.documentId)
+    : buildProductId(state.slug);
+  const draftId = toDraftId(publishedId);
+  const fields = composerToDocumentFields(state);
+
+  await client.createOrReplace({
+    _id: draftId,
+    ...fields,
+  });
+
+  return publishedId;
+}
+
+export async function hydrateComposerFromSanity(
+  client: SanityClient,
+  documentId: string,
+): Promise<ListingComposerState> {
+  const id = stripDraftId(documentId);
+  const draftId = toDraftId(id);
+  const doc = await client.fetch<{
+    _id?: string;
+    name?: string;
+    slug?: { current?: string };
+    subtitle?: string;
+    institutionalSummary?: string;
+    price?: number;
+    salePrice?: number;
+    currency?: string;
+    volume?: string;
+    stockStatus?: ListingComposerState["stockStatus"];
+    estimatedDispatchTime?: string;
+    status?: ListingComposerState["status"];
+    visibleInApothecary?: boolean;
+    featured?: boolean;
+    language?: string;
+    mainImage?: { asset?: { _ref?: string; url?: string } };
+    primaryLibraryImage?: { _ref?: string };
+    seo?: {
+      metaTitle?: string;
+      metaDescription?: string;
+      keywords?: string[];
+    };
+  } | null>(
+    `*[_id in [$draftId, $id]] | order(_updatedAt desc)[0]{
+      _id, name, slug, subtitle, institutionalSummary,
+      price, salePrice, currency, volume, stockStatus, estimatedDispatchTime,
+      status, visibleInApothecary, featured, language,
+      mainImage { asset->{_ref, url} },
+      primaryLibraryImage,
+      seo
+    }`,
+    { draftId, id },
+  );
+
+  if (!doc) {
+    return { ...emptyComposerState(), documentId: id };
+  }
+
+  return {
+    documentId: id,
+    name: doc.name || "",
+    slug: doc.slug?.current || "",
+    subtitle: doc.subtitle || "",
+    institutionalSummary: doc.institutionalSummary || "",
+    price: typeof doc.price === "number" ? String(doc.price) : "",
+    salePrice: typeof doc.salePrice === "number" ? String(doc.salePrice) : "",
+    currency: doc.currency === "DKK" ? "DKK" : "GBP",
+    volume: doc.volume || "",
+    stockStatus: doc.stockStatus || "in-stock",
+    estimatedDispatchTime: doc.estimatedDispatchTime || "",
+    seoTitle: doc.seo?.metaTitle || "",
+    seoDescription: doc.seo?.metaDescription || "",
+    seoKeywords: (doc.seo?.keywords || []).join(", "),
+    status: doc.status || "draft",
+    visibleInApothecary: Boolean(doc.visibleInApothecary),
+    featured: Boolean(doc.featured),
+    hasPrimaryImage: Boolean(
+      doc.mainImage?.asset?._ref ||
+        doc.mainImage?.asset?.url ||
+        doc.primaryLibraryImage?._ref,
+    ),
+    language: doc.language === "da" ? "da" : "en",
   };
 }

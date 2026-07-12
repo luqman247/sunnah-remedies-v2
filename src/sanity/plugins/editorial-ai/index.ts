@@ -79,22 +79,34 @@ export { EDITORIAL_AI_ACTIONS };
 
 /**
  * Call the Editorial AI API from Sanity Studio.
+ * Pass the current Studio user's Sanity token from useClient().config().token.
+ * Never use a shared admin token in the browser.
  */
 export async function callEditorialAi(
   action: EditorialAiAction,
   content: string,
-  title?: string,
-  language?: string
+  options: {
+    sanityToken: string;
+    title?: string;
+    language?: string;
+  },
 ): Promise<Record<string, unknown>> {
-  const token = process.env.SANITY_STUDIO_AI_ADMIN_TOKEN || "";
+  if (!options.sanityToken) {
+    throw new Error("Sign in to Sanity Studio to use Editorial AI");
+  }
 
   const response = await fetch("/api/ai/editorial", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${options.sanityToken}`,
     },
-    body: JSON.stringify({ action, content, title, language }),
+    body: JSON.stringify({
+      action,
+      content,
+      title: options.title,
+      language: options.language,
+    }),
   });
 
   if (!response.ok) {

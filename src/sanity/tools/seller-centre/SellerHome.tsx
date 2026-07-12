@@ -16,7 +16,7 @@ import {
   languageCompletion,
   needsAttention,
   newKey,
-  productPreviewUrl,
+  openProductPreview,
   statusLabel,
   stockLabel,
   stripDraftId,
@@ -248,12 +248,13 @@ export function SellerHome({ onNavigate }: SellerHomeProps) {
   }
 
   function preview(row: SellerProductRow) {
-    const url = productPreviewUrl(row);
-    if (!url) {
-      window.alert("Add a slug before previewing");
-      return;
-    }
-    window.open(url, "_blank", "noopener,noreferrer");
+    void (async () => {
+      try {
+        await openProductPreview(row, client.config().token || "");
+      } catch (err) {
+        window.alert(err instanceof Error ? err.message : "Preview failed");
+      }
+    })();
   }
 
   function rowActions(row: SellerProductRow): [string, () => void][] {

@@ -1,12 +1,14 @@
 /**
  * POST /api/apothecary/generate-content
  *
- * Authenticated Studio/admin endpoint for AI product drafts.
- * Never publishes — returns draft payload for the editor to review.
+ * Authenticated Studio endpoint for AI product drafts.
+ * Authorises via the caller's Sanity Studio user token (validated server-side).
+ * Provider keys stay server-only. Never publishes.
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import { checkRateLimit } from "@/ai/gateway/rate-limit";
+import { authorizeSanityStudioEditor } from "@/lib/apothecary/studio-auth";
 import {
   generateProductContent,
   type ProductContentAction,
@@ -28,23 +30,14 @@ const ACTIONS = new Set<ProductContentAction>([
   "generate_alt_text",
 ]);
 
-function isAuthorized(request: NextRequest): boolean {
-  const authHeader = request.headers.get("authorization");
-  const expected =
-    process.env.AI_ADMIN_TOKEN || process.env.SANITY_STUDIO_AI_ADMIN_TOKEN;
-  if (!expected) return false;
-  return authHeader === `Bearer ${expected}`;
-}
-
 export async function POST(request: NextRequest) {
   try {
-    if (!isAuthorized(request)) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const auth = await authorizeSanityStudioEditor(request);
+    if (!auth.ok) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
-    const clientIp =
-      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-    const rateCheck = checkRateLimit(`apothecary-ai-${clientIp}`, true);
+    const rateCheck = checkRateLimit(`apothecary-ai-${auth.userId}`, true);
     if (!rateCheck.allowed) {
       return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
     }
@@ -56,7 +49,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const body = (await request.json()) as ProductContentInput;
+    let body: ProductContentInput;
+    try {
+      body = (await request.json()) as ProductContentInput;
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    }
+
     if (!body?.name || !body?.action || !ACTIONS.has(body.action)) {
       return NextResponse.json(
         { error: "name and a valid action are required" },
@@ -70,7 +69,7 @@ export async function POST(request: NextRequest) {
       notice: "AI generated — review required. Not published.",
     });
   } catch (error) {
-    console.error("[apothecary/generate-content]", error);
+    console.error("[apothecary/generate-content] generation failed");
     return NextResponse.json(
       {
         error:

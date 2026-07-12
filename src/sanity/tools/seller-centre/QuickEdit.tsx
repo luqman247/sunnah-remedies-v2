@@ -20,7 +20,7 @@ import {
   callProductAi,
   formatMoney,
   newKey,
-  productPreviewUrl,
+  openProductPreview,
   publishRequirements,
   statusLabel,
   stripDraftId,
@@ -299,12 +299,15 @@ export function QuickEdit({ documentId, onNavigate }: QuickEditProps) {
     if (!doc?.name) return;
     setBusy(true);
     try {
-      const result = await callProductAi({
-        name: doc.name,
-        existingShortDescription: doc.institutionalSummary,
-        existingFullDescription: fullDescription,
-        action: "generate_description",
-      });
+      const result = await callProductAi(
+        {
+          name: doc.name,
+          existingShortDescription: doc.institutionalSummary,
+          existingFullDescription: fullDescription,
+          action: "generate_description",
+        },
+        client.config().token || "",
+      );
       const draft = (result.draft || {}) as {
         shortDescription?: string;
         fullDescription?: string;
@@ -426,9 +429,15 @@ export function QuickEdit({ documentId, onNavigate }: QuickEditProps) {
           type="button"
           style={s.secondaryBtn}
           onClick={() => {
-            const url = productPreviewUrl(doc);
-            if (!url) return window.alert("Add a slug first");
-            window.open(url, "_blank", "noopener,noreferrer");
+            void (async () => {
+              try {
+                await openProductPreview(doc, client.config().token || "");
+              } catch (err) {
+                window.alert(
+                  err instanceof Error ? err.message : "Preview failed",
+                );
+              }
+            })();
           }}
         >
           Preview Draft

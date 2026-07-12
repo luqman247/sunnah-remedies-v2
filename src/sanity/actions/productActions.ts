@@ -8,13 +8,14 @@
 "use client";
 
 import {
+  useClient,
   useDocumentOperation,
   type DocumentActionComponent,
   type DocumentActionProps,
 } from "sanity";
 import {
-  buildProductDraftPreviewUrl,
   productPublicPath,
+  requestProductDraftPreview,
 } from "@/sanity/lib/product-preview";
 
 type ProductFields = {
@@ -191,34 +192,44 @@ export const OpenSellerCentreAction: DocumentActionComponent = (props) => {
 };
 
 /**
- * Preview Draft — enables Next.js Draft Mode and opens the locale-correct
- * monograph. Works for unpublished and Hidden products without publishing.
+ * Preview Draft — asks the server to enable Draft Mode after validating the
+ * Studio user's Sanity token, then opens the locale-correct monograph.
+ * Works for never-published and Hidden products without publishing.
  */
 export const PreviewDraftProductAction: DocumentActionComponent = (props) => {
+  const client = useClient({ apiVersion: "2024-01-01" });
   const product = currentProduct(props);
   const path = productPublicPath(product);
-  const previewUrl = buildProductDraftPreviewUrl({
-    ...product,
-    _id: props.id,
-  });
+  const slug = product.slug?.current;
 
   return {
     label: "Preview Draft",
     disabled: !path,
-    title: previewUrl
+    title: path
       ? "Open a private draft preview (not publicly visible)"
-      : path
-        ? "Configure SANITY_STUDIO_PREVIEW_SECRET (same value as SANITY_PREVIEW_SECRET)"
-        : "Add a slug before previewing",
-    onHandle: () => {
-      // Never fall back to the public monograph URL — draft/hidden products
-      // would open a 404 and look like preview is broken.
-      if (!previewUrl) {
+      : "Add a slug before previewing",
+    onHandle: async () => {
+      try {
+        const sanityToken = client.config().token;
+        if (!sanityToken) {
+          window.alert("Sign in to Sanity Studio to preview drafts");
+          return;
+        }
+        const { redirectTo } = await requestProductDraftPreview({
+          documentId: props.id,
+          slug,
+          locale: product.language,
+          sanityToken,
+        });
+        const origin = window.location.origin;
+        window.open(`${origin}${redirectTo}`, "_blank", "noopener,noreferrer");
+      } catch (error) {
+        window.alert(
+          error instanceof Error ? error.message : "Preview failed",
+        );
+      } finally {
         props.onComplete();
-        return;
       }
-      window.open(previewUrl, "_blank", "noopener,noreferrer");
-      props.onComplete();
     },
   };
 };

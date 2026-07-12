@@ -17,7 +17,7 @@ import {
 } from "@/sanity/actions/productActions";
 import { PRODUCT_DOCUMENT_BADGES } from "@/sanity/badges/productBadges";
 import {
-  buildProductDraftPreviewUrl,
+  buildProductDraftPreviewPath,
   productPublicPath,
   siteOriginForPreview,
 } from "@/sanity/lib/product-preview";
@@ -61,12 +61,18 @@ export async function resolveProductProductionUrl(
   if (!doc || doc._type !== "product") return prev;
 
   const withId = { ...doc, _id: doc._id };
-  const draftUrl = buildProductDraftPreviewUrl(withId);
-  if (draftUrl) return draftUrl;
+  // Presentation enables Draft Mode via /api/draft-mode/enable first, then
+  // navigates here. Do not embed long-lived secrets in this URL.
+  const draftPath = buildProductDraftPreviewPath(withId);
+  if (draftPath) {
+    const origin = siteOriginForPreview();
+    return origin ? `${origin}${draftPath}` : draftPath;
+  }
 
   const path = productPublicPath(withId);
   if (!path) return prev;
-  return `${siteOriginForPreview()}${path}`;
+  const origin = siteOriginForPreview();
+  return origin ? `${origin}${path}` : path;
 }
 
 export function resolveProductTemplates(prev: Template[]): Template[] {

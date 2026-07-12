@@ -32,7 +32,7 @@ import {
   emptyAcceptedContent,
   generateSku,
   newKey,
-  productPreviewUrl,
+  openProductPreview,
   publishRequirements,
   slugify,
   stockLabel,
@@ -350,26 +350,29 @@ export function AddProductWizard({
     setError(null);
     try {
       const categoryTitle = categories.find((c) => c._id === details.categoryId)?.title;
-      const result = await callProductAi({
-        name: details.name,
-        category: categoryTitle,
-        ingredients: details.ingredientsText
-          ? details.ingredientsText.split(",").map((x) => x.trim()).filter(Boolean)
-          : undefined,
-        origin: details.origin || undefined,
-        formatOrSize: details.volume || undefined,
-        intendedUse: details.intendedUse || undefined,
-        existingShortDescription: content.shortDescription || undefined,
-        existingFullDescription: content.fullDescription || undefined,
-        action,
-        language: action === "translate_da" ? "da" : "en",
-        tone:
-          action === "make_editorial"
-            ? "premium editorial"
-            : action === "make_clinical"
-              ? "educational clinical"
-              : undefined,
-      });
+      const result = await callProductAi(
+        {
+          name: details.name,
+          category: categoryTitle,
+          ingredients: details.ingredientsText
+            ? details.ingredientsText.split(",").map((x) => x.trim()).filter(Boolean)
+            : undefined,
+          origin: details.origin || undefined,
+          formatOrSize: details.volume || undefined,
+          intendedUse: details.intendedUse || undefined,
+          existingShortDescription: content.shortDescription || undefined,
+          existingFullDescription: content.fullDescription || undefined,
+          action,
+          language: action === "translate_da" ? "da" : "en",
+          tone:
+            action === "make_editorial"
+              ? "premium editorial"
+              : action === "make_clinical"
+                ? "educational clinical"
+                : undefined,
+        },
+        client.config().token || "",
+      );
       const draft = (result.draft || {}) as AiProposal & {
         shortDescription?: string;
         fullDescription?: string;
@@ -498,17 +501,24 @@ export function AddProductWizard({
   }
 
   function previewDraft() {
-    const url = productPreviewUrl({
-      _id: publishedId || undefined,
-      slug: { current: details.slug },
-      language: "en",
-    });
-    if (!url) {
+    if (!details.slug.trim()) {
       setError("Add a slug before previewing");
       return;
     }
-    void persist("draft").then(() => {
-      window.open(url, "_blank", "noopener,noreferrer");
+    void persist("draft").then(async () => {
+      try {
+        const token = client.config().token || "";
+        await openProductPreview(
+          {
+            _id: publishedId || undefined,
+            slug: { current: details.slug },
+            language: "en",
+          },
+          token,
+        );
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Preview failed");
+      }
     });
   }
 

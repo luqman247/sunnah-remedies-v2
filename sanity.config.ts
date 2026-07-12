@@ -10,6 +10,7 @@ import { OperationsOverview } from "./src/sanity/tools/operations-overview";
 import { ApothecaryOverview } from "./src/sanity/tools/apothecary-overview";
 import { MediaLibraryOverview } from "./src/sanity/tools/media-library-overview";
 import { ApothecarySellerCentre } from "./src/sanity/tools/seller-centre";
+import { ApothecaryListingCentre } from "./src/sanity/tools/seller-centre/ApothecaryListingCentre";
 import {
   resolveProductActions,
   resolveProductBadges,
@@ -26,16 +27,11 @@ const dataset = getSanityDataset();
 const previewOrigin = (
   process.env.SANITY_STUDIO_SITE_URL ||
   process.env.NEXT_PUBLIC_SITE_URL ||
-  "http://localhost:3000"
+  ""
 ).replace(/\/$/, "");
 
-const studioPreviewSecret =
-  process.env.SANITY_STUDIO_PREVIEW_SECRET || process.env.SANITY_PREVIEW_SECRET || "";
-
-const draftModeEnablePath = studioPreviewSecret
-  ? `/api/draft?secret=${encodeURIComponent(studioPreviewSecret)}`
-  : "/api/draft";
-
+/** Presentation uses short-lived preview-url secrets — no long-lived secret in config. */
+const draftModeEnablePath = "/api/draft-mode/enable";
 const SUPPORTED_LANGUAGES = [
   { id: "en", title: "English" },
   { id: "da", title: "Dansk" },
@@ -78,7 +74,7 @@ export default defineConfig({
     structureTool({ structure }),
     presentationTool({
       previewUrl: {
-        initial: previewOrigin,
+        ...(previewOrigin ? { initial: previewOrigin } : {}),
         previewMode: {
           enable: draftModeEnablePath,
           shareAccess: true,
@@ -126,6 +122,11 @@ export default defineConfig({
       name: "apothecary-manager",
       title: "Apothecary Seller Centre",
       component: ApothecarySellerCentre,
+    },
+    {
+      name: "apothecary-listing",
+      title: "Apothecary Listing Centre",
+      component: ApothecaryListingCentre,
     },
     ...prev,
     {

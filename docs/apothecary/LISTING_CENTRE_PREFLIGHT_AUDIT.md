@@ -20,12 +20,23 @@ The repository can host a Listing Centre, but the V2.3 master prompt contains **
 |------|------------|------------------|----------|
 | Primary image | `mediaGallery[].role === "primary"` | Public UI uses `primaryLibraryImage` → `mainImage` only | **Blocking** |
 | Video | `productVideos` + Sanity `file` upload | Public UI uses `libraryVideos[0].cloudinary` only | **Blocking** |
-| AI auth | “Bearer server-side only” while Studio `fetch` sends token | `SANITY_STUDIO_AI_ADMIN_TOKEN` inlined via `next.config.ts` `env` | **Blocking (security)** |
+| AI auth | “Bearer server-side only” while Studio `fetch` sends token | ~~`SANITY_STUDIO_AI_ADMIN_TOKEN` inlined via `next.config.ts` `env`~~ → **Resolved in Milestone 0.5** (Sanity user / server API token auth) | Was blocking |
 | Five-media write target | Count `mediaGallery + productVideos` only | Must also sync public SoT fields or public site stays blank | **Blocking** |
 | Portable Text | Install `@portabletext/editor` immediately | Not direct dep; Sanity already provides PT inputs; no install yet | Non-blocking |
-| Preview | Assumed fixed | Architecturally capable via `previewId`; slug-only never-published still fragile | Non-blocking pending runtime test |
+| Preview | Assumed fixed | ~~Architecturally partial~~ → **Resolved in Milestone 0.5** (`POST /api/apothecary/preview` + id-based draft fetch); soft HTTP 404 remains | Was blocking |
 
-**Gate decision:** Do **not** begin UI Milestone 1 until the corrected write contract and AI auth design below are approved. Seller Centre remains. Schemas untouched. No publish.
+**Gate decision (updated 11 July 2026 — Milestone 0.5):** AI credential browser exposure and Draft+Hidden preview blockers are addressed — see `docs/apothecary/LISTING_CENTRE_SECURITY_AND_PREVIEW_REPORT.md`. Listing Centre UI remains blocked until the **image/video write contract** is approved. Seller Centre remains. Schemas untouched. Test product not published.
+
+### Milestone 0.5 confirmation (four prior gates)
+
+| # | Gate | Status after 0.5 |
+|---|------|------------------|
+| 1 | Exact public image write path known | Yes (unchanged) — `mainImage` / optional `primaryLibraryImage` |
+| 2 | Exact public video write path known | Yes (unchanged) — `libraryVideos` + Cloudinary |
+| 3 | AI without privileged browser token | **Yes** — Studio user token or server-only `SANITY_API_TOKEN`; no admin token in Next `env` / bundles |
+| 4 | Draft + Hidden preview secure & testable | **Yes** — runtime-proven on never-published draft; public not-found UI |
+
+**Do not begin Listing Centre UI until media write contract approval.**
 
 ---
 
