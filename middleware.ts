@@ -49,11 +49,20 @@ export default function middleware(req: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
-  // ── Auth-protected routes ───────────────────────────────────────
+  // ── Auth-protected routes (+ /sign-in itself) ───────────────────
+  // /sign-in must be routed through authMiddleware too, not because it
+  // requires auth, but so it never falls through to intlMiddleware below:
+  // /sign-in is a (staff) route, outside the [locale] tree, and
+  // intlMiddleware would otherwise rewrite it to a non-existent
+  // /en/sign-in (404). withAuth's own pages.signIn exemption (it checks
+  // `pathname === options.pages.signIn` and passes the request through
+  // untouched) already handles this correctly once routed here.
   if (
     pathname.startsWith("/handbook") ||
     pathname.startsWith("/ops") ||
-    pathname.startsWith("/intelligence")
+    pathname.startsWith("/intelligence") ||
+    pathname.startsWith("/dhikr-review") ||
+    pathname.startsWith("/sign-in")
   ) {
     return (authMiddleware as (req: NextRequest) => NextResponse)(req);
   }

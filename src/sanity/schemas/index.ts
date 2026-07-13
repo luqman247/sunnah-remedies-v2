@@ -57,6 +57,10 @@ import { campusLesson } from "./documents/academy/campus-lesson";
 // ── Documents: Sacred Journeys ──
 import { journey } from "./documents/journeys/journey";
 
+// ── Documents: Dhikr (prototype — see docs/dhikr/) ──
+import { dhikrItem } from "./documents/dhikr/dhikr-item";
+import { dhikrCategory } from "./documents/dhikr/dhikr-category";
+
 // ── Documents: Knowledge Library ──
 import { article } from "./documents/knowledge/article";
 import { author } from "./documents/knowledge/author";
@@ -146,6 +150,10 @@ export const schemaTypes = [
 
   // Sacred Journeys
   journey,
+
+  // Dhikr (prototype — see docs/dhikr/)
+  dhikrItem,
+  dhikrCategory,
 
   // Knowledge Library
   article,
