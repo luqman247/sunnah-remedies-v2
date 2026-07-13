@@ -50,7 +50,7 @@ interface StaffCredential {
   role: StaffRole;
 }
 
-function getStaffCredentials(): StaffCredential[] {
+export function getStaffCredentials(): StaffCredential[] {
   const raw = process.env.STAFF_CREDENTIALS;
   if (!raw) return [];
   try {

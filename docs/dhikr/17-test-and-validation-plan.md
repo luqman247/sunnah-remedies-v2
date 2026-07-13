@@ -30,6 +30,10 @@ Risk mapping: **R-01**.
 
 Risk mapping: **R-01**.
 
+`tests/auth/staff-credentials.test.ts` and `tests/auth/staff-route-matcher.test.ts` — these test the repository's **shared** staff authentication system (`src/lib/auth/config.ts`, `middleware.ts`), not Dhikr-specific code. They exist here because `/dhikr-review`'s privacy depends entirely on that shared system, and are recorded rather than duplicated: the full audit, root cause, and evidence are in ADR-013 of [21-decision-log.md](21-decision-log.md), not repeated here. `staff-credentials.test.ts` is a unit test of the credential-parsing/matching logic in isolation; `staff-route-matcher.test.ts` is a static source check. **Neither proves the runtime HTTP/session flow works** — that was verified separately via live curl and browser requests against a running `next start` server, documented in ADR-013.
+
+Risk mapping: **R-09**.
+
 ## Content-safety validation specific to this feature
 
 The content-gating rule is release-blocking: no Dhikr release should ship without an automated test proving `reviewStatus != "published"` items — and items missing mandatory fields or required approvals even at `"published"` — are unreachable from public routes. Both implemented test files exist specifically to prove this ahead of any real content or public route.

@@ -142,6 +142,37 @@ function testNegativeCaseTable() {
   );
 }
 
+/* ── Every non-"published" reviewStatus is independently non-public ──────
+ *
+ * NEGATIVE_CASES above uses "approved" as its stand-in mutation for
+ * "reviewStatus is not exactly published". This test checks each of the
+ * four non-published stages explicitly and individually — sourced,
+ * scholarly-review, editorial-review, approved — with every other
+ * eligibility condition (mandatory fields, both board approvals) held
+ * fully valid, confirming only "published" can ever satisfy the rule.
+ */
+
+function testEachNonPublishedReviewStatusIsIneligible() {
+  const nonPublishedStatuses = ["sourced", "scholarly-review", "editorial-review", "approved"] as const;
+
+  for (const status of nonPublishedStatuses) {
+    const item: DhikrItemEligibilityInput = { ...FULL_VALID_ITEM, reviewStatus: status };
+    assert(
+      isDhikrItemPubliclyEligible(item) === false,
+      `reviewStatus "${status}" must NOT be publicly eligible, even with every other condition valid`,
+    );
+  }
+
+  assert(
+    isDhikrItemPubliclyEligible(FULL_VALID_ITEM) === true,
+    'Only reviewStatus "published" (with every other condition valid) may be publicly eligible',
+  );
+
+  console.log(
+    '✓ sourced, scholarly-review, editorial-review, and approved are each independently non-public; only "published" satisfies the rule',
+  );
+}
+
 /* ── Structural equivalence: every TS condition also appears in GROQ ──── */
 
 function testEveryConditionAppearsInGroqFragment() {
@@ -230,6 +261,7 @@ function testDhikrReviewRouteIsAuthProtected() {
 
 function runAll() {
   testNegativeCaseTable();
+  testEachNonPublishedReviewStatusIsIneligible();
   testEveryConditionAppearsInGroqFragment();
   testStudioValidatorsMirrorEligibilityRule();
   testPublicQueryUsesCanonicalEligibilityFragment();

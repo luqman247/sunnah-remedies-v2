@@ -64,42 +64,47 @@ export default async function DhikrReviewPage() {
           Mirrors docs/dhikr/18-v1-content-register.md. Every slot is pending
           scholarly input — none has been sourced.
         </p>
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="border-b border-[#0E3B2E]/10">
-              <th scope="col" className="font-[family-name:var(--font-utility)] text-xs font-medium text-[#0E3B2E]/60 pb-2 pr-4">
-                Slot ID
-              </th>
-              <th scope="col" className="font-[family-name:var(--font-utility)] text-xs font-medium text-[#0E3B2E]/60 pb-2 pr-4">
-                Proposed category
-              </th>
-              <th scope="col" className="font-[family-name:var(--font-utility)] text-xs font-medium text-[#0E3B2E]/60 pb-2 pr-4">
-                Review status
-              </th>
-              <th scope="col" className="font-[family-name:var(--font-utility)] text-xs font-medium text-[#0E3B2E]/60 pb-2">
-                Internal note
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {DHIKR_V1_PLACEHOLDER_REGISTER.map((entry) => (
-              <tr key={entry.slotId} className="border-b border-[#0E3B2E]/5">
-                <td className="font-[family-name:var(--font-utility)] text-xs text-[#0E3B2E] py-2 pr-4">
-                  {entry.slotId}
-                </td>
-                <td className="font-[family-name:var(--font-body)] text-sm text-[#0E3B2E] py-2 pr-4">
-                  {entry.proposedCategory}
-                </td>
-                <td className="font-[family-name:var(--font-utility)] text-xs text-[#0E3B2E]/70 py-2 pr-4">
-                  {entry.reviewStatus}
-                </td>
-                <td className="font-[family-name:var(--font-body)] text-xs text-[#0E3B2E]/60 py-2">
-                  {entry.internalNote ?? "—"}
-                </td>
+        {/* Horizontally scrollable on narrow viewports so cells never wrap
+            onto multiple lines — the table itself keeps its natural width
+            and scrolls within this wrapper, rather than the whole page. */}
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[640px] text-left border-collapse">
+            <thead>
+              <tr className="border-b border-[#0E3B2E]/10">
+                <th scope="col" className="whitespace-nowrap font-[family-name:var(--font-utility)] text-xs font-medium text-[#0E3B2E]/60 pb-2 pr-4">
+                  Slot ID
+                </th>
+                <th scope="col" className="whitespace-nowrap font-[family-name:var(--font-utility)] text-xs font-medium text-[#0E3B2E]/60 pb-2 pr-4">
+                  Proposed category
+                </th>
+                <th scope="col" className="whitespace-nowrap font-[family-name:var(--font-utility)] text-xs font-medium text-[#0E3B2E]/60 pb-2 pr-4">
+                  Review status
+                </th>
+                <th scope="col" className="whitespace-nowrap font-[family-name:var(--font-utility)] text-xs font-medium text-[#0E3B2E]/60 pb-2">
+                  Internal note
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {DHIKR_V1_PLACEHOLDER_REGISTER.map((entry) => (
+                <tr key={entry.slotId} className="border-b border-[#0E3B2E]/5">
+                  <td className="whitespace-nowrap font-[family-name:var(--font-utility)] text-xs text-[#0E3B2E] py-2 pr-4">
+                    {entry.slotId}
+                  </td>
+                  <td className="whitespace-nowrap font-[family-name:var(--font-body)] text-sm text-[#0E3B2E] py-2 pr-4">
+                    {entry.proposedCategory}
+                  </td>
+                  <td className="whitespace-nowrap font-[family-name:var(--font-utility)] text-xs text-[#0E3B2E]/70 py-2 pr-4">
+                    {entry.reviewStatus}
+                  </td>
+                  <td className="whitespace-nowrap font-[family-name:var(--font-body)] text-xs text-[#0E3B2E]/60 py-2">
+                    {entry.internalNote ?? "—"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section aria-labelledby="live-preview-heading">

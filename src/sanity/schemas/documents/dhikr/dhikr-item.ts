@@ -52,12 +52,21 @@ export const dhikrItem = defineType({
   name: "dhikrItem",
   title: "Dhikr Item",
   type: "document",
+  // All three fieldsets render fully expanded (no `options: { collapsible,
+  // collapsed }`) — in particular "Sourcing & Review" holds the fields that
+  // gate publication and must never be hidden from an editor by default.
+  fieldsets: [
+    { name: "identity", title: "Identity" },
+    { name: "content", title: "Content" },
+    { name: "sourcingReview", title: "Sourcing & Review" },
+  ],
   fields: [
     defineField({
       name: "category",
       title: "Category",
       type: "reference",
       to: [{ type: "dhikrCategory" }],
+      fieldset: "identity",
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -65,19 +74,30 @@ export const dhikrItem = defineType({
       title: "Order",
       type: "number",
       description: "Position within category",
+      fieldset: "identity",
     }),
     defineField({
       name: "titleEn",
       title: "Title (English)",
       type: "string",
       description: "Short label, no religious content itself.",
+      fieldset: "identity",
       validation: (rule) => rule.required().max(80),
     }),
     defineField({
       name: "titleDa",
       title: "Title (Dansk)",
       type: "string",
+      fieldset: "identity",
       validation: (rule) => rule.max(80),
+    }),
+    defineField({
+      name: "tags",
+      title: "Tags",
+      type: "array",
+      of: [{ type: "string" }],
+      options: { layout: "tags" },
+      fieldset: "identity",
     }),
     defineField({
       name: "arabicText",
@@ -85,6 +105,7 @@ export const dhikrItem = defineType({
       type: "text",
       description:
         "Authoritative source text (see docs/dhikr/03). Empty in this prototype phase. Stored once here — never duplicated onto a separate English/Danish record.",
+      fieldset: "content",
       validation: (rule) => rule.custom(requiredWhenDhikrPublished("Arabic text is required before publishing.")),
     }),
     defineField({
@@ -92,6 +113,7 @@ export const dhikrItem = defineType({
       title: "Transliteration",
       type: "text",
       description: "Empty in this prototype phase.",
+      fieldset: "content",
     }),
     defineField({
       name: "translationEn",
@@ -99,6 +121,7 @@ export const dhikrItem = defineType({
       type: "text",
       description:
         "Derived from arabicText, not independent content — see docs/dhikr/03. Empty in this prototype phase.",
+      fieldset: "content",
       validation: (rule) =>
         rule.custom(requiredWhenDhikrPublished("English translation is required before publishing.")),
     }),
@@ -107,8 +130,24 @@ export const dhikrItem = defineType({
       title: "Translation (Dansk)",
       type: "text",
       description: "Derived from arabicText, not independent content. Empty in this prototype phase.",
+      fieldset: "content",
       validation: (rule) =>
         rule.custom(requiredWhenDhikrPublished("Danish translation is required before publishing.")),
+    }),
+    defineField({
+      name: "recommendedRepetitions",
+      title: "Recommended Repetitions",
+      type: "number",
+      description: "Not populated in this architecture/prototype phase — see docs/dhikr/07.",
+      fieldset: "content",
+    }),
+    defineField({
+      name: "audioAsset",
+      title: "Audio Asset",
+      type: "reference",
+      to: [{ type: "audioAsset" }],
+      description: "Not populated or used in this prototype phase — see docs/dhikr/10.",
+      fieldset: "content",
     }),
     defineField({
       name: "sourceReferences",
@@ -117,20 +156,8 @@ export const dhikrItem = defineType({
       of: [{ type: "sourceReference" }],
       description:
         "Citation + grading (see docs/dhikr/03). At least one is required before publishing. Empty in this prototype phase.",
+      fieldset: "sourcingReview",
       validation: (rule) => rule.custom(requiredDhikrSourceReferences),
-    }),
-    defineField({
-      name: "recommendedRepetitions",
-      title: "Recommended Repetitions",
-      type: "number",
-      description: "Not populated in this architecture/prototype phase — see docs/dhikr/07.",
-    }),
-    defineField({
-      name: "audioAsset",
-      title: "Audio Asset",
-      type: "reference",
-      to: [{ type: "audioAsset" }],
-      description: "Not populated or used in this prototype phase — see docs/dhikr/10.",
     }),
     defineField({
       name: "reviewStatus",
@@ -143,6 +170,7 @@ export const dhikrItem = defineType({
         })),
       },
       initialValue: "sourced",
+      fieldset: "sourcingReview",
       // .custom() enforces the enum at the validation layer (not just the
       // Studio dropdown, which is bypassable via a direct API write). .valid()
       // is not available on this field's inferred Rule type, so the same
@@ -162,14 +190,8 @@ export const dhikrItem = defineType({
       of: [{ type: "boardApproval" }],
       description:
         "Scholarly and editorial sign-off (see docs/dhikr/03). Both are required, independently approved, before publishing — one approval of either kind alone is not sufficient.",
+      fieldset: "sourcingReview",
       validation: (rule) => rule.custom(requiredDhikrBoardApprovals),
-    }),
-    defineField({
-      name: "tags",
-      title: "Tags",
-      type: "array",
-      of: [{ type: "string" }],
-      options: { layout: "tags" },
     }),
   ],
   orderings: [
