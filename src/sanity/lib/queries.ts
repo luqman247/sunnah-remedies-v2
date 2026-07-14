@@ -578,3 +578,65 @@ export const dhikrCategoriesInternalQuery = groq`
     order
   }
 `;
+
+/**
+ * Staff-only, full internal detail (Stage 2E). Applies NO eligibility
+ * filter — must never be imported by a route under src/app/[locale]/. This
+ * is a separate, clearly-named query from dhikrItemsInternalPreviewQuery
+ * above (left untouched) rather than an expansion of it, since that query
+ * is already relied on elsewhere for its lightweight boolean-flag shape.
+ *
+ * Every field here is governance/internal detail appropriate only for the
+ * staff-only /dhikr-review page (src/app/(staff)/dhikr-review/page.tsx):
+ * actual reviewStatus, full sourceReferences objects, full boardApprovals
+ * objects (including approver identity and free-text notes). None of this
+ * may ever be projected into a public query — see dhikrItemsPublicEligibleQuery
+ * above for the one and only public-safe projection.
+ *
+ * sourceReferences and boardApprovals are projected field-by-field against
+ * their actual schema objects (src/sanity/schemas/objects/source-reference.ts,
+ * board-approval.ts) — not `...` — so a future field added to either object
+ * is excluded by default until deliberately added here.
+ */
+export const dhikrItemsInternalDetailQuery = groq`
+  *[_type == "dhikrItem"] | order(order asc) {
+    _id,
+    _type,
+    _updatedAt,
+    titleEn,
+    titleDa,
+    "slug": slug.current,
+    "categoryId": category->_id,
+    "categoryNameEn": category->nameEn,
+    "categoryNameDa": category->nameDa,
+    "categorySlug": category->slug.current,
+    order,
+    tags,
+    arabicText,
+    transliteration,
+    translationEn,
+    translationDa,
+    recommendedRepetitions,
+    "audioAssetTitle": audioAsset->title,
+    "hasAudioAsset": defined(audioAsset),
+    "sourceReferences": sourceReferences[]{
+      type,
+      citation,
+      hadithCollection,
+      hadithNumber,
+      hadithGrading,
+      surah,
+      ayah,
+      sourceUrl,
+      verifiedStatus
+    },
+    reviewStatus,
+    "boardApprovals": boardApprovals[]{
+      board,
+      approved,
+      approver,
+      date,
+      notes
+    }
+  }
+`;
