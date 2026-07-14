@@ -503,18 +503,51 @@ export const practitionerAnnouncementsQuery = groq`
  * consumed by the staff-only src/app/(staff)/dhikr-review page.
  */
 
-// Projection is deliberately minimal: only fields intended for future public
-// rendering. No reviewStatus, boardApprovals, sourceReferences, reviewer
-// identity, or editorial note is ever projected here — even though the
-// filter guarantees reviewStatus == "published" for every row, that is
-// workflow state, not public content, and has no rendering purpose.
+// Projection is deliberately explicit and limited to what a public reader
+// view/index needs. No reviewStatus, boardApprovals, reviewer identity,
+// editorial/internal notes, draft metadata, or workflow timestamp is ever
+// projected here — even though the filter guarantees reviewStatus ==
+// "published" for every row, that is workflow state, not public content,
+// and has no rendering purpose (see Stage 2, docs/dhikr/21-decision-log.md).
+//
+// sourceReferences is projected field-by-field (not `...`) against the
+// sourceReference object (src/sanity/schemas/objects/source-reference.ts).
+// That object has no reviewer/internal-note fields of its own — every field
+// listed below is its full field set — but naming them explicitly means a
+// future field added to sourceReference is excluded by default until
+// deliberately added here, rather than leaking through an implicit spread.
+//
+// category is dereferenced only for its public-identity fields (name, slug)
+// — never the raw dhikrCategory document — so a category becomes visible
+// here only by virtue of an eligible item referencing it (see
+// getDhikrCategoriesPublic in dhikr-public-fetch.ts, which derives category
+// listings from this query's results and never queries dhikrCategory
+// directly).
 export const dhikrItemsPublicEligibleQuery = groq`
   *[_type == "dhikrItem" && ${DHIKR_ELIGIBILITY_GROQ}] | order(order asc) {
     _id,
+    "slug": slug.current,
     titleEn,
     titleDa,
+    order,
+    arabicText,
+    transliteration,
+    translationEn,
+    translationDa,
     "categoryName": category->nameEn,
-    order
+    "categoryNameDa": category->nameDa,
+    "categorySlug": category->slug.current,
+    "sourceReferences": sourceReferences[]{
+      type,
+      citation,
+      hadithCollection,
+      hadithNumber,
+      hadithGrading,
+      surah,
+      ayah,
+      sourceUrl,
+      verifiedStatus
+    }
   }
 `;
 

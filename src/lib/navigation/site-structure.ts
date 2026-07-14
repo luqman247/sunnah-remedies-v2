@@ -328,6 +328,11 @@ export const knowledgeLibrary: Department = {
       href: "/knowledge-library/patient-guides",
       description: "Plain guidance before requesting means.",
     },
+    {
+      label: "Daily Dhikr",
+      href: "/knowledge-library/dhikr",
+      description: "Verified daily remembrance, reviewed before publication.",
+    },
   ],
 };
 

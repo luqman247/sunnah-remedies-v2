@@ -24,6 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/the-academy/foundations",
     "/sacred-journeys",
     "/knowledge-library",
+    "/knowledge-library/dhikr",
     "/consultations",
     "/charter",
     "/correspondence",
