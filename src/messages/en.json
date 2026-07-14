@@ -504,6 +504,28 @@
       "relatedConsultations": "Related consultations"
     }
   },
+  "dhikr": {
+    "nav": {
+      "label": "Daily Dhikr",
+      "description": "Verified daily remembrance, reviewed before publication."
+    },
+    "breadcrumb": "Daily Dhikr",
+    "landing": {
+      "heading": "Daily Dhikr",
+      "lede": "Verified daily remembrance from the Sunnah, published under the Knowledge Library's editorial standard.",
+      "aboutHeading": "About Daily Dhikr",
+      "aboutBody1": "Daily Dhikr is a resource of verified daily remembrance from the Sunnah, presented under the same editorial standard that governs the rest of the Knowledge Library.",
+      "aboutBody2": "Every entry passes both a scholarly review and an editorial review before it is published. Nothing appears here on the strength of common usage alone.",
+      "languageHeading": "Arabic, English, and Danish",
+      "languageBody1": "The Arabic text is the authoritative source for every entry. English and Danish translations are derived from the Arabic and checked against it, not published as independent content.",
+      "languageBody2": "No account, sign-in, or download is required to read what is published here.",
+      "categoriesHeading": "Entries by category"
+    },
+    "emptyState": {
+      "heading": "Preparing for publication",
+      "body": "Daily Dhikr is being prepared and reviewed. Verified entries will appear here once scholarly and editorial review is complete."
+    }
+  },
   "consultations": {
     "title": "Clinical Consultations",
     "bookAppointment": "Book an appointment"
@@ -707,6 +729,10 @@
     },
     "correspondence": {
       "title": "Correspondence"
+    },
+    "dhikr": {
+      "title": "Daily Dhikr | Sunnah Remedies Knowledge Library",
+      "description": "A Knowledge Library resource for verified daily remembrance from the Sunnah. Every entry is reviewed by scholarly and editorial boards before publication, with Arabic as the authoritative source and English and Danish as supporting translations."
     },
     "exhibitions": {
       "title": "Exhibitions",

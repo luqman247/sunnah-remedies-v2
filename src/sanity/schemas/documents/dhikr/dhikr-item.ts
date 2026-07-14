@@ -3,6 +3,7 @@ import {
   requiredWhenDhikrPublished,
   requiredDhikrSourceReferences,
   requiredDhikrBoardApprovals,
+  isUniqueDhikrSlug,
 } from "@/sanity/validation/governance";
 
 /**
@@ -90,6 +91,20 @@ export const dhikrItem = defineType({
       type: "string",
       fieldset: "identity",
       validation: (rule) => rule.max(80),
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      description:
+        "Public URL segment for this item. Optional while this prototype has no reviewed content — only required once reviewStatus reaches \"published\" (see docs/dhikr/19-implementation-roadmap.md). A public item-detail route does not exist yet regardless of whether a slug is set; see docs/dhikr/21-decision-log.md.",
+      fieldset: "identity",
+      options: {
+        source: "titleEn",
+        maxLength: 96,
+        isUnique: isUniqueDhikrSlug,
+      },
+      validation: (rule) => rule.custom(requiredWhenDhikrPublished("A slug is required before publishing.")),
     }),
     defineField({
       name: "tags",

@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { isUniqueDhikrSlug } from "@/sanity/validation/governance";
 
 /**
  * Dhikr Category — organisational grouping only (e.g. Morning, Evening).
@@ -26,6 +27,18 @@ export const dhikrCategory = defineType({
       title: "Name (Dansk)",
       type: "string",
       validation: (rule) => rule.max(60),
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      description:
+        "Public URL segment for this category. Optional while this prototype has no reviewed content — dhikrCategory has no reviewStatus of its own (see docs/dhikr/12-sanity-integration-plan.md), so a category only becomes publicly reachable once it contains at least one publicly eligible dhikrItem (see src/sanity/lib/dhikr-publication-gate.ts); setting a slug alone does not expose it.",
+      options: {
+        source: "nameEn",
+        maxLength: 96,
+        isUnique: isUniqueDhikrSlug,
+      },
     }),
     defineField({
       name: "order",

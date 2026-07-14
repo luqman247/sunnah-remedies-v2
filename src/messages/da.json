@@ -504,6 +504,28 @@
       "relatedConsultations": "Relaterede konsultationer"
     }
   },
+  "dhikr": {
+    "nav": {
+      "label": "Daglig dhikr",
+      "description": "Verificeret daglig dhikr, gennemgået før udgivelse."
+    },
+    "breadcrumb": "Daglig dhikr",
+    "landing": {
+      "heading": "Daglig dhikr",
+      "lede": "Verificeret daglig dhikr fra Sunnah, udgivet under Vidensbibliotekets redaktionelle standard.",
+      "aboutHeading": "Om Daglig dhikr",
+      "aboutBody1": "Daglig dhikr er en ressource med verificeret daglig dhikr fra Sunnah, præsenteret under den samme redaktionelle standard, der gælder for resten af Vidensbiblioteket.",
+      "aboutBody2": "Hver tekst gennemgår både en faglig og en redaktionel vurdering, før den udgives. Intet offentliggøres her alene fordi det er almindeligt udbredt.",
+      "languageHeading": "Arabisk, engelsk og dansk",
+      "languageBody1": "Den arabiske tekst er den autoritative kilde for hver tekst. Engelske og danske oversættelser er afledt af arabisk og kontrolleret mod den, og udgives ikke som selvstændigt indhold.",
+      "languageBody2": "Der kræves ingen konto, login eller download for at læse det, der er udgivet her.",
+      "categoriesHeading": "Tekster efter kategori"
+    },
+    "emptyState": {
+      "heading": "Under forberedelse",
+      "body": "Daglig dhikr er under forberedelse og gennemgang. Verificerede tekster vises her, når den faglige og redaktionelle gennemgang er afsluttet."
+    }
+  },
   "consultations": {
     "title": "Kliniske Konsultationer",
     "bookAppointment": "Book en tid"
@@ -707,6 +729,10 @@
     },
     "correspondence": {
       "title": "Korrespondance"
+    },
+    "dhikr": {
+      "title": "Daglig dhikr | Sunnah Remedies Vidensbibliotek",
+      "description": "En ressource i Vidensbiblioteket med verificeret daglig dhikr fra Sunnah. Hver tekst gennemgås af både et fagligt og et redaktionelt udvalg før udgivelse, med arabisk som den autoritative kildetekst og engelsk og dansk som understøttende oversættelser."
     },
     "exhibitions": {
       "title": "Udstillinger",

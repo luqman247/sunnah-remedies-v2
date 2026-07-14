@@ -11,6 +11,13 @@
 
 import { hasApprovedDhikrBoard } from "@/sanity/lib/dhikr-publication-gate";
 
+interface SlugUniquenessContext {
+  document?: { _id?: string; _type?: string };
+  getClient: (options: { apiVersion: string }) => {
+    fetch: (query: string, params: Record<string, unknown>) => Promise<boolean | null>;
+  };
+}
+
 /**
  * Validates that a value exists when the document's editorial status is "published".
  * Used for fields that must be filled before publishing.
@@ -101,4 +108,40 @@ export function requiredDhikrBoardApprovals(value: unknown, context: { document?
     return "Editorial approval is required before publishing.";
   }
   return true;
+}
+
+/**
+ * Slug uniqueness check for Dhikr documents (dhikrItem, dhikrCategory).
+ *
+ * This repository's other `type: "slug"` fields (see reference-entities.ts,
+ * knowledge-entities.ts, article.ts, etc.) rely on Sanity Studio's default
+ * per-type uniqueness check and do not set `options.isUnique` explicitly.
+ * That default is a Studio-UI convenience, not a hard, queryable guarantee.
+ * Dhikr slugs are deliberately stricter: this is passed as
+ * `options.isUnique` on the slug field so a duplicate slug cannot be saved
+ * for another document of the same `_type`, which would otherwise let two
+ * documents silently resolve to the same public URL segment. Excludes both
+ * the draft and published version of the document being edited from the
+ * comparison, per Sanity's documented isUnique pattern.
+ *
+ * Deliberately independent of reviewStatus / the canonical publication gate
+ * in dhikr-publication-gate.ts — a slug can be reserved before an item is
+ * published, but two documents may never share one regardless of status.
+ */
+export async function isUniqueDhikrSlug(slug: string, context: SlugUniquenessContext): Promise<boolean> {
+  const { document, getClient } = context;
+  const id = document?._id?.replace(/^drafts\./, "") ?? "";
+  const type = document?._type;
+  if (!type || !id) return true;
+
+  const client = getClient({ apiVersion: "2024-01-01" });
+  const params = {
+    draft: `drafts.${id}`,
+    published: id,
+    slug,
+    type,
+  };
+  const query = `!defined(*[_type == $type && !(_id in [$draft, $published]) && slug.current == $slug][0]._id)`;
+  const result = await client.fetch(query, params);
+  return result !== false;
 }

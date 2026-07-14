@@ -58,6 +58,31 @@ Phased so each phase is independently testable and reversible — no phase requi
 - Test gate: content-gating release-blocking test from [17](17-test-and-validation-plan.md) passes; SEO/sharing per [14](14-seo-and-sharing.md) in place.
 - Reversible: content can be un-published (`reviewStatus` reverted) without a code change if an issue is found post-launch.
 
+## Phase 4 (repository) — Public Knowledge Library integration
+
+**Overall status: in progress.** Stages 1, 2, and 3 are complete; Stage 4 (category route scaffolding) is deferred (see below — not merely "not started"). The public landing page (Stage 3) is the complete approved public surface for the current phase.
+
+Distinct from "Phase 4 — Counter & memorisation features" above, which remains not started (and is explicitly out of scope for this integration — no counter, no memorisation, no local-storage behaviour is part of this work). This phase supersedes ADR-001's default standalone-department placement (see ADR-014, [21-decision-log.md](21-decision-log.md)): Dhikr's public surface integrates into the existing Knowledge Library rather than becoming a fifth department.
+
+### Stage 1 — Pre-flight and existing-system audit
+**Status: complete.** Full repository verification of the Knowledge Library architecture, real route structure (English unprefixed, Danish `/dk`), the existing gate/query surface, and the `knowledgeLibrary.sections` topic-entry mechanism. Corrected the route family to `/knowledge-library/dhikr` → `/knowledge-library/dhikr/[category]` → `/knowledge-library/dhikr/[category]/[slug]` (Next.js does not permit `[category]` and `[slug]` as siblings). Identified that neither `dhikrItem` nor `dhikrCategory` had a slug field.
+
+### Stage 2 — Public data layer
+**Status: complete.** `dhikrItem.slug` and `dhikrCategory.slug` added (optional, gated only where a publish concept exists — see ADR-015). `src/sanity/lib/dhikr-public-fetch.ts` added as the sole public Dhikr data-access module (see ADR-016), consuming the existing `dhikrItemsPublicEligibleQuery` (projection extended, filter/gate untouched). No public page created. Item-detail route (`[slug]`) formally deferred — see ADR-015.
+
+### Stage 3 — Knowledge Library landing integration
+**Status: complete.** `/knowledge-library/dhikr` (English) and `/dk/knowledge-library/dhikr` (Danish) landing page built via the existing `SectionPage` shell, reusing `knowledgeLibrary`'s breadcrumb/nav/metadata conventions. One entry added to `knowledgeLibrary.sections` (`src/lib/navigation/site-structure.ts`) — no global navigation change, no fifth department. EN/DA interface and the approved empty-state copy live in a new `pages.dhikr`/`dhikr.*` message namespace. Data comes exclusively from `src/sanity/lib/dhikr-public-fetch.ts`; with zero eligible items today, the page renders the approved empty state. Verified via `next build` and `next start` (English and Danish routes both return 200; `next dev` 404s on every route including the homepage, a pre-existing Turbopack middleware limitation per ADR-013, unrelated to this page). No category or item-detail route was created.
+
+### Stage 4 — Category route scaffolding
+**Status: deferred.**
+
+The category route is deferred until either:
+
+1. at least one fully eligible published category exists; and
+2. the sitewide locale-route `notFound()` behaviour is corrected so unknown or ineligible category URLs return a genuine HTTP 404 rather than not-found content with HTTP 200.
+
+The public landing page remains the complete approved public surface for the current phase. See ADR-017 (revised) in [21-decision-log.md](21-decision-log.md) for the investigation record: a category route was implemented and investigated, found to work correctly in every respect except HTTP status code on an unknown/ineligible category (a pre-existing, sitewide Next.js/next-intl limitation affecting every `notFound()` call inside `src/app/[locale]/`, not specific to this route), and was reverted rather than shipped with that ambiguity. Item-detail route (`[category]/[slug]`) remains separately deferred per ADR-015.
+
 ## Explicit assumption
 
 Phase ordering assumes editorial (Phase 2) and engineering (Phases 1, 3, 4, 5) can proceed in parallel, converging at Phase 6. This is a scheduling assumption, not a repository-evidenced fact — flagged for confirmation by whoever owns project sequencing.
