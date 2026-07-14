@@ -6,6 +6,7 @@ import { languageFilter } from "@sanity/language-filter";
 import { schemaTypes } from "./src/sanity/schemas";
 import { structure } from "./src/sanity/structure";
 import { OperationsOverview } from "./src/sanity/tools/operations-overview";
+import { dhikrItemBadgesResolver } from "./src/sanity/badges/dhikr-item-badges";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "your-project-id";
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
@@ -66,6 +67,13 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+  },
+
+  document: {
+    // Scoped strictly to dhikrItem — every other schema type's badges are
+    // returned unchanged (`prev`, untouched). No document.actions override
+    // is added in this stage.
+    badges: dhikrItemBadgesResolver,
   },
 
   tools: (prev) => [

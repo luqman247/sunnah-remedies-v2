@@ -36,92 +36,11 @@ import {
   requiredDhikrBoardApprovals,
 } from "../../src/sanity/validation/governance";
 import { dhikrItemsPublicEligibleQuery, dhikrItemsInternalPreviewQuery } from "../../src/sanity/lib/queries";
+import { FULL_VALID_ITEM, NEGATIVE_CASES } from "./dhikr-eligibility-fixtures";
 
 function assert(condition: boolean, message: string) {
   if (!condition) throw new Error(message);
 }
-
-const FULL_VALID_ITEM: DhikrItemEligibilityInput = {
-  reviewStatus: "published",
-  arabicText: "placeholder-non-empty",
-  translationEn: "placeholder-non-empty",
-  translationDa: "placeholder-non-empty",
-  sourceReferences: [{ type: "hadith", citation: "placeholder" }],
-  boardApprovals: [
-    { board: "scholarly", approved: true },
-    { board: "editorial", approved: true },
-  ],
-};
-
-/* ── Table-driven negative cases: each condition removed independently ──
- *
- * Each row mutates exactly ONE of the seven eligibility conditions away
- * from FULL_VALID_ITEM, holding every other condition valid, and asserts
- * eligibility becomes false. groqMarker is the substring in
- * DHIKR_ELIGIBILITY_GROQ that expresses the same condition in GROQ —
- * verified separately below so the TS predicate and the GROQ fragment are
- * proven to test the same conditions, not just colocated in the same file.
- */
-
-interface NegativeCase {
-  condition: string;
-  mutate: (item: DhikrItemEligibilityInput) => DhikrItemEligibilityInput;
-  groqMarker: string;
-}
-
-const NEGATIVE_CASES: NegativeCase[] = [
-  {
-    condition: "reviewStatus is not exactly 'published' (e.g. 'approved')",
-    mutate: (item) => ({ ...item, reviewStatus: "approved" }),
-    groqMarker: 'reviewStatus == "published"',
-  },
-  {
-    condition: "arabicText is absent",
-    mutate: (item) => ({ ...item, arabicText: undefined }),
-    groqMarker: "arabicText",
-  },
-  {
-    condition: "translationEn is absent",
-    mutate: (item) => ({ ...item, translationEn: undefined }),
-    groqMarker: "translationEn",
-  },
-  {
-    condition: "translationDa is absent",
-    mutate: (item) => ({ ...item, translationDa: undefined }),
-    groqMarker: "translationDa",
-  },
-  {
-    condition: "no sourceReferences (empty array)",
-    mutate: (item) => ({ ...item, sourceReferences: [] }),
-    groqMarker: "sourceReferences",
-  },
-  {
-    condition: "no board approvals at all",
-    mutate: (item) => ({ ...item, boardApprovals: [] }),
-    groqMarker: "boardApprovals",
-  },
-  {
-    condition: "editorial approval present, but no approved scholarly approval (scholarly missing)",
-    mutate: (item) => ({ ...item, boardApprovals: [{ board: "editorial", approved: true }] }),
-    groqMarker: 'board == "scholarly"',
-  },
-  {
-    condition: "scholarly approval present, but no approved editorial approval (editorial missing)",
-    mutate: (item) => ({ ...item, boardApprovals: [{ board: "scholarly", approved: true }] }),
-    groqMarker: 'board == "editorial"',
-  },
-  {
-    condition: "scholarly board entry exists but approved:false (not just absent)",
-    mutate: (item) => ({
-      ...item,
-      boardApprovals: [
-        { board: "scholarly", approved: false },
-        { board: "editorial", approved: true },
-      ],
-    }),
-    groqMarker: "approved == true",
-  },
-];
 
 function testNegativeCaseTable() {
   assert(

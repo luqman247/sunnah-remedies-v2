@@ -145,6 +145,25 @@ ADR-style running log, scoped to Dhikr architecture decisions only. Format follo
 **Resumption condition**: the category route may be revisited once (1) at least one fully eligible published category exists, and (2) the sitewide `notFound()`/locale-routing HTTP-status behaviour has been corrected as a separate infrastructure task. The item-detail route (`[category]/[slug]`) remains separately deferred per ADR-015, unaffected by and unrelated to this finding.
 **Reversibility**: fully reversible, no data or schema impact — the implementation was removed from the working tree; nothing was committed.
 
+## ADR-018 — Governed content-entry workflow: readiness model, Studio surfaces, and form organisation (Stages 2A–2C)
+
+**Status**: Decided (Stages 2A–2C, `feature/dhikr-content-operations`)
+**Decision**:
+- `getDhikrEligibilityConditions()` was added to `src/sanity/lib/dhikr-publication-gate.ts` as a behaviour-preserving refactor, factoring the seven-condition compound rule out once; `isDhikrItemPubliclyEligible()` is now `conditions.every(c => c.met)`. `DHIKR_ELIGIBILITY_GROQ` is unchanged.
+- A read-only "Publication Readiness" Studio document view (`src/sanity/components/dhikr/DhikrReadinessPanel.tsx`) and a `dhikrItem`-scoped document badge (`src/sanity/badges/dhikr-item-badges.ts`) were added, both deriving every canonical check from `getDhikrEligibilityConditions()`. The badge's precedence (Blocked > Published > Approved > Awaiting editorial review > Awaiting scholarly review > Awaiting sources > Draft) treats a document whose `reviewStatus` claims a late stage (`approved`/`published`) without the underlying content/approvals to support it as **Blocked**, rather than trusting the status field alone.
+- `dhikrItem` was restructured from three `fieldsets` to seven Studio `groups` (Identity, Arabic Source Text, Supporting Translations, Repetition Guidance, Sources and Authenticity, Scholarly Review, Editorial Review), matching the multi-tab convention already used by `product.ts`. Six fields received non-religious content-entry placeholders (e.g. "Enter verified Arabic text"); `sourceReferences` (an array type, which does not support `placeholder`) received an extended `description` instead.
+- No document action, no role/permission mechanism, and no change to `reviewStatus` values, validators, public routes, or public projection was introduced at any point across these three stages.
+**Rationale**: makes the existing, already-enforced gate *visible* to staff (readiness panel, badges) and makes correct data entry *easier* (grouped tabs, placeholders) without adding any new enforcement surface that could itself drift from the canonical rule or be mistaken for a security boundary. No custom Studio role-based permission mechanism exists anywhere in this repository (confirmed by inspection before Stage 2B) — this was stated plainly rather than assumed away; any future document action remains a UX convenience, not an access-control boundary, until Sanity's own project-level roles are configured outside this codebase.
+**Verification approach**: every claim above is covered by a dedicated test file — `tests/dhikr/dhikr-readiness.test.ts`, `tests/dhikr/dhikr-studio-readiness.test.ts`, `tests/dhikr/dhikr-schema-organisation.test.ts` — rather than asserted only in this log entry.
+
+## ADR-019 — Twelve-category, twenty-slot production plan supersedes the earlier draft taxonomy (Stage 2D)
+
+**Status**: Decided — editorial planning proposal, not authenticated content
+**Context**: [05-category-taxonomy.md](05-category-taxonomy.md) drafted 7 categories and [18-v1-content-register.md](18-v1-content-register.md) drafted 12 placeholder slots against them, both explicitly marked as pending review before this initiative had public routing, a Studio workflow, or an operating pack.
+**Decision**: [31-first-20-entries-production-plan.md](31-first-20-entries-production-plan.md) proposes a more granular 12-category, 20-slot plan as the near-term working plan. [05](05-category-taxonomy.md) and [18](18-v1-content-register.md) are not edited or deleted — they remain historical record, and per [18](18-v1-content-register.md)'s own terms, the CMS (once real `dhikrItem`/`dhikrCategory` documents exist) is authoritative over any of these planning documents regardless.
+**Rationale**: the original 7/12 draft predates the actual Studio workflow (Stages 2A–2C) and was sized as a planning scaffold, not a scholarly-reviewed category set; a fresh proposal aligned to the now-built entry workflow gives source compilers a concrete starting sequence without pretending either draft is scholarly-final. Both remain subject to the same confirmation requirement [05](05-category-taxonomy.md) already flagged as open.
+**Explicit non-goal**: no Arabic text, hadith reference, translation, or repetition count was introduced by this document or any of the nine other Stage 2D documents — confirmed by direct inspection of every new file before this entry was written.
+
 ---
 
 ## Open decisions (not yet resolved by this architecture pack)

@@ -1,4 +1,5 @@
 import type { StructureBuilder } from "sanity/structure";
+import DhikrReadinessPanel from "@/sanity/components/dhikr/DhikrReadinessPanel";
 
 function languageGroupedList(
   S: StructureBuilder,
@@ -128,6 +129,43 @@ export const structure = (S: StructureBuilder) =>
               languageGroupedList(S, "Articles", "article"),
               languageGroupedList(S, "Authors", "author"),
               languageGroupedList(S, "Topics", "topic"),
+            ]),
+        ),
+
+      // ── Daily Dhikr ──
+      // Minimal Stage 2B section: two plain lists, no filtered workflow
+      // sub-lists yet. Dhikr Items' document editor gets a second view
+      // ("Publication Readiness") alongside the normal form view; Dhikr
+      // Categories has no custom view yet.
+      S.listItem()
+        .title("Daily Dhikr")
+        .child(
+          S.list()
+            .title("Daily Dhikr")
+            .items([
+              S.listItem()
+                .title("Dhikr Items")
+                .child(
+                  S.documentTypeList("dhikrItem")
+                    .title("Dhikr Items")
+                    .child((documentId) =>
+                      S.document()
+                        .schemaType("dhikrItem")
+                        .documentId(documentId)
+                        .views([
+                          S.view.form(),
+                          S.view
+                            .component(DhikrReadinessPanel)
+                            .id("readiness")
+                            .title("Publication Readiness"),
+                        ]),
+                    ),
+                ),
+              S.listItem()
+                .title("Dhikr Categories")
+                .child(
+                  S.documentTypeList("dhikrCategory").title("Dhikr Categories"),
+                ),
             ]),
         ),
 

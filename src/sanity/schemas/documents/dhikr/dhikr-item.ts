@@ -53,13 +53,29 @@ export const dhikrItem = defineType({
   name: "dhikrItem",
   title: "Dhikr Item",
   type: "document",
-  // All three fieldsets render fully expanded (no `options: { collapsible,
-  // collapsed }`) — in particular "Sourcing & Review" holds the fields that
-  // gate publication and must never be hidden from an editor by default.
-  fieldsets: [
-    { name: "identity", title: "Identity" },
-    { name: "content", title: "Content" },
-    { name: "sourcingReview", title: "Sourcing & Review" },
+  // Studio tabs, matching the multi-section convention already used by
+  // src/sanity/schemas/documents/apothecary/product.ts. This is purely
+  // Studio-side presentation metadata — see docs/dhikr/21-decision-log.md
+  // for confirmation that switching from fieldsets to groups does not
+  // change stored document data in any way.
+  //
+  // "Editorial Review" intentionally has no field uniquely its own:
+  // boardApprovals holds both scholarly and editorial sign-off entries in
+  // one shared array (distinguished only by each entry's own `board`
+  // value), and per explicit instruction it is placed in exactly one
+  // group (Scholarly Review) rather than shown in two groups at once.
+  // reviewStatus is shared between Scholarly Review and Editorial Review
+  // (assigned to both groups) since it is a single pipeline-wide field
+  // that neither review stage owns exclusively — this is Sanity's native
+  // multi-group display mechanism, not a second copy of the field.
+  groups: [
+    { name: "identity", title: "Identity", default: true },
+    { name: "arabicSourceText", title: "Arabic Source Text" },
+    { name: "supportingTranslations", title: "Supporting Translations" },
+    { name: "repetitionGuidance", title: "Repetition Guidance" },
+    { name: "sourcesAndAuthenticity", title: "Sources and Authenticity" },
+    { name: "scholarlyReview", title: "Scholarly Review" },
+    { name: "editorialReview", title: "Editorial Review" },
   ],
   fields: [
     defineField({
@@ -67,7 +83,8 @@ export const dhikrItem = defineType({
       title: "Category",
       type: "reference",
       to: [{ type: "dhikrCategory" }],
-      fieldset: "identity",
+      description: "Which category this item belongs to. Selecting a category does not itself make the item public.",
+      group: "identity",
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -75,21 +92,23 @@ export const dhikrItem = defineType({
       title: "Order",
       type: "number",
       description: "Position within category",
-      fieldset: "identity",
+      group: "identity",
     }),
     defineField({
       name: "titleEn",
       title: "Title (English)",
       type: "string",
-      description: "Short label, no religious content itself.",
-      fieldset: "identity",
+      description: "Internal working title, no religious content itself.",
+      placeholder: "Enter internal English title",
+      group: "identity",
       validation: (rule) => rule.required().max(80),
     }),
     defineField({
       name: "titleDa",
       title: "Title (Dansk)",
       type: "string",
-      fieldset: "identity",
+      placeholder: "Enter internal Danish title",
+      group: "identity",
       validation: (rule) => rule.max(80),
     }),
     defineField({
@@ -98,7 +117,7 @@ export const dhikrItem = defineType({
       type: "slug",
       description:
         "Public URL segment for this item. Optional while this prototype has no reviewed content — only required once reviewStatus reaches \"published\" (see docs/dhikr/19-implementation-roadmap.md). A public item-detail route does not exist yet regardless of whether a slug is set; see docs/dhikr/21-decision-log.md.",
-      fieldset: "identity",
+      group: "identity",
       options: {
         source: "titleEn",
         maxLength: 96,
@@ -112,31 +131,34 @@ export const dhikrItem = defineType({
       type: "array",
       of: [{ type: "string" }],
       options: { layout: "tags" },
-      fieldset: "identity",
+      group: "identity",
     }),
     defineField({
       name: "arabicText",
       title: "Arabic Text",
       type: "text",
       description:
-        "Authoritative source text (see docs/dhikr/03). Empty in this prototype phase. Stored once here — never duplicated onto a separate English/Danish record.",
-      fieldset: "content",
+        "Entered once here and remains the authoritative source for this item (see docs/dhikr/03) — never duplicated onto a separate English/Danish record. Empty in this prototype phase.",
+      placeholder: "Enter verified Arabic text",
+      group: "arabicSourceText",
       validation: (rule) => rule.custom(requiredWhenDhikrPublished("Arabic text is required before publishing.")),
     }),
     defineField({
       name: "transliteration",
       title: "Transliteration",
       type: "text",
-      description: "Empty in this prototype phase.",
-      fieldset: "content",
+      description: "Optional unless editorial policy later requires it. Empty in this prototype phase.",
+      placeholder: "Enter reviewed transliteration if required",
+      group: "arabicSourceText",
     }),
     defineField({
       name: "translationEn",
       title: "Translation (English)",
       type: "text",
       description:
-        "Derived from arabicText, not independent content — see docs/dhikr/03. Empty in this prototype phase.",
-      fieldset: "content",
+        "A supporting translation derived from arabicText, not independent content — see docs/dhikr/03. Empty in this prototype phase.",
+      placeholder: "Enter reviewed English translation",
+      group: "supportingTranslations",
       validation: (rule) =>
         rule.custom(requiredWhenDhikrPublished("English translation is required before publishing.")),
     }),
@@ -144,8 +166,9 @@ export const dhikrItem = defineType({
       name: "translationDa",
       title: "Translation (Dansk)",
       type: "text",
-      description: "Derived from arabicText, not independent content. Empty in this prototype phase.",
-      fieldset: "content",
+      description: "A supporting translation derived from arabicText, not independent content. Empty in this prototype phase.",
+      placeholder: "Enter reviewed Danish translation",
+      group: "supportingTranslations",
       validation: (rule) =>
         rule.custom(requiredWhenDhikrPublished("Danish translation is required before publishing.")),
     }),
@@ -153,16 +176,16 @@ export const dhikrItem = defineType({
       name: "recommendedRepetitions",
       title: "Recommended Repetitions",
       type: "number",
-      description: "Not populated in this architecture/prototype phase — see docs/dhikr/07.",
-      fieldset: "content",
+      description: "Must be sourced, not assumed — see docs/dhikr/07. Not populated in this architecture/prototype phase.",
+      group: "repetitionGuidance",
     }),
     defineField({
       name: "audioAsset",
       title: "Audio Asset",
       type: "reference",
       to: [{ type: "audioAsset" }],
-      description: "Not populated or used in this prototype phase — see docs/dhikr/10.",
-      fieldset: "content",
+      description: "Optional recitation audio, grouped here as a reading/practice aid alongside repetition guidance — see docs/dhikr/10. Not populated or used in this prototype phase.",
+      group: "repetitionGuidance",
     }),
     defineField({
       name: "sourceReferences",
@@ -170,14 +193,16 @@ export const dhikrItem = defineType({
       type: "array",
       of: [{ type: "sourceReference" }],
       description:
-        "Citation + grading (see docs/dhikr/03). At least one is required before publishing. Empty in this prototype phase.",
-      fieldset: "sourcingReview",
+        "Citations must be primary or independently verified — no invented or placeholder citation numbers (see docs/dhikr/03). At least one is required before publishing. Empty in this prototype phase.",
+      group: "sourcesAndAuthenticity",
       validation: (rule) => rule.custom(requiredDhikrSourceReferences),
     }),
     defineField({
       name: "reviewStatus",
       title: "Review Status",
       type: "string",
+      description:
+        "The current pipeline stage. Changing this value does not itself guarantee public eligibility — publication also requires every condition in the canonical gate (src/sanity/lib/dhikr-publication-gate.ts) to be met, shown on the separate Publication Readiness view.",
       options: {
         list: DHIKR_REVIEW_STATUS_VALUES.map((value) => ({
           title: DHIKR_REVIEW_STATUS_TITLES[value],
@@ -185,7 +210,7 @@ export const dhikrItem = defineType({
         })),
       },
       initialValue: "sourced",
-      fieldset: "sourcingReview",
+      group: ["scholarlyReview", "editorialReview"],
       // .custom() enforces the enum at the validation layer (not just the
       // Studio dropdown, which is bypassable via a direct API write). .valid()
       // is not available on this field's inferred Rule type, so the same
@@ -204,8 +229,8 @@ export const dhikrItem = defineType({
       type: "array",
       of: [{ type: "boardApproval" }],
       description:
-        "Scholarly and editorial sign-off (see docs/dhikr/03). Both are required, independently approved, before publishing — one approval of either kind alone is not sufficient.",
-      fieldset: "sourcingReview",
+        "Governance records, not public content. Scholarly and editorial sign-off are recorded together in this single array (distinguished by each entry's own board selection) — there is no separate Editorial Review array; add editorial entries here too. Both a scholarly and an editorial approval are required, independently, before publishing — one approval of either kind alone is not sufficient (see docs/dhikr/03).",
+      group: "scholarlyReview",
       validation: (rule) => rule.custom(requiredDhikrBoardApprovals),
     }),
   ],

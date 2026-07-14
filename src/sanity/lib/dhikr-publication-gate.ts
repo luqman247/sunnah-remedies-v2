@@ -52,20 +52,91 @@ export function hasApprovedDhikrBoard(
   return Array.isArray(approvals) && approvals.some((a) => a?.board === board && a?.approved === true);
 }
 
+/** One named, gate condition — see getDhikrEligibilityConditions. */
+export interface DhikrEligibilityCondition {
+  /** Stable identifier — do not rename without updating every consumer. */
+  key:
+    | "review-status-published"
+    | "arabic-present"
+    | "english-translation-present"
+    | "danish-translation-present"
+    | "valid-source-reference-present"
+    | "scholarly-approval-present"
+    | "editorial-approval-present";
+  /** Human-readable description of what this condition checks. */
+  label: string;
+  /** Whether this specific condition is satisfied by the given document. */
+  met: boolean;
+}
+
+/**
+ * Granular breakdown of the canonical eligibility rule — the exact same
+ * seven conditions expressed in DHIKR_ELIGIBILITY_GROQ and (previously)
+ * inline in isDhikrItemPubliclyEligible, now factored out once so both the
+ * boolean predicate and any UI that needs to explain *why* a document is
+ * ineligible read from the same seven checks. Adding, removing, or
+ * reordering a condition here changes public eligibility — do not add a
+ * condition that is not already expressed in DHIKR_ELIGIBILITY_GROQ.
+ *
+ * Deliberately excludes several fields that are gated elsewhere but are not
+ * part of THIS compound rule today (see docs/dhikr/21-decision-log.md for
+ * the ADR recording this explicitly): category and titleEn are required to
+ * *save* a document at all (schema-level `rule.required()`); the item's
+ * public URL segment field is required only when saving reviewStatus as
+ * "published" (a separate, field-specific Studio validator); transliteration,
+ * recommendedRepetitions, and audioAsset are never required by anything.
+ * None of that is the same thing as this compound public-eligibility rule,
+ * and this function does not conflate them with it.
+ */
+export function getDhikrEligibilityConditions(
+  doc: DhikrItemEligibilityInput,
+): DhikrEligibilityCondition[] {
+  return [
+    {
+      key: "review-status-published",
+      label: 'reviewStatus is "published"',
+      met: doc.reviewStatus === "published",
+    },
+    {
+      key: "arabic-present",
+      label: "Arabic text is present",
+      met: !!doc.arabicText,
+    },
+    {
+      key: "english-translation-present",
+      label: "English translation is present",
+      met: !!doc.translationEn,
+    },
+    {
+      key: "danish-translation-present",
+      label: "Danish translation is present",
+      met: !!doc.translationDa,
+    },
+    {
+      key: "valid-source-reference-present",
+      label: "At least one source reference is present",
+      met: Array.isArray(doc.sourceReferences) && doc.sourceReferences.length > 0,
+    },
+    {
+      key: "scholarly-approval-present",
+      label: "An approved scholarly board approval is present",
+      met: hasApprovedDhikrBoard(doc.boardApprovals, "scholarly"),
+    },
+    {
+      key: "editorial-approval-present",
+      label: "An approved editorial board approval is present",
+      met: hasApprovedDhikrBoard(doc.boardApprovals, "editorial"),
+    },
+  ];
+}
+
 /**
  * TypeScript mirror of DHIKR_ELIGIBILITY_GROQ, for use in Studio publish-time
  * validation and in behavioural tests. Must stay logically identical to the
- * GROQ fragment above — if you change one, change both.
+ * GROQ fragment above — if you change one, change both. Implemented in terms
+ * of getDhikrEligibilityConditions so the boolean predicate and the granular
+ * breakdown can never drift apart — there is exactly one list of conditions.
  */
 export function isDhikrItemPubliclyEligible(doc: DhikrItemEligibilityInput): boolean {
-  return (
-    doc.reviewStatus === "published" &&
-    !!doc.arabicText &&
-    !!doc.translationEn &&
-    !!doc.translationDa &&
-    Array.isArray(doc.sourceReferences) &&
-    doc.sourceReferences.length > 0 &&
-    hasApprovedDhikrBoard(doc.boardApprovals, "scholarly") &&
-    hasApprovedDhikrBoard(doc.boardApprovals, "editorial")
-  );
+  return getDhikrEligibilityConditions(doc).every((condition) => condition.met);
 }
