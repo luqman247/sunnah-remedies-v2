@@ -38,17 +38,18 @@ function loadAuditReport(): string {
 }
 
 function testOnlyMdr002ChangedInThisStage() {
-  // MDR-003 is excluded from this comparison: it was legitimately researched
-  // in a later stage and is no longer expected to match this checkpoint's
-  // baseline. That later change is verified by its own dedicated file,
-  // tests/dhikr/dhikr-source-register-mdr-003-audit.test.ts.
+  // MDR-003 through MDR-005 are excluded from this comparison: each was
+  // legitimately researched in a later stage and is no longer expected to
+  // match this checkpoint's baseline. Those later changes are verified by
+  // their own dedicated files, tests/dhikr/dhikr-source-register-mdr-003-audit.test.ts,
+  // -mdr-004-audit.test.ts, and -mdr-005-audit.test.ts.
   assert(MDR_002.internalId === "MDR-002", "REGISTER[1] is not MDR-002");
-  const excludedIds = new Set(["MDR-003", "MDR-004"]);
+  const excludedIds = new Set(["MDR-003", "MDR-004", "MDR-005"]);
   const baseline = loadBaselineFixture().filter((r: { internalId: string }) => !excludedIds.has(r.internalId));
   const otherRecords = REGISTER.filter((r) => r.internalId !== "MDR-002" && !excludedIds.has(r.internalId));
   assert(
     otherRecords.length === baseline.length,
-    `Expected ${baseline.length} records besides MDR-002/MDR-003, found ${otherRecords.length}`,
+    `Expected ${baseline.length} records besides MDR-002/MDR-003/MDR-004/MDR-005, found ${otherRecords.length}`,
   );
   for (let i = 0; i < otherRecords.length; i++) {
     assert(
@@ -57,7 +58,7 @@ function testOnlyMdr002ChangedInThisStage() {
     );
   }
   console.log(
-    "✓ only MDR-002 changed in this stage; MDR-001 and MDR-003 through MDR-030 match checkpoint 8e2c46d exactly",
+    "✓ only MDR-002 changed in this stage; MDR-001 and MDR-006 through MDR-030 match checkpoint 8e2c46d exactly (MDR-003 through MDR-005 verified separately)",
   );
 }
 

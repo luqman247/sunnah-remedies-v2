@@ -30,15 +30,16 @@ function loadBaselineFixture() {
 }
 
 function testOnlyMdr001Changed() {
-  // MDR-002 and MDR-003 are excluded from this comparison: both were
-  // legitimately researched in later stages and are no longer expected to
+  // MDR-002 through MDR-005 are excluded from this comparison: each was
+  // legitimately researched in a later stage and is no longer expected to
   // match the pre-research Stage 3A baseline. Those later changes are
   // verified by their own dedicated files (dhikr-source-register-mdr-002-audit.test.ts,
-  // dhikr-source-register-mdr-003-audit.test.ts). This file's job is only
-  // to confirm MDR-001's own Stage 3B research, and that MDR-004 through
-  // MDR-030 (still untouched since Stage 3A) remain exactly as transcribed.
+  // dhikr-source-register-mdr-003-audit.test.ts, -mdr-004-audit.test.ts,
+  // -mdr-005-audit.test.ts). This file's job is only to confirm MDR-001's
+  // own Stage 3B research, and that MDR-006 through MDR-030 (still
+  // untouched since Stage 3A) remain exactly as transcribed.
   assert(MDR_001.internalId === "MDR-001", "REGISTER[0] is not MDR-001");
-  const excluded = new Set(["MDR-002", "MDR-003", "MDR-004"]);
+  const excluded = new Set(["MDR-002", "MDR-003", "MDR-004", "MDR-005"]);
   const baseline = loadBaselineFixture().filter((r: { internalId: string }) => !excluded.has(r.internalId));
   const currentTail = REGISTER.slice(1).filter((r) => !excluded.has(r.internalId));
   assert(
@@ -51,7 +52,7 @@ function testOnlyMdr001Changed() {
       `${currentTail[i].internalId} differs from its Stage 3A checkpoint (commit 309fbdb) baseline — this stage must only touch MDR-001`,
     );
   }
-  console.log("✓ only MDR-001 changed here; MDR-003 through MDR-030 match the Stage 3A checkpoint exactly (MDR-002 verified separately)");
+  console.log("✓ only MDR-001 changed here; MDR-006 through MDR-030 match the Stage 3A checkpoint exactly (MDR-002 through MDR-005 verified separately)");
 }
 
 function testMdr001ProtectedFieldsUnchanged() {
