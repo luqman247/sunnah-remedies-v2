@@ -3,13 +3,22 @@
  *
  * Verifies the Stage 3B research pass touched only MDR-008's research
  * fields, left MDR-001 through MDR-007 (already researched, checkpoint
- * 52b7a1b) and MDR-009 through MDR-030 (still Stage 3A transcription-only)
- * unchanged. MDR-008 was not segmented (see docs/dhikr/research/MDR-008-source-audit.md,
- * "Segmentation decision") — all its content is drawn from one identified
- * narration, so no clause-map file exists for this record. All other
- * records are checked against a fixture snapshot captured from checkpoint
- * 52b7a1b — see
+ * 52b7a1b) and MDR-010 through MDR-030 (still Stage 3A transcription-only
+ * at the time of MDR-008's own checkpoint) unchanged. MDR-008 was not
+ * segmented (see docs/dhikr/research/MDR-008-source-audit.md, "Segmentation
+ * decision") — all its content is drawn from one identified narration, so
+ * no clause-map file exists for this record. All other records are checked
+ * against a fixture snapshot captured from checkpoint 52b7a1b — see
  * tests/dhikr/fixtures/mdr-001-007-009-030-52b7a1b-baseline.json.
+ *
+ * MDR-009 is deliberately excluded from every "unchanged since 52b7a1b"
+ * comparison below: it was legitimately researched in a later Stage 3B pass
+ * (checkpoint 90a10af) and is expected to differ from its Stage-3A-only
+ * 52b7a1b baseline snapshot. This does not weaken this file's original
+ * guarantee — MDR-008's own fields, and MDR-001 through MDR-007 and MDR-010
+ * through MDR-030, are still verified unchanged in full. See
+ * tests/dhikr/dhikr-source-register-mdr-009-audit.test.ts for MDR-009's own
+ * dedicated verification.
  *
  * Plain assert()-based, run via `npx tsx`, following the repository's
  * established convention (docs/dhikr/17-test-and-validation-plan.md).
@@ -41,19 +50,20 @@ function loadAuditReport(): string {
 
 function testOnlyMdr008ResearchFieldsChanged() {
   const baseline = loadBaselineFixture();
-  const otherRecords = REGISTER.filter((r) => r.internalId !== "MDR-008");
+  const otherRecords = REGISTER.filter((r) => r.internalId !== "MDR-008" && r.internalId !== "MDR-009");
+  const baselineWithoutMdr009 = baseline.filter((r: { internalId: string }) => r.internalId !== "MDR-009");
   assert(
-    otherRecords.length === baseline.length,
-    `Expected ${baseline.length} records besides MDR-008, found ${otherRecords.length}`,
+    otherRecords.length === baselineWithoutMdr009.length,
+    `Expected ${baselineWithoutMdr009.length} records besides MDR-008/MDR-009, found ${otherRecords.length}`,
   );
   for (let i = 0; i < otherRecords.length; i++) {
     assert(
-      JSON.stringify(otherRecords[i]) === JSON.stringify(baseline[i]),
+      JSON.stringify(otherRecords[i]) === JSON.stringify(baselineWithoutMdr009[i]),
       `${otherRecords[i].internalId} differs from its checkpoint 52b7a1b baseline — this Stage 3B pass must only touch MDR-008`,
     );
   }
   console.log(
-    "✓ only MDR-008 changed in this stage; MDR-001 through MDR-007 and MDR-009 through MDR-030 match checkpoint 52b7a1b exactly",
+    "✓ only MDR-008 changed in this stage; MDR-001 through MDR-007 and MDR-010 through MDR-030 match checkpoint 52b7a1b exactly (MDR-009 excluded — legitimately researched later, see MDR-009's own dedicated test)",
   );
 }
 
@@ -71,9 +81,9 @@ function testMdr001Through007RemainUnchangedFromCheckpoint() {
   console.log("✓ MDR-001 through MDR-007 remain unchanged from checkpoint 52b7a1b");
 }
 
-function testMdr009Through030RemainUnchanged() {
+function testMdr010Through030RemainUnchanged() {
   const baseline = loadBaselineFixture();
-  const expectedIds = Array.from({ length: 22 }, (_, i) => `MDR-${String(i + 9).padStart(3, "0")}`);
+  const expectedIds = Array.from({ length: 21 }, (_, i) => `MDR-${String(i + 10).padStart(3, "0")}`);
   for (const id of expectedIds) {
     const baselineRecord = baseline.find((r: { internalId: string }) => r.internalId === id);
     const currentRecord = REGISTER.find((r) => r.internalId === id);
@@ -83,7 +93,9 @@ function testMdr009Through030RemainUnchanged() {
       `${id} changed during the MDR-008 audit — it must remain Stage-3A transcription-only`,
     );
   }
-  console.log("✓ MDR-009 through MDR-030 remain unchanged (22 records checked)");
+  console.log(
+    "✓ MDR-010 through MDR-030 remain unchanged (21 records checked; MDR-009 excluded — legitimately researched in a later Stage 3B pass, see MDR-009's own dedicated test)",
+  );
 }
 
 function testMdr008ProtectedTranscriptionFieldsUnchanged() {
@@ -544,7 +556,7 @@ function testAuditReportDoesNotOverstateAuthenticityCertaintyOrNonExistence() {
 function runAll() {
   testOnlyMdr008ResearchFieldsChanged();
   testMdr001Through007RemainUnchangedFromCheckpoint();
-  testMdr009Through030RemainUnchanged();
+  testMdr010Through030RemainUnchanged();
   testMdr008ProtectedTranscriptionFieldsUnchanged();
   testNoClauseMapFileWasNeeded();
   testNoArabicWasAlteredOrDuplicated();
