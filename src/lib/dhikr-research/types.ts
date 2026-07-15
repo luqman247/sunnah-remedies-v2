@@ -32,7 +32,13 @@ export type ContentClassification =
 export type MorningSpecificStatus = "uncertain" | "morning-only" | "evening-only" | "morning-and-evening" | "not-time-specific";
 
 /** Where source research for this record currently stands. */
-export type SourceResearchStatus = "not-started" | "in-progress" | "sourced" | "verified" | "disputed";
+export type SourceResearchStatus =
+  | "not-started"
+  | "in-progress"
+  | "sourced"
+  | "scholarly-review-required"
+  | "verified"
+  | "disputed";
 
 /** Whether the transcribed Arabic wording has been checked against a verified primary-source wording. */
 export type WordingMatchStatus =
@@ -40,6 +46,7 @@ export type WordingMatchStatus =
   | "exact-match"
   | "minor-orthographic-variation"
   | "recognised-narration-variant"
+  | "composite-of-multiple-sources"
   | "materially-different";
 
 /** Whether this record may be imported into the approved dhikrItem schema. */

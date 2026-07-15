@@ -67,8 +67,17 @@ function testOriginalAndFullArabicTextNonEmptyForEveryRecord() {
   console.log("✓ originalDocumentText and fullArabicText are non-empty for every record");
 }
 
+// Records whose sourceResearchStatus is still "not-started" have had no Stage
+// 3B (or later) research pass applied — these fields must remain fully
+// unclaimed for them. A record that has moved past "not-started" (currently
+// only MDR-001, researched in Stage 3B) is deliberately excluded here and is
+// covered instead by its own dedicated audit test file, e.g.
+// tests/dhikr/dhikr-source-register-mdr-001-audit.test.ts.
+const UNRESEARCHED_RECORDS = REGISTER.filter((r) => r.sourceResearchStatus === "not-started");
+
 function testNoRecordContainsASourceReferenceYet() {
-  for (const record of REGISTER) {
+  assert(UNRESEARCHED_RECORDS.length > 0, "Expected at least one unresearched record");
+  for (const record of UNRESEARCHED_RECORDS) {
     assert(record.primaryCollection === "", `primaryCollection is populated for ${record.internalId}`);
     assert(record.primaryReference === "", `primaryReference is populated for ${record.internalId}`);
     assert(
@@ -79,16 +88,18 @@ function testNoRecordContainsASourceReferenceYet() {
     assert(record.narrator === "", `narrator is populated for ${record.internalId}`);
     assert(record.sourceArabicWording === "", `sourceArabicWording is populated for ${record.internalId}`);
   }
-  console.log("✓ no record contains a source reference yet");
+  console.log(
+    `✓ no unresearched record (${UNRESEARCHED_RECORDS.length}/${REGISTER.length}) contains a source reference yet`,
+  );
 }
 
 function testNoRecordContainsAGradingYet() {
-  for (const record of REGISTER) {
+  for (const record of UNRESEARCHED_RECORDS) {
     assert(record.hadithGrading === "", `hadithGrading is populated for ${record.internalId}`);
     assert(record.gradingAuthority === "", `gradingAuthority is populated for ${record.internalId}`);
     assert(record.gradingNotes === "", `gradingNotes is populated for ${record.internalId}`);
   }
-  console.log("✓ no record contains a grading yet");
+  console.log(`✓ no unresearched record (${UNRESEARCHED_RECORDS.length}/${REGISTER.length}) contains a grading yet`);
 }
 
 function testNoRecordClaimsScholarlyApproval() {
@@ -128,8 +139,13 @@ function testNoRecordIsImportReady() {
 }
 
 function testSourceDocumentRepetitionAnnotationsDoNotCountAsEvidence() {
-  const withVisibleRepetition = REGISTER.filter((r) => r.repetitionCount !== undefined);
-  assert(withVisibleRepetition.length > 0, "Expected at least one record with a visible repetition count");
+  // Scoped to unresearched records only. A record that has since been
+  // researched (currently only MDR-001) may legitimately have cited
+  // repetitionEvidence — that is verified separately, alongside proof that
+  // the record still remains blocked overall, in
+  // tests/dhikr/dhikr-source-register-mdr-001-audit.test.ts.
+  const withVisibleRepetition = UNRESEARCHED_RECORDS.filter((r) => r.repetitionCount !== undefined);
+  assert(withVisibleRepetition.length > 0, "Expected at least one unresearched record with a visible repetition count");
   for (const record of withVisibleRepetition) {
     assert(
       record.repetitionEvidence === "",
@@ -142,7 +158,7 @@ function testSourceDocumentRepetitionAnnotationsDoNotCountAsEvidence() {
     );
   }
   console.log(
-    `✓ source-document repetition annotations (${withVisibleRepetition.length} records) do not count as evidence`,
+    `✓ source-document repetition annotations on unresearched records (${withVisibleRepetition.length} records) do not count as evidence`,
   );
 }
 

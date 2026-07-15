@@ -81,6 +81,8 @@ function unclaimedResearchFields(): Pick<
 
 export const MORNING_DHIKR_SOURCE_REGISTER: DhikrSourceResearchRecord[] = [
   {
+    // Stage 3B source audit — see docs/dhikr/research/MDR-001-source-audit.md
+    // for the full research trail behind every field below.
     sequenceNumber: 1,
     internalId: "MDR-001",
     openingArabicWords: "آيَة ٱلْكُرْسِيّ",
@@ -91,8 +93,52 @@ export const MORNING_DHIKR_SOURCE_REGISTER: DhikrSourceResearchRecord[] = [
     transcriptionNotes:
       "Document lists this entry as a reference to Ayat al-Kursi plus the three Quls by name, each annotated 3x, rather than transcribing their full Qur'anic text inline. fullArabicText reproduces exactly what the source document contains (the reference line), not the full Qur'anic text of the four items referenced.",
     proposedCategory: "",
-    ...unclaimedResearchFields(),
+    contentClassification: "composite-text",
+    morningSpecificStatus: "uncertain",
+    sourceResearchStatus: "scholarly-review-required",
+    primaryCollection: "Sunan Abi Dawud; Jami' at-Tirmidhi (three-Quls component; primary pages not yet directly inspected — see usulAiResearchNotes and the audit report's evidence-quality table)",
+    primaryReference:
+      "Abu Dawud 5082; Tirmidhi 3575 — three-Quls component only (al-Ikhlas, al-Falaq, an-Nas, 3x morning and evening), as reported by search-indexed sunnah.com content and independently corroborated by islamqa.info; the sunnah.com pages themselves were not directly inspected in this environment (HTTP 403). No primary reference is asserted for the whole combined entry; see secondaryReferences for the separately-sourced Ayat al-Kursi component. Manual verification against the primary pages is still required — see docs/dhikr/research/MDR-001-source-audit.md.",
+    secondaryReferences: [
+      "Component: Ayat al-Kursi (Qur'an 2:255) paired with the opening of Surah al-Mu'min/Ghafir (40:1-3) as a morning-recited pair — Jami' at-Tirmidhi 2879, narrated by Abu Hurairah, reported as graded da'if (weak) by Imam at-Tirmidhi himself (directly inspected via islamqa.org's citation page, not sunnah.com's own page); a parallel version with a weak chain is reported as recorded by Ibn al-Sunni, 'Amal al-Yawm wal-Layla, no. 77 — this specific citation was not independently located or inspected and its exact location remains unverified. This is a different hadith from the three-Quls citation above and does not involve the three Quls at all.",
+      "Related but distinct: Sahih al-Bukhari 5010, narrated by Abu Hurairah (the 'thief who was Shaytan' narration) — reported as sahih, instructing recitation of Ayat al-Kursi at bedtime for protection through the night 'until the morning', not as a morning-recited item. This is contextual evidence only for why compilations commonly place Ayat al-Kursi near morning/evening adhkar — it does not establish a morning repetition and is not evidence for MDR-001's specific grouping.",
+      "Component: al-Ikhlas (Qur'an 112), al-Falaq (Qur'an 113), an-Nas (Qur'an 114) — surah identity and opening-verse Arabic text directly inspected on quran.com (quran.com/112, /113, /114); Ayat al-Kursi (Qur'an 2:255) opening Arabic text likewise directly inspected on quran.com/2/255.",
+    ],
+    narrator:
+      "Abdullah ibn Khubayb (three-Quls component, Abu Dawud 5082/Tirmidhi 3575, per indirect corroboration); Abu Hurairah (Ayat al-Kursi + al-Mu'min component, Tirmidhi 2879, weak — see secondaryReferences). Narrator names are as reported by secondary corroboration, not yet confirmed against a directly-inspected primary isnad.",
+    sourceArabicWording:
+      "",
+    wordingMatchStatus: "composite-of-multiple-sources",
+    hadithGrading: "",
+    gradingAuthority: "",
+    gradingNotes:
+      "Left empty at the record level: this record combines two components with different, and differently-verified, grading claims, so no single value can honestly represent it. As reported (not yet directly inspected on their primary sunnah.com pages): the three-Quls component is graded hasan sahih gharib by at-Tirmidhi, with its isnad separately reported as graded sahih by Imam an-Nawawi (al-Adhkar, p.107); the Ayat al-Kursi + al-Mu'min component's only located morning-specific hadith (Tirmidhi 2879) is reported graded da'if (weak) by at-Tirmidhi himself. Provisional metadata — verify against the original collection page or edition. See primaryReference/secondaryReferences and the audit report's per-narration grading table.",
     repetitionCount: 3,
+    repetitionEvidence:
+      "Applies only to the al-Ikhlas/al-Falaq/an-Nas component, not to Ayat al-Kursi: Abu Dawud 5082 and Tirmidhi 3575 are reported (via secondary corroboration, not yet direct inspection of the primary pages) to state the Prophet ﷺ instructed reciting these three surahs three times ('thalathan') in the evening and in the morning. The source document attaches no repetition marker to Ayat al-Kursi itself (checked directly against this record's own originalDocumentText), and no repetition-count evidence for Ayat al-Kursi was located in this stage. This repetition count must not be extended to Ayat al-Kursi.",
+    virtueOrRewardClaim:
+      "Three-Quls component: reported as 'they will suffice you against all things' (kafathu min kulli shay'), stated within the same hadith as the repetition instruction. Ayat al-Kursi + al-Mu'min component: reported that recitation 'in the morning' brings protection 'until the evening' (and vice versa for evening recitation), stated within a hadith reported graded weak.",
+    virtueEvidence:
+      "Three-Quls claim: Abu Dawud 5082; Tirmidhi 3575 (reported hasan sahih gharib / sahih isnad per an-Nawawi, via secondary corroboration) — evidence located, primary-page inspection still outstanding. Ayat al-Kursi + al-Mu'min claim: Tirmidhi 2879 (reported da'if per at-Tirmidhi); parallel weak-chain version reported in Ibn al-Sunni, 'Amal al-Yawm wal-Layla no. 77, location unverified — evidence located but weak, not sahih or hasan, and not yet directly inspected.",
+    sourceUrls: [
+      "https://sunnah.com/abudawud:5082",
+      "https://sunnah.com/tirmidhi:3575",
+      "https://sunnah.com/tirmidhi:2879",
+      "https://sunnah.com/bukhari:5010",
+      "https://islamqa.info/en/answers/126587",
+      "https://islamqa.org/hanafi/hadithanswers/122483/reciting-the-beginning-verses-of-surah-mumin-and-ayatul-kursi/",
+      "https://quran.com/2/255",
+      "https://quran.com/112",
+      "https://quran.com/113",
+      "https://quran.com/114",
+    ],
+    usulAiResearchNotes:
+      "Search expressions used on usul.ai (https://usul.ai): 'Ayat al-Kursi morning evening', and a site-restricted web search 'site:usul.ai al-Mu'awwidhatayn OR Ikhlas OR Falaq OR Nas morning evening'. No specific book, volume/page, or hadith number was located for this combination via either query — results surfaced whole classical texts and commentaries (tafsir, fiqh works, unrelated titles) rather than an individually-citable hadith entry comparable to sunnah.com's per-hadith pages. Arabic wording was not directly inspected via Usul.ai in this pass. Usul.ai's more targeted features (its AI chat / 'Find Hadith' filter) were not used interactively in this pass and remain untried. Direct WebFetch access to sunnah.com's own hadith pages returned HTTP 403 in this environment for every URL attempted (abudawud:5082, tirmidhi:3575, tirmidhi:2879, hisn:87, bulugh/2/220); hadith numbers, narrators, and gradings above are as reported via Google-indexed search-result snippets of sunnah.com plus islamqa.info's and islamqa.org's independent citation of the same hadith numbers and gradings (islamqa.org's page was directly fetched and its full quoted text inspected; islamqa.info's page was likewise directly fetched). Remaining for a human researcher: open the sunnah.com pages for Abu Dawud 5082, Tirmidhi 3575, and Tirmidhi 2879 directly; locate and inspect an actual edition or Usul.ai work-location for the Ibn al-Sunni no. 77 citation, which was never independently located in this pass; and use Usul.ai's interactive search/chat tooling to check for classical commentary or variant narrations beyond what is recorded here.",
+    scholarlyReviewer: "",
+    scholarlyDecision: "pending",
+    editorialNotes:
+      "MDR-001 is a compilation-style reference list (Ayat al-Kursi + three Quls), not itself the recited Arabic text of any of the four items. It combines two components with different, unequal degrees of source verification, one of which (the three-Quls component) is strongly reported-graded and the other (Ayat al-Kursi's morning pairing) weakly reported-graded — no primary page for either has yet been directly inspected in this environment. No single narration containing the full combined MDR-001 entry was located during this audit; the evidence located supports the components separately, not the combined entry as one narration. Recommend scholarly review decide whether to: (a) keep as one composite register entry with per-component sourcing as recorded here, (b) split into separate entries once mapped into dhikrItem, or (c) drop the Ayat al-Kursi reference from this entry given its weak morning-specific sourcing, retaining only the well-graded three-Quls instruction — after manual primary-source verification (see docs/dhikr/research/MDR-001-source-audit.md, 'Manual primary-source verification required').",
+    importStatus: "research-only",
   },
   {
     sequenceNumber: 2,
