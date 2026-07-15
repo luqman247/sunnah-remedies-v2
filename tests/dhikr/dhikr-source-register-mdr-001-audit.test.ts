@@ -30,19 +30,20 @@ function loadBaselineFixture() {
 }
 
 function testOnlyMdr001Changed() {
-  // MDR-002 is excluded from this comparison: it was legitimately researched
-  // in a later stage (checkpoint 8e2c46d onward) and is no longer expected to
-  // match the pre-research Stage 3A baseline. That later change is verified
-  // by its own dedicated file, tests/dhikr/dhikr-source-register-mdr-002-audit.test.ts,
-  // against a fixture captured at checkpoint 8e2c46d. This file's job is only
-  // to confirm MDR-001's own Stage 3B research, and that MDR-003 through
+  // MDR-002 and MDR-003 are excluded from this comparison: both were
+  // legitimately researched in later stages and are no longer expected to
+  // match the pre-research Stage 3A baseline. Those later changes are
+  // verified by their own dedicated files (dhikr-source-register-mdr-002-audit.test.ts,
+  // dhikr-source-register-mdr-003-audit.test.ts). This file's job is only
+  // to confirm MDR-001's own Stage 3B research, and that MDR-004 through
   // MDR-030 (still untouched since Stage 3A) remain exactly as transcribed.
   assert(MDR_001.internalId === "MDR-001", "REGISTER[0] is not MDR-001");
-  const baseline = loadBaselineFixture().filter((r: { internalId: string }) => r.internalId !== "MDR-002");
-  const currentTail = REGISTER.slice(1).filter((r) => r.internalId !== "MDR-002");
+  const excluded = new Set(["MDR-002", "MDR-003"]);
+  const baseline = loadBaselineFixture().filter((r: { internalId: string }) => !excluded.has(r.internalId));
+  const currentTail = REGISTER.slice(1).filter((r) => !excluded.has(r.internalId));
   assert(
     currentTail.length === baseline.length,
-    `Expected ${baseline.length} records after MDR-001 (excluding MDR-002), found ${currentTail.length}`,
+    `Expected ${baseline.length} records after MDR-001 (excluding MDR-002/MDR-003), found ${currentTail.length}`,
   );
   for (let i = 0; i < currentTail.length; i++) {
     assert(

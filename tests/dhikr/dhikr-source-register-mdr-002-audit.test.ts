@@ -38,12 +38,16 @@ function loadAuditReport(): string {
 }
 
 function testOnlyMdr002ChangedInThisStage() {
+  // MDR-003 is excluded from this comparison: it was legitimately researched
+  // in a later stage and is no longer expected to match this checkpoint's
+  // baseline. That later change is verified by its own dedicated file,
+  // tests/dhikr/dhikr-source-register-mdr-003-audit.test.ts.
   assert(MDR_002.internalId === "MDR-002", "REGISTER[1] is not MDR-002");
-  const baseline = loadBaselineFixture();
-  const otherRecords = REGISTER.filter((r) => r.internalId !== "MDR-002");
+  const baseline = loadBaselineFixture().filter((r: { internalId: string }) => r.internalId !== "MDR-003");
+  const otherRecords = REGISTER.filter((r) => r.internalId !== "MDR-002" && r.internalId !== "MDR-003");
   assert(
     otherRecords.length === baseline.length,
-    `Expected ${baseline.length} records besides MDR-002, found ${otherRecords.length}`,
+    `Expected ${baseline.length} records besides MDR-002/MDR-003, found ${otherRecords.length}`,
   );
   for (let i = 0; i < otherRecords.length; i++) {
     assert(
