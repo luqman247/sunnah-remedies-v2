@@ -38,15 +38,17 @@ function loadAuditReport(): string {
 }
 
 function testOnlyMdr005ResearchFieldsChanged() {
-  // MDR-006 is excluded from this comparison: it was legitimately researched
-  // in a later stage and is no longer expected to match this checkpoint's
-  // baseline. That later change is verified by its own dedicated file,
-  // tests/dhikr/dhikr-source-register-mdr-006-audit.test.ts.
-  const baseline = loadBaselineFixture().filter((r: { internalId: string }) => r.internalId !== "MDR-006");
-  const otherRecords = REGISTER.filter((r) => r.internalId !== "MDR-005" && r.internalId !== "MDR-006");
+  // MDR-006 and MDR-007 are excluded from this comparison: each was
+  // legitimately researched in a later stage and is no longer expected to
+  // match this checkpoint's baseline. Those later changes are verified by
+  // their own dedicated files, tests/dhikr/dhikr-source-register-mdr-006-audit.test.ts
+  // and -mdr-007-audit.test.ts.
+  const excludedIds = new Set(["MDR-006", "MDR-007"]);
+  const baseline = loadBaselineFixture().filter((r: { internalId: string }) => !excludedIds.has(r.internalId));
+  const otherRecords = REGISTER.filter((r) => r.internalId !== "MDR-005" && !excludedIds.has(r.internalId));
   assert(
     otherRecords.length === baseline.length,
-    `Expected ${baseline.length} records besides MDR-005/MDR-006, found ${otherRecords.length}`,
+    `Expected ${baseline.length} records besides MDR-005/MDR-006/MDR-007, found ${otherRecords.length}`,
   );
   for (let i = 0; i < otherRecords.length; i++) {
     assert(
@@ -55,7 +57,7 @@ function testOnlyMdr005ResearchFieldsChanged() {
     );
   }
   console.log(
-    "✓ only MDR-005 changed in this stage; MDR-001 through MDR-004 and MDR-007 through MDR-030 match checkpoint 3729062 exactly (MDR-006 verified separately)",
+    "✓ only MDR-005 changed in this stage; MDR-001 through MDR-004 and MDR-008 through MDR-030 match checkpoint 3729062 exactly (MDR-006 and MDR-007 verified separately)",
   );
 }
 
@@ -73,12 +75,12 @@ function testMdr001Through004RemainUnchangedFromCheckpoint() {
   console.log("✓ MDR-001 through MDR-004 remain unchanged from checkpoint 3729062");
 }
 
-function testMdr007Through030RemainUnchanged() {
-  // MDR-006 is excluded: it was legitimately researched in a later stage
-  // (verified separately by dhikr-source-register-mdr-006-audit.test.ts
-  // against its own later checkpoint baseline).
+function testMdr008Through030RemainUnchanged() {
+  // MDR-006 and MDR-007 are excluded: each was legitimately researched in
+  // a later stage (verified separately by their own dedicated test files
+  // against their own later checkpoint baselines).
   const baseline = loadBaselineFixture();
-  const expectedIds = Array.from({ length: 24 }, (_, i) => `MDR-${String(i + 7).padStart(3, "0")}`);
+  const expectedIds = Array.from({ length: 23 }, (_, i) => `MDR-${String(i + 8).padStart(3, "0")}`);
   for (const id of expectedIds) {
     const baselineRecord = baseline.find((r: { internalId: string }) => r.internalId === id);
     const currentRecord = REGISTER.find((r) => r.internalId === id);
@@ -88,7 +90,7 @@ function testMdr007Through030RemainUnchanged() {
       `${id} changed during the MDR-005 audit — it must remain Stage-3A transcription-only`,
     );
   }
-  console.log("✓ MDR-007 through MDR-030 remain unchanged (24 records checked; MDR-006 verified separately)");
+  console.log("✓ MDR-008 through MDR-030 remain unchanged (23 records checked; MDR-006 and MDR-007 verified separately)");
 }
 
 function testMdr005ProtectedTranscriptionFieldsUnchanged() {
@@ -553,7 +555,7 @@ function testAuditReportDoesNotOverstateAuthenticityCertaintyOrNonExistence() {
 function runAll() {
   testOnlyMdr005ResearchFieldsChanged();
   testMdr001Through004RemainUnchangedFromCheckpoint();
-  testMdr007Through030RemainUnchanged();
+  testMdr008Through030RemainUnchanged();
   testMdr005ProtectedTranscriptionFieldsUnchanged();
   testClauseIdsAreUniqueAndOrdered();
   testClauseReconstructionReproducesMdr005Exactly();
