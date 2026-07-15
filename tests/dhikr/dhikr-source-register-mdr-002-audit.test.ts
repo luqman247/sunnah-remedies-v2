@@ -43,8 +43,9 @@ function testOnlyMdr002ChangedInThisStage() {
   // baseline. That later change is verified by its own dedicated file,
   // tests/dhikr/dhikr-source-register-mdr-003-audit.test.ts.
   assert(MDR_002.internalId === "MDR-002", "REGISTER[1] is not MDR-002");
-  const baseline = loadBaselineFixture().filter((r: { internalId: string }) => r.internalId !== "MDR-003");
-  const otherRecords = REGISTER.filter((r) => r.internalId !== "MDR-002" && r.internalId !== "MDR-003");
+  const excludedIds = new Set(["MDR-003", "MDR-004"]);
+  const baseline = loadBaselineFixture().filter((r: { internalId: string }) => !excludedIds.has(r.internalId));
+  const otherRecords = REGISTER.filter((r) => r.internalId !== "MDR-002" && !excludedIds.has(r.internalId));
   assert(
     otherRecords.length === baseline.length,
     `Expected ${baseline.length} records besides MDR-002/MDR-003, found ${otherRecords.length}`,

@@ -38,7 +38,7 @@ function testOnlyMdr001Changed() {
   // to confirm MDR-001's own Stage 3B research, and that MDR-004 through
   // MDR-030 (still untouched since Stage 3A) remain exactly as transcribed.
   assert(MDR_001.internalId === "MDR-001", "REGISTER[0] is not MDR-001");
-  const excluded = new Set(["MDR-002", "MDR-003"]);
+  const excluded = new Set(["MDR-002", "MDR-003", "MDR-004"]);
   const baseline = loadBaselineFixture().filter((r: { internalId: string }) => !excluded.has(r.internalId));
   const currentTail = REGISTER.slice(1).filter((r) => !excluded.has(r.internalId));
   assert(
