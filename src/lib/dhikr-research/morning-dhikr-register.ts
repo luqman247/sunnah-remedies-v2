@@ -583,7 +583,38 @@ export const MORNING_DHIKR_SOURCE_REGISTER: DhikrSourceResearchRecord[] = [
     transcriptionStatus: "exact",
     transcriptionNotes: "",
     proposedCategory: "",
-    ...unclaimedResearchFields(),
+    contentClassification: "morning-and-evening",
+    morningSpecificStatus: "morning-and-evening",
+    sourceResearchStatus: "in-progress",
+    primaryCollection:
+      "Not directly fetched in this streamlined batch pass — evidence is WebSearch synthesis only (an AI-generated summary drawing on multiple indexed pages, not an inspected primary page). WebSearch synthesis consistently reports this as a hadith of 'Abdullah ibn Ghannam al-Bayadi, reported by Abu Dawud and by al-Nasa'i in 'Amal al-Yawm wa'l-Layla, with wording variation noted between the two. This must not be treated as a directly inspected primary-collection page.",
+    primaryReference:
+      "Reported Abu Dawud / al-Nasa'i ('Amal al-Yawm wa'l-Layla) reference for 'Abdullah ibn Ghannam al-Bayadi's report; exact hadith number not confirmed in this pass (no direct fetch performed).",
+    secondaryReferences: [
+      "dorar.net (Mawsoah Hadithiyah, title only — 'محدث: الألباني، مصدر: الكلم الطيب') — page itself not fetched in this pass; recorded as a title-level lead naming al-Albani as the grading scholar cited by that compilation, exact grading word not confirmed.",
+    ],
+    narrator: "Reported: 'Abdullah ibn Ghannam al-Bayadi, per WebSearch synthesis of multiple indexed pages; not independently verified against a directly fetched primary or secondary page in this pass.",
+    sourceArabicWording:
+      "Not obtained from a directly fetched page in this pass. WebSearch synthesis reports the hadith's own frame as 'man qala hina yusbihu... wa man qala mithla dhalika hina yumsi' (whoever says it upon waking has fulfilled the gratitude of his day; whoever says the like upon retiring has fulfilled the gratitude of his night) — a wording-level morning/evening alternation, not merely an external condition. Exact evening-form wording was not obtained.",
+    wordingMatchStatus: "unresolved",
+    hadithGrading:
+      "Reported cited by al-Albani in al-Kalim al-Tayyib per a dorar.net title only (page not fetched, exact grading word not confirmed). Not independently verified in this pass.",
+    gradingAuthority: "Reportedly al-Albani (al-Kalim al-Tayyib), per an unfetched dorar.net title only — not independently confirmed.",
+    gradingNotes:
+      "No wording comparison was performed against a directly fetched primary text in this pass; MDR-010's own wording has not been checked character-for-character against any inspected source.",
+    repetitionCount: undefined,
+    repetitionEvidence: "",
+    virtueOrRewardClaim:
+      "Reportedly: whoever says it upon waking has fulfilled the gratitude (shukr) owed for his day; whoever says the like upon retiring has fulfilled the gratitude owed for his night. Both conditions (timing and the 'fulfilled gratitude' outcome) preserved together; not shortened to an unconditional 'gratitude guaranteed' claim.",
+    virtueEvidence:
+      "Narration-attached evidence, not part of MDR-010's own transcribed text — must not be inserted into fullArabicText/originalDocumentText. Sourced from WebSearch synthesis only in this pass, not a directly fetched primary or secondary page; treated as a reported claim pending direct-source confirmation.",
+    sourceUrls: [],
+    usulAiResearchNotes: "Not separately searched in this streamlined batch pass; research relied on WebSearch synthesis only, per the batch's efficiency limits.",
+    scholarlyReviewer: "",
+    scholarlyDecision: "pending",
+    editorialNotes:
+      "MDR-010 (135 characters) was not assumed to be one hadith, Prophetic, authentic, or morning-and-evening; each was checked against WebSearch synthesis only (no direct fetch performed in this streamlined batch pass, consistent with the batch's efficiency limits). Not segmented — one continuous conditional-declaration sentence, no source plurality indicated. Checked against MDR-009 (unrelated testimony formula) and MDR-011 (unrelated 'afiya petition); not merged with either. sourceResearchStatus is 'in-progress', not 'scholarly-review-required', specifically because no primary or secondary page was directly fetched in this pass — only WebSearch-synthesis-level evidence was obtained, which per this batch's own evidence rules ('search snippets may identify leads but are not direct source inspection') does not meet the bar for a more resolved status. Recommend: directly fetch a primary-collection hosting of Abu Dawud or al-Nasa'i's 'Amal al-Yawm wa'l-Layla for this specific report; confirm the exact evening-form wording; confirm al-Albani's exact grading wording in al-Kalim al-Tayyib.",
+    importStatus: "research-only",
   },
   {
     sequenceNumber: 11,
@@ -597,8 +628,36 @@ export const MORNING_DHIKR_SOURCE_REGISTER: DhikrSourceResearchRecord[] = [
     transcriptionStatus: "exact",
     transcriptionNotes: "",
     proposedCategory: "",
-    ...unclaimedResearchFields(),
+    contentClassification: "morning-and-evening",
+    morningSpecificStatus: "morning-and-evening",
+    sourceResearchStatus: "in-progress",
+    primaryCollection:
+      "Not directly fetched in this streamlined batch pass — evidence is WebSearch synthesis only, not an inspected primary page. WebSearch synthesis consistently and specifically reports: 'Abd al-Rahman ibn Abi Bakrah asked his father Abu Bakrah why he heard him supplicating every morning with these words; Abu Bakrah answered that he heard the Messenger of Allah ﷺ supplicate with them and wished to follow his sunnah. Reported by Abu Dawud, al-Nasa'i (al-Kubra), Ahmad, and al-Bukhari in al-Adab al-Mufrad.",
+    primaryReference: "Reportedly Sunan Abi Dawud 5090; Musnad Ahmad 20430; Musnad al-Tayalisi 909 — per WebSearch synthesis, not independently confirmed against a directly fetched page.",
+    secondaryReferences: [
+      "dorar.net (Mawsoah Hadithiyah, sharh 28806 and 70157, titles only, not fetched) — both attribute the report to Abu Bakrah Nufay' ibn al-Harith, graded by al-Albani in Sahih Abi Dawud / Tamam al-Minnah per the titles; exact grading word not confirmed since the pages were not fetched.",
+    ],
+    narrator:
+      "Reported: Abu Bakrah Nufay' ibn al-Harith, describing the Prophet's ﷺ own regular practice, transmitted via his son 'Abd al-Rahman ibn Abi Bakrah — per WebSearch synthesis; not independently re-verified against a directly fetched page in this pass.",
+    sourceArabicWording:
+      "Not obtained from a directly fetched page in this pass. WebSearch synthesis reports the hadith's own wording as explicitly instructing the formula be said three times upon entering morning and three times upon entering evening ('thalathan hina tusbihu wa thalathan hina tumsi') — a repetition-and-timing instruction stated within the narration's own reported text, not merely a source-document annotation.",
+    wordingMatchStatus: "unresolved",
+    hadithGrading: "Reportedly 'hasan or close to it' per WebSearch synthesis of secondary discussion; not independently verified against a directly fetched page in this pass.",
+    gradingAuthority: "Not independently confirmed in this pass — reported via WebSearch synthesis only, exact authority and wording not obtained from a directly fetched page.",
+    gradingNotes:
+      "No wording comparison was performed against a directly fetched primary text in this pass; MDR-011's own wording (including the 'لَا إِلَهَ إِلَّا أَنْتَ' and 'الْكُفْرِ وَالْفَقْرِ' / 'عَذَابِ الْقَبْرِ' clauses) has not been checked character-for-character against any inspected source.",
     repetitionCount: 3,
+    repetitionEvidence:
+      "The source-document '3x' annotation is directly consistent with WebSearch synthesis's report that the underlying narration's own wording explicitly instructs three recitations upon entering morning and three upon entering evening — this is a narration-level repetition instruction, not merely an editorial display choice, though it was not confirmed against a directly fetched primary page in this pass.",
+    virtueOrRewardClaim: "",
+    virtueEvidence: "",
+    sourceUrls: [],
+    usulAiResearchNotes: "Not separately searched in this streamlined batch pass; research relied on WebSearch synthesis only, per the batch's efficiency limits.",
+    scholarlyReviewer: "",
+    scholarlyDecision: "pending",
+    editorialNotes:
+      "MDR-011 (265 characters) was not assumed to be one hadith, Prophetic, authentic, or correctly repeated three times; each was checked against WebSearch synthesis only (no direct fetch performed in this streamlined batch pass). Not segmented — five parallel 'Allahumma 'afini/a'udhu' clauses drawn from one identified narration, no source plurality indicated. Checked against MDR-010 and MDR-012; unrelated to both, not merged. repetitionCount (3) is retained because WebSearch synthesis specifically reports the underlying narration's own wording states the three-times-morning/three-times-evening instruction directly, not merely a source-document display convention — this is a stronger, narration-internal basis than several other records in this batch, though still not confirmed via a directly fetched page. sourceResearchStatus is 'in-progress', not 'scholarly-review-required', because no page was directly fetched in this pass. No explicit reward/virtue statement beyond the petition itself was found; virtueOrRewardClaim is left empty rather than inferred. Recommend: directly fetch Sunan Abi Dawud 5090 or an equivalent primary hosting to confirm exact wording and the precise three-times instruction's phrasing.",
+    importStatus: "research-only",
   },
   {
     sequenceNumber: 12,
@@ -612,7 +671,32 @@ export const MORNING_DHIKR_SOURCE_REGISTER: DhikrSourceResearchRecord[] = [
     transcriptionStatus: "exact",
     transcriptionNotes: "",
     proposedCategory: "",
-    ...unclaimedResearchFields(),
+    contentClassification: "general-prophetic-supplication",
+    morningSpecificStatus: "uncertain",
+    sourceResearchStatus: "in-progress",
+    primaryCollection:
+      "Not directly fetched in this streamlined batch pass — evidence is WebSearch synthesis only, not an inspected primary page. WebSearch synthesis consistently and specifically attributes this exact eight-refuge formula (hamm/hazan, 'ajz/kasal, jubn/bukhl, and a debt/men pairing) to Sahih al-Bukhari, hadith 6363, narrated by Anas ibn Malik, describing it as the Prophet's ﷺ frequent regular practice.",
+    primaryReference: "Reportedly Sahih al-Bukhari, hadith 6363 — per WebSearch synthesis, not independently confirmed against a directly fetched page in this pass.",
+    secondaryReferences: [],
+    narrator: "Reported: Anas ibn Malik, describing the Prophet's ﷺ own frequent practice — per WebSearch synthesis; not independently re-verified against a directly fetched page in this pass.",
+    sourceArabicWording:
+      "Not obtained from a directly fetched page in this pass. WebSearch synthesis's own reported wording for the final pair reads 'وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ' (the weight/burden of debt, and being overpowered by men); MDR-012's own transcription instead reads 'وَغَلَبَةِ الدَّيْنِ وَقَهْرِ الرِّجَالِ' (being overcome by debt, and being subdued by men) — a genuine two-word difference on this specific pairing. This is recorded as an observed difference between MDR-012's text and WebSearch-synthesis-reported wording, not confirmed against any directly fetched or raw source, and not attributed to a recognised variant without further evidence.",
+    wordingMatchStatus: "unresolved",
+    hadithGrading: "Reportedly Sahih (Sahih al-Bukhari's own canonical inclusion) — per WebSearch synthesis, not independently confirmed against a directly fetched page in this pass.",
+    gradingAuthority: "Sahih al-Bukhari's own canonical status, as reported by WebSearch synthesis; not independently verified in this pass.",
+    gradingNotes:
+      "This grading, if the Bukhari 6363 identification is correct, would apply to the identified narration generally, not to MDR-012's exact letter-forms — the دَيْن/رِجَال wording pair specifically remains an open, unresolved comparison point (see sourceArabicWording), not covered by this grading without further verification.",
+    repetitionCount: undefined,
+    repetitionEvidence: "",
+    virtueOrRewardClaim: "",
+    virtueEvidence: "",
+    sourceUrls: [],
+    usulAiResearchNotes: "Not separately searched in this streamlined batch pass; research relied on WebSearch synthesis only, per the batch's efficiency limits.",
+    scholarlyReviewer: "",
+    scholarlyDecision: "pending",
+    editorialNotes:
+      "MDR-012 (202 characters) was not assumed to be one hadith, Prophetic, or authentic; checked against WebSearch synthesis only (no direct fetch performed). Not segmented — four parallel refuge-seeking clauses drawn from one identified narration, no source plurality indicated. Checked against MDR-011 and MDR-013 and found distinct from both (MDR-013 in particular has a different, non-overlapping refuge-item combination — kasal/harem/su' al-kibar/fitnat al-dunya/'adhab al-qabr — and is treated as a separate narration, not a continuation or duplicate of MDR-012). The central finding is a genuine two-word wording difference on the final pairing ('غَلَبَةِ الدَّيْنِ وَقَهْرِ الرِّجَالِ' in MDR-012 versus WebSearch-synthesis-reported 'ضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ') — recorded precisely, not smoothed over or assumed to be a recognised variant. sourceResearchStatus is 'in-progress' because no page was directly fetched in this pass and the wording difference remains unconfirmed against any inspected source. Recommend: directly fetch a primary-collection hosting of Sahih al-Bukhari 6363 to confirm the exact دَيْن/رِجَال wording and resolve whether MDR-012's pairing is a documented variant, an edition difference, or a transcription drift.",
+    importStatus: "research-only",
   },
   {
     sequenceNumber: 13,
@@ -624,7 +708,33 @@ export const MORNING_DHIKR_SOURCE_REGISTER: DhikrSourceResearchRecord[] = [
     transcriptionStatus: "exact",
     transcriptionNotes: "",
     proposedCategory: "",
-    ...unclaimedResearchFields(),
+    contentClassification: "general-prophetic-supplication",
+    morningSpecificStatus: "uncertain",
+    sourceResearchStatus: "in-progress",
+    primaryCollection:
+      "Not directly fetched in this streamlined batch pass — evidence is WebSearch synthesis only, not an inspected primary page. WebSearch synthesis reports a Sahih Muslim hadith (narrator and exact hadith number not confirmed in this pass) with the refuge items 'al-kasal, al-haram, su' al-kibr, and miserliness' followed by refuge from the torment of the grave and the trials of life and death — but this reported combination does not exactly match MDR-013's own combination (kasal, haram, su' al-kibar, fitnat al-dunya, 'adhab al-qabr specifically). A separate Sahih al-Bukhari version was also found (dorar.net sharh 12527, title/snippet only, attributed to Anas ibn Malik) with yet another combination ('ajz/kasal/jubn/haram + fitnat al-mahya wal-mamat + 'adhab al-qabr). Neither located combination is a confirmed exact match to MDR-013.",
+    primaryReference: "Not confirmed in this pass — candidate leads point to Sahih Muslim and/or Sahih al-Bukhari, but MDR-013's specific five-item combination was not matched exactly to either located quotation.",
+    secondaryReferences: [
+      "dorar.net (Mawsoah Hadithiyah, sharh 12527, title/snippet only, not fetched) — reports a Sahih al-Bukhari version from Anas ibn Malik with a different specific combination than MDR-013's own text.",
+    ],
+    narrator: "Not confirmed in this pass — candidate narrators include Anas ibn Malik (for the Bukhari-attributed combination found) and an unidentified narrator for the Sahih-Muslim-attributed combination found; MDR-013's own exact combination was not matched to either.",
+    sourceArabicWording:
+      "Not obtained from a directly fetched page in this pass, and no located WebSearch-synthesis quotation exactly matches MDR-013's own five-item combination (الْكَسَلِ، وَالْهَرَمِ، وَسُوءِ الْكِبَرِ، وَفِتْنَةِ الدُّنْيَا وَعَذَابِ الْقَبْرِ). This is recorded as an open matching question, not resolved or assumed in either direction.",
+    wordingMatchStatus: "unresolved",
+    hadithGrading: "Not confirmed in this pass — the underlying narration was not conclusively identified, so no grading is assigned.",
+    gradingAuthority: "",
+    gradingNotes: "No grading is recorded because the underlying narration itself has not been conclusively identified in this pass — assigning a grading without a confirmed source would misattribute authority.",
+    repetitionCount: undefined,
+    repetitionEvidence: "",
+    virtueOrRewardClaim: "",
+    virtueEvidence: "",
+    sourceUrls: [],
+    usulAiResearchNotes: "Not separately searched in this streamlined batch pass; research relied on WebSearch synthesis only, per the batch's efficiency limits.",
+    scholarlyReviewer: "",
+    scholarlyDecision: "pending",
+    editorialNotes:
+      "MDR-013 (120 characters) was not assumed to be one hadith, Prophetic, authentic, or a continuation of MDR-012 merely because both are 'refuge' (a'udhu) formulas — checked against MDR-012 and found to have a non-overlapping refuge-item combination, so treated as a separate, unrelated narration, not a split or continuation of MDR-012. Not segmented — one continuous 'a'udhu bika min...' clause chain, no source plurality indicated beyond the identification question itself. The central finding is that MDR-013's specific five-item combination (kasal/haram/su' al-kibar/fitnat al-dunya/'adhab al-qabr) does not exactly match either of the two candidate hadiths located via WebSearch (a Sahih Muslim combination and a distinct Sahih al-Bukhari/Anas ibn Malik combination) — this is left as a genuinely unresolved sourcing question, not forced into either candidate. sourceResearchStatus is 'in-progress' because the underlying narration itself remains unidentified, which is a more fundamental gap than a wording-only question. Recommend: directly fetch or inspect a critical edition index (e.g. Mu'jam al-Fadh al-Hadith or a Sahih Muslim/Bukhari concordance) to identify the exact narration carrying MDR-013's specific five-item combination before any grading or narrator attribution is assigned.",
+    importStatus: "research-only",
   },
   {
     sequenceNumber: 14,
@@ -636,8 +746,42 @@ export const MORNING_DHIKR_SOURCE_REGISTER: DhikrSourceResearchRecord[] = [
     transcriptionStatus: "exact",
     transcriptionNotes: "",
     proposedCategory: "",
-    ...unclaimedResearchFields(),
+    contentClassification: "quranic-recitation",
+    morningSpecificStatus: "morning-and-evening",
+    sourceResearchStatus: "disputed",
+    primaryCollection:
+      "The base wording ('حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ') was directly fetched and verified against Qur'an.com (quran.com/9/129, Surah At-Tawbah, verse 129) — this is Qur'anic text, not hadith prose, and matches MDR-014's own wording exactly on this clause (the verse's own preceding frame 'فَإِن تَوَلَّوْا فَقُلْ' — 'if they turn away, then say' — is naturally not part of the recited dhikr). The '7x' repetition-and-virtue layer is separate hadith material, directly fetched via a scholarly explanation page (khaledalsabt.com, tool-mediated, not raw): reported in two forms — marfu' (raised to the Prophet ﷺ) per Ibn al-Sunni's 'Amal al-Yawm wa'l-Layla, and mawquf (a saying of the Companion Abu al-Darda', not explicitly attributed to the Prophet) per Abu Dawud's Sunan (Kitab al-Adab).",
+    primaryReference: "Qur'an 9:129 (base wording, directly verified); the '7 times' virtue-report is per Abu Dawud's Sunan (mawquf to Abu al-Darda') and Ibn al-Sunni's 'Amal al-Yawm wa'l-Layla (marfu') — exact hadith numbers not confirmed in this pass.",
+    secondaryReferences: [
+      "khaledalsabt.com (Sheikh Khalid al-Sabt's sharh, directly fetched) — reports the mawquf/marfu' distinction and a named grading dispute (see hadithGrading).",
+    ],
+    narrator:
+      "The Qur'anic clause carries no separate hadith narrator (it is scripture). The '7 times' virtue-report is attributed to Abu al-Darda' as a mawquf saying (per Abu Dawud) and separately reported marfu' to the Prophet ﷺ (per Ibn al-Sunni) — these are two distinct attribution levels and must not be collapsed into one unconditional 'the Prophet said' claim.",
+    sourceArabicWording:
+      "The Qur'anic portion is directly verified against Qur'an.com and matches MDR-014's own wording exactly. The '7 times' instruction and outcome clause ('sab'a marrat, kafahu Allah ma ahammahu' — 'seven times, Allah will suffice him against whatever concerns him') was returned only via a tool-mediated quotation from khaledalsabt.com, not independently checked against a raw Abu Dawud/Ibn al-Sunni edition — that specific clause's exact wording remains unconfirmed at raw-text level even though the Qur'anic base clause is confirmed.",
+    wordingMatchStatus: "exact-match",
+    hadithGrading:
+      "Disputed among named authorities for the mawquf/marfu' hadith layer (the Qur'anic base wording itself is not subject to hadith grading): al-Mundhiri stated it 'does not fall below the grade of hasan'; Ibn Baz considered the mawquf version 'sound in chain'; separately reported that Shu'ayb and 'Abd al-Qadir al-Arna'ut authenticated its isnad. Against this, al-Albani classified it as fabricated/weak across multiple of his own works. This is a genuine, named authenticity disagreement about the hadith layer specifically — it does not affect the Qur'anic base wording's own status.",
+    gradingAuthority: "al-Mundhiri, Ibn Baz, Shu'ayb and 'Abd al-Qadir al-Arna'ut (accepting) versus al-Albani (rejecting) — reported via a directly fetched but tool-mediated secondary source (khaledalsabt.com); not independently verified against each scholar's own primary work in this pass.",
+    gradingNotes:
+      "Two separate layers must not be conflated: (1) the recited Qur'anic clause itself, whose text is confirmed against Qur'an.com and carries no authenticity dispute as scripture; (2) the '7 times / Allah will suffice him' hadith-level virtue-report, whose grading is genuinely disputed and whose attribution level (mawquf vs marfu') differs by collection. Neither the mawquf nor the marfu' report's grading extends to establish the exact wording of the outcome clause itself, which remains tool-mediated only.",
     repetitionCount: 7,
+    repetitionEvidence:
+      "The source-document '7x' annotation is directly consistent with the hadith-level report (in both its mawquf and marfu' forms, per WebSearch synthesis and the khaledalsabt.com fetch) explicitly instructing seven recitations morning and evening — a narration-internal repetition instruction, not an inferred or invented count. This finding is separate from, and does not resolve, the disputed grading of the report carrying that instruction (see hadithGrading) — the count is textually consistent across sources, but the report's own authority is disputed.",
+    virtueOrRewardClaim:
+      "Reportedly: whoever says this seven times in the morning and seven times in the evening, Allah will suffice him against whatever concerns him ('kafahu Allah ma ahammahu'). Both the count (seven) and the timing (morning and evening) are preserved as conditions of this claim, not separated from it or reduced to an unconditional promise.",
+    virtueEvidence:
+      "Narration-attached evidence, not part of MDR-014's own transcribed text (which carries only the Qur'anic clause plus the source-document's '7x' annotation) — must not be inserted into fullArabicText/originalDocumentText. This claim's authority is directly tied to the disputed mawquf/marfu' hadith-grading question (see hadithGrading/gradingNotes): it is reported consistently across sources on substance, but its underlying authenticity is genuinely contested by al-Albani against several other named authorities, and this claim must not be presented as more certain than that disputed status allows.",
+    sourceUrls: [
+      "https://quran.com/9/129",
+      "https://khaledalsabt.com/explanations/368/172-%D8%A7%D8%B0%D9%83%D8%A7%D8%B1-%D8%A7%D9%84%D8%B5%D8%A8%D8%A7%D8%AD-%D9%88%D8%A7%D9%84%D9%85%D8%B3%D8%A7%D8%A1-%D8%AD%D8%B3%D8%A8%D9%8A-%D8%A7%D9%84%D9%84%D9%87-%D9%84%D8%A7-%D8%A7%D9%84%D9%87-%D8%A7%D9%84%D8%A7-%D9%87%D9%88-%D8%B9%D9%84%D9%8A%D9%87-%D8%AA%D9%88%D9%83%D9%84%D8%AA-%D9%88%D9%87%D9%88-%D8%B1%D8%A8-%D8%A7%D9%84%D8%B9%D8%B1%D8%B4-%D8%A7%D9%84%D8%B9%D8%B8%D9%8A%D9%85",
+    ],
+    usulAiResearchNotes: "Not separately searched in this streamlined batch pass; research relied on WebSearch synthesis plus two directly fetched pages (Qur'an.com, khaledalsabt.com), per the batch's efficiency limits.",
+    scholarlyReviewer: "",
+    scholarlyDecision: "pending",
+    editorialNotes:
+      "MDR-014 (92 characters) was not assumed to be one hadith, Prophetic, authentic, or correctly repeated seven times; each was checked from evidence. Structural note: the record is not itself hadith prose — its base clause is a direct quotation of Qur'an 9:129 (confirmed via a directly fetched Qur'an.com page), and the '7x' repetition-and-virtue layer is a separate hadith-level report about the merit of reciting this verse. Not segmented — the Qur'anic clause and the '7x' annotation form one continuous unit as transcribed, with the reward/count structure recorded as narration-attached evidence rather than a separate clause requiring its own source conclusion. contentClassification is recorded as 'quranic-recitation' because the recited text itself is scripture, not composed hadith prose — this is distinct from morningSpecificStatus, which reflects the hadith-level report's own morning-and-evening usage instruction. sourceResearchStatus is 'disputed' (the second use of this value in the register, after MDR-009) because a genuine, named authenticity disagreement exists for the hadith-level virtue-report specifically (al-Mundhiri/Ibn Baz/Arna'ut versus al-Albani), directly confirmed via a fetched secondary source, not merely a route or edition question. wordingMatchStatus is recorded as 'exact-match' for the Qur'anic base clause only, which was directly verified against Qur'an.com — this does not extend to the hadith-level outcome clause's own exact wording, which remains tool-mediated only (see gradingNotes). Recommend: directly inspect a raw edition of Abu Dawud's Sunan (Kitab al-Adab) and Ibn al-Sunni's 'Amal al-Yawm wa'l-Layla to confirm the outcome clause's exact wording; directly inspect al-Albani's own stated reasoning for weakening this report.",
+    importStatus: "research-only",
   },
   {
     sequenceNumber: 15,
@@ -651,7 +795,34 @@ export const MORNING_DHIKR_SOURCE_REGISTER: DhikrSourceResearchRecord[] = [
     transcriptionStatus: "exact",
     transcriptionNotes: "",
     proposedCategory: "",
-    ...unclaimedResearchFields(),
+    contentClassification: "morning-and-evening",
+    morningSpecificStatus: "morning-and-evening",
+    sourceResearchStatus: "in-progress",
+    primaryCollection:
+      "Not directly fetched in this streamlined batch pass — evidence is WebSearch synthesis only, not an inspected primary page. WebSearch synthesis consistently and specifically attributes this multi-clause supplication ('afiya in this world and the next; 'afw and 'afiya in din/dunya/family/wealth; conceal my faults; guard me from every direction) to 'Abdullah ibn 'Umar, stating the Messenger of Allah ﷺ never abandoned these words morning and evening. Reported by Abu Dawud, al-Nasa'i, Ibn Majah, and Ahmad.",
+    primaryReference: "Reportedly Sunan Abi Dawud 5074 — per WebSearch synthesis, not independently confirmed against a directly fetched page in this pass.",
+    secondaryReferences: [
+      "dorar.net (Mawsoah Hadithiyah, sharh 69801 and 73176, titles only, not fetched) — attribute the report to 'Abdullah ibn 'Umar and cite al-Mundhiri/al-Albani as grading sources per the titles; exact grading wording not confirmed since the pages were not fetched.",
+    ],
+    narrator: "Reported: 'Abdullah ibn 'Umar, describing the Prophet's ﷺ own regular morning-and-evening practice — per WebSearch synthesis; not independently re-verified against a directly fetched page in this pass.",
+    sourceArabicWording:
+      "Not obtained from a directly fetched page in this pass. WebSearch synthesis's own reported wording matches MDR-015's own text closely across all five clauses on substance, but was not checked character-for-character against any inspected source.",
+    wordingMatchStatus: "unresolved",
+    hadithGrading: "Reportedly authenticated (isnad sahih) by al-Albani, and separately by al-Nawawi and Ahmad Shakir, per WebSearch synthesis — not independently verified against a directly fetched page in this pass; no disagreement among these three was found in this pass.",
+    gradingAuthority: "Reportedly al-Nawawi, Ahmad Shakir, and al-Albani, per WebSearch synthesis; not independently confirmed against each scholar's own primary work in this pass.",
+    gradingNotes:
+      "No wording comparison was performed against a directly fetched primary text in this pass; MDR-015's own wording (372 characters, five clauses) has not been checked character-for-character against any inspected source. No grading disagreement was found among the three authorities located in this pass, distinguishing this record from MDR-014/MDR-020's disputed gradings.",
+    repetitionCount: undefined,
+    repetitionEvidence: "",
+    virtueOrRewardClaim: "",
+    virtueEvidence: "",
+    sourceUrls: [],
+    usulAiResearchNotes: "Not separately searched in this streamlined batch pass; research relied on WebSearch synthesis only, per the batch's efficiency limits.",
+    scholarlyReviewer: "",
+    scholarlyDecision: "pending",
+    editorialNotes:
+      "MDR-015 (372 characters, the longest record in this batch) was not assumed to be one hadith, Prophetic, or authentic; checked against WebSearch synthesis only (no direct fetch performed). Not segmented — five successive petitionary clauses reported as part of one narration the Prophet ﷺ never abandoned morning and evening, per WebSearch synthesis; no source plurality indicated, so treated as one continuous unit despite internal periods. sourceResearchStatus is 'in-progress' because no page was directly fetched in this pass, notwithstanding the unusually consistent three-authority grading agreement found. No explicit reward/virtue statement beyond the petitions themselves was found; virtueOrRewardClaim is left empty rather than inferred. Recommend: directly fetch Sunan Abi Dawud 5074 or an equivalent primary hosting to confirm exact wording across all five clauses.",
+    importStatus: "research-only",
   },
   {
     sequenceNumber: 16,
@@ -665,7 +836,34 @@ export const MORNING_DHIKR_SOURCE_REGISTER: DhikrSourceResearchRecord[] = [
     transcriptionStatus: "exact",
     transcriptionNotes: "",
     proposedCategory: "",
-    ...unclaimedResearchFields(),
+    contentClassification: "morning-and-evening",
+    morningSpecificStatus: "morning-and-evening",
+    sourceResearchStatus: "in-progress",
+    primaryCollection:
+      "Not directly fetched in this streamlined batch pass — evidence is WebSearch synthesis only, not an inspected primary page. WebSearch synthesis consistently and specifically reports that Abu Bakr al-Siddiq asked the Prophet ﷺ for words to say morning and evening, and was taught this formula (tawhid-witness plus refuge from the evil of one's self, Satan, and his shirk-invitation). Reported by Abu Dawud, al-Tirmidhi, al-Bukhari in al-Adab al-Mufrad, and Ahmad; narrated by Abu Hurayrah.",
+    primaryReference: "Reportedly Sunan Abi Dawud 5067 and Jami' al-Tirmidhi 3392 — per WebSearch synthesis, not independently confirmed against a directly fetched page in this pass.",
+    secondaryReferences: [
+      "dorar.net (Mawsoah Hadithiyah, sharh 74285 and 30026, titles only, not fetched) — corroborate the Abu Bakr/Abu Hurayrah attribution and the Tirmidhi reference per the titles.",
+    ],
+    narrator: "Reported: Abu Hurayrah, relating the Prophet's ﷺ instruction to Abu Bakr al-Siddiq — per WebSearch synthesis; not independently re-verified against a directly fetched page in this pass.",
+    sourceArabicWording:
+      "Not obtained from a directly fetched page in this pass. WebSearch synthesis's own reported wording matches MDR-016's own text closely on substance (the 'alim al-ghayb wa'sh-shahada, fatir as-samawat wa'l-ard, rabb kulli shay'in wa malikahu' opening and the shirk/self-evil refuge clauses), but was not checked character-for-character against any inspected source. WebSearch synthesis also reports a timing instruction of 'when you wake up, when you retire in the evening, and when you go to bed' — three named occasions, not clearly distinguished as two or three distinct timings in the synthesis obtained; this ambiguity is not resolved in this pass.",
+    wordingMatchStatus: "unresolved",
+    hadithGrading: "Reportedly graded hasan sahih by al-Tirmidhi himself, and separately authenticated by Ibn Hibban and al-Hakim, per WebSearch synthesis — not independently verified against a directly fetched page in this pass; no disagreement among these was found in this pass.",
+    gradingAuthority: "Reportedly al-Tirmidhi (hasan sahih), Ibn Hibban, and al-Hakim, per WebSearch synthesis; not independently confirmed against each scholar's own primary work in this pass.",
+    gradingNotes:
+      "No wording comparison was performed against a directly fetched primary text in this pass; MDR-016's own wording (270 characters) has not been checked character-for-character against any inspected source. No grading disagreement was found among the authorities located in this pass.",
+    repetitionCount: undefined,
+    repetitionEvidence: "",
+    virtueOrRewardClaim: "",
+    virtueEvidence: "",
+    sourceUrls: [],
+    usulAiResearchNotes: "Not separately searched in this streamlined batch pass; research relied on WebSearch synthesis only, per the batch's efficiency limits.",
+    scholarlyReviewer: "",
+    scholarlyDecision: "pending",
+    editorialNotes:
+      "MDR-016 (270 characters) was not assumed to be one hadith, Prophetic, or authentic; checked against WebSearch synthesis only (no direct fetch performed). Not segmented — one continuous address-plus-witness-plus-refuge sentence reported as taught in a single instruction to Abu Bakr, no source plurality indicated. sourceResearchStatus is 'in-progress' because no page was directly fetched in this pass. The reported 'when you wake up, when you retire in the evening, and when you go to bed' timing instruction is recorded exactly as found, without resolving whether this is two occasions or three — left as an open point rather than collapsed to a simple 'morning and evening' claim beyond what morningSpecificStatus already represents. No explicit reward/virtue statement beyond being taught as good words to say was found; virtueOrRewardClaim is left empty rather than inferred. Recommend: directly fetch Jami' al-Tirmidhi 3392 or an equivalent primary hosting to confirm exact wording and resolve the two-versus-three-occasions timing question.",
+    importStatus: "research-only",
   },
   {
     sequenceNumber: 17,
@@ -680,8 +878,37 @@ export const MORNING_DHIKR_SOURCE_REGISTER: DhikrSourceResearchRecord[] = [
     transcriptionNotes:
       "Source document gives two wordings separated by \"|\" (رَضِينَا ... رَسُولا and رضيت ... نَبيا) as a single entry; both variants preserved verbatim, not merged or split. Which variant (or both) belongs in the final register is a Stage 3B research question.",
     proposedCategory: "",
-    ...unclaimedResearchFields(),
+    contentClassification: "general-prophetic-supplication",
+    morningSpecificStatus: "uncertain",
+    sourceResearchStatus: "in-progress",
+    primaryCollection:
+      "Not directly fetched in this streamlined batch pass — evidence is WebSearch synthesis only, not an inspected primary page. WebSearch synthesis consistently reports the located hadith wording as 'رَضِيتُ بِاللَّهِ رَبًّا وَبِالْإِسْلَامِ دِينًا وَبِمُحَمَّدٍ رَسُولًا' (first-person singular 'raditu', closing word 'rasula' — messenger), narrated by Abu Sa'id al-Khudri, with the outcome 'wajabat lahu al-jannah' (Paradise becomes obligatory for him). Reported by Abu Dawud, al-Nasa'i (al-Kubra), Ibn Hibban, and al-Hakim (who called it sahih by isnad).",
+    primaryReference: "Reportedly Sunan Abi Dawud 1529 / 5072 (sources vary), al-Nasa'i al-Kubra 9748, Ibn Hibban's Sahih 863, al-Hakim's Mustadrak 1904 — per WebSearch synthesis, not independently confirmed against a directly fetched page in this pass.",
+    secondaryReferences: [
+      "dorar.net (Mawsoah Hadithiyah, sharh 28330, title only, not fetched) — attributes the report to Abu Sa'id al-Khudri and cites Sahih Abi Dawud (al-Albani) per the title.",
+    ],
+    narrator: "Reported: Abu Sa'id al-Khudri — per WebSearch synthesis; not independently re-verified against a directly fetched page in this pass.",
+    sourceArabicWording:
+      "Not obtained from a directly fetched page in this pass. The located WebSearch-synthesis wording ('رَضِيتُ ... رَسُولًا', singular, closing 'رسولا') does not exactly match EITHER of MDR-017's own two source-document variants: variant 1 ('رَضِينَا ... رَسُولا') matches the located wording's closing word ('رسولا') but uses the plural 'رضينا' instead of the located singular 'رضيت'; variant 2 ('رضيت ... نَبيا') matches the located wording's singular form ('رضيت') but uses the closing word 'نبيا' (prophet) instead of the located 'رسولا' (messenger). Neither MDR-017 variant is a confirmed exact match; this is recorded precisely rather than assuming either variant is simply 'the' correct wording.",
+    wordingMatchStatus: "unresolved",
+    hadithGrading: "Reportedly graded sahih by al-Hakim (by isnad) and included in al-Albani's Sahih Abi Dawud per a dorar.net title (not fetched) — per WebSearch synthesis, not independently verified against a directly fetched page in this pass; no disagreement found in this pass.",
+    gradingAuthority: "Reportedly al-Hakim and al-Albani, per WebSearch synthesis; not independently confirmed against each scholar's own primary work in this pass.",
+    gradingNotes:
+      "This grading, if the located hadith's identification is correct, would apply to the identified narration's own wording ('رَضِيتُ ... رَسُولًا') specifically — it does not automatically extend to either of MDR-017's own two source-document variants, both of which differ from that located wording on at least one word (see sourceArabicWording).",
     repetitionCount: 3,
+    repetitionEvidence:
+      "The located WebSearch-synthesis quotation of the underlying hadith's own reward clause ('man qala: raditu billahi rabban... wajabat lahu al-jannah') does not itself state a repetition count or a morning/evening timing condition — the reward is reported as tied to saying the words, not explicitly to saying them three times. The source-document's '3x, morning and evening' framing was not confirmed as part of the primary hadith's own wording in this pass; it may reflect a later compilation's usage convention rather than the base hadith's own reward-conditioning text. repetitionCount (3) is retained from Stage 3A but is NOT treated as narration-confirmed in this pass.",
+    virtueOrRewardClaim:
+      "Reportedly: whoever says 'I am pleased with Allah as Lord, Islam as religion, and Muhammad as messenger,' Paradise becomes obligatory for him ('wajabat lahu al-jannah'). This claim, per the located wording, is not explicitly conditioned on a specific repetition count or on morning/evening timing in the primary report found in this pass (see repetitionEvidence) — it is recorded here exactly as found, without adding a count or timing condition not present in the located source.",
+    virtueEvidence:
+      "Narration-attached evidence, not part of MDR-017's own transcribed text — must not be inserted into fullArabicText/originalDocumentText. Sourced from WebSearch synthesis only in this pass, not a directly fetched primary or secondary page; treated as a reported claim pending direct-source confirmation. The claim's relationship to the source-document's '3x' annotation and to either of MDR-017's two wording variants remains unresolved (see repetitionEvidence, sourceArabicWording).",
+    sourceUrls: [],
+    usulAiResearchNotes: "Not separately searched in this streamlined batch pass; research relied on WebSearch synthesis only, per the batch's efficiency limits.",
+    scholarlyReviewer: "",
+    scholarlyDecision: "pending",
+    editorialNotes:
+      "MDR-017 (137 characters, carrying two source-document variants separated by '|' since Stage 3A) was not assumed to be one hadith, Prophetic, authentic, or correctly repeated three times; each was checked against WebSearch synthesis only (no direct fetch performed). Not segmented — the two variants are preserved side by side exactly as Stage 3A recorded them, per the existing transcriptionNotes; this Stage 3B pass did not merge, split, or choose between them, since neither was confirmed as the sole correct wording. The central finding is that the one hadith wording located via WebSearch ('رَضِيتُ ... رَسُولًا') does not exactly match either of MDR-017's own two variants — each variant matches the located wording on one dimension (person/number, or closing word) and differs on the other; this is recorded precisely (see sourceArabicWording), not resolved in favour of either variant. A second finding is that the located hadith's own reward clause does not itself specify a repetition count or morning/evening timing, raising an open question about whether the source-document's '3x, morning and evening' framing reflects the base hadith's own text or a later compilation convention (see repetitionEvidence) — repetitionCount is retained from Stage 3A but explicitly flagged as not narration-confirmed in this pass. sourceResearchStatus is 'in-progress' because no page was directly fetched and both the wording-variant and repetition-count questions remain open. Recommend: directly fetch Sunan Abi Dawud (the specific hadith number carrying this report) to resolve which variant, if either, matches the primary wording, and to confirm whether a repetition count or timing condition is part of the base hadith text.",
+    importStatus: "research-only",
   },
   {
     sequenceNumber: 18,
@@ -693,7 +920,33 @@ export const MORNING_DHIKR_SOURCE_REGISTER: DhikrSourceResearchRecord[] = [
     transcriptionStatus: "exact",
     transcriptionNotes: "",
     proposedCategory: "",
-    ...unclaimedResearchFields(),
+    contentClassification: "morning-and-evening",
+    morningSpecificStatus: "morning-and-evening",
+    sourceResearchStatus: "in-progress",
+    primaryCollection:
+      "Not directly fetched in this streamlined batch pass — evidence is WebSearch synthesis only, not an inspected primary page. WebSearch synthesis consistently reports this as the Prophet's ﷺ advice to his daughter Fatimah, narrated by Anas ibn Malik: 'What prevents you from listening to what I advise you? Say when you wake up and when you go to bed: Ya Hayy, Ya Qayyum, bi-rahmatika astaghith, aslih li sha'ni kullahu, wa la takilni ila nafsi tarfata 'ayn.' Reported by al-Nasa'i (al-Sunan al-Kubra and 'Amal al-Yawm wa'l-Layla), al-Hakim (al-Mustadrak), al-Bayhaqi, and al-Bazzar.",
+    primaryReference: "Reportedly al-Nasa'i's al-Sunan al-Kubra / 'Amal al-Yawm wa'l-Layla — per WebSearch synthesis, exact hadith number not confirmed in this pass.",
+    secondaryReferences: [
+      "dorar.net (Mawsoah Hadithiyah, h/XoIdBMrF, title only, not fetched) — attributes the report to Anas ibn Malik (recounting the Prophet's ﷺ advice to Fatimah) with al-Bazzar's al-Bahr al-Zakhkhar cited as a source per the title.",
+    ],
+    narrator: "Reported: Anas ibn Malik, recounting the Prophet's ﷺ advice to his daughter Fatimah — per WebSearch synthesis; not independently re-verified against a directly fetched page in this pass.",
+    sourceArabicWording:
+      "Not obtained from a directly fetched page in this pass. WebSearch synthesis's own reported wording matches MDR-018's own text closely on substance and structure, but was not checked character-for-character against any inspected source.",
+    wordingMatchStatus: "unresolved",
+    hadithGrading: "Not confirmed in this pass — no specific grading word was located via WebSearch synthesis for this report; recorded as an open question rather than assumed sahih or da'if.",
+    gradingAuthority: "",
+    gradingNotes: "No grading authority or wording was located in this pass; this is left unresolved rather than inferred from the report's inclusion in recognised collections (al-Nasa'i, al-Hakim) alone.",
+    repetitionCount: undefined,
+    repetitionEvidence: "",
+    virtueOrRewardClaim: "",
+    virtueEvidence: "",
+    sourceUrls: [],
+    usulAiResearchNotes: "Not separately searched in this streamlined batch pass; research relied on WebSearch synthesis only, per the batch's efficiency limits.",
+    scholarlyReviewer: "",
+    scholarlyDecision: "pending",
+    editorialNotes:
+      "MDR-018 (123 characters) was not assumed to be one hadith, Prophetic, or authentic; checked against WebSearch synthesis only (no direct fetch performed). Not segmented — one continuous vocative-plus-petition sentence reported as a single piece of advice, no source plurality indicated. sourceResearchStatus is 'in-progress' because no page was directly fetched and no specific grading word was located for this report — recorded as an open grading question rather than assumed authentic from collection inclusion alone. No explicit reward/virtue statement beyond the petition itself ('set right all my affairs') was found; virtueOrRewardClaim is left empty rather than inferred. Recommend: directly fetch a primary hosting of al-Nasa'i's al-Sunan al-Kubra or 'Amal al-Yawm wa'l-Layla to confirm exact wording, hadith number, and grading.",
+    importStatus: "research-only",
   },
   {
     sequenceNumber: 19,
@@ -706,7 +959,32 @@ export const MORNING_DHIKR_SOURCE_REGISTER: DhikrSourceResearchRecord[] = [
     transcriptionNotes:
       "Diacritization is lighter than in similar-looking neighbouring entries (compare entry 6); preserved exactly as it appears, not normalised to match other entries.",
     proposedCategory: "",
-    ...unclaimedResearchFields(),
+    contentClassification: "morning-and-evening",
+    morningSpecificStatus: "morning-and-evening",
+    sourceResearchStatus: "in-progress",
+    primaryCollection:
+      "Not directly fetched in this streamlined batch pass — evidence is WebSearch synthesis only, not an inspected primary page. WebSearch synthesis reports this short form ('Asbahna wa asbaha al-mulk lillahi wa'l-hamdu lillahi, la sharika lahu, la ilaha illa huwa, wa ilayhi al-nushur') as a hadith of Abu Hurayrah, authenticated by al-Haythami in Majma' al-Zawa'id with a reported 'good chain' (isnad hasan). This is a DIFFERENT, shorter narration from MDR-006's own researched hadith (Sahih Muslim, 'Abdullah ibn Mas'ud, the four-part 'asbahna wa asbaha al-mulk lillahi... rabbi as'aluka khayra ma fi hadha'l-yawm' formula) — the two share only an opening phrase and are not merged or treated as the same narration.",
+    primaryReference: "Reportedly via al-Haythami's Majma' al-Zawa'id (a compilation grading additional-musnad hadiths, not itself a primary collection) — per WebSearch synthesis, underlying primary collection and hadith number not confirmed in this pass.",
+    secondaryReferences: [],
+    narrator: "Reported: Abu Hurayrah — per WebSearch synthesis; not independently re-verified against a directly fetched page in this pass.",
+    sourceArabicWording:
+      "Not obtained from a directly fetched page in this pass. WebSearch synthesis's own reported wording matches MDR-019's own text closely on substance, but was not checked character-for-character against any inspected source.",
+    wordingMatchStatus: "unresolved",
+    hadithGrading: "Reportedly graded 'good chain' (isnad hasan) by al-Haythami in Majma' al-Zawa'id per WebSearch synthesis — not independently verified against a directly fetched page in this pass. Majma' al-Zawa'id gradings apply to a hadith's presence in a specific additional musnad, not necessarily to every wording variant; this scope limitation is noted, not resolved.",
+    gradingAuthority: "Reportedly al-Haythami (Majma' al-Zawa'id), per WebSearch synthesis; not independently confirmed in this pass.",
+    gradingNotes:
+      "No wording comparison was performed against a directly fetched primary text in this pass. This grading, if correctly identified, applies to the underlying musnad report al-Haythami reviewed, not confirmed to be character-for-character identical to MDR-019's own transcription.",
+    repetitionCount: undefined,
+    repetitionEvidence: "",
+    virtueOrRewardClaim: "",
+    virtueEvidence: "",
+    sourceUrls: [],
+    usulAiResearchNotes: "Not separately searched in this streamlined batch pass; research relied on WebSearch synthesis only, per the batch's efficiency limits.",
+    scholarlyReviewer: "",
+    scholarlyDecision: "pending",
+    editorialNotes:
+      "MDR-019 (100 characters, its lighter diacritization already flagged in Stage 3A transcriptionNotes) was not assumed to be one hadith, Prophetic, authentic, or the same narration as MDR-006 merely because both open with 'أَصْبَحْنَا وَأصْبح الْملك لله' — checked specifically against MDR-006's own already-researched fields (Sahih Muslim, Ibn Mas'ud, a four-part formula ending in refuge from kasal/su'al-kibr/'adhab fi'n-nar wa'l-qabr, 446 characters) and found to diverge after the opening clause: MDR-019 closes with 'لَا شريك لَهُ لَا إِلَه إِلَّا هُوَ وَإِلَيْهِ النشور' (100 characters total), a closing MDR-006's own researched wording does not contain at all. This is treated as a distinct, separately-narrated (Abu Hurayrah, per al-Haythami) short hadith, not a truncation, error, or duplicate of MDR-006 — not merged. Not segmented — one continuous declarative sentence, no source plurality indicated. sourceResearchStatus is 'in-progress' because no page was directly fetched in this pass and the underlying primary collection (as opposed to al-Haythami's grading compilation) was not identified. No explicit reward/virtue statement beyond the declaration itself was found; virtueOrRewardClaim is left empty rather than inferred. Recommend: identify the specific primary musnad al-Haythami reviewed for this report and directly fetch or inspect it to confirm exact wording and an independent grading.",
+    importStatus: "research-only",
   },
   {
     sequenceNumber: 20,
@@ -721,7 +999,36 @@ export const MORNING_DHIKR_SOURCE_REGISTER: DhikrSourceResearchRecord[] = [
     transcriptionNotes:
       "Contains the word \"وهدأيه\", which does not match standard spelling patterns seen elsewhere in the document and may be a source-document typo. Transcribed exactly as it appears; not corrected. Flagged for scholarly clarification in Stage 3B.",
     proposedCategory: "",
-    ...unclaimedResearchFields(),
+    contentClassification: "morning-and-evening",
+    morningSpecificStatus: "morning-and-evening",
+    sourceResearchStatus: "disputed",
+    primaryCollection:
+      "Not directly fetched in this streamlined batch pass — evidence is WebSearch synthesis only, not an inspected primary page. WebSearch synthesis consistently and specifically attributes this formula to Abu Malik al-Ash'ari: 'When one of you enters the morning, let him say: Asbahna wa asbaha al-mulk lillahi rabbi'l-'alamin. Allahumma inni as'aluka khayra hadha'l-yawm: fathahu, wa nasrahu, wa nurahu, wa barakatahu, wa hudahu, wa a'udhu bika min sharri ma fihi wa sharri ma ba'dahu. Then when evening comes, let him say the same.' Reported by Abu Dawud (isnad includes Isma'il ibn 'Ayyash, a narrator whose transmission from non-Levantine sheikhs is widely documented as weak).",
+    primaryReference: "Reportedly Sunan Abi Dawud (exact number not confirmed in this pass) — per WebSearch synthesis, not independently confirmed against a directly fetched page.",
+    secondaryReferences: [
+      "dorar.net (Mawsoah Hadithiyah, h/1yd1o9ZV, title only, not fetched) — cites al-Albani's Da'if Abi Dawud, explicitly signalling al-Albani's later weakening rather than his earlier hasan grading.",
+      "hdith.com (h/0a-TZrixgy, title only, not fetched) — title itself flags 'Isma'il ibn 'Ayyash wa fihi maqal ma'ruf' (Isma'il ibn 'Ayyash is present, and there is well-known discussion of him) as the specific isnad concern.",
+    ],
+    narrator: "Reported: Abu Malik al-Ash'ari, describing the Prophet's ﷺ instruction — per WebSearch synthesis; not independently re-verified against a directly fetched page in this pass. The isnad's specific weak point is consistently identified as Isma'il ibn 'Ayyash (or, per one source, Muhammad ibn Isma'il ibn 'Ayyash).",
+    sourceArabicWording:
+      "Not obtained from a directly fetched page in this pass. WebSearch synthesis's own reported wording confirms the fivefold list 'fathahu, wa nasrahu, wa nurahu, wa barakatahu, wa hudahu' (its opening, its victory, its light, its blessing, and its guidance) — this directly supports treating MDR-020's own 'وهدأيه' as a transcription irregularity for 'وَهُدَاهُ' (its guidance), consistent with the Stage 3A transcriptionNotes flag, though fullArabicText/originalDocumentText remain unedited per instruction.",
+    wordingMatchStatus: "unresolved",
+    hadithGrading:
+      "Disputed among named authorities: al-Nawawi reportedly did not weaken its isnad; Ibn al-Qayyim graded it hasan; al-'Iraqi reportedly described it as having a good chain; against this, Ibn Hajar called it gharib (strange/isolated) and identified Isma'il ibn 'Ayyash's transmission as weak in this instance, and al-Albani first graded it hasan (in Sahih al-Jami') but later weakened it (in Da'if Abi Dawud). This is a genuine, named authenticity disagreement — including a documented change of position within al-Albani's own body of work — not merely a route or edition question.",
+    gradingAuthority: "al-Nawawi, Ibn al-Qayyim, al-'Iraqi (accepting or not weakening) versus Ibn Hajar and al-Albani's later position (weakening) — reported via WebSearch synthesis only; not independently verified against each scholar's own primary work in this pass.",
+    gradingNotes:
+      "The specific isnad concern (Isma'il ibn 'Ayyash's transmission reliability, which varies by whether he narrates from Levantine or non-Levantine sheikhs) was not itself independently investigated in this pass — it is recorded as the reported basis for the dispute, not resolved. Al-Albani's own documented change of position (hasan in Sahih al-Jami', later weakened in Da'if Abi Dawud) is recorded as such, not collapsed into a single 'al-Albani said X' claim.",
+    repetitionCount: undefined,
+    repetitionEvidence: "",
+    virtueOrRewardClaim: "",
+    virtueEvidence: "",
+    sourceUrls: [],
+    usulAiResearchNotes: "Not separately searched in this streamlined batch pass; research relied on WebSearch synthesis only, per the batch's efficiency limits.",
+    scholarlyReviewer: "",
+    scholarlyDecision: "pending",
+    editorialNotes:
+      "MDR-020 (224 characters, its 'وهدأيه' irregularity already flagged in Stage 3A transcriptionNotes) was not assumed to be one hadith, Prophetic, or authentic; checked against WebSearch synthesis only (no direct fetch performed). Not segmented — one continuous declaration-plus-petition-plus-refuge sentence reported as part of one instruction, no source plurality indicated. The central finding is a genuine, named grading dispute for the underlying narration (see hadithGrading) — al-Nawawi/Ibn al-Qayyim/al-'Iraqi versus Ibn Hajar and al-Albani's later (though not earlier) position — directly comparable to MDR-014's disputed status; sourceResearchStatus is recorded as 'disputed' (the third use of this value in the register) for the same reason: a genuine authenticity disagreement among named authorities, not a route/edition question. Separately, WebSearch synthesis's consistent fivefold list ('fathahu/nasrahu/nurahu/barakatahu/hudahu') supports — but does not by itself, without a directly fetched raw source, conclusively confirm — that MDR-020's own 'وهدأيه' is a transcription irregularity for 'وَهُدَاهُ'; fullArabicText/originalDocumentText remain unedited per instruction, and this remains a flagged, not silently corrected, point. No explicit reward/virtue statement beyond the petition itself was found; virtueOrRewardClaim is left empty rather than inferred. Recommend: directly fetch the specific Sunan Abi Dawud hadith number and al-Albani's Da'if Abi Dawud entry to confirm exact wording, the 'وهدأيه'/'وَهُدَاهُ' question, and the precise scope of the isnad weakness.",
+    importStatus: "research-only",
   },
   {
     sequenceNumber: 21,

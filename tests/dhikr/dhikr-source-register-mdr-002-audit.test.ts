@@ -45,12 +45,21 @@ function testOnlyMdr002ChangedInThisStage() {
   // -mdr-004-audit.test.ts, -mdr-005-audit.test.ts, -mdr-006-audit.test.ts,
   // -mdr-007-audit.test.ts, -mdr-008-audit.test.ts, and -mdr-009-audit.test.ts.
   assert(MDR_002.internalId === "MDR-002", "REGISTER[1] is not MDR-002");
-  const excludedIds = new Set(["MDR-003", "MDR-004", "MDR-005", "MDR-006", "MDR-007", "MDR-008", "MDR-009"]);
+  const excludedIds = new Set([
+    "MDR-003",
+    "MDR-004",
+    "MDR-005",
+    "MDR-006",
+    "MDR-007",
+    "MDR-008",
+    "MDR-009",
+    ...Array.from({ length: 11 }, (_, i) => `MDR-${String(i + 10).padStart(3, "0")}`),
+  ]);
   const baseline = loadBaselineFixture().filter((r: { internalId: string }) => !excludedIds.has(r.internalId));
   const otherRecords = REGISTER.filter((r) => r.internalId !== "MDR-002" && !excludedIds.has(r.internalId));
   assert(
     otherRecords.length === baseline.length,
-    `Expected ${baseline.length} records besides MDR-002/MDR-003/MDR-004/MDR-005/MDR-006/MDR-007/MDR-008/MDR-009, found ${otherRecords.length}`,
+    `Expected ${baseline.length} records besides MDR-002/MDR-003–009/MDR-010–020, found ${otherRecords.length}`,
   );
   for (let i = 0; i < otherRecords.length; i++) {
     assert(
@@ -59,7 +68,7 @@ function testOnlyMdr002ChangedInThisStage() {
     );
   }
   console.log(
-    "✓ only MDR-002 changed in this stage; MDR-001 and MDR-010 through MDR-030 match checkpoint 8e2c46d exactly (MDR-003 through MDR-009 verified separately)",
+    "✓ only MDR-002 changed in this stage; MDR-001 and MDR-021 through MDR-030 match checkpoint 8e2c46d exactly (MDR-003 through MDR-009 and MDR-010–020 verified separately)",
   );
 }
 
