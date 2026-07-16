@@ -9,8 +9,10 @@ The core narration (Tirmidhi 3388, Ibn Majah 3869, corroborated by Riyad as-Sali
 ## 2. Exact source-document wording
 
 ```
-بسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ، فِي الْأَرْضِ، وَلَا فِي السَّمَاءِ، وَهُوَ السَّمِيعُ الْعَلِيمُ 3x 
+بسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ، فِي الْأَرْضِ، وَلَا فِي السَّمَاءِ، وَهُوَ السَّمِيعُ الْعَلِيمُ 3x
 ```
+
+Displayed audit notation: `…الْعَلِيمُ 3x␠` — here `␠` represents one literal trailing space present at the very end of the source document's `originalDocumentText`, immediately after the final `3x`. This marker is editorial notation added for this report only; it is not part of the recited Arabic text and is not present in the fenced code block above (which is trimmed for Markdown formatting). `originalDocumentText`/`fullArabicText` themselves are unchanged and still contain the literal trailing space.
 
 (`originalDocumentText`/`fullArabicText`, unchanged — this correction pass did not alter it.)
 

@@ -5,8 +5,10 @@
 ## Exact source-document wording
 
 ```
-آيَة ٱلْكُرْسِيّ | ٱلْإِخْلَاص 3x | ٱلْفَلَق 3x| ٱلنَّاس  3x 
+آيَة ٱلْكُرْسِيّ | ٱلْإِخْلَاص 3x | ٱلْفَلَق 3x| ٱلنَّاس  3x
 ```
+
+Displayed audit notation: `…النَّاس  3x␠` — here `␠` represents one literal trailing space present at the very end of the source document's `originalDocumentText`, immediately after the final `3x`. This marker is editorial notation added for this report only; it is not part of the recited Arabic text and is not present in the fenced code block above (which is trimmed for Markdown formatting). `originalDocumentText`/`fullArabicText` themselves are unchanged and still contain the literal trailing space.
 
 (`originalDocumentText`/`fullArabicText`, unchanged from Stage 3A — see [docs/dhikr/32-morning-dhikr-source-register.md](../32-morning-dhikr-source-register.md).)
 
