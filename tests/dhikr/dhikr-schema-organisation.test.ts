@@ -87,7 +87,7 @@ function testAllSevenGroupsExist() {
 
 function testEveryFieldAssignedExactlyOnceExceptReviewStatus() {
   const allFieldNames = fields.map((f) => f.name);
-  assert(allFieldNames.length === 15, `dhikrItem must still have exactly 15 fields, found ${allFieldNames.length}`);
+  assert(allFieldNames.length === 18, `dhikrItem must have exactly 18 fields (15 plus Stage 2's mdrSourceId, timingLabel, virtueText), found ${allFieldNames.length}`);
 
   for (const field of fields) {
     const memberships = groupsOf(field);
@@ -114,10 +114,10 @@ function testBoardApprovalsNotDuplicatedAcrossGroups() {
 
 function testGroupToFieldMapping() {
   const expectedMapping: Record<string, string[]> = {
-    identity: ["category", "order", "titleEn", "titleDa", "slug", "tags"],
+    identity: ["mdrSourceId", "category", "order", "titleEn", "titleDa", "slug", "tags"],
     arabicSourceText: ["arabicText", "transliteration"],
     supportingTranslations: ["translationEn", "translationDa"],
-    repetitionGuidance: ["recommendedRepetitions", "audioAsset"],
+    repetitionGuidance: ["recommendedRepetitions", "audioAsset", "timingLabel", "virtueText"],
     sourcesAndAuthenticity: ["sourceReferences"],
   };
   for (const [groupName, expectedFieldNames] of Object.entries(expectedMapping)) {

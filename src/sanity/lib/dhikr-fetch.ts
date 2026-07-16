@@ -113,6 +113,7 @@ export interface DhikrItemInternalDetail extends DhikrInternalCategorySummary {
   _id: string;
   _type: string;
   _updatedAt: string;
+  mdrSourceId?: string;
   titleEn: string;
   titleDa?: string;
   slug?: string;
@@ -123,6 +124,8 @@ export interface DhikrItemInternalDetail extends DhikrInternalCategorySummary {
   translationEn?: string;
   translationDa?: string;
   recommendedRepetitions?: number;
+  timingLabel?: string;
+  virtueText?: string;
   audioAssetTitle?: string;
   hasAudioAsset: boolean;
   sourceReferences: DhikrInternalSourceReference[];

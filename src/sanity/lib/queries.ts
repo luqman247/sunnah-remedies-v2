@@ -526,6 +526,7 @@ export const practitionerAnnouncementsQuery = groq`
 export const dhikrItemsPublicEligibleQuery = groq`
   *[_type == "dhikrItem" && ${DHIKR_ELIGIBILITY_GROQ}] | order(order asc) {
     _id,
+    mdrSourceId,
     "slug": slug.current,
     titleEn,
     titleDa,
@@ -534,6 +535,9 @@ export const dhikrItemsPublicEligibleQuery = groq`
     transliteration,
     translationEn,
     translationDa,
+    recommendedRepetitions,
+    timingLabel,
+    virtueText,
     "categoryName": category->nameEn,
     "categoryNameDa": category->nameDa,
     "categorySlug": category->slug.current,
@@ -603,6 +607,7 @@ export const dhikrItemsInternalDetailQuery = groq`
     _id,
     _type,
     _updatedAt,
+    mdrSourceId,
     titleEn,
     titleDa,
     "slug": slug.current,
@@ -617,6 +622,8 @@ export const dhikrItemsInternalDetailQuery = groq`
     translationEn,
     translationDa,
     recommendedRepetitions,
+    timingLabel,
+    virtueText,
     "audioAssetTitle": audioAsset->title,
     "hasAudioAsset": defined(audioAsset),
     "sourceReferences": sourceReferences[]{

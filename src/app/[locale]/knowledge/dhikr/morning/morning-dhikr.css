@@ -1,0 +1,140 @@
+/* Morning Dhikr — Arabic-first premium presentation.
+   Scoped to this route only; reuses the site's existing design tokens
+   (see src/app/globals.css) rather than inventing a new palette. */
+
+.morning-dhikr-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s5, 2.5rem);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.morning-dhikr-card {
+  background: var(--paper-deep, #e3dbc9);
+  border: 1px solid var(--rule, #d6ccb5);
+  border-radius: 0.75rem;
+  padding: var(--s4, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3, 1rem);
+}
+
+@media (min-width: 640px) {
+  .morning-dhikr-card {
+    padding: var(--s5, 2.5rem);
+    gap: var(--s4, 1.5rem);
+  }
+}
+
+.morning-dhikr-card__arabic {
+  text-align: right;
+  font-size: 1.4rem;
+  line-height: 2.1;
+  color: var(--ink, #201d16);
+}
+
+@media (min-width: 640px) {
+  .morning-dhikr-card__arabic {
+    font-size: 1.75rem;
+    line-height: 2.3;
+  }
+}
+
+.morning-dhikr-card__translation {
+  color: var(--ink-soft, #4a4638);
+}
+
+.morning-dhikr-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2, 0.75rem);
+}
+
+.morning-dhikr-card__badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sage-deep, #232a1e);
+  background: var(--paper, #ece6d8);
+  border: 1px solid var(--rule, #d6ccb5);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+}
+
+.morning-dhikr-card__divider {
+  border: none;
+  border-top: 1px solid var(--rule, #d6ccb5);
+  margin: 0;
+}
+
+.morning-dhikr-card__source {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--muted, #6e6656);
+}
+
+.morning-dhikr-card__source-label {
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brass, #9a7b4f);
+}
+
+.morning-dhikr-card__virtue {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--ink-soft, #4a4638);
+  border-left: 2px solid var(--brass, #9a7b4f);
+  padding-left: var(--s3, 1rem);
+}
+
+:root[dir="rtl"] .morning-dhikr-card__virtue,
+.morning-dhikr-card__virtue[dir="rtl"] {
+  border-left: none;
+  border-right: 2px solid var(--brass, #9a7b4f);
+  padding-left: 0;
+  padding-right: var(--s3, 1rem);
+}
+
+.morning-dhikr-empty-state,
+.morning-dhikr-error-state {
+  background: var(--paper-deep, #e3dbc9);
+  border: 1px solid var(--rule, #d6ccb5);
+  border-radius: 0.75rem;
+  padding: var(--s5, 2.5rem);
+  text-align: center;
+}
+
+.morning-dhikr-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s5, 2.5rem);
+}
+
+.morning-dhikr-skeleton__card {
+  background: var(--paper-deep, #e3dbc9);
+  border: 1px solid var(--rule, #d6ccb5);
+  border-radius: 0.75rem;
+  padding: var(--s5, 2.5rem);
+  height: 8rem;
+  animation: morning-dhikr-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes morning-dhikr-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .morning-dhikr-skeleton__card {
+    animation: none;
+  }
+}

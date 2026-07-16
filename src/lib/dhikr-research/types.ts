@@ -50,7 +50,28 @@ export type WordingMatchStatus =
   | "materially-different";
 
 /** Whether this record may be imported into the approved dhikrItem schema. */
-export type ImportStatus = "research-only" | "import-ready" | "imported" | "rejected";
+export type ImportStatus = "research-only" | "review-complete" | "import-ready" | "imported" | "rejected";
+
+/**
+ * Controlled scholarly-adjudication outcome (Stage 4). "pending" is the only
+ * value any of the 30 Stage 3B records may hold until a completed, second-
+ * reviewed decision record (docs/dhikr/review/MDR-SCHOLARLY-DECISION-RECORD-
+ * TEMPLATE.md) is transcribed in via a separate, explicitly-approved commit.
+ * See docs/dhikr/40-scholarly-review-and-adjudication-framework.md, §C.
+ */
+export type ScholarlyDecisionStatus =
+  | "pending"
+  | "approved"
+  | "approved-with-corrections"
+  | "deferred"
+  | "rejected";
+
+/**
+ * Controlled editorial-approval outcome — independent of, and required in
+ * addition to, scholarlyDecision (see framework §B: editorial approval
+ * cannot substitute for or override a scholarly/grading/wording decision).
+ */
+export type EditorialApprovalStatus = "pending" | "approved" | "revision-required" | "rejected";
 
 export interface DhikrSourceResearchRecord {
   // --- Transcription fields (populated in Stage 3A) ---
@@ -96,9 +117,56 @@ export interface DhikrSourceResearchRecord {
   virtueEvidence: string;
   sourceUrls: string[];
   usulAiResearchNotes: string;
+
+  // --- Operational scholarly-review fields (Stage 2 of the launch plan) ---
+  // See docs/dhikr/40-scholarly-review-and-adjudication-framework.md. All of
+  // these remain empty/"pending" for every one of the 30 Stage 3B records
+  // until a completed, second-reviewed decision record is transcribed in via
+  // a separate, explicitly-approved commit — this schema change alone
+  // approves nothing.
+  /** Primary reviewer's name. Empty until Stage 4B review actually occurs. */
   scholarlyReviewer: string;
-  /** Free-text decision record. "pending" is the Stage 3A default meaning "not yet reviewed". */
-  scholarlyDecision: string;
+  /** Primary reviewer's stated qualification (institution, ijazah, field of expertise). */
+  scholarlyReviewerQualification: string;
+  /** ISO date (YYYY-MM-DD) the scholarly decision was finalised. Empty until decided. */
+  scholarlyReviewDate: string;
+  /** Controlled decision outcome. "pending" is the only live value across all 30 records today. */
+  scholarlyDecision: ScholarlyDecisionStatus;
+  /** Free-text scholarly rationale/caveats, distinct from editorialNotes below. */
+  scholarlyNotes: string;
+  /**
+   * Approved publication Arabic wording — a DISTINCT field from the protected
+   * fullArabicText/originalDocumentText. Never written back into either
+   * protected field; see §3 "Protect original evidence" in the Stage 2
+   * launch plan and framework §E.
+   */
+  approvedArabicText: string;
+  /** Approved publication English translation. Empty until approved. */
+  approvedEnglishText: string;
+  /** Approved, reviewer-confirmed source citation, distinct from primaryReference/secondaryReferences (which are research-stage, not adjudicated). */
+  approvedSourceReference: string;
+  /** Approved timing label for publication (e.g. a MorningSpecificStatus value), confirmed by the reviewer — distinct from morningSpecificStatus, which is a research-stage classification. */
+  approvedTiming: string;
+  /** Approved repetition count for publication, distinct from the unauthenticated repetitionCount above. */
+  approvedRepetitionCount?: number;
+  /** Approved virtue/reward text for publication, distinct from virtueOrRewardClaim (research-stage). Only populated where a claim is genuinely supported — see framework §H. */
+  approvedVirtueText: string;
+  /** Editorial approver's name. Independent of, and required in addition to, scholarlyReviewer. */
+  editorialReviewer: string;
+  /** Controlled editorial-approval outcome — cannot substitute for scholarlyDecision (framework §B). */
+  editorialApproval: EditorialApprovalStatus;
+  /** ISO date (YYYY-MM-DD) editorial approval was finalised. Empty until approved. */
+  editorialApprovalDate: string;
+  /**
+   * For composite records only (those with a dedicated clause-map file under
+   * src/lib/dhikr-research/audits/ — see COMPOSITE_RECORD_IDS_WITH_CLAUSE_MAPS
+   * in ./validation.ts): true only once every individual clause has been
+   * independently approved. There is no whole-record shortcut for a
+   * composite record — framework §I. Undefined/false for non-composite
+   * records and for every record today.
+   */
+  compositeClausesApproved?: boolean;
+
   editorialNotes: string;
   importStatus: ImportStatus;
 }
