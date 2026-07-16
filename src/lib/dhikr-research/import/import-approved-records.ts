@@ -26,7 +26,7 @@
  */
 
 import { MORNING_DHIKR_SOURCE_REGISTER } from "../morning-dhikr-register";
-import { computeImportGate, COMPOSITE_RECORD_IDS_WITH_CLAUSE_MAPS } from "../validation";
+import { computeImportGate, computeEditorialPublicationGate, COMPOSITE_RECORD_IDS_WITH_CLAUSE_MAPS } from "../validation";
 import type { DhikrSourceResearchRecord } from "../types";
 import { writeClient } from "@/sanity/lib/write-client";
 
@@ -36,9 +36,12 @@ export type ImportOutcome =
   | "skipped-not-ready"
   | "skipped-composite-incomplete";
 
+export type ImportPathway = "scholarly-approved" | "editorial-publication";
+
 export interface ImportAuditEntry {
   internalId: string;
   outcome: ImportOutcome;
+  pathway?: ImportPathway;
   sanityDocumentId?: string;
   blockedReasons: string[];
 }
@@ -62,9 +65,19 @@ function sanityDocumentIdFor(internalId: string): string {
  * reads or writes originalDocumentText/fullArabicText/openingArabicWords —
  * those protected transcription fields have no Sanity counterpart and are
  * never part of this mapping.
+ *
+ * pathway "scholarly-approved": writes both scholarly and editorial
+ * boardApprovals entries — only reachable when computeImportGate passed,
+ * which itself requires a real scholarlyReviewer/scholarlyDecision.
+ *
+ * pathway "editorial-publication": writes ONLY an editorial boardApprovals
+ * entry and sets editorialPublicationStatus — never writes a scholarly
+ * boardApprovals entry, never invents a scholarly reviewer. Only reachable
+ * when computeEditorialPublicationGate passed, which itself requires
+ * scholarlyDecision to still be "pending".
  */
-function toApprovedContentFields(record: DhikrSourceResearchRecord) {
-  return {
+function toApprovedContentFields(record: DhikrSourceResearchRecord, pathway: ImportPathway) {
+  const base = {
     mdrSourceId: record.internalId,
     order: record.sequenceNumber,
     arabicText: record.approvedArabicText,
@@ -81,6 +94,27 @@ function toApprovedContentFields(record: DhikrSourceResearchRecord) {
         verifiedStatus: "verified",
       },
     ],
+  };
+
+  const editorialApproval = {
+    _type: "boardApproval",
+    _key: "editorial",
+    board: "editorial",
+    approved: true,
+    approver: record.editorialReviewer,
+    date: record.editorialApprovalDate,
+  };
+
+  if (pathway === "editorial-publication") {
+    return {
+      ...base,
+      editorialPublicationStatus: "editorially-published-pending-scholarly-review",
+      boardApprovals: [editorialApproval],
+    };
+  }
+
+  return {
+    ...base,
     boardApprovals: [
       {
         _type: "boardApproval",
@@ -91,14 +125,7 @@ function toApprovedContentFields(record: DhikrSourceResearchRecord) {
         date: record.scholarlyReviewDate,
         notes: record.scholarlyNotes || undefined,
       },
-      {
-        _type: "boardApproval",
-        _key: "editorial",
-        board: "editorial",
-        approved: true,
-        approver: record.editorialReviewer,
-        date: record.editorialApprovalDate,
-      },
+      editorialApproval,
     ],
   };
 }
@@ -121,22 +148,32 @@ export async function runApprovedDhikrImport(
   const entries: ImportAuditEntry[] = [];
 
   for (const record of MORNING_DHIKR_SOURCE_REGISTER) {
-    const gate = computeImportGate(record);
+    const scholarlyGate = computeImportGate(record);
+    const editorialGate = computeEditorialPublicationGate(record);
 
-    if (!gate.canImport) {
+    const pathway: ImportPathway | undefined = scholarlyGate.canImport
+      ? "scholarly-approved"
+      : editorialGate.canImport
+        ? "editorial-publication"
+        : undefined;
+
+    if (!pathway) {
       const isCompositeIncomplete =
         COMPOSITE_RECORD_IDS_WITH_CLAUSE_MAPS.includes(record.internalId) &&
         record.compositeClausesApproved !== true;
       entries.push({
         internalId: record.internalId,
         outcome: isCompositeIncomplete ? "skipped-composite-incomplete" : "skipped-not-ready",
-        blockedReasons: gate.blockedReasons,
+        // Report the scholarly gate's reasons as primary (it is the fuller,
+        // canonical pathway) — the editorial gate's reasons are a subset
+        // concern in practice and would only add noise here.
+        blockedReasons: scholarlyGate.blockedReasons,
       });
       continue;
     }
 
     const documentId = sanityDocumentIdFor(record.internalId);
-    const fields = toApprovedContentFields(record);
+    const fields = toApprovedContentFields(record, pathway);
     const alreadyExists = dryRun ? false : await documentExists(documentId);
 
     if (!dryRun) {
@@ -156,6 +193,7 @@ export async function runApprovedDhikrImport(
     entries.push({
       internalId: record.internalId,
       outcome: alreadyExists ? "updated" : "imported",
+      pathway,
       sanityDocumentId: documentId,
       blockedReasons: [],
     });
@@ -181,7 +219,7 @@ export function formatAuditReport(report: ImportAuditReport): string {
   lines.push("");
   for (const entry of report.entries) {
     if (entry.outcome === "imported" || entry.outcome === "updated") {
-      lines.push(`  [${entry.outcome.toUpperCase()}] ${entry.internalId} -> ${entry.sanityDocumentId}`);
+      lines.push(`  [${entry.outcome.toUpperCase()}] ${entry.internalId} -> ${entry.sanityDocumentId} (pathway: ${entry.pathway})`);
     } else {
       lines.push(`  [SKIPPED] ${entry.internalId} (${entry.outcome}):`);
       for (const reason of entry.blockedReasons) {

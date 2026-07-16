@@ -529,7 +529,7 @@
   "dhikrMorning": {
     "breadcrumb": "Morning Dhikr",
     "heading": "Morning Dhikr",
-    "lede": "Remembrance recited at the start of the day, verified against its source and reviewed before publication.",
+    "lede": "Remembrance recited at the start of the day, prepared from documented sources.",
     "emptyState": {
       "heading": "Under scholarly review",
       "body": "Morning Dhikr is currently undergoing scholarly review and will be available soon."
@@ -538,6 +538,8 @@
       "heading": "Temporarily unavailable",
       "body": "Morning Dhikr could not be loaded right now. Please try again shortly."
     },
+    "editorialNotice": "Editorial review status: These entries have been prepared from documented sources and are awaiting independent scholarly verification. They should not be treated as a formal fatwa or definitive hadith-authentication ruling.",
+    "pendingScholarlyReviewBadge": "Pending scholarly review",
     "recitedTextLabel": "Recited text",
     "sourceLabel": "Source",
     "timing": {
@@ -759,7 +761,7 @@
     },
     "dhikrMorning": {
       "title": "Morning Dhikr | Sunnah Remedies",
-      "description": "Verified morning remembrance from the Sunnah, reviewed by scholarly and editorial boards before publication, with Arabic as the authoritative source."
+      "description": "Morning remembrance from the Sunnah, prepared from documented sources, with Arabic as the authoritative source. Entries pending scholarly verification are clearly labelled as such."
     },
     "exhibitions": {
       "title": "Exhibitions",

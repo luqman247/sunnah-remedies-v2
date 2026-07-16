@@ -61,6 +61,9 @@ import { journey } from "./documents/journeys/journey";
 import { dhikrItem } from "./documents/dhikr/dhikr-item";
 import { dhikrCategory } from "./documents/dhikr/dhikr-category";
 
+// ── Documents: Dhikr MDR review drafts (staff-only, final launch stage) ──
+import { dhikrMdrReviewDraft } from "./documents/dhikr-review/dhikr-mdr-review-draft";
+
 // ── Documents: Knowledge Library ──
 import { article } from "./documents/knowledge/article";
 import { author } from "./documents/knowledge/author";
@@ -154,6 +157,7 @@ export const schemaTypes = [
   // Dhikr (prototype — see docs/dhikr/)
   dhikrItem,
   dhikrCategory,
+  dhikrMdrReviewDraft,
 
   // Knowledge Library
   article,

@@ -87,7 +87,7 @@ function testAllSevenGroupsExist() {
 
 function testEveryFieldAssignedExactlyOnceExceptReviewStatus() {
   const allFieldNames = fields.map((f) => f.name);
-  assert(allFieldNames.length === 18, `dhikrItem must have exactly 18 fields (15 plus Stage 2's mdrSourceId, timingLabel, virtueText), found ${allFieldNames.length}`);
+  assert(allFieldNames.length === 19, `dhikrItem must have exactly 19 fields (15 plus Stage 2's mdrSourceId/timingLabel/virtueText, plus editorialPublicationStatus), found ${allFieldNames.length}`);
 
   for (const field of fields) {
     const memberships = groupsOf(field);
@@ -130,9 +130,12 @@ function testGroupToFieldMapping() {
   // scholarlyReview: boardApprovals + reviewStatus (shared)
   const scholarly = fields.filter((f) => groupsOf(f).includes("scholarlyReview")).map((f) => f.name).sort();
   assert(JSON.stringify(scholarly) === JSON.stringify(["boardApprovals", "reviewStatus"]), `group "scholarlyReview" must contain exactly [boardApprovals, reviewStatus], found [${scholarly.join(", ")}]`);
-  // editorialReview: reviewStatus only (shared)
+  // editorialReview: reviewStatus (shared) + editorialPublicationStatus
   const editorial = fields.filter((f) => groupsOf(f).includes("editorialReview")).map((f) => f.name).sort();
-  assert(JSON.stringify(editorial) === JSON.stringify(["reviewStatus"]), `group "editorialReview" must contain exactly [reviewStatus], found [${editorial.join(", ")}]`);
+  assert(
+    JSON.stringify(editorial) === JSON.stringify(["editorialPublicationStatus", "reviewStatus"]),
+    `group "editorialReview" must contain exactly [editorialPublicationStatus, reviewStatus], found [${editorial.join(", ")}]`,
+  );
   console.log("✓ every group's field membership matches the exact reported mapping");
 }
 

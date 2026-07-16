@@ -2,6 +2,36 @@
    Scoped to this route only; reuses the site's existing design tokens
    (see src/app/globals.css) rather than inventing a new palette. */
 
+.morning-dhikr-editorial-notice {
+  background: var(--paper, #ece6d8);
+  border: 1px solid var(--oxblood, #8a4b3b);
+  border-left-width: 4px;
+  border-radius: 0.5rem;
+  padding: var(--s3, 1rem) var(--s4, 1.5rem);
+  margin-bottom: var(--s4, 1.5rem);
+}
+
+.morning-dhikr-editorial-notice p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft, #4a4638);
+}
+
+.morning-dhikr-card__pending-badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--oxblood, #8a4b3b);
+  background: var(--paper, #ece6d8);
+  border: 1px solid var(--oxblood, #8a4b3b);
+  border-radius: 999px;
+  padding: 0.25rem 0.65rem;
+}
+
 .morning-dhikr-list {
   display: flex;
   flex-direction: column;

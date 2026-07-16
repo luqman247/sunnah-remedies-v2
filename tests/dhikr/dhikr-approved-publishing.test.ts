@@ -68,6 +68,7 @@ function makeCompleteApprovedFixture(overrides: Partial<DhikrSourceResearchRecor
     editorialReviewer: "Test Editor",
     editorialApproval: "approved",
     editorialApprovalDate: "2026-01-02",
+    publicationReviewStatus: "not-published",
     editorialNotes: "",
     importStatus: "import-ready",
   };
@@ -76,17 +77,38 @@ function makeCompleteApprovedFixture(overrides: Partial<DhikrSourceResearchRecor
 
 /* ── 1. All 30 current records remain pending and blocked ────────────── */
 
+/**
+ * Two records (MDR-002, MDR-011) have a real, named editorial reviewer and
+ * editorialApproval: "approved" via the SEPARATE editorial-publication
+ * pathway (see docs/dhikr/40-... and
+ * tests/dhikr/dhikr-editorial-publication-model.test.ts) — this is
+ * intentional, not a regression. Three further candidates originally
+ * considered (MDR-006, MDR-008, MDR-015) were withdrawn after a stricter
+ * evidence-tier review found genuine unresolved wording points on each and
+ * were reverted to their pre-launch state — see each record's scholarlyNotes.
+ * scholarlyDecision, scholarlyReviewer, and importStatus are unaffected and
+ * remain pending/empty/research-only for all 30, and every record —
+ * including these two — must still fail the SCHOLARLY pathway
+ * (computeImportGate), which never reads editorialApproval as a substitute
+ * for a real scholarly decision.
+ */
+const EDITORIALLY_APPROVED_RECORD_IDS = new Set(["MDR-002", "MDR-011"]);
+
 function testAll30RecordsRemainPendingAndBlocked() {
   assert(MORNING_DHIKR_SOURCE_REGISTER.length === 30, `Expected 30 records, found ${MORNING_DHIKR_SOURCE_REGISTER.length}`);
   for (const record of MORNING_DHIKR_SOURCE_REGISTER) {
     assert(record.scholarlyDecision === "pending", `${record.internalId}.scholarlyDecision must remain "pending", found "${record.scholarlyDecision}"`);
-    assert(record.editorialApproval === "pending", `${record.internalId}.editorialApproval must remain "pending", found "${record.editorialApproval}"`);
+    if (EDITORIALLY_APPROVED_RECORD_IDS.has(record.internalId)) {
+      assert(record.editorialApproval === "approved", `${record.internalId} is expected to have editorialApproval "approved" via the editorial-publication pathway, found "${record.editorialApproval}"`);
+    } else {
+      assert(record.editorialApproval === "pending", `${record.internalId}.editorialApproval must remain "pending", found "${record.editorialApproval}"`);
+    }
     assert(record.importStatus === "research-only", `${record.internalId}.importStatus must remain "research-only", found "${record.importStatus}"`);
     assert(record.scholarlyReviewer === "", `${record.internalId}.scholarlyReviewer must remain empty`);
     const gate = computeImportGate(record);
-    assert(gate.canImport === false, `${record.internalId} unexpectedly passes computeImportGate`);
+    assert(gate.canImport === false, `${record.internalId} unexpectedly passes the SCHOLARLY computeImportGate`);
   }
-  console.log("✓ all 30 current records remain pending, unassigned, research-only, and blocked");
+  console.log(`✓ all 30 current records remain scholarlyDecision-pending, unassigned, research-only, and blocked from the scholarly pathway (${EDITORIALLY_APPROVED_RECORD_IDS.size} legitimately editorially-approved via the separate pathway)`);
 }
 
 /* ── 2. Approved-only gate requirements work (happy path) ─────────────── */
@@ -185,7 +207,11 @@ async function testImportIsIdempotentInDryRun() {
   const second = await runApprovedDhikrImport({ dryRun: true });
   assert(first.dryRun === true && second.dryRun === true, "Both runs must be dry runs");
   assert(first.totalRecords === second.totalRecords, "Repeated dry runs must evaluate the same total record count");
-  assert(first.imported === 0 && first.updated === 0, "No live records are import-ready, so nothing should be imported or updated");
+  assert(first.updated === 0, "A dry run must never report an 'updated' outcome (that requires a live Sanity read, which dry-run mode skips)");
+  assert(
+    first.imported === second.imported,
+    "Repeated dry runs against unchanged data must report the same imported count",
+  );
   assert(
     JSON.stringify(first.entries.map((e) => e.outcome)) === JSON.stringify(second.entries.map((e) => e.outcome)),
     "Repeated dry runs against unchanged data must produce identical per-record outcomes",
@@ -301,8 +327,8 @@ async function testNoRealImportRunsDuringTests() {
   );
   const report = await runApprovedDhikrImport();
   assert(report.dryRun === true, "Calling runApprovedDhikrImport() with no arguments must default to dry-run");
-  assert(report.imported === 0 && report.updated === 0, "No writes should occur against the live register during tests");
-  console.log("✓ the import defaults to dry-run, and no real import occurred while running this test suite");
+  assert(report.updated === 0, "A dry run must never report an 'updated' outcome — no live Sanity read/write occurs");
+  console.log(`✓ the import defaults to dry-run (${report.imported} record(s) would import, 0 actually written), and no real import occurred while running this test suite`);
 }
 
 async function runAll() {
