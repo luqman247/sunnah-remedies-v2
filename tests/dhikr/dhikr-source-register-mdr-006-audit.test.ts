@@ -422,9 +422,19 @@ function testSourceResearchStatusMatchesActualEvidence() {
 }
 
 function testWordingMatchStatusMatchesComparison() {
+  // A later, separate editorial-launch verification pass (2026-07-16)
+  // briefly reclassified this record as "minor-orthographic-variation" on
+  // the strength of one convergently-resolved point (al-Malik/al-Mulk), but
+  // a subsequent evidence-tier correction (same date) found that treatment
+  // too permissive: three further wording points remain genuinely
+  // unresolved and were never independently confirmed, so a record with
+  // multiple open wording questions does not meet the bar for a resolved
+  // status even where one point is well-corroborated. wordingMatchStatus
+  // was restored to "unresolved" and MDR-006 was withdrawn from editorial
+  // publication — see scholarlyNotes for the full corrected reasoning.
   assert(
     MDR_006.wordingMatchStatus === "unresolved",
-    `MDR-006.wordingMatchStatus is "${MDR_006.wordingMatchStatus}", expected "unresolved" — narration identity is strongly supported, but the wording relationship is not yet text-critically resolved`,
+    `MDR-006.wordingMatchStatus is "${MDR_006.wordingMatchStatus}", expected "unresolved" — narration identity is strongly supported, but the wording relationship is not yet text-critically resolved (see scholarlyNotes for the corrected editorial-launch reasoning)`,
   );
   console.log('✓ MDR-006.wordingMatchStatus ("unresolved") reflects that raw character-for-character comparison has not been done');
 }

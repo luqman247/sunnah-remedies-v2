@@ -73,6 +73,29 @@ export type ScholarlyDecisionStatus =
  */
 export type EditorialApprovalStatus = "pending" | "approved" | "revision-required" | "rejected";
 
+/**
+ * Which publication pathway (if either) a record currently occupies.
+ * "not-published" is the only value any of the 30 records may hold until a
+ * human editorial reviewer actually approves specific public wording (the
+ * "editorially-published-pending-scholarly-review" transition) — this type
+ * existing does not itself publish or approve anything.
+ *
+ * Two distinct, coexisting pathways:
+ *  - "editorially-published-pending-scholarly-review": the lighter-weight
+ *    transparent-editorial model — publishable once editorial (not
+ *    scholarly) review confirms the public wording, documented sourcing,
+ *    and absence of unsupported claims, with a mandatory public "awaiting
+ *    scholarly verification" label. scholarlyDecision remains "pending".
+ *  - "scholarly-verified-published": the full Stage 4 scholarly-approval
+ *    pathway (see docs/dhikr/40-scholarly-review-and-adjudication-
+ *    framework.md) — kept intact, unaffected by this type's addition, for
+ *    future use once real scholarly review actually occurs.
+ */
+export type PublicationReviewStatus =
+  | "not-published"
+  | "editorially-published-pending-scholarly-review"
+  | "scholarly-verified-published";
+
 export interface DhikrSourceResearchRecord {
   // --- Transcription fields (populated in Stage 3A) ---
   /** Editorially authoritative position in the source document, 1-30. Never used for storage order — see assertRegisterStoredInAuthoritativeOrder. */
@@ -166,6 +189,14 @@ export interface DhikrSourceResearchRecord {
    * records and for every record today.
    */
   compositeClausesApproved?: boolean;
+
+  /**
+   * Which publication pathway this record currently occupies. "not-published"
+   * for every one of the 30 records until a human editorial reviewer (this
+   * pathway) or scholarly reviewer (the existing pathway) actually approves
+   * it — see PublicationReviewStatus above.
+   */
+  publicationReviewStatus: PublicationReviewStatus;
 
   editorialNotes: string;
   importStatus: ImportStatus;

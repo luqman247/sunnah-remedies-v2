@@ -11,13 +11,16 @@ import "./morning-dhikr.css";
  * Morning Dhikr — public route.
  *
  * Data comes exclusively from getMorningDhikrItemsPublic()
- * (src/sanity/lib/dhikr-public-fetch.ts), which itself calls
- * getDhikrItemsPublic() — the same canonical-eligibility-gated query used
- * by the general /knowledge-library/dhikr landing page — and applies one
- * further, additive filter on the approved timingLabel field. This route
- * never imports the staff-only src/sanity/lib/dhikr-fetch.ts and never
- * reads the research register (src/lib/dhikr-research/*) directly —
- * nothing rendered here can be an unreviewed, unapproved, disputed, or
+ * (src/sanity/lib/dhikr-public-fetch.ts), which merges two SEPARATE
+ * eligibility pathways: the canonical scholarly-approved gate (unchanged)
+ * and the additive editorial-publication gate (DHIKR_EDITORIAL_ELIGIBILITY_
+ * GROQ) — then applies one further, additive filter on the approved
+ * timingLabel field. Each returned item carries a `publicationPathway` tag;
+ * this page renders the mandatory "pending scholarly review" notice and
+ * per-card badge whenever any visible item took the editorial-only path.
+ * This route never imports the staff-only src/sanity/lib/dhikr-fetch.ts and
+ * never reads the research register (src/lib/dhikr-research/*) directly —
+ * nothing rendered here can be an unreviewed, disputed, composite, or
  * research-only record.
  *
  * @see docs/dhikr/40-scholarly-review-and-adjudication-framework.md
@@ -85,11 +88,18 @@ export default async function MorningDhikrPage({
           <p className="type-body">{t("emptyState.body")}</p>
         </section>
       ) : (
-        <ol className="morning-dhikr-list" aria-label={t("heading")}>
+        <>
+          {items.some((item) => item.publicationPathway === "editorial-pending-scholarly-review") && (
+            <div className="morning-dhikr-editorial-notice" role="note">
+              <p className="type-body">{t("editorialNotice")}</p>
+            </div>
+          )}
+          <ol className="morning-dhikr-list" aria-label={t("heading")}>
           {items.map((item) => {
             const translation = locale === "da" && item.translationDa ? item.translationDa : item.translationEn;
             const primaryReference = item.sourceReferences[0]?.citation;
             const timingKey = isKnownTimingKey(item.timingLabel) ? item.timingLabel : undefined;
+            const pendingScholarlyReview = item.publicationPathway === "editorial-pending-scholarly-review";
 
             return (
               <li key={item._id}>
@@ -97,6 +107,10 @@ export default async function MorningDhikrPage({
                   className="morning-dhikr-card"
                   aria-labelledby={`morning-dhikr-${item._id}-arabic`}
                 >
+                  {pendingScholarlyReview && (
+                    <span className="morning-dhikr-card__pending-badge">{t("pendingScholarlyReviewBadge")}</span>
+                  )}
+
                   <p
                     id={`morning-dhikr-${item._id}-arabic`}
                     className="type-arabic morning-dhikr-card__arabic"
@@ -143,7 +157,8 @@ export default async function MorningDhikrPage({
               </li>
             );
           })}
-        </ol>
+          </ol>
+        </>
       )}
     </SectionPage>
   );

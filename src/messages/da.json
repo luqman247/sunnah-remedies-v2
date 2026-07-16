@@ -529,7 +529,7 @@
   "dhikrMorning": {
     "breadcrumb": "Morgen-dhikr",
     "heading": "Morgen-dhikr",
-    "lede": "Dhikr reciteret ved dagens begyndelse, verificeret mod sin kilde og gennemgået før udgivelse.",
+    "lede": "Dhikr reciteret ved dagens begyndelse, udarbejdet fra dokumenterede kilder.",
     "emptyState": {
       "heading": "Under faglig gennemgang",
       "body": "Morgen-dhikr er i øjeblikket under faglig gennemgang og vil være tilgængelig snart."
@@ -538,6 +538,8 @@
       "heading": "Midlertidigt utilgængelig",
       "body": "Morgen-dhikr kunne ikke indlæses lige nu. Prøv venligst igen om lidt."
     },
+    "editorialNotice": "Redaktionel gennemgangsstatus: Disse tekster er udarbejdet fra dokumenterede kilder og afventer uafhængig faglig verifikation. De bør ikke betragtes som en formel fatwa eller en endelig autentificering af hadith.",
+    "pendingScholarlyReviewBadge": "Afventer faglig gennemgang",
     "recitedTextLabel": "Reciteret tekst",
     "sourceLabel": "Kilde",
     "timing": {
@@ -759,7 +761,7 @@
     },
     "dhikrMorning": {
       "title": "Morgen-dhikr | Sunnah Remedies",
-      "description": "Verificeret morgen-dhikr fra Sunnah, gennemgået af et fagligt og et redaktionelt udvalg før udgivelse, med arabisk som den autoritative kildetekst."
+      "description": "Morgen-dhikr fra Sunnah, udarbejdet fra dokumenterede kilder, med arabisk som den autoritative kildetekst. Tekster, der afventer faglig verifikation, er tydeligt mærket som sådan."
     },
     "exhibitions": {
       "title": "Udstillinger",

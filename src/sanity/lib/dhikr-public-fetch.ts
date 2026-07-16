@@ -42,7 +42,7 @@
  */
 
 import { client } from "./client";
-import { dhikrItemsPublicEligibleQuery } from "./queries";
+import { dhikrItemsPublicEligibleQuery, dhikrItemsEditoriallyPublicEligibleQuery } from "./queries";
 
 /** Reader-safe projection of the sourceReference object — see queries.ts for field-by-field rationale. */
 export interface DhikrSourceReferencePublic {
@@ -83,17 +83,44 @@ export interface DhikrItemPublic {
   categoryNameDa?: string;
   categorySlug?: string;
   sourceReferences: DhikrSourceReferencePublic[];
+  /**
+   * Which publication pathway made this item publicly visible.
+   * "scholarly-approved": passed the canonical, unchanged eligibility gate
+   * (full scholarly + editorial board approval).
+   * "editorial-pending-scholarly-review": passed only the separate,
+   * lighter-weight editorial-publication gate — NOT scholarly-verified.
+   * Any UI rendering an item with this pathway must show a clear
+   * "pending scholarly review" label; see the Morning Dhikr page.
+   */
+  publicationPathway: "scholarly-approved" | "editorial-pending-scholarly-review";
 }
 
 /**
- * Every publicly eligible Dhikr item, ordered by `order asc`. Returns an
- * empty array (not an error) when zero items are eligible — this is the
- * expected state for the empty-state UI, not a failure mode.
+ * Every publicly eligible Dhikr item via the canonical, scholarly-approved
+ * pathway, ordered by `order asc`. Returns an empty array (not an error)
+ * when zero items are eligible — this is the expected state for the
+ * empty-state UI, not a failure mode.
  */
 export async function getDhikrItemsPublic(): Promise<DhikrItemPublic[]> {
   try {
-    const result = await client.fetch<DhikrItemPublic[]>(dhikrItemsPublicEligibleQuery);
-    return result ?? [];
+    const result = await client.fetch<Omit<DhikrItemPublic, "publicationPathway">[]>(dhikrItemsPublicEligibleQuery);
+    return (result ?? []).map((item) => ({ ...item, publicationPathway: "scholarly-approved" as const }));
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Every publicly eligible Dhikr item via the SEPARATE editorial-publication
+ * pathway (see src/sanity/lib/dhikr-publication-gate.ts,
+ * DHIKR_EDITORIAL_ELIGIBILITY_GROQ) — none of these have been
+ * scholarly-approved. Same fail-closed-to-empty-array behaviour as
+ * getDhikrItemsPublic().
+ */
+export async function getEditoriallyPublishedDhikrItemsPublic(): Promise<DhikrItemPublic[]> {
+  try {
+    const result = await client.fetch<Omit<DhikrItemPublic, "publicationPathway">[]>(dhikrItemsEditoriallyPublicEligibleQuery);
+    return (result ?? []).map((item) => ({ ...item, publicationPathway: "editorial-pending-scholarly-review" as const }));
   } catch {
     return [];
   }
@@ -103,14 +130,21 @@ export async function getDhikrItemsPublic(): Promise<DhikrItemPublic[]> {
 const MORNING_TIMING_LABELS = new Set(["morning-only", "morning-and-evening"]);
 
 /**
- * Every publicly eligible Dhikr item whose approved timingLabel qualifies it
- * for the Morning Dhikr page — a further, additive filter on top of
- * getDhikrItemsPublic()'s canonical eligibility gate, never a replacement
- * for it. An item with no timingLabel set is excluded (not assumed morning).
+ * Every publicly eligible Dhikr item (from EITHER pathway) whose approved
+ * timingLabel qualifies it for the Morning Dhikr page — a further, additive
+ * filter on top of each pathway's own eligibility gate, never a replacement
+ * for either. An item with no timingLabel set is excluded (not assumed
+ * morning). Results from both pathways are merged and re-sorted by `order`;
+ * each item's `publicationPathway` tells the caller which label to show.
  */
 export async function getMorningDhikrItemsPublic(): Promise<DhikrItemPublic[]> {
-  const items = await getDhikrItemsPublic();
-  return items.filter((item) => item.timingLabel !== undefined && MORNING_TIMING_LABELS.has(item.timingLabel));
+  const [scholarlyItems, editorialItems] = await Promise.all([
+    getDhikrItemsPublic(),
+    getEditoriallyPublishedDhikrItemsPublic(),
+  ]);
+  return [...scholarlyItems, ...editorialItems]
+    .filter((item) => item.timingLabel !== undefined && MORNING_TIMING_LABELS.has(item.timingLabel))
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 }
 
 export interface DhikrCategoryPublic {

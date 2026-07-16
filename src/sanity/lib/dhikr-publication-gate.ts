@@ -140,3 +140,102 @@ export function getDhikrEligibilityConditions(
 export function isDhikrItemPubliclyEligible(doc: DhikrItemEligibilityInput): boolean {
   return getDhikrEligibilityConditions(doc).every((condition) => condition.met);
 }
+
+/**
+ * Editorial-publication pathway — a SEPARATE, additive eligibility rule,
+ * deliberately independent of DHIKR_ELIGIBILITY_GROQ/isDhikrItemPubliclyEligible
+ * above (both frozen — see tests/dhikr/dhikr-schema-organisation.test.ts,
+ * "reviewStatus enum values are unchanged" / "the canonical gate ... is
+ * unchanged"). This rule requires only EDITORIAL board approval (never
+ * scholarly) plus editorialPublicationStatus explicitly set — it never
+ * reads or requires a scholarly board approval, and nothing that satisfies
+ * this rule is ever treated as scholarly-verified. Any route that surfaces
+ * content eligible only through this rule MUST display a "pending
+ * scholarly review" label — see docs/dhikr/41-editorial-publication-model.md
+ * and src/app/[locale]/knowledge/dhikr/morning/page.tsx.
+ *
+ * @see docs/dhikr/40-scholarly-review-and-adjudication-framework.md
+ */
+export const DHIKR_EDITORIAL_ELIGIBILITY_GROQ = `
+  editorialPublicationStatus == "editorially-published-pending-scholarly-review"
+  && defined(arabicText) && arabicText != ""
+  && defined(translationEn) && translationEn != ""
+  && defined(translationDa) && translationDa != ""
+  && count(sourceReferences) > 0
+  && count(boardApprovals[board == "editorial" && approved == true]) > 0
+`.trim();
+
+export interface DhikrItemEditorialEligibilityInput {
+  editorialPublicationStatus?: string;
+  arabicText?: string;
+  translationEn?: string;
+  translationDa?: string;
+  sourceReferences?: unknown[];
+  boardApprovals?: DhikrBoardApprovalLike[];
+}
+
+export interface DhikrEditorialEligibilityCondition {
+  key:
+    | "editorial-publication-status-set"
+    | "arabic-present"
+    | "english-translation-present"
+    | "danish-translation-present"
+    | "valid-source-reference-present"
+    | "editorial-approval-present";
+  label: string;
+  met: boolean;
+}
+
+/**
+ * Granular breakdown of DHIKR_EDITORIAL_ELIGIBILITY_GROQ — the exact same
+ * six conditions, mirroring the pattern of getDhikrEligibilityConditions
+ * above but for the separate editorial pathway. Deliberately does not
+ * include a scholarly-approval condition — this pathway can never require
+ * or imply one.
+ */
+export function getDhikrEditorialEligibilityConditions(
+  doc: DhikrItemEditorialEligibilityInput,
+): DhikrEditorialEligibilityCondition[] {
+  return [
+    {
+      key: "editorial-publication-status-set",
+      label: 'editorialPublicationStatus is "editorially-published-pending-scholarly-review"',
+      met: doc.editorialPublicationStatus === "editorially-published-pending-scholarly-review",
+    },
+    {
+      key: "arabic-present",
+      label: "Arabic text is present",
+      met: !!doc.arabicText,
+    },
+    {
+      key: "english-translation-present",
+      label: "English translation is present",
+      met: !!doc.translationEn,
+    },
+    {
+      key: "danish-translation-present",
+      label: "Danish translation is present",
+      met: !!doc.translationDa,
+    },
+    {
+      key: "valid-source-reference-present",
+      label: "At least one source reference is present",
+      met: Array.isArray(doc.sourceReferences) && doc.sourceReferences.length > 0,
+    },
+    {
+      key: "editorial-approval-present",
+      label: "An approved editorial board approval is present",
+      met: hasApprovedDhikrBoard(doc.boardApprovals, "editorial"),
+    },
+  ];
+}
+
+/**
+ * TypeScript mirror of DHIKR_EDITORIAL_ELIGIBILITY_GROQ. Never true for a
+ * document that hasn't had editorialPublicationStatus explicitly set by a
+ * real human editorial reviewer — nothing in this codebase sets that field
+ * automatically.
+ */
+export function isDhikrItemEditoriallyPubliclyEligible(doc: DhikrItemEditorialEligibilityInput): boolean {
+  return getDhikrEditorialEligibilityConditions(doc).every((condition) => condition.met);
+}

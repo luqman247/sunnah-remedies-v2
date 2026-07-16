@@ -202,3 +202,124 @@ export function computeImportGate(record: DhikrSourceResearchRecord): ImportGate
     blockedReasons,
   };
 }
+
+/**
+ * MDR-001 is a documented special case: a composite reference list with no
+ * clause-map file (see COMPOSITE_RECORD_IDS_WITH_CLAUSE_MAPS above). It is
+ * excluded from the editorial-publication pathway on the same "composite"
+ * grounds even though it has no clause map to independently approve.
+ */
+const COMPOSITE_RECORD_IDS_FOR_EDITORIAL_EXCLUSION = new Set<string>([
+  ...COMPOSITE_RECORD_IDS_WITH_CLAUSE_MAPS,
+  "MDR-001",
+]);
+
+/**
+ * The editorial-publication pathway is deliberately conservative about what
+ * counts as "wording resolved": a status of "unresolved" means the
+ * transcribed Arabic has never been checked against any verified
+ * primary-source wording at all — not merely that a difference was found.
+ * Publishing under a claim of "prepared from documented sources" requires
+ * an actual confirmed comparison, not merely the absence of a known
+ * problem. See docs/dhikr/... and the editorial-publication launch report
+ * for the reasoning; if this proves too strict in practice, loosen this set
+ * deliberately, not by silently treating "unresolved" as acceptable.
+ */
+const EDITORIAL_PUBLICATION_ACCEPTABLE_WORDING: DhikrSourceResearchRecord["wordingMatchStatus"][] = [
+  "exact-match",
+  "minor-orthographic-variation",
+  "recognised-narration-variant",
+];
+
+/**
+ * Determines whether a record may be published via the transparent
+ * editorial-publication pathway — a distinct, lighter-weight route from
+ * computeImportGate's scholarly-approval pathway above, which remains
+ * completely unmodified and available for future use. A record reaching
+ * "true" here still has scholarlyDecision: "pending" — this function never
+ * reads scholarlyDecision as a gating condition, and nothing in this
+ * codebase ever sets scholarlyDecision based on this function's result.
+ *
+ * This is a technical gate only: it may BLOCK publication, but it never
+ * sets, infers, or upgrades editorialApproval, editorialReviewer, or any
+ * approved* field — those only ever change because a real human editorial
+ * reviewer populated them via a separate, checkpoint-reviewed commit.
+ */
+export function computeEditorialPublicationGate(record: DhikrSourceResearchRecord): ImportGateResult {
+  const blockedReasons: string[] = [];
+
+  // --- Protected transcription must be genuinely unaltered ---
+  if (record.fullArabicText !== record.originalDocumentText) {
+    blockedReasons.push("fullArabicText has diverged from originalDocumentText — protected transcription must remain unaltered.");
+  }
+
+  // --- Exclusions from the launch scope ---
+  if (record.sourceResearchStatus === "disputed") {
+    blockedReasons.push("Record is disputed and excluded from the editorial-publication pathway.");
+  }
+
+  if (COMPOSITE_RECORD_IDS_FOR_EDITORIAL_EXCLUSION.has(record.internalId)) {
+    blockedReasons.push("Record is composite and excluded from the editorial-publication pathway.");
+  }
+
+  if (!EDITORIAL_PUBLICATION_ACCEPTABLE_WORDING.includes(record.wordingMatchStatus)) {
+    blockedReasons.push(`Wording is not confirmed-resolved for editorial publication (status: "${record.wordingMatchStatus}").`);
+  }
+
+  if (record.morningSpecificStatus === "uncertain") {
+    blockedReasons.push("Timing is uncertain and excluded from the editorial-publication pathway.");
+  }
+
+  if (record.repetitionCount !== undefined && record.repetitionEvidence.trim() === "") {
+    blockedReasons.push(`A visible repetition count (${record.repetitionCount}x) has no supporting evidence — omit repetition rather than publish it unsupported.`);
+  }
+
+  if (record.approvedVirtueText.trim() !== "" && record.virtueEvidence.trim() === "") {
+    blockedReasons.push("An approved virtue/reward text is set but has no supporting evidence — omit virtue text rather than publish it unsupported.");
+  }
+
+  // --- Documented sourcing and public wording must actually exist ---
+  if (record.approvedSourceReference.trim() === "") {
+    blockedReasons.push("No approved, documented source reference is recorded.");
+  }
+
+  if (record.approvedArabicText.trim() === "") {
+    blockedReasons.push("No approved Arabic publication text is recorded.");
+  }
+
+  if (record.approvedEnglishText.trim() === "") {
+    blockedReasons.push("No approved English translation is recorded.");
+  }
+
+  // --- A real editorial reviewer must have actually approved this ---
+  if (record.editorialApproval !== "approved") {
+    blockedReasons.push(`Editorial approval is not granted (status: "${record.editorialApproval}").`);
+  }
+
+  if (record.editorialReviewer.trim() === "") {
+    blockedReasons.push("No editorial reviewer is recorded.");
+  }
+
+  if (record.editorialApprovalDate.trim() === "") {
+    blockedReasons.push("No editorial approval date is recorded.");
+  }
+
+  // --- scholarlyDecision must remain untouched by this pathway ---
+  if (record.scholarlyDecision !== "pending") {
+    blockedReasons.push(
+      `scholarlyDecision is "${record.scholarlyDecision}", not "pending" — the editorial-publication pathway must never be used on a record with a real scholarly decision already recorded; use the scholarly pathway (computeImportGate) instead.`,
+    );
+  }
+
+  // --- Final technical gate: publicationReviewStatus must have been explicitly advanced ---
+  if (record.publicationReviewStatus !== "editorially-published-pending-scholarly-review") {
+    blockedReasons.push(
+      `Record is not marked for editorial publication (publicationReviewStatus: "${record.publicationReviewStatus}").`,
+    );
+  }
+
+  return {
+    canImport: blockedReasons.length === 0,
+    blockedReasons,
+  };
+}

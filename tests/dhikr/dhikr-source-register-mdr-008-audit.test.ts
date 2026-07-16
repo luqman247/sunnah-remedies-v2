@@ -436,9 +436,19 @@ function testInconsistentInternalSourcesNotSilentlyResolved() {
 }
 
 function testWordingMatchStatusMatchesComparison() {
+  // A later, separate editorial-launch verification pass (2026-07-16)
+  // briefly reclassified this record as "minor-orthographic-variation" on
+  // the strength of the most-corroborated of three open wording points
+  // (clause order), but a subsequent evidence-tier correction (same date)
+  // found that treatment too permissive: two further wording points remain
+  // genuinely unresolved (this pass's own sources even disagree with each
+  // other on one of them) and were never independently confirmed.
+  // wordingMatchStatus was restored to "unresolved" and MDR-008 was
+  // withdrawn from editorial publication — see scholarlyNotes for the full
+  // corrected reasoning.
   assert(
     MDR_008.wordingMatchStatus === "unresolved",
-    `MDR-008.wordingMatchStatus is "${MDR_008.wordingMatchStatus}", expected "unresolved"`,
+    `MDR-008.wordingMatchStatus is "${MDR_008.wordingMatchStatus}", expected "unresolved" (see scholarlyNotes for the corrected editorial-launch reasoning)`,
   );
   console.log('✓ MDR-008.wordingMatchStatus ("unresolved") reflects the absence of any raw, unmediated comparison text');
 }

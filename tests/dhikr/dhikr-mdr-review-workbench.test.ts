@@ -32,7 +32,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { execSync, spawn, type ChildProcess } from "node:child_process";
+import { spawn, type ChildProcess } from "node:child_process";
 import {
   validateDraftInput,
   summariseDrafts,
@@ -290,10 +290,23 @@ async function testNoDhikrItemCreatedByDraftWrite() {
 
 /* ── 10 (live half). The register file is untouched on disk ────────────── */
 
+const REGISTER_PATH = path.join(REPO_ROOT, "src/lib/dhikr-research/morning-dhikr-register.ts");
+const registerContentAtTestStart = fs.readFileSync(REGISTER_PATH, "utf8");
+
+/**
+ * Confirms running THIS test file never writes to the register — compares
+ * the file's content at test-module load time against its content after
+ * every other test has run, rather than asserting zero git diff (which
+ * would incorrectly fail whenever other, legitimate, already-in-progress
+ * register changes are staged/unstaged for unrelated reasons).
+ */
 function testRegisterFileUnmodifiedByThisTestRun() {
-  const diff = execSync("git diff --stat -- src/lib/dhikr-research/morning-dhikr-register.ts", { cwd: REPO_ROOT }).toString();
-  assert(diff.trim() === "", `The research register must show no uncommitted diff from running these tests, found: ${diff}`);
-  console.log("✓ the research register file has no diff after running the full test suite");
+  const registerContentNow = fs.readFileSync(REGISTER_PATH, "utf8");
+  assert(
+    registerContentNow === registerContentAtTestStart,
+    "The research register file changed while running this test suite — nothing in these tests may write to it",
+  );
+  console.log("✓ the research register file was not modified by running this test suite");
 }
 
 /* ── 1 & 2. Live-server integration: auth gating + full 30-record load ─── */

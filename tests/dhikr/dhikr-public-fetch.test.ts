@@ -195,10 +195,10 @@ function testCategoriesNeverQueriedDirectly() {
   );
   const fetchCallCount = (publicFetchSource.match(/client\.fetch/g) ?? []).length;
   assert(
-    fetchCallCount === 1,
-    `[static check] dhikr-public-fetch.ts should call client.fetch exactly once (the items query); found ${fetchCallCount} — a second call would suggest a separate category query was added`,
+    fetchCallCount === 2,
+    `[static check] dhikr-public-fetch.ts should call client.fetch exactly twice (the scholarly-approved items query and the separate editorial-publication items query — see dhikrItemsEditoriallyPublicEligibleQuery); found ${fetchCallCount} — an unexpected additional call would suggest a category query or a third pathway was added without review`,
   );
-  console.log("✓ [static check] dhikr-public-fetch.ts issues exactly one Sanity query and never queries dhikrCategory directly");
+  console.log("✓ [static check] dhikr-public-fetch.ts issues exactly two Sanity item queries (both non-category) and never queries dhikrCategory directly");
 }
 
 async function testGetDhikrCategoriesPublicGroupsFromItemsOnly() {
@@ -267,6 +267,7 @@ function testDhikrItemPublicTypeHasNoGovernanceKeys() {
     translationEn: "test",
     translationDa: "test",
     sourceReferences: [],
+    publicationPathway: "scholarly-approved",
   };
   const keys = Object.keys(sample);
   const forbiddenKeys = ["reviewStatus", "boardApprovals", "reviewer", "internalNote", "editorialNote"];

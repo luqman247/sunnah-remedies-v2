@@ -1,5 +1,5 @@
 import { groq } from "next-sanity";
-import { DHIKR_ELIGIBILITY_GROQ } from "./dhikr-publication-gate";
+import { DHIKR_ELIGIBILITY_GROQ, DHIKR_EDITORIAL_ELIGIBILITY_GROQ } from "./dhikr-publication-gate";
 
 /**
  * Translation siblings projection — reusable fragment for hreflang.
@@ -525,6 +525,47 @@ export const practitionerAnnouncementsQuery = groq`
 // directly).
 export const dhikrItemsPublicEligibleQuery = groq`
   *[_type == "dhikrItem" && ${DHIKR_ELIGIBILITY_GROQ}] | order(order asc) {
+    _id,
+    mdrSourceId,
+    "slug": slug.current,
+    titleEn,
+    titleDa,
+    order,
+    arabicText,
+    transliteration,
+    translationEn,
+    translationDa,
+    recommendedRepetitions,
+    timingLabel,
+    virtueText,
+    "categoryName": category->nameEn,
+    "categoryNameDa": category->nameDa,
+    "categorySlug": category->slug.current,
+    "sourceReferences": sourceReferences[]{
+      type,
+      citation,
+      hadithCollection,
+      hadithNumber,
+      hadithGrading,
+      surah,
+      ayah,
+      sourceUrl,
+      verifiedStatus
+    }
+  }
+`;
+
+/**
+ * Editorial-publication pathway — a SEPARATE query from
+ * dhikrItemsPublicEligibleQuery above (left byte-for-byte unchanged),
+ * applying DHIKR_EDITORIAL_ELIGIBILITY_GROQ instead of the canonical
+ * scholarly-approved rule. Never projects reviewStatus/boardApprovals/
+ * reviewer identity — same public-safe projection discipline as the
+ * canonical query. Any item returned by this query has NOT been
+ * scholarly-approved; callers must label it accordingly.
+ */
+export const dhikrItemsEditoriallyPublicEligibleQuery = groq`
+  *[_type == "dhikrItem" && ${DHIKR_EDITORIAL_ELIGIBILITY_GROQ}] | order(order asc) {
     _id,
     mdrSourceId,
     "slug": slug.current,

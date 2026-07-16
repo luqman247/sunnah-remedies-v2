@@ -288,6 +288,21 @@ export const dhikrItem = defineType({
       group: "scholarlyReview",
       validation: (rule) => rule.custom(requiredDhikrBoardApprovals),
     }),
+    defineField({
+      name: "editorialPublicationStatus",
+      title: "Editorial Publication Status",
+      type: "string",
+      description:
+        "A separate, additive publication pathway from reviewStatus/boardApprovals above — deliberately does not touch or weaken them (reviewStatus's canonical scholarly-approved eligibility rule is unchanged and frozen; see src/sanity/lib/dhikr-publication-gate.ts, DHIKR_ELIGIBILITY_GROQ). Set only once a real editorial reviewer approves this item's public wording; still requires editorial (not scholarly) boardApprovals. Public display must always show a \"pending scholarly review\" label alongside content published through this pathway — see src/sanity/lib/dhikr-publication-gate.ts, DHIKR_EDITORIAL_ELIGIBILITY_GROQ.",
+      options: {
+        list: [
+          { title: "(not published via this pathway)", value: "" },
+          { title: "Editorially published — pending scholarly review", value: "editorially-published-pending-scholarly-review" },
+        ],
+      },
+      initialValue: "",
+      group: "editorialReview",
+    }),
   ],
   orderings: [
     { title: "Order", name: "orderAsc", by: [{ field: "order", direction: "asc" }] },
