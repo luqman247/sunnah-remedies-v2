@@ -53,13 +53,13 @@ function testOnlyMdr002ChangedInThisStage() {
     "MDR-007",
     "MDR-008",
     "MDR-009",
-    ...Array.from({ length: 11 }, (_, i) => `MDR-${String(i + 10).padStart(3, "0")}`),
+    ...Array.from({ length: 21 }, (_, i) => `MDR-${String(i + 10).padStart(3, "0")}`),
   ]);
   const baseline = loadBaselineFixture().filter((r: { internalId: string }) => !excludedIds.has(r.internalId));
   const otherRecords = REGISTER.filter((r) => r.internalId !== "MDR-002" && !excludedIds.has(r.internalId));
   assert(
     otherRecords.length === baseline.length,
-    `Expected ${baseline.length} records besides MDR-002/MDR-003–009/MDR-010–020, found ${otherRecords.length}`,
+    `Expected ${baseline.length} records besides MDR-002/MDR-003–009/MDR-010–030, found ${otherRecords.length}`,
   );
   for (let i = 0; i < otherRecords.length; i++) {
     assert(
@@ -68,7 +68,7 @@ function testOnlyMdr002ChangedInThisStage() {
     );
   }
   console.log(
-    "✓ only MDR-002 changed in this stage; MDR-001 and MDR-021 through MDR-030 match checkpoint 8e2c46d exactly (MDR-003 through MDR-009 and MDR-010–020 verified separately)",
+    "✓ only MDR-002 changed in this stage; MDR-001 matches checkpoint 8e2c46d exactly (MDR-003 through MDR-009, MDR-010–020, and MDR-021–030 verified separately)",
   );
 }
 

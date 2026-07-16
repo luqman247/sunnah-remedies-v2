@@ -38,13 +38,17 @@ function loadBatchReport(): string {
   return fs.readFileSync(reportPath, "utf8");
 }
 
-// 1 & 2: MDR-001–009 and MDR-021–030 unchanged
+// 1 & 2: MDR-001–009 unchanged (MDR-021–030 excluded: legitimately researched
+// in a later batch pass, verified separately by
+// dhikr-source-register-mdr-021-030-batch-audit.test.ts against its own
+// later checkpoint baseline)
 function testMdr001Through009And021Through030Unchanged() {
-  const baseline = loadBaselineFixture();
-  const otherRecords = REGISTER.filter((r) => !BATCH_IDS.includes(r.internalId));
+  const laterResearchedIds = new Set(Array.from({ length: 10 }, (_, i) => `MDR-${String(i + 21).padStart(3, "0")}`));
+  const baseline = loadBaselineFixture().filter((r: { internalId: string }) => !laterResearchedIds.has(r.internalId));
+  const otherRecords = REGISTER.filter((r) => !BATCH_IDS.includes(r.internalId) && !laterResearchedIds.has(r.internalId));
   assert(
     otherRecords.length === baseline.length,
-    `Expected ${baseline.length} records besides MDR-010–020, found ${otherRecords.length}`,
+    `Expected ${baseline.length} records besides MDR-010–020 and MDR-021–030, found ${otherRecords.length}`,
   );
   for (let i = 0; i < otherRecords.length; i++) {
     assert(
@@ -52,7 +56,7 @@ function testMdr001Through009And021Through030Unchanged() {
       `${otherRecords[i].internalId} differs from its checkpoint e06f46c baseline — this batch pass must only touch MDR-010 through MDR-020`,
     );
   }
-  console.log("✓ MDR-001 through MDR-009 and MDR-021 through MDR-030 match checkpoint e06f46c exactly (19 records checked)");
+  console.log("✓ MDR-001 through MDR-009 match checkpoint e06f46c exactly (9 records checked; MDR-021–030 verified separately)");
 }
 
 // 3: protected transcription fields of MDR-010–020 unchanged
