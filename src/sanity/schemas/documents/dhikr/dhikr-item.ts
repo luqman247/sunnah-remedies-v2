@@ -28,6 +28,28 @@ const DHIKR_REVIEW_STATUS_TITLES: Record<(typeof DHIKR_REVIEW_STATUS_VALUES)[num
 };
 
 /**
+ * Approved timing labels for public display — mirrors the vocabulary of
+ * MorningSpecificStatus in src/lib/dhikr-research/types.ts, but this is a
+ * distinct, Sanity-native field: it is only ever set here by a human
+ * transcribing an already-approved decision, never read from or written
+ * back to the research register (see docs/dhikr/21-decision-log.md, ADR-020,
+ * for why the register stays outside Sanity).
+ */
+const DHIKR_TIMING_LABEL_VALUES = [
+  "morning-only",
+  "evening-only",
+  "morning-and-evening",
+  "not-time-specific",
+] as const;
+
+const DHIKR_TIMING_LABEL_TITLES: Record<(typeof DHIKR_TIMING_LABEL_VALUES)[number], string> = {
+  "morning-only": "Morning only",
+  "evening-only": "Evening only",
+  "morning-and-evening": "Morning and evening",
+  "not-time-specific": "Not time-specific",
+};
+
+/**
  * Dhikr Item — content model shape only. Empty in this prototype phase:
  * no Arabic text, translation, source citation, grading, or repetition
  * count has been populated anywhere.
@@ -78,6 +100,19 @@ export const dhikrItem = defineType({
     { name: "editorialReview", title: "Editorial Review" },
   ],
   fields: [
+    defineField({
+      name: "mdrSourceId",
+      title: "MDR Source ID",
+      type: "string",
+      description:
+        "Stable identifier of the research register record this item was imported from (e.g. \"MDR-006\"), for traceability back to src/lib/dhikr-research/morning-dhikr-register.ts. Set once, at import time, by the approved-only import workflow — never edited by hand thereafter. Optional while this prototype has no reviewed content; required before publishing.",
+      readOnly: true,
+      group: "identity",
+      validation: (rule) =>
+        rule
+          .custom(requiredWhenDhikrPublished("An MDR source ID is required before publishing."))
+          .regex(/^MDR-\d{3}$/, { name: "MDR ID format" }),
+    }),
     defineField({
       name: "category",
       title: "Category",
@@ -177,6 +212,26 @@ export const dhikrItem = defineType({
       title: "Recommended Repetitions",
       type: "number",
       description: "Must be sourced, not assumed — see docs/dhikr/07. Not populated in this architecture/prototype phase.",
+      group: "repetitionGuidance",
+    }),
+    defineField({
+      name: "timingLabel",
+      title: "Timing",
+      type: "string",
+      description:
+        "Approved timing category, confirmed by the reviewer at adjudication time — not inferred from category or chapter placement. Required before publishing so this item can appear on a timing-scoped public route (e.g. the Morning Dhikr page). Not populated in this architecture/prototype phase.",
+      options: {
+        list: DHIKR_TIMING_LABEL_VALUES.map((value) => ({ title: DHIKR_TIMING_LABEL_TITLES[value], value })),
+      },
+      group: "repetitionGuidance",
+      validation: (rule) => rule.custom(requiredWhenDhikrPublished("A timing label is required before publishing.")),
+    }),
+    defineField({
+      name: "virtueText",
+      title: "Virtue / Reward Text",
+      type: "text",
+      description:
+        "Approved virtue/reward wording, only ever populated where a reviewer has confirmed a genuinely supported claim — never a promotional simplification of a conditional or graded source claim (see docs/dhikr/40-scholarly-review-and-adjudication-framework.md, §H). Always optional: many items legitimately have no virtue text. Not populated in this architecture/prototype phase.",
       group: "repetitionGuidance",
     }),
     defineField({

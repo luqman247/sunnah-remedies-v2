@@ -466,8 +466,8 @@ function testComputeImportGateRemainsFalse() {
   const gate = computeImportGate(MDR_008);
   assert(gate.canImport === false, "MDR-008 unexpectedly passed computeImportGate");
   assert(
-    gate.blockedReasons.length === 4,
-    `MDR-008 should remain blocked by exactly four independent conditions, found ${gate.blockedReasons.length}: ${gate.blockedReasons.join(" | ")}`,
+    gate.blockedReasons.length === 13,
+    `MDR-008 should remain blocked by exactly thirteen independent conditions (Stage 2 strengthened the gate with operational approval checks), found ${gate.blockedReasons.length}: ${gate.blockedReasons.join(" | ")}`,
   );
   const expectedFragments = [
     /source research is not verified/i,
@@ -485,7 +485,7 @@ function testComputeImportGateRemainsFalse() {
     !gate.blockedReasons.some((r) => /hadith grading is absent/i.test(r)),
     "computeImportGate(MDR-008) must not cite absent grading — hadithGrading is populated and identifies the underlying narration",
   );
-  console.log(`✓ computeImportGate(MDR-008) remains false with exactly four blockers (source research, wording, scholarly approval, research-only status)`);
+  console.log(`✓ computeImportGate(MDR-008) remains false with thirteen blockers (source research, wording, scholarly approval, research-only status, plus Stage 2's operational approval-field checks)`);
 }
 
 function testNoSanityOrPublicFileChanged() {

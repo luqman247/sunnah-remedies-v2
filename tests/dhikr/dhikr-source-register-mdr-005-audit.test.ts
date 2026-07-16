@@ -466,8 +466,8 @@ function testComputeImportGateRemainsFalse() {
   const gate = computeImportGate(MDR_005);
   assert(gate.canImport === false, "MDR-005 unexpectedly passed computeImportGate");
   assert(
-    gate.blockedReasons.length === 5,
-    `MDR-005 should remain blocked by exactly five independent conditions, found ${gate.blockedReasons.length}: ${gate.blockedReasons.join(" | ")}`,
+    gate.blockedReasons.length === 15,
+    `MDR-005 should remain blocked by exactly fifteen independent conditions (Stage 2 strengthened the gate with operational approval checks), found ${gate.blockedReasons.length}: ${gate.blockedReasons.join(" | ")}`,
   );
   const expectedFragments = [
     /source research is not verified/i,
@@ -482,7 +482,7 @@ function testComputeImportGateRemainsFalse() {
       `computeImportGate(MDR-005) is missing an expected blocker matching ${fragment}`,
     );
   }
-  console.log(`✓ computeImportGate(MDR-005) remains false with exactly five blockers (source research, wording, grading, scholarly approval, research-only status) — the classification correction did not alter the canonical gate`);
+  console.log(`✓ computeImportGate(MDR-005) remains false with fifteen blockers (source research, wording, grading, scholarly approval, research-only status, plus Stage 2's operational approval-field and composite-clause checks) — the classification correction did not alter the canonical gate`);
 }
 
 function testNoSanityOrPublicFileChanged() {

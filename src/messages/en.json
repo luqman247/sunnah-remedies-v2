@@ -526,6 +526,29 @@
       "body": "Daily Dhikr is being prepared and reviewed. Verified entries will appear here once scholarly and editorial review is complete."
     }
   },
+  "dhikrMorning": {
+    "breadcrumb": "Morning Dhikr",
+    "heading": "Morning Dhikr",
+    "lede": "Remembrance recited at the start of the day, verified against its source and reviewed before publication.",
+    "emptyState": {
+      "heading": "Under scholarly review",
+      "body": "Morning Dhikr is currently undergoing scholarly review and will be available soon."
+    },
+    "errorState": {
+      "heading": "Temporarily unavailable",
+      "body": "Morning Dhikr could not be loaded right now. Please try again shortly."
+    },
+    "recitedTextLabel": "Recited text",
+    "sourceLabel": "Source",
+    "timing": {
+      "morning-only": "Morning",
+      "evening-only": "Evening",
+      "morning-and-evening": "Morning and evening",
+      "not-time-specific": "Not time-specific"
+    },
+    "repetitionLabel": "{count, plural, one {Recite once} other {Recite # times}}",
+    "virtueLabel": "Virtue"
+  },
   "consultations": {
     "title": "Clinical Consultations",
     "bookAppointment": "Book an appointment"
@@ -733,6 +756,10 @@
     "dhikr": {
       "title": "Daily Dhikr | Sunnah Remedies Knowledge Library",
       "description": "A Knowledge Library resource for verified daily remembrance from the Sunnah. Every entry is reviewed by scholarly and editorial boards before publication, with Arabic as the authoritative source and English and Danish as supporting translations."
+    },
+    "dhikrMorning": {
+      "title": "Morning Dhikr | Sunnah Remedies",
+      "description": "Verified morning remembrance from the Sunnah, reviewed by scholarly and editorial boards before publication, with Arabic as the authoritative source."
     },
     "exhibitions": {
       "title": "Exhibitions",

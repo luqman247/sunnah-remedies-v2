@@ -526,6 +526,29 @@
       "body": "Daglig dhikr er under forberedelse og gennemgang. Verificerede tekster vises her, når den faglige og redaktionelle gennemgang er afsluttet."
     }
   },
+  "dhikrMorning": {
+    "breadcrumb": "Morgen-dhikr",
+    "heading": "Morgen-dhikr",
+    "lede": "Dhikr reciteret ved dagens begyndelse, verificeret mod sin kilde og gennemgået før udgivelse.",
+    "emptyState": {
+      "heading": "Under faglig gennemgang",
+      "body": "Morgen-dhikr er i øjeblikket under faglig gennemgang og vil være tilgængelig snart."
+    },
+    "errorState": {
+      "heading": "Midlertidigt utilgængelig",
+      "body": "Morgen-dhikr kunne ikke indlæses lige nu. Prøv venligst igen om lidt."
+    },
+    "recitedTextLabel": "Reciteret tekst",
+    "sourceLabel": "Kilde",
+    "timing": {
+      "morning-only": "Morgen",
+      "evening-only": "Aften",
+      "morning-and-evening": "Morgen og aften",
+      "not-time-specific": "Ikke tidsbestemt"
+    },
+    "repetitionLabel": "{count, plural, one {Recitér én gang} other {Recitér # gange}}",
+    "virtueLabel": "Dyd"
+  },
   "consultations": {
     "title": "Kliniske Konsultationer",
     "bookAppointment": "Book en tid"
@@ -733,6 +756,10 @@
     "dhikr": {
       "title": "Daglig dhikr | Sunnah Remedies Vidensbibliotek",
       "description": "En ressource i Vidensbiblioteket med verificeret daglig dhikr fra Sunnah. Hver tekst gennemgås af både et fagligt og et redaktionelt udvalg før udgivelse, med arabisk som den autoritative kildetekst og engelsk og dansk som understøttende oversættelser."
+    },
+    "dhikrMorning": {
+      "title": "Morgen-dhikr | Sunnah Remedies",
+      "description": "Verificeret morgen-dhikr fra Sunnah, gennemgået af et fagligt og et redaktionelt udvalg før udgivelse, med arabisk som den autoritative kildetekst."
     },
     "exhibitions": {
       "title": "Udstillinger",

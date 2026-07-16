@@ -62,6 +62,7 @@ export default function middleware(req: NextRequest) {
     pathname.startsWith("/ops") ||
     pathname.startsWith("/intelligence") ||
     pathname.startsWith("/dhikr-review") ||
+    pathname.startsWith("/dhikr-mdr-review") ||
     pathname.startsWith("/sign-in")
   ) {
     return (authMiddleware as (req: NextRequest) => NextResponse)(req);

@@ -64,6 +64,8 @@ export interface DhikrSourceReferencePublic {
  */
 export interface DhikrItemPublic {
   _id: string;
+  /** Stable research-register identifier (e.g. "MDR-006"), for traceability only — not rendered as reviewer/workflow metadata. */
+  mdrSourceId?: string;
   slug?: string;
   titleEn: string;
   titleDa?: string;
@@ -72,6 +74,11 @@ export interface DhikrItemPublic {
   transliteration?: string;
   translationEn: string;
   translationDa: string;
+  recommendedRepetitions?: number;
+  /** Approved timing category — "morning-only" | "evening-only" | "morning-and-evening" | "not-time-specific". */
+  timingLabel?: string;
+  /** Approved virtue/reward text. Absent for most items — see docs/dhikr/40-scholarly-review-and-adjudication-framework.md, §H. */
+  virtueText?: string;
   categoryName?: string;
   categoryNameDa?: string;
   categorySlug?: string;
@@ -90,6 +97,20 @@ export async function getDhikrItemsPublic(): Promise<DhikrItemPublic[]> {
   } catch {
     return [];
   }
+}
+
+/** Timing labels that qualify an item for the Morning Dhikr page. */
+const MORNING_TIMING_LABELS = new Set(["morning-only", "morning-and-evening"]);
+
+/**
+ * Every publicly eligible Dhikr item whose approved timingLabel qualifies it
+ * for the Morning Dhikr page — a further, additive filter on top of
+ * getDhikrItemsPublic()'s canonical eligibility gate, never a replacement
+ * for it. An item with no timingLabel set is excluded (not assumed morning).
+ */
+export async function getMorningDhikrItemsPublic(): Promise<DhikrItemPublic[]> {
+  const items = await getDhikrItemsPublic();
+  return items.filter((item) => item.timingLabel !== undefined && MORNING_TIMING_LABELS.has(item.timingLabel));
 }
 
 export interface DhikrCategoryPublic {

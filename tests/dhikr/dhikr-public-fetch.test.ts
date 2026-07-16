@@ -152,7 +152,6 @@ function testPublicProjectionOmitsGovernanceFields() {
     "\"date\":", // boardApproval.date
     "notes,", // boardApproval.notes (internal editorial note)
     "audioAsset",
-    "recommendedRepetitions",
     "tags,",
     "_createdAt",
     "_updatedAt",
