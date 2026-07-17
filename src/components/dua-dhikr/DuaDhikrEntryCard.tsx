@@ -20,8 +20,8 @@ function isKnownTimingKey(value: string | undefined): value is (typeof KNOWN_TIM
 }
 
 /**
- * Reusable Duʿā & Dhikr entry component — see docs/dua-dhikr/CONTENT_MODEL.md
- * "Duʿā entry component" and docs/dua-dhikr/VISUAL_SYSTEM.md for the reading
+ * Reusable Duʿa & Dhikr entry component — see docs/dua-dhikr/CONTENT_MODEL.md
+ * "Duʿa entry component" and docs/dua-dhikr/VISUAL_SYSTEM.md for the reading
  * hierarchy (Arabic first, then translation, transliteration, virtue,
  * explanation, references). Virtue/explanation/references are collapsible;
  * Arabic and the primary translation are never hidden behind an accordion.

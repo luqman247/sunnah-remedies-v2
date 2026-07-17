@@ -1,5 +1,5 @@
 /**
- * Duʿā & Dhikr Publication Gate — single canonical eligibility rule for
+ * Duʿa & Dhikr Publication Gate — single canonical eligibility rule for
  * `duaDhikrEntry` documents.
  *
  * Deliberately mirrors src/sanity/lib/dhikr-publication-gate.ts (the
@@ -97,7 +97,7 @@ export function isDuaDhikrEntryPubliclyEligible(doc: DuaDhikrEntryEligibilityInp
 
 /**
  * Editorial-publication pathway — the temporary, reversible scholarly-review
- * bypass for THIS Duʿā & Dhikr expansion phase only (see docs/dua-dhikr/
+ * bypass for THIS Duʿa & Dhikr expansion phase only (see docs/dua-dhikr/
  * REVIEW_BYPASS.md). A SEPARATE, additive rule from DUA_DHIKR_ELIGIBILITY_GROQ
  * above — never touches or weakens it. Requires only an EDITORIAL board
  * approval (never scholarly) plus editorialPublicationStatus explicitly set

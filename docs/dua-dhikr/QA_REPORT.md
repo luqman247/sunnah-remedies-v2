@@ -1,10 +1,88 @@
 # QA Report
 
-Reflects what was actually run and observed on `feature/dua-dhikr-library`, not what was intended.
+Reflects what was actually run and observed, not what was intended.
 
-## Scope
+## Reconciliation with production `main` (this pass)
 
-Everything below concerns the Duʿā & Dhikr expansion. Morning/Evening Dhikr
+Branch `feature/dua-dhikr-library-architecture`, starting commit `0bce753`,
+merged `origin/main` (`3a3715e`, bringing in the completed Evening Dhikr
+production implementation) via `git merge` — **zero conflicts**; the only
+files touched by both sides (`src/messages/en.json`, `da.json`) had their
+edits in disjoint regions and auto-merged cleanly. A local, unpushed backup
+branch `backup/dua-dhikr-architecture-pre-main-sync` was created at
+`0bce753` before merging.
+
+- **Naming standardisation**: every occurrence of `Duʿā` (capital, project
+  name) and generic-word `duʿā` (lowercase, "supplication") was normalised
+  to `Duʿa`/`duʿa` (107 + 28 replacements across 36+ files) per the updated
+  official name, **Sunnah Remedies Duʿa & Dhikr Library**. Zero remaining
+  occurrences of `Duʿā`, bare `Dua &`, or reversed `Dhikr & Duʿa` ordering
+  (`rg` verified). No TypeScript identifiers, schema names, route slugs, or
+  file paths were renamed — only visible strings and prose.
+- **Typecheck**: `npx tsc --noEmit` → **exit 0**, clean, after the merge and
+  naming pass.
+- **Tests**: `tests/dua-dhikr/*` 7/7 pass. `tests/dhikr/*` **29/30** pass —
+  one pre-existing failure (`dhikr-morning-page-visual-safety.test.ts`)
+  confirmed present with byte-identical file content on `origin/main`
+  itself (not introduced by this branch or the merge). Publication,
+  reference-projection, navigation, and schema/review-bypass tests all
+  re-run and pass explicitly.
+- **Production build**: `npm run build` → exit 0, both Duʿa & Dhikr routes
+  present in the manifest.
+- **Browser verification**: see "Reconciliation browser verification"
+  below — a `next dev`/Turbopack-only artifact caused bare unprefixed
+  routes (including the unrelated site root `/`) to 404 in dev mode; the
+  production server (`next start`) served every route correctly, so this
+  was an environment quirk, not a code defect (confirmed via zero diff
+  against `origin/main` in `middleware.ts`/`src/i18n/*`).
+
+### Reconciliation browser verification
+
+Run against the production build (`next start --port 3200`), since the
+dev-server artifact above made it the more reliable signal:
+
+- **English**: bare `/`, `/knowledge-library`, `/knowledge-library/
+  dua-dhikr` (landing), `/knowledge/dhikr/morning` and `/evening`
+  (production, real content — 2/30 and 2/16 entries editorially reviewed
+  respectively, rendering Arabic/translation/virtue/source correctly),
+  `/knowledge-library/dua-dhikr/home` (empty-state collection with
+  subcategory filters), `/knowledge-library/dua-dhikr/hajj-and-umrah`
+  (subcategory filters "Ḥajj"/"ʿUmrah"), and the legacy
+  `/knowledge-library/dhikr` → `/knowledge-library/dua-dhikr` redirect
+  (308, confirmed via `curl -I` and in-browser) — all correct.
+- **Danish**: confirmed the actual convention first (`src/i18n/locales.ts`,
+  `da.prefix === "/dk"` — not assumed). `/dk/knowledge-library/dua-dhikr`,
+  `/dk/knowledge/dhikr/morning`, `/dk/knowledge/dhikr/evening`, `/dk/
+  knowledge-library/dua-dhikr/home` all render fully translated UI chrome
+  (nav, breadcrumb-adjacent labels, search placeholder, filter labels,
+  empty-state copy). Collection titles/descriptions without an authored
+  Danish override in Sanity fall back to the English taxonomy default
+  (e.g. "Home" stayed English) — this is the existing, documented
+  Morning/Evening Dhikr fallback pattern (dual `*En`/`*Da` fields, no
+  Danish → English fallback for message *keys*, but content fields do
+  fall back), not a silent/undocumented gap.
+- **Viewports**: 375px (mobile — nav collapses to hamburger, no overflow),
+  768px (tablet — found a **pre-existing, sitewide** ~63px horizontal
+  overflow in the header's `.masthead__actions` cluster, reproduced
+  identically on an unrelated page (`/the-apothecary`) with zero diff in
+  the header component vs `origin/main` — not introduced by this branch),
+  1024px and 1440px (desktop — no overflow).
+- **Console/hydration**: no hydration errors, no application errors on any
+  Duʿa & Dhikr page. One pre-existing, sitewide React key-collision warning
+  ("`/charter`") reproduces on every page including ones this project never
+  touched.
+- **No redirect loops**: confirmed — `morning-dhikr`/`evening-dhikr`
+  collection slugs `redirect()` once to the real production routes, which
+  do not themselves redirect anywhere.
+
+## Original architecture-phase report (pre-reconciliation)
+
+The section below was written before the `main` merge and naming pass, on
+the original isolated architecture branch. Kept as the historical record of
+that phase; superseded where it conflicts with the reconciliation section
+above.
+
+Everything below concerns the Duʿa & Dhikr expansion. Morning/Evening Dhikr
 code paths were not modified; their existing test suite was re-run to
 confirm no regression.
 
@@ -12,7 +90,7 @@ confirm no regression.
 
 `npx tsc --noEmit` — clean except one pre-existing failure unrelated to
 this work: `tests/auth/staff-credentials.test.ts` (TS2393, "Duplicate
-function implementation"), confirmed present even with every Duʿā & Dhikr
+function implementation"), confirmed present even with every Duʿa & Dhikr
 change stashed out of the tree (`git stash push -u` + re-run). Not touched
 by this branch.
 
@@ -65,7 +143,7 @@ One existing test was intentionally updated, not just left to fail:
 `tests/dhikr/dhikr-landing-page.test.ts`'s
 `testKnowledgeLibrarySectionsPointsToDhikrLanding` asserted the sidebar
 pointed at `/knowledge-library/dhikr` — updated to assert
-`/knowledge-library/dua-dhikr` with the label "Duʿā & Dhikr", reflecting
+`/knowledge-library/dua-dhikr` with the label "Duʿa & Dhikr", reflecting
 the deliberate, documented navigation change in
 [INFORMATION_ARCHITECTURE.md](INFORMATION_ARCHITECTURE.md).
 

@@ -1,5 +1,5 @@
 /**
- * Duʿā & Dhikr — public-fetch safety and projection tests.
+ * Duʿa & Dhikr — public-fetch safety and projection tests.
  *
  * Static source checks (no public route ever imports a staff-only module,
  * no public projection ever leaks a governance field) plus a query-string
@@ -99,7 +99,7 @@ function runAll() {
   testCanonicalQueryNeverProjectsGovernanceFields();
   testCollectionsQueryNeverProjectsInternalFields();
   testBothEntryQueriesApplyTheirOwnGate();
-  console.log("\nAll Duʿā & Dhikr public-fetch safety tests passed.");
+  console.log("\nAll Duʿa & Dhikr public-fetch safety tests passed.");
 }
 
 runAll();

@@ -7,7 +7,7 @@ import {
 } from "@/sanity/validation/governance";
 
 /**
- * Duʿā & Dhikr Entry — the content unit for the wider Duʿā & Dhikr library.
+ * Duʿa & Dhikr Entry — the content unit for the wider Duʿa & Dhikr library.
  *
  * Deliberately modelled on dhikrItem (src/sanity/schemas/documents/dhikr/
  * dhikr-item.ts): same reviewStatus pipeline, same reused sourceReference /
@@ -22,7 +22,7 @@ import {
  * Morning and Evening Dhikr remain dhikrItem documents and are NOT
  * migrated to this type — they continue to be served by
  * src/sanity/lib/dhikr-public-fetch.ts exactly as before. This type exists
- * for the rest of the Duʿā & Dhikr taxonomy only.
+ * for the rest of the Duʿa & Dhikr taxonomy only.
  */
 
 const DUA_DHIKR_REVIEW_STATUS_VALUES = [
@@ -50,7 +50,7 @@ const DUA_DHIKR_TIMING_LABEL_VALUES = [
 
 export const duaDhikrEntry = defineType({
   name: "duaDhikrEntry",
-  title: "Duʿā & Dhikr Entry",
+  title: "Duʿa & Dhikr Entry",
   type: "document",
   groups: [
     { name: "identity", title: "Identity", default: true },
@@ -142,7 +142,7 @@ export const duaDhikrEntry = defineType({
       title: "Occasion / Situation Tags",
       type: "array",
       of: [{ type: "string" }],
-      description: "Free-text situation tags used by \"What do you need a duʿā for?\" discovery (e.g. \"beginning my day\", \"travelling\").",
+      description: "Free-text situation tags used by \"What do you need a duʿa for?\" discovery (e.g. \"beginning my day\", \"travelling\").",
       options: { layout: "tags" },
       group: "identity",
     }),
@@ -297,7 +297,7 @@ export const duaDhikrEntry = defineType({
       title: "Editorial Publication Status",
       type: "string",
       description:
-        "The temporary, reversible scholarly-review bypass for this Duʿā & Dhikr expansion phase only — see docs/dua-dhikr/REVIEW_BYPASS.md. A separate, additive pathway from reviewStatus/boardApprovals above; never weakens the canonical gate. Public display must always show a neutral \"scholarly review pending\" note, never a claim of scholarly approval.",
+        "The temporary, reversible scholarly-review bypass for this Duʿa & Dhikr expansion phase only — see docs/dua-dhikr/REVIEW_BYPASS.md. A separate, additive pathway from reviewStatus/boardApprovals above; never weakens the canonical gate. Public display must always show a neutral \"scholarly review pending\" note, never a claim of scholarly approval.",
       options: {
         list: [
           { title: "(not published via this pathway)", value: "" },

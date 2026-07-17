@@ -1,5 +1,5 @@
 /**
- * CLI wrapper for the Duʿā & Dhikr content-document import.
+ * CLI wrapper for the Duʿa & Dhikr content-document import.
  *
  * Usage:
  *   npx tsx scripts/dua-dhikr-import.ts <path-to.json>            # dry run (default, no writes)
@@ -48,6 +48,6 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error("Duʿā & Dhikr import failed:", error);
+  console.error("Duʿa & Dhikr import failed:", error);
   process.exitCode = 1;
 });

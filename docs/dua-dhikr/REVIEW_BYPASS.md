@@ -2,7 +2,7 @@
 
 ## What this is
 
-For the Duʿā & Dhikr expansion phase only, a `duaDhikrEntry` (and,
+For the Duʿa & Dhikr expansion phase only, a `duaDhikrEntry` (and,
 separately, a `duaDhikrCollection`'s own introduction copy) may be
 published without a scholarly board approval, provided:
 

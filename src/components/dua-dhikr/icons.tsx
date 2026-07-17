@@ -1,7 +1,7 @@
 import type { IconKey } from "@/lib/dua-dhikr/taxonomy";
 
 /**
- * Original, restrained two-tone line icon system for Duʿā & Dhikr
+ * Original, restrained two-tone line icon system for Duʿa & Dhikr
  * collections — see docs/dua-dhikr/VISUAL_SYSTEM.md.
  *
  * Every icon shares one 24x24 grid, 1.5px stroke, round joins/caps, and

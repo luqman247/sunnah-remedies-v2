@@ -2,7 +2,7 @@
 
 ## Design tokens
 
-Duʿā & Dhikr uses the repository's existing tokens exclusively — no new
+Duʿa & Dhikr uses the repository's existing tokens exclusively — no new
 colours, fonts, or radii were introduced.
 
 | Token | Value | Use |
@@ -19,7 +19,7 @@ colours, fonts, or radii were introduced.
 
 **Spacing scale decision**: the audit found two coexisting spacing scales
 in the repository (`--s1..--s8` legacy, `--space-1..--space-20` 8px-base).
-All new Duʿā & Dhikr CSS
+All new Duʿa & Dhikr CSS
 (`src/components/dua-dhikr/dua-dhikr.css`,
 `src/app/[locale]/knowledge-library/dua-dhikr/dua-dhikr-landing.css`) uses
 `--space-*` exclusively. The reused `DhikrTimeNavigation` component keeps
@@ -66,6 +66,27 @@ needs to change.
 7. Source citation line
 8. Optional audio (hidden entirely when no asset is set; never autoplays)
 9. Toolbar: Memorise mode, mark as learning/memorised, share
+
+## Focus mode vs. memorisation mode
+
+These are two unrelated features that happen to sit near each other in the
+UI and must not be conflated:
+
+- **Focus mode** (the sitewide "Day / Focus / Evening" reading-mode
+  selector, top-right of every Knowledge Library page) is a broader,
+  pre-existing site feature (`src/components/ui/ReadingModeSelector.tsx`)
+  that changes reading theme/contrast across the *entire* site. Duʿa &
+  Dhikr did not build it and does not modify it.
+- **Memorise mode** (the toolbar button on `DuaDhikrEntryCard`) is a
+  Duʿa & Dhikr-specific learning feature: it enlarges the Arabic text and
+  progressively hides/reveals the translation and transliteration behind
+  explicit "Show translation" / "Show transliteration" actions, and lets a
+  reader mark an entry as "learning" or "memorised" — state stored only in
+  `src/lib/dua-dhikr/local-storage.ts` (device-local, no account). See
+  [CONTENT_MODEL.md](CONTENT_MODEL.md) for the full reading hierarchy.
+
+A reader can be in sitewide Focus mode and Duʿa-specific memorise mode
+at the same time — they are independent, composable states.
 
 ## Empty states
 

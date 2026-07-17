@@ -113,7 +113,7 @@ function testPageSourceHasNoGovernanceFields() {
 /* ── Knowledge Library entry point ───────────────────────────────────── */
 
 function testKnowledgeLibrarySectionsPointsToDhikrLanding() {
-  // Superseded by the Duʿā & Dhikr expansion (docs/dua-dhikr/
+  // Superseded by the Duʿa & Dhikr expansion (docs/dua-dhikr/
   // INFORMATION_ARCHITECTURE.md): the sidebar entry now points at the new
   // canonical hub, /knowledge-library/dua-dhikr, which itself links to
   // Morning/Evening Dhikr and supersedes this page's plain-list UI. This
@@ -123,10 +123,10 @@ function testKnowledgeLibrarySectionsPointsToDhikrLanding() {
   // its own source/content remain valid and unchanged.
   const entry = knowledgeLibrary.sections.find((s) => s.href === "/knowledge-library/dua-dhikr");
   assert(!!entry, "knowledgeLibrary.sections must contain an entry linking to /knowledge-library/dua-dhikr");
-  assert(entry!.label === "Duʿā & Dhikr", `sidebar entry label must be "Duʿā & Dhikr", got "${entry!.label}"`);
+  assert(entry!.label === "Duʿa & Dhikr", `sidebar entry label must be "Duʿa & Dhikr", got "${entry!.label}"`);
   assert(
     knowledgeLibrary.sections.length === 1,
-    `Knowledge Library sidebar must list only Duʿā & Dhikr for now, got ${knowledgeLibrary.sections.length} sections`,
+    `Knowledge Library sidebar must list only Duʿa & Dhikr for now, got ${knowledgeLibrary.sections.length} sections`,
   );
   assert(
     !knowledgeLibrary.sections.some((s) =>

@@ -1,5 +1,5 @@
 /**
- * Duʿā & Dhikr — account-free, local-storage-only reading progress.
+ * Duʿa & Dhikr — account-free, local-storage-only reading progress.
  *
  * Following the same rationale as docs/dhikr/16-privacy-and-local-storage-
  * policy.md and docs/dhikr/08-memorisation-system.md (written for Morning/

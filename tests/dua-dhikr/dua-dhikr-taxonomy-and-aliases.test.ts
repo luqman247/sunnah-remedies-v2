@@ -1,5 +1,5 @@
 /**
- * Duʿā & Dhikr — canonical taxonomy and alias-map tests.
+ * Duʿa & Dhikr — canonical taxonomy and alias-map tests.
  *
  * Plain assert()-based, run via `npx tsx`, mirroring the convention in
  * tests/dhikr/. No dev server, no network — pure source-level checks
@@ -118,7 +118,7 @@ function runAll() {
   testMarriageAndChildrenUmbrellaDoesNotDuplicateItsMembers();
   testAfterSalahIsNotDuplicated();
   testHajjAndUmrahHasParentChildSubcategories();
-  console.log("\nAll Duʿā & Dhikr taxonomy/alias tests passed.");
+  console.log("\nAll Duʿa & Dhikr taxonomy/alias tests passed.");
 }
 
 runAll();

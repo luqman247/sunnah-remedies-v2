@@ -11,7 +11,7 @@ interface DuaDhikrCollectionCardProps {
 }
 
 /**
- * Category card for the Duʿā & Dhikr landing/browse grid — icon, title,
+ * Category card for the Duʿa & Dhikr landing/browse grid — icon, title,
  * short description, entry count when data exists, and subcategory labels.
  * Server component: no interactivity beyond a native link/focus state.
  */

@@ -24,7 +24,7 @@ interface PageProps {
 }
 
 /**
- * Duʿā & Dhikr — collection page (docs/dua-dhikr/INFORMATION_ARCHITECTURE.md).
+ * Duʿa & Dhikr — collection page (docs/dua-dhikr/INFORMATION_ARCHITECTURE.md).
  *
  * Every canonical collection slug (src/lib/dua-dhikr/taxonomy.ts) gets a
  * statically-generated route and renders its structural shell even with
@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = locale === "da" && canonical.titleDa ? canonical.titleDa : canonical.titleEn;
   return buildStaticMetadata(
     `/knowledge-library/dua-dhikr/${collectionSlug}`,
-    `${title} | Duʿā & Dhikr · Sunnah Remedies`,
+    `${title} | Duʿa & Dhikr · Sunnah Remedies`,
     canonical.descriptionEn,
   );
 }

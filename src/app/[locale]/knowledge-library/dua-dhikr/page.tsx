@@ -15,7 +15,7 @@ import "@/components/dua-dhikr/dua-dhikr.css";
 import "./dua-dhikr-landing.css";
 
 /**
- * Duʿā & Dhikr — landing page (docs/dua-dhikr/INFORMATION_ARCHITECTURE.md).
+ * Duʿa & Dhikr — landing page (docs/dua-dhikr/INFORMATION_ARCHITECTURE.md).
  *
  * Extends, rather than duplicates, Morning/Evening Dhikr: the hero embeds
  * the existing shared DhikrTimeNavigation component unchanged, and this
@@ -25,7 +25,7 @@ import "./dua-dhikr-landing.css";
  *
  * The full canonical collection grid (src/lib/dua-dhikr/taxonomy.ts) always
  * renders — collections are structural navigation, not gated by whether
- * Sanity content exists yet. Never generates a duʿā or virtue claim; the
+ * Sanity content exists yet. Never generates a duʿa or virtue claim; the
  * discovery/learning sections below only ever link to a fixed collection
  * route or render neutral placeholder text.
  */

@@ -1,5 +1,5 @@
 /**
- * Duʿā & Dhikr — content-import validation and fixture-protection tests.
+ * Duʿa & Dhikr — content-import validation and fixture-protection tests.
  */
 
 import { readFileSync } from "node:fs";
@@ -112,7 +112,7 @@ async function runAll() {
   testDuplicateImportIdentifiersAreDetected();
   await testDryRunNeverWrites();
   await testSampleFixtureFileIsWellFormedAndDryRunClean();
-  console.log("\nAll Duʿā & Dhikr import-pipeline tests passed.");
+  console.log("\nAll Duʿa & Dhikr import-pipeline tests passed.");
 }
 
 runAll();

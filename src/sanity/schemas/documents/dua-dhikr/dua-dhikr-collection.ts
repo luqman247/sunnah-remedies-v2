@@ -3,7 +3,7 @@ import { isUniqueDhikrSlug } from "@/sanity/validation/governance";
 import { PARENT_GROUPS, ICON_KEYS, CANONICAL_COLLECTION_SLUGS } from "@/lib/dua-dhikr/taxonomy";
 
 /**
- * Duʿā & Dhikr Collection — one node in the canonical taxonomy defined in
+ * Duʿa & Dhikr Collection — one node in the canonical taxonomy defined in
  * src/lib/dua-dhikr/taxonomy.ts (docs/dua-dhikr/CATEGORY_ALIAS_MAP.md).
  *
  * Structural in the same sense as dhikrCategory (see
@@ -25,7 +25,7 @@ import { PARENT_GROUPS, ICON_KEYS, CANONICAL_COLLECTION_SLUGS } from "@/lib/dua-
  */
 export const duaDhikrCollection = defineType({
   name: "duaDhikrCollection",
-  title: "Duʿā & Dhikr Collection",
+  title: "Duʿa & Dhikr Collection",
   type: "document",
   groups: [
     { name: "identity", title: "Identity", default: true },
@@ -214,7 +214,7 @@ export const duaDhikrCollection = defineType({
       name: "reviewStatus",
       title: "Review Status",
       type: "string",
-      description: "Gates this collection's own introductionEn/Da and whenReadEn/Da copy only — never gates whether the collection page itself renders or whether its entries appear (entries gate individually via the Duʿā & Dhikr publication rule). See docs/dua-dhikr/REVIEW_BYPASS.md.",
+      description: "Gates this collection's own introductionEn/Da and whenReadEn/Da copy only — never gates whether the collection page itself renders or whether its entries appear (entries gate individually via the Duʿa & Dhikr publication rule). See docs/dua-dhikr/REVIEW_BYPASS.md.",
       options: {
         list: [
           { title: "Sourced", value: "sourced" },
@@ -232,7 +232,7 @@ export const duaDhikrCollection = defineType({
       title: "Editorial Publication Status",
       type: "string",
       description:
-        "The same additive, reversible bypass pathway used on Duʿā & Dhikr entries — see docs/dua-dhikr/REVIEW_BYPASS.md. Never displayed publicly as \"scholarly reviewed\".",
+        "The same additive, reversible bypass pathway used on Duʿa & Dhikr entries — see docs/dua-dhikr/REVIEW_BYPASS.md. Never displayed publicly as \"scholarly reviewed\".",
       options: {
         list: [
           { title: "(not published via this pathway)", value: "" },

@@ -1,5 +1,5 @@
 /**
- * Duʿā & Dhikr — schema shape and review-bypass scope tests.
+ * Duʿa & Dhikr — schema shape and review-bypass scope tests.
  *
  * Static source inspection (schema files, index registration) plus direct
  * unit tests of the publication-gate functions. No Sanity client, no
@@ -82,7 +82,7 @@ function testBothSchemasRegisteredInSchemaIndex() {
 function testBothSchemasRegisteredInStudioStructure() {
   assert(structureIndexSource.includes("duaDhikrCollection"), "duaDhikrCollection must appear in the Studio structure");
   assert(structureIndexSource.includes("duaDhikrEntry"), "duaDhikrEntry must appear in the Studio structure");
-  console.log("✓ Duʿā & Dhikr document types are reachable from the Studio structure");
+  console.log("✓ Duʿa & Dhikr document types are reachable from the Studio structure");
 }
 
 /* ── Review-bypass scope ─────────────────────────────────────────────── */
@@ -109,7 +109,7 @@ function testCanonicalGateRequiresBothApprovals() {
     !isDuaDhikrEntryPubliclyEligible({ ...baseEligibleDoc, boardApprovals: [{ board: "scholarly", approved: true }] }),
     "the canonical gate must require an editorial approval, not just scholarly",
   );
-  console.log("✓ the canonical Duʿā & Dhikr gate requires BOTH scholarly and editorial approval");
+  console.log("✓ the canonical Duʿa & Dhikr gate requires BOTH scholarly and editorial approval");
 }
 
 function testBypassNeverRequiresScholarlyApproval() {
@@ -176,17 +176,17 @@ function testDuaDhikrGateIsIndependentFromDhikrGate() {
   // design (see docs/dua-dhikr/REVIEW_BYPASS.md) and so must differ:
   assert(
     DUA_DHIKR_EDITORIAL_ELIGIBILITY_GROQ !== DHIKR_EDITORIAL_ELIGIBILITY_GROQ,
-    "the Duʿā & Dhikr bypass gate must use its own status string, not the Dhikr bypass gate's",
+    "the Duʿa & Dhikr bypass gate must use its own status string, not the Dhikr bypass gate's",
   );
   assert(
     DUA_DHIKR_EDITORIAL_ELIGIBILITY_GROQ.includes("editorial-only-scholarly-review-pending"),
-    "the Duʿā & Dhikr bypass must use its own status string, distinct from dhikrItem's",
+    "the Duʿa & Dhikr bypass must use its own status string, distinct from dhikrItem's",
   );
   assert(
     !DUA_DHIKR_EDITORIAL_ELIGIBILITY_GROQ.includes("editorially-published-pending-scholarly-review"),
-    "the Duʿā & Dhikr bypass must not reuse dhikrItem's bypass status string",
+    "the Duʿa & Dhikr bypass must not reuse dhikrItem's bypass status string",
   );
-  console.log("✓ the Duʿā & Dhikr publication gate (canonical and bypass) is fully independent from the Dhikr (Morning/Evening) gate");
+  console.log("✓ the Duʿa & Dhikr publication gate (canonical and bypass) is fully independent from the Dhikr (Morning/Evening) gate");
 }
 
 function runAll() {
@@ -200,7 +200,7 @@ function runAll() {
   testBypassRequiresExplicitFlag();
   testBypassNeverWeakensCanonicalGate();
   testDuaDhikrGateIsIndependentFromDhikrGate();
-  console.log("\nAll Duʿā & Dhikr schema/review-bypass tests passed.");
+  console.log("\nAll Duʿa & Dhikr schema/review-bypass tests passed.");
 }
 
 runAll();

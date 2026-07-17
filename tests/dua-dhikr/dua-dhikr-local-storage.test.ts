@@ -1,5 +1,5 @@
 /**
- * Duʿā & Dhikr — local-only reading-progress tests.
+ * Duʿa & Dhikr — local-only reading-progress tests.
  *
  * Runs under plain Node (via tsx), so `window`/`localStorage` do not exist
  * by default — this both proves the SSR-safe no-op path and, via a small
@@ -97,7 +97,7 @@ async function runAll() {
   await testMemoriseStateRoundTrips();
   await testContinueReadingCapsAndOrdersByRecency();
   await testNoGamificationFieldsInStoredShape();
-  console.log("\nAll Duʿā & Dhikr local-storage tests passed.");
+  console.log("\nAll Duʿa & Dhikr local-storage tests passed.");
 }
 
 runAll();

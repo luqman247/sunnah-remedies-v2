@@ -1,6 +1,6 @@
 /**
- * Duʿā & Dhikr Public Fetch — the ONLY module a public route under
- * src/app/[locale]/ may use to read Duʿā & Dhikr content.
+ * Duʿa & Dhikr Public Fetch — the ONLY module a public route under
+ * src/app/[locale]/ may use to read Duʿa & Dhikr content.
  *
  * Mirrors the discipline of src/sanity/lib/dhikr-public-fetch.ts: uses the
  * public `client` (perspective: "published"), never a preview client, and

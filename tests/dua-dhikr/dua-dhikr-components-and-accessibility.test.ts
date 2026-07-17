@@ -1,5 +1,5 @@
 /**
- * Duʿā & Dhikr — component/accessibility static-source checks.
+ * Duʿa & Dhikr — component/accessibility static-source checks.
  *
  * These are source-level checks (no DOM rendering) confirming the
  * accessibility-critical markup decisions documented in
@@ -68,7 +68,7 @@ function testIconsAreDecorativeByDefault() {
 
 function testSearchResultsUseLiveRegion() {
   assert(search.includes('aria-live="polite"'), "search results must announce via an aria-live region");
-  console.log("✓ Duʿā & Dhikr search results announce through an aria-live region");
+  console.log("✓ Duʿa & Dhikr search results announce through an aria-live region");
 }
 
 function testMemoriseModeNeverHidesArabic() {
@@ -102,7 +102,7 @@ function testMemoriseModeHasNoGamificationLanguage() {
   const forbidden = ["streak", "leaderboard", "confetti", "achievement", "points earned", "level up"];
   const allSource = stripComments(entryCard) + stripComments(entryCollection);
   for (const term of forbidden) {
-    assert(!allSource.toLowerCase().includes(term), `Duʿā & Dhikr component code must not contain gamification language ("${term}")`);
+    assert(!allSource.toLowerCase().includes(term), `Duʿa & Dhikr component code must not contain gamification language ("${term}")`);
   }
   console.log("✓ no streak/leaderboard/badge/confetti/points gamification language exists in the memorise-mode component code");
 }
@@ -118,7 +118,7 @@ function runAll() {
   testSearchResultsUseLiveRegion();
   testMemoriseModeNeverHidesArabic();
   testMemoriseModeHasNoGamificationLanguage();
-  console.log("\nAll Duʿā & Dhikr component/accessibility tests passed.");
+  console.log("\nAll Duʿa & Dhikr component/accessibility tests passed.");
 }
 
 runAll();

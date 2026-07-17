@@ -506,10 +506,10 @@
   },
   "dhikr": {
     "nav": {
-      "label": "Dua & dhikr",
+      "label": "Duʿa & dhikr",
       "description": "Morgen- og aften-dhikr-samlinger fra Sunnah."
     },
-    "breadcrumb": "Dua & dhikr",
+    "breadcrumb": "Duʿa & dhikr",
     "landing": {
       "heading": "Daglig dhikr",
       "lede": "Verificeret daglig dhikr fra Sunnah, udgivet under Vidensbibliotekets redaktionelle standard.",
@@ -1152,8 +1152,8 @@
       ]
     },
     "duaDhikr": {
-      "title": "Duʿā & dhikr | Sunnah Remedies Vidensbibliotek",
-      "description": "Verificeret duʿā og dhikr fra Sunnah, organiseret efter hverdagens øjeblikke — arabisk som den autoritative kildetekst, med gennemgåede engelske og danske oversættelser."
+      "title": "Duʿa & dhikr | Sunnah Remedies Vidensbibliotek",
+      "description": "Verificeret duʿa og dhikr fra Sunnah, organiseret efter hverdagens øjeblikke — arabisk som den autoritative kildetekst, med gennemgåede engelske og danske oversættelser."
     }
   },
   "homepage": {
@@ -1209,14 +1209,14 @@
     "jsonLdDescription": "Et institut for Profetisk Medicin med forskning, klinisk behandling og naturlig terapi"
   },
   "duaDhikr": {
-    "breadcrumb": "Duʿā & dhikr",
+    "breadcrumb": "Duʿa & dhikr",
     "landing": {
-      "eyebrow": "Duʿā & dhikr",
-      "heading": "Duʿā & dhikr",
-      "lede": "Et roligt hjem for verificeret duʿā og dhikr fra Sunnah — organiseret efter hverdagens øjeblikke og gennemgået under samme redaktionelle standard som resten af Vidensbiblioteket.",
+      "eyebrow": "Duʿa & dhikr",
+      "heading": "Duʿa & dhikr",
+      "lede": "Et roligt hjem for verificeret duʿa og dhikr fra Sunnah — organiseret efter hverdagens øjeblikke og gennemgået under samme redaktionelle standard som resten af Vidensbiblioteket.",
       "quickAccessHeading": "Hurtig adgang",
       "browseHeading": "Gennemse efter anledning",
-      "discoveryHeading": "Hvad har du brug for en duʿā til?",
+      "discoveryHeading": "Hvad har du brug for en duʿa til?",
       "discovery": {
         "beginningMyDay": "Jeg begynder min dag",
         "goingToSleep": "Jeg skal sove",
@@ -1229,17 +1229,17 @@
       "learningHeading": "Læring",
       "learningPlaceholderNotice": "Disse guides er under forberedelse og udgives, når kildemateriale er leveret. De kan endnu ikke læses.",
       "learningGuides": {
-        "whatIsDua": "Hvad er duʿā?",
+        "whatIsDua": "Hvad er duʿa?",
         "whatIsDhikr": "Hvad er dhikr?",
-        "etiquettesOfDua": "Duʿāens etikette",
-        "timesDuaAccepted": "Tidspunkter, hvor duʿā besvares",
+        "etiquettesOfDua": "Duʿaens etikette",
+        "timesDuaAccepted": "Tidspunkter, hvor duʿa besvares",
         "rememberingAdhkar": "Hvordan man husker de daglige adhkār",
-        "praisingAllahBeforeDua": "At prise Allah, før man beder en duʿā",
+        "praisingAllahBeforeDua": "At prise Allah, før man beder en duʿa",
         "sendingSalawat": "At sende ṣalawāt over Profeten ﷺ",
         "askingThroughNames": "At bede Allah gennem Hans skønne navne"
       },
       "continueReadingHeading": "Fortsæt læsning",
-      "searchLabel": "Søg i Duʿā & dhikr",
+      "searchLabel": "Søg i Duʿa & dhikr",
       "searchPlaceholder": "Søg efter anledning, emne eller navn…",
       "searchNoResults": "Ingen samlinger matcher \"{query}\".",
       "entryCount": "{count, plural, one {1 tekst} other {# tekster}}",

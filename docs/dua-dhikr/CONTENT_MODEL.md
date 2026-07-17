@@ -1,9 +1,44 @@
 # Content Model
 
+## Taxonomy authority model
+
+- **Code owns the canonical category identifiers, slugs, grouping, and
+  aliases.** `src/lib/dua-dhikr/taxonomy.ts` (`CANONICAL_COLLECTIONS`,
+  `PARENT_GROUPS`, `ALIAS_MAP`) is the single source of truth — see
+  [CATEGORY_ALIAS_MAP.md](CATEGORY_ALIAS_MAP.md).
+- **Sanity owns editable presentation content** attached to those canonical
+  identifiers: a `duaDhikrCollection` document's `introductionEn/Da`,
+  `whenReadEn/Da`, `descriptionDa`, `iconKey` override, `relatedCollections`,
+  and `seo` — never the identity of the category itself.
+- **Sanity editors cannot create an arbitrary public canonical category.**
+  `duaDhikrCollection.slug` is validated (Studio-side and at write time)
+  against `CANONICAL_COLLECTION_SLUGS`; a slug outside that list cannot be
+  saved. Every collection route is generated from the code list
+  (`generateStaticParams` in the `[collectionSlug]` route), never from
+  whatever `duaDhikrCollection` documents happen to exist — so an editor
+  creating (or failing to create) a Sanity document never changes which
+  routes exist.
+- **The import pipeline resolves source-document labels into canonical,
+  code-defined categories** — `resolveCollectionSlug()` in `taxonomy.ts`,
+  used by both `src/lib/dua-dhikr/import/schema.ts` and the live search/
+  filter UI, so "eating", "wudu", "before wudu" etc. all resolve to one
+  canonical collection rather than becoming new ones.
+
+This is enforced, not just documented, by:
+`tests/dua-dhikr/dua-dhikr-taxonomy-and-aliases.test.ts` (no duplicate
+canonical slugs/aliases, no alias claimed by two collections),
+`tests/dua-dhikr/dua-dhikr-schema-and-review-bypass.test.ts` (schema slug
+validation references the canonical list), and
+`tests/dua-dhikr/dua-dhikr-import-pipeline.test.ts` (an unresolvable
+`collectionSlug` is rejected before any write, and Morning/Evening Dhikr
+slugs are excluded from `duaDhikrEntry` generation entirely — see
+`tests/dua-dhikr/dua-dhikr-routes-and-locale.test.ts` for the
+redirect-not-duplicate check).
+
 ## Why a new document type, not a reuse of `dhikrItem`/`dhikrCategory`
 
 `dhikrItem`/`dhikrCategory` (`src/sanity/schemas/documents/dhikr/`) remain
-exactly as they are, serving only Morning/Evening Dhikr. Duʿā & Dhikr's
+exactly as they are, serving only Morning/Evening Dhikr. Duʿa & Dhikr's
 field set is broader (multi-collection references, subcategories, occasion
 tags, instruction/explanation text, related entries, import provenance),
 so it is modelled as two new, sibling document types —

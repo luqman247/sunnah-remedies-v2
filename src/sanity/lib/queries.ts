@@ -693,7 +693,7 @@ export const dhikrItemsInternalDetailQuery = groq`
   }
 `;
 
-/* ── Duʿā & Dhikr (extends the Dhikr prototype — see docs/dua-dhikr/) ──
+/* ── Duʿa & Dhikr (extends the Dhikr prototype — see docs/dua-dhikr/) ──
  *
  * Same discipline as the Dhikr queries above: duaDhikrEntriesPublicEligibleQuery
  * is the only query a public route may use for canonical-pathway entries;
@@ -741,7 +741,7 @@ const duaDhikrEntryPublicProjection = groq`
   "hasAudioAsset": defined(audioAsset->cloudinary.secure_url)
 `;
 
-/** The only query any public route may use for the canonical, scholarly-approved Duʿā & Dhikr pathway. */
+/** The only query any public route may use for the canonical, scholarly-approved Duʿa & Dhikr pathway. */
 export const duaDhikrEntriesPublicEligibleQuery = groq`
   *[_type == "duaDhikrEntry" && ${DUA_DHIKR_ELIGIBILITY_GROQ}] | order(order asc) {
     ${duaDhikrEntryPublicProjection}

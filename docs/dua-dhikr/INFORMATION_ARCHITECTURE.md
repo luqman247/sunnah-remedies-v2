@@ -6,7 +6,7 @@
 |---|---|---|
 | `/[locale]/knowledge-library/dua-dhikr` | `src/app/[locale]/knowledge-library/dua-dhikr/page.tsx` | Landing page: hero (embeds the existing `DhikrTimeNavigation`), search, quick access, browse-by-occasion grid, guided discovery, learning placeholders, continue reading. |
 | `/[locale]/knowledge-library/dua-dhikr/[collectionSlug]` | `.../dua-dhikr/[collectionSlug]/page.tsx` | One statically-generated route per canonical collection slug (`generateStaticParams` reads `CANONICAL_COLLECTIONS`). |
-| `/knowledge/dhikr/morning`, `/knowledge/dhikr/evening` | unchanged | Still the canonical Morning/Evening Dhikr routes. Linked from the Duʿā & Dhikr hero via the existing `DhikrTimeNavigation` component, never duplicated. |
+| `/knowledge/dhikr/morning`, `/knowledge/dhikr/evening` | production, unmodified by this project | Complete, live Morning/Evening Dhikr collections (`dhikrItem` content, merged in from `main`). Linked from the Duʿa & Dhikr hero via the existing `DhikrTimeNavigation` component, never duplicated. |
 
 Visiting `/knowledge-library/dua-dhikr/morning-dhikr` or `.../evening-dhikr`
 redirects (Next.js `redirect()`) straight to the real Morning/Evening
@@ -19,7 +19,7 @@ own, so there is exactly one page per piece of content.
 The audit found three URL families sharing the word "knowledge":
 `/knowledge-library/dhikr` (old plain-list landing), `/knowledge/dhikr/*`
 (styled Morning/Evening reader), and an unrelated `/knowledge/[type]/[slug]`
-SEO knowledge-graph route outside `[locale]` entirely. Duʿā & Dhikr
+SEO knowledge-graph route outside `[locale]` entirely. Duʿa & Dhikr
 deliberately extends `knowledge-library`, matching the explicit route given
 in the brief, and becomes the new canonical hub:
 

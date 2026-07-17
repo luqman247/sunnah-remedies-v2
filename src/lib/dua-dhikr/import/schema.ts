@@ -1,5 +1,5 @@
 /**
- * Duʿā & Dhikr content-import row shape and validation.
+ * Duʿa & Dhikr content-import row shape and validation.
  *
  * One row = one future `duaDhikrEntry` document. No dependency added for
  * this (no zod) — the validators below are plain functions, consistent

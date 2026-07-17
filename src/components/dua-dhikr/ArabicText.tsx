@@ -9,12 +9,12 @@ interface ArabicTextProps {
 }
 
 /**
- * Shared Arabic reading block for Duʿā & Dhikr content.
+ * Shared Arabic reading block for Duʿa & Dhikr content.
  *
  * Reuses the same `.type-arabic` global class + `dir="rtl" lang="ar"`
  * convention already established inline in
  * src/app/[locale]/knowledge/dhikr/morning/MorningDhikrCollection.tsx, now
- * factored into one component so future Duʿā & Dhikr surfaces do not
+ * factored into one component so future Duʿa & Dhikr surfaces do not
  * duplicate it a third time (see docs/dua-dhikr/VISUAL_SYSTEM.md). No
  * truncation, no decorative background — legibility of the Arabic is never
  * reduced.

@@ -9,7 +9,7 @@
 
 ## Never used as evidence
 
-Random Islamic blogs, social-media posts, unsourced duʿā compilation
+Random Islamic blogs, social-media posts, unsourced duʿa compilation
 websites, AI-generated references, search-result summaries, or
 **lifewithallah.com** — that site was consulted only as a UX/information-
 architecture reference for this project (see the brief), never as a
@@ -29,7 +29,7 @@ and does not permit inventing any of them.
 
 ## What shipped in this phase
 
-Zero real duʿā/dhikr content. Every collection page renders its structural
+Zero real duʿa/dhikr content. Every collection page renders its structural
 shell only; entries render only once real content exists in Sanity and
 passes one of the two publication gates in
 `src/sanity/lib/dua-dhikr-publication-gate.ts`. No fixture Islamic text

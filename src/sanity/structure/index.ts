@@ -169,23 +169,23 @@ export const structure = (S: StructureBuilder) =>
             ]),
         ),
 
-      // ── Duʿā & Dhikr (extends Daily Dhikr — see docs/dua-dhikr/) ──
+      // ── Duʿa & Dhikr (extends Daily Dhikr — see docs/dua-dhikr/) ──
       S.listItem()
-        .title("Duʿā & Dhikr")
+        .title("Duʿa & Dhikr")
         .child(
           S.list()
-            .title("Duʿā & Dhikr")
+            .title("Duʿa & Dhikr")
             .items([
               S.listItem()
                 .title("Collections")
                 .child(
                   S.documentTypeList("duaDhikrCollection")
-                    .title("Duʿā & Dhikr Collections"),
+                    .title("Duʿa & Dhikr Collections"),
                 ),
               S.listItem()
                 .title("Entries")
                 .child(
-                  S.documentTypeList("duaDhikrEntry").title("Duʿā & Dhikr Entries"),
+                  S.documentTypeList("duaDhikrEntry").title("Duʿa & Dhikr Entries"),
                 ),
             ]),
         ),

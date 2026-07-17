@@ -4,10 +4,10 @@
 
 1. Convert your source document (Word/Excel/Notion/etc.) into a JSON array
    matching [CONTENT_IMPORT_TEMPLATE.md](CONTENT_IMPORT_TEMPLATE.md) — one
-   object per duʿā/dhikr entry.
+   object per duʿa/dhikr entry.
 2. For each `collectionSlug` you plan to use, make sure a
    `duaDhikrCollection` Sanity document already exists with that slug
-   (Studio → Duʿā & Dhikr → Collections). The import does not create
+   (Studio → Duʿa & Dhikr → Collections). The import does not create
    collections — only entries.
 3. Run a dry run: `npx tsx scripts/dua-dhikr-import.ts your-file.json`.
    Fix every reported issue before proceeding — nothing is written in dry
@@ -23,10 +23,10 @@
 
 ## Mapping table
 
-| Your document field | Duʿā & Dhikr field | Notes |
+| Your document field | Duʿa & Dhikr field | Notes |
 |---|---|---|
 | What for? | `whatItIsFor` | One or two plain-language sentences |
-| Duʿā (Arabic) | `arabicText` | Authoritative source — full tashkīl |
+| Duʿa (Arabic) | `arabicText` | Authoritative source — full tashkīl |
 | Translation | `translationEn` (+ `translationDa` if supplied) | |
 | Transliteration | `transliteration` | |
 | Virtue | `virtue` → `virtueText` | Optional — leave blank rather than guess |
@@ -59,7 +59,7 @@ or live mode, and is reported with the exact field and reason.
   `importIdentifier` updates that one document (`createOrReplace`) instead
   of creating a second document. Change `importIdentifier` deliberately if
   you mean to create a genuinely new, separate entry.
-- **Content-level duplicates** (the same duʿā transcribed twice under two
+- **Content-level duplicates** (the same duʿa transcribed twice under two
   different identifiers) are not auto-detected — reviewers should check
   for this during the normal editorial review pass, the same as for any
   other content type in this repository.

@@ -1,5 +1,5 @@
 /**
- * Duʿā & Dhikr content-document import.
+ * Duʿa & Dhikr content-document import.
  *
  * Reads a JSON array of rows matching docs/dua-dhikr/CONTENT_IMPORT_TEMPLATE.md,
  * validates every row (src/lib/dua-dhikr/import/schema.ts), and — only in
@@ -172,7 +172,7 @@ export async function runDuaDhikrImport({ rows, dryRun }: ImportRunOptions): Pro
 
 export function formatImportReport(report: ImportRunReport): string {
   const lines = [
-    `Duʿā & Dhikr import — ${report.dryRun ? "DRY RUN" : "LIVE"} (${report.generatedAt})`,
+    `Duʿa & Dhikr import — ${report.dryRun ? "DRY RUN" : "LIVE"} (${report.generatedAt})`,
     `Total rows: ${report.totalRows} · Valid: ${report.valid} · Invalid/skipped: ${report.invalid}`,
     "",
   ];

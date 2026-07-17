@@ -1,5 +1,5 @@
 /**
- * Duʿā & Dhikr — route existence, collection-route generation, locale
+ * Duʿa & Dhikr — route existence, collection-route generation, locale
  * routing, and Morning/Evening-unchanged tests.
  */
 
@@ -23,8 +23,8 @@ const EVENING_PAGE_PATH = join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/even
 const NEXT_CONFIG_PATH = join(REPO_ROOT, "next.config.ts");
 
 function testLandingAndCollectionRouteFilesExist() {
-  assert(existsSync(LANDING_PAGE_PATH), "the Duʿā & Dhikr landing page route file must exist");
-  assert(existsSync(COLLECTION_PAGE_PATH), "the Duʿā & Dhikr [collectionSlug] route file must exist");
+  assert(existsSync(LANDING_PAGE_PATH), "the Duʿa & Dhikr landing page route file must exist");
+  assert(existsSync(COLLECTION_PAGE_PATH), "the Duʿa & Dhikr [collectionSlug] route file must exist");
   console.log("✓ landing and collection route files exist");
 }
 
@@ -68,8 +68,8 @@ function testMorningAndEveningRoutesAreUnchangedInSubstance() {
 
 function testDhikrTimeNavigationEmbeddedInLandingHero() {
   const source = readFileSync(LANDING_PAGE_PATH, "utf-8");
-  assert(source.includes("DhikrTimeNavigation"), "the Duʿā & Dhikr landing hero must embed the existing DhikrTimeNavigation component");
-  console.log("✓ the Duʿā & Dhikr landing page extends (embeds), rather than re-implements, Morning/Evening navigation");
+  assert(source.includes("DhikrTimeNavigation"), "the Duʿa & Dhikr landing hero must embed the existing DhikrTimeNavigation component");
+  console.log("✓ the Duʿa & Dhikr landing page extends (embeds), rather than re-implements, Morning/Evening navigation");
 }
 
 function testKnowledgeLibraryRedirectConfigured() {
@@ -84,8 +84,8 @@ function testKnowledgeLibraryRedirectConfigured() {
 function testSidebarPointsToNewHub() {
   const entry = knowledgeLibrary.sections.find((s) => s.href === "/knowledge-library/dua-dhikr");
   assert(!!entry, "the Knowledge Library sidebar must link to /knowledge-library/dua-dhikr");
-  assert(entry!.label === "Duʿā & Dhikr", `sidebar label must use the order "Duʿā & Dhikr", got "${entry!.label}"`);
-  console.log("✓ Knowledge Library sidebar links to the new Duʿā & Dhikr hub with the correct label order");
+  assert(entry!.label === "Duʿa & Dhikr", `sidebar label must use the order "Duʿa & Dhikr", got "${entry!.label}"`);
+  console.log("✓ Knowledge Library sidebar links to the new Duʿa & Dhikr hub with the correct label order");
 }
 
 /* ── Locale completeness ──────────────────────────────────────────────── */
@@ -130,7 +130,7 @@ function runAll() {
   testDuaDhikrMessageNamespaceExistsInBothLocales();
   testDuaDhikrKeysMatchBetweenLocales();
   testDanishLocaleStillUsesDkPrefix();
-  console.log("\nAll Duʿā & Dhikr route/locale tests passed.");
+  console.log("\nAll Duʿa & Dhikr route/locale tests passed.");
 }
 
 runAll();

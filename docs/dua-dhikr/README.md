@@ -1,16 +1,20 @@
-# Duʿā & Dhikr
+# Sunnah Remedies Duʿa & Dhikr Library
 
 A premium expansion of the Knowledge Library's existing Dhikr work into the
-wider Sunnah collections of duʿā and dhikr — Daily Foundations, Everyday
+wider Sunnah collections of duʿa and dhikr — Daily Foundations, Everyday
 Life, Family & Relationships, Faith/Protection/Healing, Qurʾān & Sunnah
 Collections, Nature & Life Events, and Sacred Times & Journeys.
 
 This is **not** a rebuild. Morning and Evening Dhikr (`dhikrItem`,
 `dhikrCategory`, `/knowledge/dhikr/morning`, `/knowledge/dhikr/evening`) are
-unchanged and remain the canonical home for that content. Duʿā & Dhikr adds
-a new, parallel content type (`duaDhikrEntry` / `duaDhikrCollection`) for
-everything else, reusing the same review pipeline, the same reused Sanity
-objects (`sourceReference`, `boardApproval`), and the same visual language.
+**complete, production implementations, live on `main`** — this project
+does not modify them. Duʿa & Dhikr adds a new, parallel content type
+(`duaDhikrEntry` / `duaDhikrCollection`) for everything else, reusing the
+same review pipeline, the same reused Sanity objects (`sourceReference`,
+`boardApproval`), and the same visual language. This branch
+(`feature/dua-dhikr-library-architecture`) is kept in sync with `main` by
+merge (not rebase) so the two stay compatible — see the reconciliation
+record in [QA_REPORT.md](QA_REPORT.md).
 
 ## What exists today
 
@@ -38,7 +42,7 @@ objects (`sourceReference`, `boardApproval`), and the same visual language.
 
 ## What is deliberately not built yet
 
-- No real Duʿā content exists anywhere in this repository. Every route
+- No real Duʿa content exists anywhere in this repository. Every route
   renders its full structural shell (title, icon, subcategory nav, related
   collections) with an honest "preparing for publication" empty state —
   the same precedent as the existing Evening Dhikr page — never invented

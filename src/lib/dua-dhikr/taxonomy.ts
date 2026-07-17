@@ -1,5 +1,5 @@
 /**
- * Duʿā & Dhikr — canonical taxonomy and alias map.
+ * Duʿa & Dhikr — canonical taxonomy and alias map.
  *
  * Single source of truth for the parent-group / collection / subcategory
  * structure described in docs/dua-dhikr/CATEGORY_ALIAS_MAP.md. Sanity's
@@ -89,7 +89,7 @@ export interface CanonicalCollection {
   subcategories?: CanonicalSubcategory[];
   /** Slugs of other canonical collections this one is conceptually grouped with (umbrella relationships), e.g. Marriage & Children. */
   relatedGroupSlugs?: string[];
-  /** External route this collection defers to instead of a Duʿā & Dhikr collection page (Morning/Evening Dhikr). */
+  /** External route this collection defers to instead of a Duʿa & Dhikr collection page (Morning/Evening Dhikr). */
   externalHref?: string;
 }
 
@@ -141,7 +141,7 @@ export const CANONICAL_COLLECTIONS: CanonicalCollection[] = [
     slug: "tahajjud",
     parentGroup: "daily-foundations",
     titleEn: "Tahajjud",
-    descriptionEn: "Remembrance and duʿā associated with the night prayer.",
+    descriptionEn: "Remembrance and duʿa associated with the night prayer.",
     iconKey: "crescent-moon",
     aliases: ["night prayer", "qiyam al-layl"],
   },
@@ -157,7 +157,7 @@ export const CANONICAL_COLLECTIONS: CanonicalCollection[] = [
     slug: "istikharah",
     parentGroup: "daily-foundations",
     titleEn: "Istikharah",
-    descriptionEn: "The prayer and duʿā of seeking Allah's guidance in a decision.",
+    descriptionEn: "The prayer and duʿa of seeking Allah's guidance in a decision.",
     iconKey: "istikharah-compass",
     aliases: ["prayer of guidance", "seeking guidance"],
   },
@@ -251,7 +251,7 @@ export const CANONICAL_COLLECTIONS: CanonicalCollection[] = [
     slug: "parents",
     parentGroup: "family-and-relationships",
     titleEn: "Parents",
-    descriptionEn: "Remembrance and duʿā for one's parents.",
+    descriptionEn: "Remembrance and duʿa for one's parents.",
     iconKey: "family-abstract",
     aliases: [],
     relatedGroupSlugs: ["marriage-and-children"],
@@ -260,7 +260,7 @@ export const CANONICAL_COLLECTIONS: CanonicalCollection[] = [
     slug: "children",
     parentGroup: "family-and-relationships",
     titleEn: "Children",
-    descriptionEn: "Remembrance and duʿā for one's children.",
+    descriptionEn: "Remembrance and duʿa for one's children.",
     iconKey: "child-abstract",
     aliases: [],
     relatedGroupSlugs: ["marriage-and-children"],
@@ -269,7 +269,7 @@ export const CANONICAL_COLLECTIONS: CanonicalCollection[] = [
     slug: "newborn",
     parentGroup: "family-and-relationships",
     titleEn: "Newborn",
-    descriptionEn: "Remembrance and duʿā for a newborn child.",
+    descriptionEn: "Remembrance and duʿa for a newborn child.",
     iconKey: "cradle",
     aliases: ["new baby", "birth"],
     relatedGroupSlugs: ["marriage-and-children"],
@@ -278,7 +278,7 @@ export const CANONICAL_COLLECTIONS: CanonicalCollection[] = [
     slug: "marriage",
     parentGroup: "family-and-relationships",
     titleEn: "Marriage",
-    descriptionEn: "Remembrance and duʿā for marriage.",
+    descriptionEn: "Remembrance and duʿa for marriage.",
     iconKey: "rings",
     aliases: ["wedding", "spouse"],
     relatedGroupSlugs: ["marriage-and-children"],
@@ -345,7 +345,7 @@ export const CANONICAL_COLLECTIONS: CanonicalCollection[] = [
     slug: "names-of-allah",
     parentGroup: "faith-protection-and-healing",
     titleEn: "Names of Allah",
-    descriptionEn: "Duʿā through Allah's Most Beautiful Names.",
+    descriptionEn: "Duʿa through Allah's Most Beautiful Names.",
     iconKey: "beautiful-names",
     aliases: ["asma ul husna", "the beautiful names"],
   },
@@ -354,16 +354,16 @@ export const CANONICAL_COLLECTIONS: CanonicalCollection[] = [
   {
     slug: "quranic-duas",
     parentGroup: "quran-and-sunnah-collections",
-    titleEn: "Qurʾānic Duʿās",
-    descriptionEn: "Duʿās drawn directly from the Qurʾān.",
+    titleEn: "Qurʾānic Duʿas",
+    descriptionEn: "Duʿas drawn directly from the Qurʾān.",
     iconKey: "open-quran",
     aliases: ["duas from the quran", "quran duas"],
   },
   {
     slug: "sunnah-duas",
     parentGroup: "quran-and-sunnah-collections",
-    titleEn: "Sunnah Duʿās",
-    descriptionEn: "Duʿās taught by the Prophet ﷺ in the authentic Sunnah.",
+    titleEn: "Sunnah Duʿas",
+    descriptionEn: "Duʿas taught by the Prophet ﷺ in the authentic Sunnah.",
     iconKey: "open-quran",
     aliases: ["prophetic duas", "hadith duas"],
   },

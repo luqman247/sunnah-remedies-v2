@@ -64,7 +64,7 @@ import { dhikrCategory } from "./documents/dhikr/dhikr-category";
 // ── Documents: Dhikr MDR review drafts (staff-only, final launch stage) ──
 import { dhikrMdrReviewDraft } from "./documents/dhikr-review/dhikr-mdr-review-draft";
 
-// ── Documents: Duʿā & Dhikr (extends the Dhikr prototype — see docs/dua-dhikr/) ──
+// ── Documents: Duʿa & Dhikr (extends the Dhikr prototype — see docs/dua-dhikr/) ──
 import { duaDhikrCollection } from "./documents/dua-dhikr/dua-dhikr-collection";
 import { duaDhikrEntry } from "./documents/dua-dhikr/dua-dhikr-entry";
 
@@ -163,7 +163,7 @@ export const schemaTypes = [
   dhikrCategory,
   dhikrMdrReviewDraft,
 
-  // Duʿā & Dhikr (extends the Dhikr prototype — see docs/dua-dhikr/)
+  // Duʿa & Dhikr (extends the Dhikr prototype — see docs/dua-dhikr/)
   duaDhikrCollection,
   duaDhikrEntry,
 
