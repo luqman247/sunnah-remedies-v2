@@ -5,35 +5,40 @@ import { pageMetadata } from "@/lib/i18n/page-metadata";
 import { SectionPage } from "@/components/ui/SectionPage";
 import { knowledgeLibrary } from "@/sanity/lib/fetch";
 import { getMorningDhikrItemsPublic, type DhikrItemPublic } from "@/sanity/lib/dhikr-public-fetch";
+import {
+  getPendingReferenceCollection,
+  getSourceRegisterTotalCount,
+} from "@/lib/dhikr-research/public-reference-projection";
+import { MorningDhikrCollection } from "./MorningDhikrCollection";
 import "./morning-dhikr.css";
 
 /**
  * Morning Dhikr — public route.
  *
- * Data comes exclusively from getMorningDhikrItemsPublic()
- * (src/sanity/lib/dhikr-public-fetch.ts), which merges two SEPARATE
- * eligibility pathways: the canonical scholarly-approved gate (unchanged)
- * and the additive editorial-publication gate (DHIKR_EDITORIAL_ELIGIBILITY_
- * GROQ) — then applies one further, additive filter on the approved
- * timingLabel field. Each returned item carries a `publicationPathway` tag;
- * this page renders the mandatory "pending scholarly review" notice and
- * per-card badge whenever any visible item took the editorial-only path.
- * This route never imports the staff-only src/sanity/lib/dhikr-fetch.ts and
- * never reads the research register (src/lib/dhikr-research/*) directly —
- * nothing rendered here can be an unreviewed, disputed, composite, or
- * research-only record.
+ * Two data sources, each through its own dedicated public-safe chokepoint
+ * module, and never any other way:
+ *  - getMorningDhikrItemsPublic() (src/sanity/lib/dhikr-public-fetch.ts):
+ *    the "Editorially reviewed" section. Merges two SEPARATE eligibility
+ *    pathways (the canonical scholarly-approved gate, unchanged, and the
+ *    additive editorial-publication gate), then filters on the approved
+ *    timingLabel field. Each item carries a `publicationPathway` tag.
+ *  - getPendingReferenceCollection() (src/lib/dhikr-research/public-
+ *    reference-projection.ts): the "Reference collection" section — every
+ *    source-register record NOT already shown above, narrowed to a
+ *    public-safe projection (protected Arabic, sequence, documented source
+ *    reference where actually documented, known timing, known repetition
+ *    count) that structurally cannot expose internal notes, reviewer
+ *    identity, authentication claims, or unsupported virtue text.
+ *
+ * This route never imports the staff-only src/sanity/lib/dhikr-fetch.ts,
+ * and never reads src/lib/dhikr-research/morning-dhikr-register.ts or
+ * ./types.ts directly — only the two projection modules above.
  *
  * @see docs/dhikr/40-scholarly-review-and-adjudication-framework.md
  */
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata("dhikrMorning", "/knowledge/dhikr/morning");
-}
-
-const TIMING_KEYS = ["morning-only", "evening-only", "morning-and-evening", "not-time-specific"] as const;
-
-function isKnownTimingKey(value: string | undefined): value is (typeof TIMING_KEYS)[number] {
-  return !!value && (TIMING_KEYS as readonly string[]).includes(value);
 }
 
 export default async function MorningDhikrPage({
@@ -54,6 +59,10 @@ export default async function MorningDhikrPage({
   } catch {
     loadFailed = true;
   }
+
+  const publishedIds = items.map((item) => item.mdrSourceId).filter((id): id is string => !!id);
+  const referenceEntries = loadFailed ? [] : getPendingReferenceCollection(publishedIds);
+  const totalCount = getSourceRegisterTotalCount();
 
   return (
     <SectionPage
@@ -77,7 +86,7 @@ export default async function MorningDhikrPage({
           </h2>
           <p className="type-body">{t("errorState.body")}</p>
         </section>
-      ) : items.length === 0 ? (
+      ) : items.length === 0 && referenceEntries.length === 0 ? (
         <section
           aria-labelledby="morning-dhikr-empty-heading"
           className="morning-dhikr-empty-state"
@@ -89,75 +98,22 @@ export default async function MorningDhikrPage({
         </section>
       ) : (
         <>
-          {items.some((item) => item.publicationPathway === "editorial-pending-scholarly-review") && (
-            <div className="morning-dhikr-editorial-notice" role="note">
-              <p className="type-body">{t("editorialNotice")}</p>
-            </div>
-          )}
-          <ol className="morning-dhikr-list" aria-label={t("heading")}>
-          {items.map((item) => {
-            const translation = locale === "da" && item.translationDa ? item.translationDa : item.translationEn;
-            const primaryReference = item.sourceReferences[0]?.citation;
-            const timingKey = isKnownTimingKey(item.timingLabel) ? item.timingLabel : undefined;
-            const pendingScholarlyReview = item.publicationPathway === "editorial-pending-scholarly-review";
-
-            return (
-              <li key={item._id}>
-                <article
-                  className="morning-dhikr-card"
-                  aria-labelledby={`morning-dhikr-${item._id}-arabic`}
-                >
-                  {pendingScholarlyReview && (
-                    <span className="morning-dhikr-card__pending-badge">{t("pendingScholarlyReviewBadge")}</span>
-                  )}
-
-                  <p
-                    id={`morning-dhikr-${item._id}-arabic`}
-                    className="type-arabic morning-dhikr-card__arabic"
-                    dir="rtl"
-                    lang="ar"
-                  >
-                    {item.arabicText}
-                  </p>
-
-                  <p className="type-body morning-dhikr-card__translation" lang={locale}>
-                    {translation}
-                  </p>
-
-                  {(timingKey || item.recommendedRepetitions) && (
-                    <div className="morning-dhikr-card__badges">
-                      {timingKey && (
-                        <span className="morning-dhikr-card__badge">{t(`timing.${timingKey}`)}</span>
-                      )}
-                      {item.recommendedRepetitions !== undefined && item.recommendedRepetitions > 0 && (
-                        <span className="morning-dhikr-card__badge">
-                          {t("repetitionLabel", { count: item.recommendedRepetitions })}
-                        </span>
-                      )}
-                    </div>
-                  )}
-
-                  {item.virtueText && (
-                    <p className="morning-dhikr-card__virtue" lang={locale}>
-                      <span className="morning-dhikr-card__source-label">{t("virtueLabel")}: </span>
-                      {item.virtueText}
-                    </p>
-                  )}
-
-                  {primaryReference && (
-                    <>
-                      <hr className="morning-dhikr-card__divider" />
-                      <div className="morning-dhikr-card__source">
-                        <span className="morning-dhikr-card__source-label">{t("sourceLabel")}</span>
-                        <span>{primaryReference}</span>
-                      </div>
-                    </>
-                  )}
-                </article>
-              </li>
-            );
-          })}
-          </ol>
+          {/* Literal, launch-specific copy — states the current 2-of-30
+              reviewed status in prose. Revisit this text (and its Danish
+              equivalent) when more records complete editorial review; it is
+              intentionally not auto-generated so it can never overstate the
+              collection's status. */}
+          <div className="morning-dhikr-collection-intro">
+            <h2 className="morning-dhikr-collection-intro__heading">{t("collectionIntroHeading")}</h2>
+            <p className="type-body">{t("collectionIntroBody")}</p>
+          </div>
+          <MorningDhikrCollection
+            locale={locale}
+            items={items}
+            referenceEntries={referenceEntries}
+            reviewedCount={items.length}
+            totalCount={totalCount}
+          />
         </>
       )}
     </SectionPage>

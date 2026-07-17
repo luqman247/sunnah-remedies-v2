@@ -549,7 +549,28 @@
       "not-time-specific": "Ikke tidsbestemt"
     },
     "repetitionLabel": "{count, plural, one {Recitér én gang} other {Recitér # gange}}",
-    "virtueLabel": "Dyd"
+    "virtueLabel": "Dyd",
+    "progressIndicator": "{reviewed} af {total} tekster redaktionelt gennemgået.",
+    "contentsLabel": "Indhold",
+    "collectionIntroHeading": "Morgen-dhikr-samling",
+    "collectionIntroBody": "Denne samling indeholder 30 tekster fra Sunnah Remedies' kildesamling. To tekster har gennemført redaktionel gennemgang og er offentliggjort i afventning af uafhængig faglig verifikation. De resterende tekster er tilgængelige som en tydeligt markeret referencesamling, mens deres ordlyd, oversættelse og kildeangivelse fortsat gennemgås.",
+    "sectionEditoriallyReviewedHeading": "Redaktionelt gennemgået",
+    "sectionEditoriallyReviewedDescription": "Udarbejdet fra dokumenterede kilder af en redaktionel gennemgår og afventer uafhængig faglig verifikation.",
+    "sectionReferenceHeading": "Referencesamling — faglig og redaktionel gennemgang afventes",
+    "referenceCollectionCount": "{count, plural, one {1 tekst afventer gennemgang} other {# tekster afventer gennemgang}}",
+    "referenceCollectionNotice": "Teksterne nedenfor gengiver kildesamlingen til reference og udenadslæring. Deres ordlyd, oversættelse, kildeangivelse, tidspunkt, gentagelsesantal og dydsudsagn kan stadig kræve verifikation. De præsenteres ikke som bekræftet autentiske afgørelser eller endelige faglige konklusioner.",
+    "reviewPendingBadge": "Afventer gennemgang",
+    "sourceVerificationPending": "Kildeverifikation afventes",
+    "translationUnderReview": "Oversættelse under gennemgang.",
+    "pendingTimingLabel": "Registreret tidspunkt: {timing} — verifikation afventes",
+    "pendingRepetitionLabel": "Kildedokumentet angiver: {count, plural, one {# gentagelse} other {# gentagelser}} — verifikation afventes",
+    "filters": {
+      "all": "Alle",
+      "editoriallyReviewed": "Redaktionelt gennemgået",
+      "reviewPending": "Afventer gennemgang",
+      "morningOnly": "Kun morgen",
+      "morningAndEvening": "Morgen og aften"
+    }
   },
   "consultations": {
     "title": "Kliniske Konsultationer",

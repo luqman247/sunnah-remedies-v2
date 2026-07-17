@@ -303,7 +303,9 @@ function testNoSecretsExposed() {
     "src/app/(staff)/dhikr-mdr-review/page.tsx",
     "src/app/(staff)/dhikr-mdr-review/MdrReviewWorkbench.tsx",
     "src/app/[locale]/knowledge/dhikr/morning/page.tsx",
+    "src/app/[locale]/knowledge/dhikr/morning/MorningDhikrCollection.tsx",
     "src/sanity/lib/dhikr-public-fetch.ts",
+    "src/lib/dhikr-research/public-reference-projection.ts",
   ];
   const secretPatterns = [/\bsk_(live|test)_[A-Za-z0-9]{10,}/, /SANITY_API_TOKEN\s*=\s*["'][^"']+["']/, /Bearer [A-Za-z0-9._-]{20,}/];
   for (const relPath of filesToCheck) {
