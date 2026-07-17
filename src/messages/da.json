@@ -1108,6 +1108,10 @@
         "Olivenolie",
         "Immunstøtte"
       ]
+    },
+    "duaDhikr": {
+      "title": "Duʿā & dhikr | Sunnah Remedies Vidensbibliotek",
+      "description": "Verificeret duʿā og dhikr fra Sunnah, organiseret efter hverdagens øjeblikke — arabisk som den autoritative kildetekst, med gennemgåede engelske og danske oversættelser."
     }
   },
   "homepage": {
@@ -1161,5 +1165,83 @@
     "deptJourneysPlatePurpose": "Masjid an-Nabawi i gylden time — stille gårdsplads og grøn kuppel",
     "deptJourneysPlateAlt": "Masjid an-Nabawi i gylden time — varm marmorgårdsplads, grøn kuppel og fjerne pilgrimme i stille refleksion",
     "jsonLdDescription": "Et institut for Profetisk Medicin med forskning, klinisk behandling og naturlig terapi"
+  },
+  "duaDhikr": {
+    "breadcrumb": "Duʿā & dhikr",
+    "landing": {
+      "eyebrow": "Duʿā & dhikr",
+      "heading": "Duʿā & dhikr",
+      "lede": "Et roligt hjem for verificeret duʿā og dhikr fra Sunnah — organiseret efter hverdagens øjeblikke og gennemgået under samme redaktionelle standard som resten af Vidensbiblioteket.",
+      "quickAccessHeading": "Hurtig adgang",
+      "browseHeading": "Gennemse efter anledning",
+      "discoveryHeading": "Hvad har du brug for en duʿā til?",
+      "discovery": {
+        "beginningMyDay": "Jeg begynder min dag",
+        "goingToSleep": "Jeg skal sove",
+        "travelling": "Jeg rejser",
+        "worriedOrUnwell": "Jeg er bekymret eller utilpas",
+        "seekingForgiveness": "Jeg ønsker at søge tilgivelse",
+        "duaForFamily": "Jeg beder for min familie",
+        "preparingForHajjOrUmrah": "Jeg forbereder mig til Ḥajj eller ʿUmrah"
+      },
+      "learningHeading": "Læring",
+      "learningPlaceholderNotice": "Disse guides er under forberedelse og udgives, når kildemateriale er leveret. De kan endnu ikke læses.",
+      "learningGuides": {
+        "whatIsDua": "Hvad er duʿā?",
+        "whatIsDhikr": "Hvad er dhikr?",
+        "etiquettesOfDua": "Duʿāens etikette",
+        "timesDuaAccepted": "Tidspunkter, hvor duʿā besvares",
+        "rememberingAdhkar": "Hvordan man husker de daglige adhkār",
+        "praisingAllahBeforeDua": "At prise Allah, før man beder en duʿā",
+        "sendingSalawat": "At sende ṣalawāt over Profeten ﷺ",
+        "askingThroughNames": "At bede Allah gennem Hans skønne navne"
+      },
+      "continueReadingHeading": "Fortsæt læsning",
+      "searchLabel": "Søg i Duʿā & dhikr",
+      "searchPlaceholder": "Søg efter anledning, emne eller navn…",
+      "searchNoResults": "Ingen samlinger matcher \"{query}\".",
+      "entryCount": "{count, plural, one {1 tekst} other {# tekster}}",
+      "noEntriesYet": "Under forberedelse"
+    },
+    "collection": {
+      "entriesHeading": "Tekster",
+      "relatedHeading": "Relaterede samlinger",
+      "prevNextLabel": "Mere i denne gruppe",
+      "copyPendingReview": "Denne introduktion er udgivet redaktionelt og afventer selvstændig faglig gennemgang.",
+      "whenReadLabel": "Hvornår dette læses",
+      "searchWithinLabel": "Søg i denne samling",
+      "searchWithinPlaceholder": "Søg i denne samling…",
+      "subcategoryFilterLabel": "Filtrer efter underkategori",
+      "allSubcategories": "Alle",
+      "entryCount": "{count, plural, =0 {Ingen tekster endnu} one {1 tekst} other {# tekster}}",
+      "emptyState": {
+        "heading": "Under forberedelse",
+        "body": "Denne samling er under forberedelse og gennemgang. Verificerede tekster vises her, når den faglige og redaktionelle gennemgang er afsluttet."
+      }
+    },
+    "entryCard": {
+      "pendingScholarlyReviewBadge": "Faglig gennemgang afventer",
+      "revealTranslation": "Vis oversættelse",
+      "revealTransliteration": "Vis translitteration",
+      "timing": {
+        "morning-only": "Morgen",
+        "evening-only": "Aften",
+        "morning-and-evening": "Morgen og aften",
+        "not-time-specific": "Ikke tidsbestemt"
+      },
+      "repetitionLabel": "{count, plural, one {Reciteres én gang} other {Reciteres # gange}}",
+      "virtueLabel": "Fortjeneste",
+      "explanationLabel": "Forklaring",
+      "referencesLabel": "Referencer",
+      "sourceLabel": "Kilde",
+      "audioLabel": "Recitationslyd for {title}",
+      "toolbarLabel": "Læseværktøjer",
+      "enterMemoriseMode": "Memoreringstilstand",
+      "exitMemoriseMode": "Afslut memoreringstilstand",
+      "markAsLearning": "Markér som under indlæring",
+      "markedLearning": "Under indlæring",
+      "markedMemorised": "Memoreret",
+      "share": "Del"
+    }
   }
 }

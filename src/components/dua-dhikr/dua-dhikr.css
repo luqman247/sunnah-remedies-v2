@@ -1,0 +1,351 @@
+/* Duʿā & Dhikr — shared visual system. Tokens only (--sage-deep emerald,
+   --brass gold, --paper ivory); the 8px-base --space-* scale is used
+   throughout new Duʿā & Dhikr markup rather than the legacy --s* scale —
+   see docs/dua-dhikr/VISUAL_SYSTEM.md for the reasoning. */
+
+/* ── Arabic reading block ─────────────────────────────────────────── */
+
+.dua-dhikr-arabic {
+  margin: 0;
+  direction: rtl;
+  text-align: right;
+  line-height: 2.1;
+  font-size: clamp(1.5rem, 3.6vw, 2.1rem);
+  color: var(--sage-deep);
+  word-break: normal;
+  overflow-wrap: normal;
+  white-space: normal;
+}
+
+.dua-dhikr-arabic--large {
+  font-size: clamp(1.9rem, 5vw, 2.75rem);
+  line-height: 2.2;
+}
+
+/* ── Pending-review notice ────────────────────────────────────────── */
+
+.dua-dhikr-pending-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+  padding: var(--space-1) var(--space-3);
+  border: var(--hairline);
+  border-radius: var(--radius);
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── Entry card ────────────────────────────────────────────────────── */
+
+.dua-dhikr-entry-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  border: var(--hairline);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.dua-dhikr-entry-card__what-for {
+  margin: 0;
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.dua-dhikr-entry-card__translation {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.dua-dhikr-entry-card__transliteration {
+  margin: 0;
+  font-style: italic;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.dua-dhikr-entry-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.dua-dhikr-entry-card__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border: var(--hairline);
+  border-radius: var(--radius);
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.78rem;
+  color: var(--sage-deep);
+}
+
+.dua-dhikr-entry-card details {
+  border-top: var(--hairline);
+  padding-top: var(--space-3);
+}
+
+.dua-dhikr-entry-card summary {
+  cursor: pointer;
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  color: var(--sage-deep);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.dua-dhikr-entry-card summary:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 4px;
+}
+
+.dua-dhikr-entry-card__detail-body {
+  margin: var(--space-2) 0 0;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--ink-soft, var(--ink));
+}
+
+.dua-dhikr-entry-card__source {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.dua-dhikr-entry-card__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  border-top: var(--hairline);
+  padding-top: var(--space-4);
+}
+
+.dua-dhikr-entry-card__action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: var(--hairline);
+  border-radius: var(--radius);
+  background: transparent;
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.82rem;
+  color: var(--sage-deep);
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.dua-dhikr-entry-card__action:hover {
+  color: var(--brass);
+  border-color: var(--brass);
+}
+
+.dua-dhikr-entry-card__action:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}
+
+.dua-dhikr-entry-card__action[aria-pressed="true"] {
+  background: var(--sage-deep);
+  color: var(--paper);
+  border-color: var(--sage-deep);
+}
+
+/* ── Collection card ───────────────────────────────────────────────── */
+
+.dua-dhikr-collection-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border: var(--hairline);
+  border-radius: var(--radius);
+  background: var(--paper);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.dua-dhikr-collection-card:hover {
+  border-color: var(--brass);
+}
+
+.dua-dhikr-collection-card:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dua-dhikr-collection-card:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.dua-dhikr-collection-card__icon {
+  color: var(--brass);
+}
+
+.dua-dhikr-collection-card__title {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  font-size: 1.15rem;
+  color: var(--sage-deep);
+}
+
+.dua-dhikr-collection-card__description {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.dua-dhikr-collection-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: auto;
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dua-dhikr-entry-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  margin-top: var(--space-4);
+}
+
+.dua-dhikr-collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+  gap: var(--space-5);
+}
+
+/* ── Discovery / occasion picker ───────────────────────────────────── */
+
+.dua-dhikr-discovery-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dua-dhikr-discovery-link {
+  display: block;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-4);
+  border: var(--hairline);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--sage-deep);
+  font-size: 0.92rem;
+}
+
+.dua-dhikr-discovery-link:hover,
+.dua-dhikr-discovery-link:focus-visible {
+  border-color: var(--brass);
+  color: var(--brass);
+}
+
+.dua-dhikr-discovery-link:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}
+
+/* ── Search ────────────────────────────────────────────────────────── */
+
+.dua-dhikr-search {
+  max-width: var(--measure-reading);
+}
+
+.dua-dhikr-search__input {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-4);
+  border: var(--hairline);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.dua-dhikr-search__input:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}
+
+.dua-dhikr-search__empty {
+  margin: var(--space-3) 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.dua-dhikr-search__results {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.dua-dhikr-search__result {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--sage-deep);
+}
+
+.dua-dhikr-search__result:hover,
+.dua-dhikr-search__result:focus-visible {
+  color: var(--brass);
+  background: color-mix(in srgb, var(--brass) 8%, transparent);
+}
+
+.dua-dhikr-search__result:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}
+
+/* ── Empty states (reused pattern from Evening Dhikr) ─────────────── */
+
+.dua-dhikr-empty-state {
+  padding: var(--space-6);
+  border: var(--hairline);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.dua-dhikr-empty-state__heading {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: var(--sage-deep);
+}

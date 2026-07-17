@@ -169,6 +169,27 @@ export const structure = (S: StructureBuilder) =>
             ]),
         ),
 
+      // ── Duʿā & Dhikr (extends Daily Dhikr — see docs/dua-dhikr/) ──
+      S.listItem()
+        .title("Duʿā & Dhikr")
+        .child(
+          S.list()
+            .title("Duʿā & Dhikr")
+            .items([
+              S.listItem()
+                .title("Collections")
+                .child(
+                  S.documentTypeList("duaDhikrCollection")
+                    .title("Duʿā & Dhikr Collections"),
+                ),
+              S.listItem()
+                .title("Entries")
+                .child(
+                  S.documentTypeList("duaDhikrEntry").title("Duʿā & Dhikr Entries"),
+                ),
+            ]),
+        ),
+
       // ── Clinical ──
       S.listItem()
         .title("Clinical")

@@ -1,5 +1,9 @@
 import { groq } from "next-sanity";
 import { DHIKR_ELIGIBILITY_GROQ, DHIKR_EDITORIAL_ELIGIBILITY_GROQ } from "./dhikr-publication-gate";
+import {
+  DUA_DHIKR_ELIGIBILITY_GROQ,
+  DUA_DHIKR_EDITORIAL_ELIGIBILITY_GROQ,
+} from "./dua-dhikr-publication-gate";
 
 /**
  * Translation siblings projection — reusable fragment for hreflang.
@@ -686,5 +690,102 @@ export const dhikrItemsInternalDetailQuery = groq`
       date,
       notes
     }
+  }
+`;
+
+/* ── Duʿā & Dhikr (extends the Dhikr prototype — see docs/dua-dhikr/) ──
+ *
+ * Same discipline as the Dhikr queries above: duaDhikrEntriesPublicEligibleQuery
+ * is the only query a public route may use for canonical-pathway entries;
+ * duaDhikrEntriesEditoriallyPublicEligibleQuery is the separate, additive
+ * bypass pathway (docs/dua-dhikr/REVIEW_BYPASS.md); both apply their
+ * eligibility gate inside the query filter, never re-filtered downstream.
+ * Projections are explicit field lists, never `...`, so a future schema
+ * field is excluded by default until deliberately added here.
+ */
+
+const duaDhikrEntryPublicProjection = groq`
+  _id,
+  "slug": slug.current,
+  titleEn,
+  titleDa,
+  order,
+  featured,
+  whatItIsFor,
+  occasion,
+  searchAliases,
+  arabicText,
+  transliteration,
+  translationEn,
+  translationDa,
+  recommendedRepetitions,
+  timingLabel,
+  instructionText,
+  virtueText,
+  explanationText,
+  authenticationNote,
+  subcategorySlugs,
+  "collections": collections[]->{ "slug": slug.current, titleEn, titleDa },
+  "sourceReferences": sourceReferences[]{
+    type,
+    citation,
+    hadithCollection,
+    hadithNumber,
+    hadithGrading,
+    surah,
+    ayah,
+    sourceUrl,
+    verifiedStatus
+  },
+  "audioAssetUrl": audioAsset->cloudinary.secure_url,
+  "hasAudioAsset": defined(audioAsset->cloudinary.secure_url)
+`;
+
+/** The only query any public route may use for the canonical, scholarly-approved Duʿā & Dhikr pathway. */
+export const duaDhikrEntriesPublicEligibleQuery = groq`
+  *[_type == "duaDhikrEntry" && ${DUA_DHIKR_ELIGIBILITY_GROQ}] | order(order asc) {
+    ${duaDhikrEntryPublicProjection}
+  }
+`;
+
+/** Separate, additive editorial-bypass pathway — see docs/dua-dhikr/REVIEW_BYPASS.md. */
+export const duaDhikrEntriesEditoriallyPublicEligibleQuery = groq`
+  *[_type == "duaDhikrEntry" && ${DUA_DHIKR_EDITORIAL_ELIGIBILITY_GROQ}] | order(order asc) {
+    ${duaDhikrEntryPublicProjection}
+  }
+`;
+
+/**
+ * Public collection metadata (structural shell). Note this does NOT gate on
+ * duaDhikrCollection.reviewStatus/editorialPublicationStatus — those fields
+ * only gate the collection's own introductionEn/Da + whenReadEn/Da copy
+ * (applied in application code, see src/sanity/lib/dua-dhikr-public-fetch.ts),
+ * exactly as dhikrCategory's structural fields are never gated. A collection
+ * only becomes publicly *reachable* once it has at least one eligible entry,
+ * enforced by getDuaDhikrCollectionsPublic deriving reachability from entries,
+ * not from this query alone.
+ */
+export const duaDhikrCollectionsQuery = groq`
+  *[_type == "duaDhikrCollection"] | order(order asc) {
+    _id,
+    "slug": slug.current,
+    titleEn,
+    titleDa,
+    parentGroup,
+    order,
+    featured,
+    iconKey,
+    visualMotifKey,
+    descriptionEn,
+    descriptionDa,
+    introductionEn,
+    introductionDa,
+    whenReadEn,
+    whenReadDa,
+    searchAliases,
+    subcategories,
+    "relatedCollections": relatedCollections[]->{ "slug": slug.current, titleEn, titleDa, iconKey },
+    reviewStatus,
+    editorialPublicationStatus
   }
 `;

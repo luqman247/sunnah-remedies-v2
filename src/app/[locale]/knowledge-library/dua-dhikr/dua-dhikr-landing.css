@@ -1,0 +1,56 @@
+/* Duʿā & Dhikr landing page — hero + section spacing. Shared card/search/
+   icon styles live in src/components/dua-dhikr/dua-dhikr.css. */
+
+.dua-dhikr-hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: var(--measure-reading);
+}
+
+.dua-dhikr-hero__lede {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.dua-dhikr-parent-group {
+  margin: 0 0 var(--space-8);
+}
+
+.dua-dhikr-parent-group:last-child {
+  margin-bottom: 0;
+}
+
+.dua-dhikr-parent-group__heading {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  font-size: 1.05rem;
+  color: var(--brass);
+}
+
+.dua-dhikr-learning-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: var(--space-3);
+}
+
+.dua-dhikr-prev-next {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.dua-dhikr-learning-list li {
+  padding: var(--space-3) var(--space-4);
+  border: var(--hairline);
+  border-radius: var(--radius);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
