@@ -113,12 +113,20 @@ function testPageSourceHasNoGovernanceFields() {
 /* ── Knowledge Library entry point ───────────────────────────────────── */
 
 function testKnowledgeLibrarySectionsPointsToDhikrLanding() {
-  const entry = knowledgeLibrary.sections.find((s) => s.href === "/knowledge-library/dhikr");
-  assert(!!entry, "knowledgeLibrary.sections must contain an entry linking to /knowledge-library/dhikr");
-  assert(entry!.label === "Dua & Dhikr", `sidebar entry label must be "Dua & Dhikr", got "${entry!.label}"`);
+  // Superseded by the Duʿa & Dhikr expansion (docs/dua-dhikr/
+  // INFORMATION_ARCHITECTURE.md): the sidebar entry now points at the new
+  // canonical hub, /knowledge-library/dua-dhikr, which itself links to
+  // Morning/Evening Dhikr and supersedes this page's plain-list UI. This
+  // page (src/app/[locale]/knowledge-library/dhikr/page.tsx) is kept in
+  // place, unmodified, and reachable only via a permanent redirect
+  // (next.config.ts) — hence the rest of this test file's assertions about
+  // its own source/content remain valid and unchanged.
+  const entry = knowledgeLibrary.sections.find((s) => s.href === "/knowledge-library/dua-dhikr");
+  assert(!!entry, "knowledgeLibrary.sections must contain an entry linking to /knowledge-library/dua-dhikr");
+  assert(entry!.label === "Duʿa & Dhikr", `sidebar entry label must be "Duʿa & Dhikr", got "${entry!.label}"`);
   assert(
     knowledgeLibrary.sections.length === 1,
-    `Knowledge Library sidebar must list only Dua & Dhikr for now, got ${knowledgeLibrary.sections.length} sections`,
+    `Knowledge Library sidebar must list only Duʿa & Dhikr for now, got ${knowledgeLibrary.sections.length} sections`,
   );
   assert(
     !knowledgeLibrary.sections.some((s) =>
@@ -126,7 +134,7 @@ function testKnowledgeLibrarySectionsPointsToDhikrLanding() {
     ),
     "Knowledge Library sidebar must not list the deferred topic entries",
   );
-  console.log(`✓ knowledgeLibrary.sections includes only "${entry!.label}" linking to /knowledge-library/dhikr`);
+  console.log(`✓ knowledgeLibrary.sections includes only "${entry!.label}" linking to /knowledge-library/dua-dhikr`);
 }
 
 function testNoFifthDepartmentAdded() {

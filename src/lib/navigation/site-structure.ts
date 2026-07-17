@@ -287,9 +287,9 @@ export const knowledgeLibrary: Department = {
   // and will return to this list when their editorial presentation is ready.
   sections: [
     {
-      label: "Dua & Dhikr",
-      href: "/knowledge-library/dhikr",
-      description: "Morning and evening remembrance collections from the Sunnah.",
+      label: "Duʿa & Dhikr",
+      href: "/knowledge-library/dua-dhikr",
+      description: "Morning and evening remembrance, and the wider Sunnah collections of duʿa and dhikr.",
     },
   ],
 };

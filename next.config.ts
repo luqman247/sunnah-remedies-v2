@@ -29,6 +29,11 @@ const nextConfig: NextConfig = {
         destination: "/the-academy/course-handbook",
         permanent: true,
       },
+      {
+        source: "/knowledge-library/dhikr",
+        destination: "/knowledge-library/dua-dhikr",
+        permanent: true,
+      },
     ];
   },
 };

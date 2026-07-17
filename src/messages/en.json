@@ -506,10 +506,10 @@
   },
   "dhikr": {
     "nav": {
-      "label": "Dua & Dhikr",
+      "label": "Duʿa & Dhikr",
       "description": "Morning and evening remembrance collections from the Sunnah."
     },
-    "breadcrumb": "Dua & Dhikr",
+    "breadcrumb": "Duʿa & Dhikr",
     "landing": {
       "heading": "Daily Dhikr",
       "lede": "Verified daily remembrance from the Sunnah, published under the Knowledge Library's editorial standard.",
@@ -1150,6 +1150,10 @@
         "Olive oil",
         "Immune support"
       ]
+    },
+    "duaDhikr": {
+      "title": "Duʿa & Dhikr | Sunnah Remedies Knowledge Library",
+      "description": "Verified duʿa and dhikr from the Sunnah, organised by the moments of daily life — Arabic as the authoritative source, with reviewed English and Danish translations."
     }
   },
   "homepage": {
@@ -1203,5 +1207,83 @@
     "deptJourneysPlatePurpose": "Masjid an-Nabawi at golden hour — quiet courtyard and green dome",
     "deptJourneysPlateAlt": "Masjid an-Nabawi at golden hour — warm marble courtyard, green dome, and distant pilgrims in quiet reflection",
     "jsonLdDescription": "An institute of Prophetic Medicine for scholarship, clinical care, and natural therapeutics"
+  },
+  "duaDhikr": {
+    "breadcrumb": "Duʿa & Dhikr",
+    "landing": {
+      "eyebrow": "Duʿa & Dhikr",
+      "heading": "Duʿa & Dhikr",
+      "lede": "A calm home for verified duʿa and dhikr from the Sunnah — organised by the moments of daily life, reviewed under the same editorial standard as the rest of the Knowledge Library.",
+      "quickAccessHeading": "Quick access",
+      "browseHeading": "Browse by occasion",
+      "discoveryHeading": "What do you need a duʿa for?",
+      "discovery": {
+        "beginningMyDay": "I am beginning my day",
+        "goingToSleep": "I am going to sleep",
+        "travelling": "I am travelling",
+        "worriedOrUnwell": "I am worried or unwell",
+        "seekingForgiveness": "I want to seek forgiveness",
+        "duaForFamily": "I am making duʿa for my family",
+        "preparingForHajjOrUmrah": "I am preparing for Ḥajj or ʿUmrah"
+      },
+      "learningHeading": "Learning",
+      "learningPlaceholderNotice": "These guides are being prepared and will be published once sourced content is supplied. They are not yet available to read.",
+      "learningGuides": {
+        "whatIsDua": "What is duʿa?",
+        "whatIsDhikr": "What is dhikr?",
+        "etiquettesOfDua": "Etiquettes of duʿa",
+        "timesDuaAccepted": "Times when duʿa is accepted",
+        "rememberingAdhkar": "How to remember daily adhkār",
+        "praisingAllahBeforeDua": "Praising Allah before making duʿa",
+        "sendingSalawat": "Sending ṣalawāt upon the Prophet ﷺ",
+        "askingThroughNames": "Asking Allah through His Beautiful Names"
+      },
+      "continueReadingHeading": "Continue reading",
+      "searchLabel": "Search Duʿa & Dhikr",
+      "searchPlaceholder": "Search by occasion, topic, or name…",
+      "searchNoResults": "No collections match \"{query}\".",
+      "entryCount": "{count, plural, one {1 entry} other {# entries}}",
+      "noEntriesYet": "Preparing for publication"
+    },
+    "collection": {
+      "entriesHeading": "Entries",
+      "relatedHeading": "Related collections",
+      "prevNextLabel": "More in this group",
+      "copyPendingReview": "This introduction has been published editorially and is pending independent scholarly review.",
+      "whenReadLabel": "When this is read",
+      "searchWithinLabel": "Search within this collection",
+      "searchWithinPlaceholder": "Search this collection…",
+      "subcategoryFilterLabel": "Filter by subcategory",
+      "allSubcategories": "All",
+      "entryCount": "{count, plural, =0 {No entries yet} one {1 entry} other {# entries}}",
+      "emptyState": {
+        "heading": "Preparing for publication",
+        "body": "This collection is being prepared and reviewed. Verified entries will appear here once scholarly and editorial review is complete."
+      }
+    },
+    "entryCard": {
+      "pendingScholarlyReviewBadge": "Scholarly review pending",
+      "revealTranslation": "Show translation",
+      "revealTransliteration": "Show transliteration",
+      "timing": {
+        "morning-only": "Morning",
+        "evening-only": "Evening",
+        "morning-and-evening": "Morning and evening",
+        "not-time-specific": "Not time-specific"
+      },
+      "repetitionLabel": "{count, plural, one {Recite once} other {Recite # times}}",
+      "virtueLabel": "Virtue",
+      "explanationLabel": "Explanation",
+      "referencesLabel": "References",
+      "sourceLabel": "Source",
+      "audioLabel": "Recitation audio for {title}",
+      "toolbarLabel": "Reading tools",
+      "enterMemoriseMode": "Memorise mode",
+      "exitMemoriseMode": "Exit memorise mode",
+      "markAsLearning": "Mark as learning",
+      "markedLearning": "Learning",
+      "markedMemorised": "Memorised",
+      "share": "Share"
+    }
   }
 }

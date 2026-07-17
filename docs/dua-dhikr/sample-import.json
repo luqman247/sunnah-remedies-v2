@@ -1,0 +1,45 @@
+[
+  {
+    "importIdentifier": "FIXTURE-001",
+    "collectionSlug": "food-and-drink",
+    "whatItIsFor": "FIXTURE PLACEHOLDER — not for publication.",
+    "titleEn": "Fixture Entry One",
+    "titleDa": "Fixtur-post Et",
+    "arabicText": "FIXTURE ARABIC PLACEHOLDER — NOT FOR PUBLICATION",
+    "transliteration": "fixture-placeholder-transliteration",
+    "translationEn": "FIXTURE PLACEHOLDER — not for publication.",
+    "translationDa": "FIXTUR-PLACEHOLDER — ikke til offentliggørelse.",
+    "repetitionCount": 1,
+    "timingLabel": "not-time-specific",
+    "occasion": ["fixture-testing"],
+    "instruction": "FIXTURE PLACEHOLDER.",
+    "explanation": "FIXTURE PLACEHOLDER — not for publication.",
+    "authenticationNote": "Fixture row for import-pipeline testing only.",
+    "references": [
+      {
+        "type": "other",
+        "citation": "Fixture citation — not a real source.",
+        "verifiedStatus": "unverified"
+      }
+    ]
+  },
+  {
+    "importIdentifier": "FIXTURE-002",
+    "collectionSlug": "travel",
+    "subcategorySlug": "entering-a-car",
+    "whatItIsFor": "FIXTURE PLACEHOLDER — not for publication.",
+    "titleEn": "Fixture Entry Two",
+    "arabicText": "FIXTURE ARABIC PLACEHOLDER — NOT FOR PUBLICATION",
+    "translationEn": "FIXTURE PLACEHOLDER — not for publication.",
+    "references": [
+      {
+        "type": "hadith",
+        "citation": "Fixture hadith citation — not a real source.",
+        "hadithCollection": "Fixture Collection",
+        "hadithNumber": "0000",
+        "hadithGrading": "other",
+        "verifiedStatus": "unverified"
+      }
+    ]
+  }
+]
