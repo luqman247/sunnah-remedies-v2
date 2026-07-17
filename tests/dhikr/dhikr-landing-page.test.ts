@@ -115,7 +115,18 @@ function testPageSourceHasNoGovernanceFields() {
 function testKnowledgeLibrarySectionsPointsToDhikrLanding() {
   const entry = knowledgeLibrary.sections.find((s) => s.href === "/knowledge-library/dhikr");
   assert(!!entry, "knowledgeLibrary.sections must contain an entry linking to /knowledge-library/dhikr");
-  console.log(`✓ knowledgeLibrary.sections includes a "${entry!.label}" entry linking to /knowledge-library/dhikr`);
+  assert(entry!.label === "Dua & Dhikr", `sidebar entry label must be "Dua & Dhikr", got "${entry!.label}"`);
+  assert(
+    knowledgeLibrary.sections.length === 1,
+    `Knowledge Library sidebar must list only Dua & Dhikr for now, got ${knowledgeLibrary.sections.length} sections`,
+  );
+  assert(
+    !knowledgeLibrary.sections.some((s) =>
+      ["Prophetic Medicine", "Hijama", "Patient Guides", "Daily Dhikr"].includes(s.label),
+    ),
+    "Knowledge Library sidebar must not list the deferred topic entries",
+  );
+  console.log(`✓ knowledgeLibrary.sections includes only "${entry!.label}" linking to /knowledge-library/dhikr`);
 }
 
 function testNoFifthDepartmentAdded() {

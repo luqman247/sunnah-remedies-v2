@@ -282,56 +282,14 @@ export const knowledgeLibrary: Department = {
   id: "knowledge-library",
   label: "Knowledge Library",
   href: "/knowledge-library",
+  // Public department nav lists only the topics ready for readers.
+  // Other Knowledge Library topic routes remain available by direct URL
+  // and will return to this list when their editorial presentation is ready.
   sections: [
     {
-      label: "Prophetic Medicine",
-      href: "/knowledge-library/prophetic-medicine",
-      description: "Terms, grades, and method in Tibb al-Nabawī.",
-    },
-    {
-      label: "Hijama",
-      href: "/knowledge-library/hijama",
-      description: "Graded reports and clinical limits.",
-    },
-    {
-      label: "Black Seed",
-      href: "/knowledge-library/black-seed",
-      description: "Nigella sativa in revelation, report, and use.",
-    },
-    {
-      label: "Honey",
-      href: "/knowledge-library/honey",
-      description: "Named in revelation; nourishment and means.",
-    },
-    {
-      label: "Olive Oil",
-      href: "/knowledge-library/olive-oil",
-      description: "The blessed tree: pressed, traced, studied.",
-    },
-    {
-      label: "Saffron",
-      href: "/knowledge-library/saffron",
-      description: "Zaʿfarān in the classical materia medica.",
-    },
-    {
-      label: "Nutrition",
-      href: "/knowledge-library/nutrition",
-      description: "Food in the Sunnah: adab, not diet marketing.",
-    },
-    {
-      label: "Research",
-      href: "/knowledge-library/research",
-      description: "Evidence-informed notes, bounded and cited.",
-    },
-    {
-      label: "Patient Guides",
-      href: "/knowledge-library/patient-guides",
-      description: "Plain guidance before requesting means.",
-    },
-    {
-      label: "Daily Dhikr",
+      label: "Dua & Dhikr",
       href: "/knowledge-library/dhikr",
-      description: "Verified daily remembrance, reviewed before publication.",
+      description: "Morning and evening remembrance collections from the Sunnah.",
     },
   ],
 };
@@ -351,7 +309,9 @@ export function getDepartmentByPath(path: string): Department | undefined {
   if (path.startsWith("/the-apothecary")) return apothecary;
   if (path.startsWith("/the-academy")) return academy;
   if (path.startsWith("/sacred-journeys")) return sacredJourneys;
-  if (path.startsWith("/knowledge-library")) return knowledgeLibrary;
+  if (path.startsWith("/knowledge-library") || path.startsWith("/knowledge/dhikr")) {
+    return knowledgeLibrary;
+  }
   if (path.startsWith("/institute")) return institution;
   if (path.startsWith("/charter")) return institution;
   if (path.startsWith("/calendar")) return institution;

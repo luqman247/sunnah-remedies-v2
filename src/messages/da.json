@@ -506,10 +506,10 @@
   },
   "dhikr": {
     "nav": {
-      "label": "Daglig dhikr",
-      "description": "Verificeret daglig dhikr, gennemgået før udgivelse."
+      "label": "Dua & dhikr",
+      "description": "Morgen- og aften-dhikr-samlinger fra Sunnah."
     },
-    "breadcrumb": "Daglig dhikr",
+    "breadcrumb": "Dua & dhikr",
     "landing": {
       "heading": "Daglig dhikr",
       "lede": "Verificeret daglig dhikr fra Sunnah, udgivet under Vidensbibliotekets redaktionelle standard.",

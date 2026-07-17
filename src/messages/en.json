@@ -506,10 +506,10 @@
   },
   "dhikr": {
     "nav": {
-      "label": "Daily Dhikr",
-      "description": "Verified daily remembrance, reviewed before publication."
+      "label": "Dua & Dhikr",
+      "description": "Morning and evening remembrance collections from the Sunnah."
     },
-    "breadcrumb": "Daily Dhikr",
+    "breadcrumb": "Dua & Dhikr",
     "landing": {
       "heading": "Daily Dhikr",
       "lede": "Verified daily remembrance from the Sunnah, published under the Knowledge Library's editorial standard.",

@@ -40,7 +40,7 @@ export default async function EveningDhikrPage({
     <SectionPage
       department={knowledgeLibrary}
       folio="iv"
-      currentHref="/knowledge/dhikr/evening"
+      currentHref="/knowledge-library/dhikr"
       breadcrumb={[
         { label: tNav("knowledgeLibrary"), href: "/knowledge-library" },
         { label: t("breadcrumb") },
