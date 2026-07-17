@@ -43,6 +43,38 @@ canonical collection plus a `leaf` fallback. Swapping or refining an
 individual icon is a one-line change to the `PATHS` map — no consumer
 needs to change.
 
+### Icon-selection principles (for adding future icons)
+
+When a new canonical collection needs an icon, choose or draw one that
+follows all of these — enforced where testable by
+`tests/dua-dhikr/dua-dhikr-icon-consistency.test.ts`:
+
+1. **One shared wrapper, never per-icon styling.** Add only geometry
+   (`<path>`, `<circle>`, `<rect>`, `<ellipse>` with `d`/`cx`/`cy`/`r`/etc.)
+   to the `PATHS` map. Never set `fill`, `stroke`, `strokeWidth`, or
+   `style` on an individual shape — colour, weight, and caps come from the
+   shared `<svg>` wrapper in `DuaDhikrIcon` alone. This is what guarantees
+   every icon reads as one family, not a per-icon judgement call.
+2. **Geometric, architectural, or natural motifs only.** A prayer mat's
+   woven lines, a crescent, a plate and cup, a doorway, a water droplet,
+   wind lines, a Kaʿbah-inspired outline. Never a depiction of a Prophet,
+   Companion, angel, or other sacred personality, and never a stock icon
+   pack or emoji.
+3. **Recognition, not decoration.** The icon should help a reader
+   recognise the collection at a glance alongside its text label — if a
+   shape doesn't clearly evoke the concept, prefer a more literal motif
+   over an abstract one.
+4. **Optically balanced at 20–28px.** Test the icon at the sizes actually
+   used in the UI (20px in search results, 24px on cards, ~36–40px in a
+   collection hero) — a shape that reads clearly as a large illustration
+   but collapses into a blob at 20px needs simplifying, not more detail.
+5. **No new icon key without a consumer.** Every key in `ICON_KEYS` must
+   be assigned to at least one collection in `CANONICAL_COLLECTIONS` (test-
+   enforced) — don't pre-add speculative icons.
+6. **Never copy Life With Allah's (or any other site's) artwork, icon
+   pack, or exact visual treatment.** That site is a UX/IA reference only,
+   per docs/dua-dhikr/README.md.
+
 ## Cards
 
 - **`DuaDhikrCollectionCard`** — icon, title, description, entry count

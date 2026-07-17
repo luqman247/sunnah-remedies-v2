@@ -99,7 +99,7 @@ export default async function DuaDhikrLandingPage({
           <p className="type-eyebrow">{t("eyebrow")}</p>
           <h1 className="sr-only">{t("heading")}</h1>
           <p className="dua-dhikr-hero__lede">{t("lede")}</p>
-          <DhikrTimeNavigation />
+          <DhikrTimeNavigation suppressOwnHeading />
           <DuaDhikrSearch collections={collections} locale={locale} />
         </div>
       }

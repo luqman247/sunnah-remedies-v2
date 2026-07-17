@@ -1,5 +1,37 @@
 # Content Model
 
+## Studio Publication Readiness view — deferred
+
+`dhikrItem` (Morning/Evening Dhikr) already has a Studio-only "Publication
+Readiness" view (`src/sanity/components/dhikr/DhikrReadinessPanel.tsx` +
+`src/sanity/badges/dhikr-item-badges.ts`) showing the seven canonical gate
+conditions per document. A `duaDhikrEntry` equivalent was assessed during
+the pre-content-readiness phase and **deferred, not built**, for this
+phase specifically because:
+
+- It cannot be meaningfully tested without real `duaDhikrEntry` documents
+  in Sanity, and this phase creates none (see
+  [SOURCE_POLICY.md](SOURCE_POLICY.md)) — building an unverified Studio
+  view now would mean shipping untested Studio-only code.
+- The existing `DhikrReadinessPanel`/`dhikrItemBadgesResolver` are scoped
+  strictly to `dhikrItem` (`sanity.config.ts`'s `document.badges` resolver
+  checks `context.schemaType === "dhikrItem"` — Morning/Evening Dhikr must
+  never be touched to add this).
+- The underlying data it would need already exists and is fully exposed:
+  `getDuaDhikrEligibilityConditions()` /
+  `getDuaDhikrEditorialEligibilityConditions()` in
+  `src/sanity/lib/dua-dhikr-publication-gate.ts` already compute every
+  condition a readiness panel would display — adding the panel itself is a
+  contained, low-risk follow-up once real content exists to verify it
+  against, not a redesign.
+
+**When to build it**: once the first batch of real `duaDhikrEntry`
+documents exists in Sanity (after content import), mirror
+`DhikrReadinessPanel.tsx` and `dhikr-item-badges.ts` for `duaDhikrEntry`,
+add a second, independent badge/view resolver (never modify the existing
+`dhikrItemBadgesResolver`), and verify it against real documents before
+considering it done.
+
 ## Taxonomy authority model
 
 - **Code owns the canonical category identifiers, slugs, grouping, and

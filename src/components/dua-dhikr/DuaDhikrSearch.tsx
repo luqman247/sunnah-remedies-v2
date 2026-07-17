@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/locales";
 import type { DuaDhikrCollectionPublic } from "@/sanity/lib/dua-dhikr-public-fetch";
+import { searchDuaDhikrCollections } from "@/lib/dua-dhikr/search";
 import { DuaDhikrIcon } from "./icons";
 import "./dua-dhikr.css";
 
@@ -25,20 +26,7 @@ export function DuaDhikrSearch({ collections, locale }: DuaDhikrSearchProps) {
   const t = useTranslations("duaDhikr.landing");
   const [query, setQuery] = useState("");
 
-  const results = useMemo(() => {
-    const term = query.trim().toLowerCase();
-    if (!term) return [];
-    return collections.filter((collection) => {
-      const haystacks = [
-        collection.titleEn,
-        collection.titleDa ?? "",
-        collection.descriptionEn,
-        ...collection.aliases,
-        ...(collection.subcategories?.flatMap((s) => [s.titleEn, ...(s.aliases ?? [])]) ?? []),
-      ];
-      return haystacks.some((value) => value.toLowerCase().includes(term));
-    });
-  }, [collections, query]);
+  const results = useMemo(() => searchDuaDhikrCollections(collections, query), [collections, query]);
 
   return (
     <div className="dua-dhikr-search">

@@ -98,8 +98,25 @@ async function testSampleFixtureFileIsWellFormedAndDryRunClean() {
     );
   }
   const report = await runDuaDhikrImport({ rows, dryRun: true });
-  assert(report.invalid === 0, `docs/dua-dhikr/sample-import.json must be fully valid; issues found: ${JSON.stringify(report.entries.filter((e) => e.issues.length > 0))}`);
-  console.log("✓ docs/dua-dhikr/sample-import.json is well-formed, clearly fixture-labelled, and passes a dry run cleanly");
+  // Updated in the pre-content-readiness phase: sample-import.json is
+  // DELIBERATELY fixture-marked, and the importer now DELIBERATELY refuses
+  // any row containing a "FIXTURE"/"NOT FOR PUBLICATION" marker (see
+  // src/lib/dua-dhikr/import/schema.ts, containsFixtureMarker) as a
+  // backstop against ever importing this file for real. So every row here
+  // is expected to be reported invalid — that is the safety feature
+  // working, not a regression. See
+  // tests/dua-dhikr/dua-dhikr-import-safety.test.ts for the dedicated
+  // fixture-rejection test suite.
+  assert(rows.length > 0, "sample-import.json must contain at least one row for this test to mean anything");
+  assert(
+    report.invalid === rows.length,
+    `every row in docs/dua-dhikr/sample-import.json must be rejected by fixture-marker validation (found ${report.invalid} of ${rows.length} rejected)`,
+  );
+  assert(
+    report.entries.every((e) => e.issues.some((i) => i.message.includes("fixture/placeholder marker"))),
+    "every rejected row must be rejected specifically for its fixture marker, not some other validation error",
+  );
+  console.log("✓ docs/dua-dhikr/sample-import.json is well-formed, clearly fixture-labelled, and is correctly refused in full by fixture-marker validation");
 }
 
 async function runAll() {
