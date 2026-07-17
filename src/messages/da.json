@@ -524,6 +524,13 @@
     "emptyState": {
       "heading": "Under forberedelse",
       "body": "Daglig dhikr er under forberedelse og gennemgang. Verificerede tekster vises her, når den faglige og redaktionelle gennemgang er afsluttet."
+    },
+    "timeNavigation": {
+      "eyebrow": "Daglig dhikr",
+      "ariaLabel": "Morgen- og aften-dhikr-samlinger",
+      "morning": "Morgen-dhikr",
+      "evening": "Aften-dhikr",
+      "supporting": "Vælg samlingen af dhikr til begyndelsen eller afslutningen på din dag"
     }
   },
   "dhikrMorning": {
@@ -570,6 +577,16 @@
       "reviewPending": "Afventer gennemgang",
       "morningOnly": "Kun morgen",
       "morningAndEvening": "Morgen og aften"
+    }
+  },
+  "dhikrEvening": {
+    "breadcrumb": "Aften-dhikr",
+    "heading": "Aften-dhikr",
+    "reviewStatusHeading": "Gennemgangsstatus",
+    "reviewStatusNotice": "Samlingen af aften-dhikr har endnu ikke gennemført redaktionel eller faglig gennemgang. Intet på denne side bør læses som verificeret eller godkendt dhikr",
+    "emptyState": {
+      "heading": "Samling under forberedelse",
+      "body": "Samlingen af aften-dhikr er under udarbejdelse og gennemgang. Den offentliggøres her, når ordlyd, kilder og oversættelser er klar"
     }
   },
   "consultations": {
@@ -783,6 +800,10 @@
     "dhikrMorning": {
       "title": "Morgen-dhikr | Sunnah Remedies",
       "description": "Morgen-dhikr fra Sunnah, udarbejdet fra dokumenterede kilder, med arabisk som den autoritative kildetekst. Tekster, der afventer faglig verifikation, er tydeligt mærket som sådan."
+    },
+    "dhikrEvening": {
+      "title": "Aften-dhikr | Sunnah Remedies",
+      "description": "Aften-dhikr fra Sunnah. Denne samling er under udarbejdelse og gennemgang og offentliggøres, når ordlyd, kilder og oversættelser er klar."
     },
     "exhibitions": {
       "title": "Udstillinger",

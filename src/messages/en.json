@@ -524,6 +524,13 @@
     "emptyState": {
       "heading": "Preparing for publication",
       "body": "Daily Dhikr is being prepared and reviewed. Verified entries will appear here once scholarly and editorial review is complete."
+    },
+    "timeNavigation": {
+      "eyebrow": "Daily Dhikr",
+      "ariaLabel": "Morning and evening dhikr collections",
+      "morning": "Morning Dhikr",
+      "evening": "Evening Dhikr",
+      "supporting": "Choose the remembrance collection for the beginning or close of your day"
     }
   },
   "dhikrMorning": {
@@ -570,6 +577,16 @@
       "reviewPending": "Review pending",
       "morningOnly": "Morning only",
       "morningAndEvening": "Morning and evening"
+    }
+  },
+  "dhikrEvening": {
+    "breadcrumb": "Evening Dhikr",
+    "heading": "Evening Dhikr",
+    "reviewStatusHeading": "Review status",
+    "reviewStatusNotice": "The Evening Dhikr collection has not yet completed editorial or scholarly review. Nothing on this page should be read as verified or approved remembrance",
+    "emptyState": {
+      "heading": "Collection in preparation",
+      "body": "The Evening Dhikr collection is currently being prepared and reviewed. It will be published here once the wording, sourcing and translations are ready"
     }
   },
   "consultations": {
@@ -783,6 +800,10 @@
     "dhikrMorning": {
       "title": "Morning Dhikr | Sunnah Remedies",
       "description": "Morning remembrance from the Sunnah, prepared from documented sources, with Arabic as the authoritative source. Entries pending scholarly verification are clearly labelled as such."
+    },
+    "dhikrEvening": {
+      "title": "Evening Dhikr | Sunnah Remedies",
+      "description": "Evening remembrance from the Sunnah. This collection is being prepared and reviewed and will be published once wording, sourcing and translations are ready."
     },
     "exhibitions": {
       "title": "Exhibitions",
