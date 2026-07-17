@@ -10,7 +10,7 @@ const DESTINATIONS: Record<DhikrTime, string> = {
 };
 
 interface DhikrTimeNavigationProps {
-  activeTime: DhikrTime;
+  activeTime?: DhikrTime;
 }
 
 /**
@@ -21,7 +21,8 @@ interface DhikrTimeNavigationProps {
  */
 export async function DhikrTimeNavigation({ activeTime }: DhikrTimeNavigationProps) {
   const t = await getTranslations("dhikr.timeNavigation");
-  const pageTitle = activeTime === "morning" ? t("morning") : t("evening");
+  const pageTitle =
+    activeTime === "morning" ? t("morning") : activeTime === "evening" ? t("evening") : t("eyebrow");
 
   return (
     <div className="dhikr-time-nav">

@@ -18,6 +18,7 @@ function assert(condition: boolean, message: string) {
 const REPO_ROOT = join(__dirname, "../..");
 const NAV_PATH = join(REPO_ROOT, "src/components/dhikr/DhikrTimeNavigation.tsx");
 const NAV_CSS_PATH = join(REPO_ROOT, "src/components/dhikr/dhikr-time-navigation.css");
+const LANDING_PAGE = join(REPO_ROOT, "src/app/[locale]/knowledge-library/dhikr/page.tsx");
 const MORNING_PAGE = join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/morning/page.tsx");
 const EVENING_PAGE = join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/evening/page.tsx");
 
@@ -63,6 +64,18 @@ function testMorningPageNoLongerUsesStaticHeroTitle() {
   assert(!/title=\{t\("heading"\)\}/.test(morning), "Morning page must not pass the former heading as SectionPage title");
   assert(!/lede=\{t\("lede"\)\}/.test(morning), "Morning page must not pass the former lede as SectionPage lede");
   console.log("✓ Morning page hero is the dual-navigation component, not the former title/lede");
+}
+
+function testLandingPageUsesSharedNavHero() {
+  const landing = readFileSync(LANDING_PAGE, "utf-8");
+  assert(
+    landing.includes('from "@/components/dhikr/DhikrTimeNavigation"'),
+    "Daily Dhikr landing page must import DhikrTimeNavigation",
+  );
+  assert(landing.includes("intro={<DhikrTimeNavigation />}"), "Daily Dhikr landing page must render the selector as its hero");
+  assert(!/title=\{t\("landing\.heading"\)\}/.test(landing), "Daily Dhikr landing page must not pass the former heading as SectionPage title");
+  assert(!/lede=\{t\("landing\.lede"\)\}/.test(landing), "Daily Dhikr landing page must not pass the former lede as SectionPage lede");
+  console.log("✓ Daily Dhikr landing page uses the shared selector instead of the former title/lede");
 }
 
 function testEnglishCopy() {
@@ -148,6 +161,7 @@ async function main() {
   testBothPagesUseSharedNav();
   testNavUsesLocaleAwareLinks();
   testMorningPageNoLongerUsesStaticHeroTitle();
+  testLandingPageUsesSharedNavHero();
   testEnglishCopy();
   testDanishCopy();
   testLocalePrefixConvention();

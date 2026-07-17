@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/locales";
 import { pageMetadata } from "@/lib/i18n/page-metadata";
 import { SectionPage } from "@/components/ui/SectionPage";
+import { DhikrTimeNavigation } from "@/components/dhikr/DhikrTimeNavigation";
 import { knowledgeLibrary } from "@/sanity/lib/fetch";
 import {
   getDhikrItemsPublic,
@@ -52,13 +53,12 @@ export default async function DhikrLandingPage({
     <SectionPage
       department={knowledgeLibrary}
       folio="ii"
-      title={t("landing.heading")}
-      lede={t("landing.lede")}
       currentHref="/knowledge-library/dhikr"
       breadcrumb={[
         { label: tNav("knowledgeLibrary"), href: "/knowledge-library" },
         { label: t("breadcrumb") },
       ]}
+      intro={<DhikrTimeNavigation />}
     >
       <section aria-labelledby="dhikr-about-heading" className="policy-block">
         <h2 id="dhikr-about-heading" className="section-label">
