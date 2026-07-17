@@ -149,6 +149,8 @@ function testPublicRouteNeverImportsRawRegisterOrTypes() {
   const files = [
     path.join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/morning/page.tsx"),
     path.join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/morning/MorningDhikrCollection.tsx"),
+    path.join(REPO_ROOT, "src/components/dhikr/ReviewedDhikrCard.tsx"),
+    path.join(REPO_ROOT, "src/components/dhikr/PendingReferenceCard.tsx"),
   ];
   for (const file of files) {
     const source = fs.readFileSync(file, "utf8");
@@ -167,15 +169,19 @@ function testPublicRouteNeverImportsRawRegisterOrTypes() {
 /* ── 4. UI wiring and copy ────────────────────────────────────────────── */
 
 function testUiRendersReferenceSectionSafely() {
-  const source = fs.readFileSync(
+  // Per-item card rendering now lives in the shared PendingReferenceCard.tsx
+  // (used by both Morning and Evening); the section heading stays in
+  // MorningDhikrCollection.tsx.
+  const cardSource = fs.readFileSync(path.join(REPO_ROOT, "src/components/dhikr/PendingReferenceCard.tsx"), "utf8");
+  const collectionSource = fs.readFileSync(
     path.join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/morning/MorningDhikrCollection.tsx"),
     "utf8",
   );
-  assert(source.includes('t("reviewPendingBadge")'), "Every reference-collection card must render the review-pending badge");
-  assert(source.includes('t("translationUnderReview")'), "Reference-collection cards must render the translation-under-review label, never an invented translation");
-  assert(source.includes("entry.documentedSourceReference ?? t(\"sourceVerificationPending\")"), "Reference-collection cards must show 'Source verification pending' whenever no documented source reference exists");
-  assert(source.includes('t("sectionReferenceHeading")'), "The reference-collection section heading must be rendered");
-  assert(!source.includes("entry.knownRepetitionCount}"), "A raw repetition count must never be rendered without the unverified-repetition label wrapper");
+  assert(cardSource.includes('t("reviewPendingBadge")'), "Every reference-collection card must render the review-pending badge");
+  assert(cardSource.includes('t("translationUnderReview")'), "Reference-collection cards must render the translation-under-review label, never an invented translation");
+  assert(cardSource.includes("entry.documentedSourceReference ?? t(\"sourceVerificationPending\")"), "Reference-collection cards must show 'Source verification pending' whenever no documented source reference exists");
+  assert(collectionSource.includes('t("sectionReferenceHeading")'), "The reference-collection section heading must be rendered");
+  assert(!cardSource.includes("entry.knownRepetitionCount}"), "A raw repetition count must never be rendered without the unverified-repetition label wrapper");
   console.log("✓ [static check] the reference-collection UI never invents a translation, never claims an undocumented source, and always shows the review-pending badge");
 }
 

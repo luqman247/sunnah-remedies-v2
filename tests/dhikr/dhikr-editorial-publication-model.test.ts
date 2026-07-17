@@ -201,8 +201,11 @@ function testSupportedVirtueClaimDoesNotBlock() {
 }
 
 function testPublicPageOmitsVirtueTextUnlessPresent() {
+  // Reviewed-card rendering (including this conditional) lives in the
+  // shared ReviewedDhikrCard.tsx, used by both Morning and Evening — see
+  // that file's module docblock.
   const pageSource = fs.readFileSync(
-    path.join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/morning/MorningDhikrCollection.tsx"),
+    path.join(REPO_ROOT, "src/components/dhikr/ReviewedDhikrCard.tsx"),
     "utf8",
   );
   assert(pageSource.includes("{item.virtueText &&"), "The public page must only render virtue text when item.virtueText is actually present");
@@ -213,7 +216,7 @@ function testPublicPageOmitsVirtueTextUnlessPresent() {
 
 function testPendingScholarlyReviewBadgeShownForEditorialItems() {
   const pageSource = fs.readFileSync(
-    path.join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/morning/MorningDhikrCollection.tsx"),
+    path.join(REPO_ROOT, "src/components/dhikr/ReviewedDhikrCard.tsx"),
     "utf8",
   );
   assert(

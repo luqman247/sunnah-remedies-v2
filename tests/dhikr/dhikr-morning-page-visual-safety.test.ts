@@ -57,16 +57,13 @@ function testReferenceEntryTypeHasNoVirtueField() {
 }
 
 function testCollectionUiNeverRendersVirtueForReferenceCards() {
-  const source = fs.readFileSync(
-    path.join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/morning/MorningDhikrCollection.tsx"),
-    "utf8",
-  );
-  // Isolate the reference-card rendering block (from the reference <ol> to its closing </section>).
-  const startIdx = source.indexOf("morning-dhikr-reference-list");
-  assert(startIdx !== -1, "Expected to find the reference-list rendering block");
-  const referenceBlock = source.slice(startIdx);
-  assert(!/virtue/i.test(referenceBlock), "The reference-card rendering block must never mention virtue text in any form");
-  assert(source.includes("{item.virtueText &&"), "The editorially-reviewed card block must still conditionally render virtue text only when present");
+  // Per-item rendering now lives in the shared card components, used by
+  // both Morning and Evening — see PendingReferenceCard.tsx / ReviewedDhikrCard.tsx.
+  const stripComments = (src: string) => src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
+  const referenceCardSource = fs.readFileSync(path.join(REPO_ROOT, "src/components/dhikr/PendingReferenceCard.tsx"), "utf8");
+  const reviewedCardSource = fs.readFileSync(path.join(REPO_ROOT, "src/components/dhikr/ReviewedDhikrCard.tsx"), "utf8");
+  assert(!/virtue/i.test(stripComments(referenceCardSource)), "PendingReferenceCard.tsx must never mention virtue text in any form (outside comments)");
+  assert(reviewedCardSource.includes("{item.virtueText &&"), "ReviewedDhikrCard.tsx must still conditionally render virtue text only when present");
   console.log("✓ [static check] the reference-card (pending) rendering path contains no virtue rendering of any kind — only the reviewed-card path can ever show it, and only when present");
 }
 
@@ -79,12 +76,7 @@ function testPendingRepetitionWordingIsNonInstructional() {
   assert(!/^recite/i.test(label.trim()), "Pending repetition wording must not read as a recitation instruction (must not start with \"Recite\")");
   assert(label.includes("Source document records:") && label.includes("verification pending"), "Pending repetition wording must match the required hedged format");
 
-  const source = fs.readFileSync(
-    path.join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/morning/MorningDhikrCollection.tsx"),
-    "utf8",
-  );
-  const startIdx = source.indexOf("morning-dhikr-reference-list");
-  const referenceBlock = source.slice(startIdx);
+  const referenceBlock = fs.readFileSync(path.join(REPO_ROOT, "src/components/dhikr/PendingReferenceCard.tsx"), "utf8");
   assert(referenceBlock.includes('t("pendingRepetitionLabel"'), "Reference cards must render repetition via pendingRepetitionLabel, never the instructional repetitionLabel");
   assert(!referenceBlock.includes('t("repetitionLabel"'), "Reference cards must never use the instructional repetitionLabel key");
   console.log('✓ pending repetition wording is non-instructional ("Source document records: N repetitions — verification pending")');
@@ -96,12 +88,7 @@ function testPendingTimingWordingIsNonInstructional() {
   assert(typeof label === "string", "pendingTimingLabel must exist");
   assert(label.includes("Recorded timing:") && label.includes("verification pending"), "Pending timing wording must match the required hedged format");
 
-  const source = fs.readFileSync(
-    path.join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/morning/MorningDhikrCollection.tsx"),
-    "utf8",
-  );
-  const startIdx = source.indexOf("morning-dhikr-reference-list");
-  const referenceBlock = source.slice(startIdx);
+  const referenceBlock = fs.readFileSync(path.join(REPO_ROOT, "src/components/dhikr/PendingReferenceCard.tsx"), "utf8");
   assert(referenceBlock.includes('t("pendingTimingLabel"'), "Reference cards must render timing via pendingTimingLabel");
   console.log('✓ pending timing wording is non-instructional ("Recorded timing: <value> — verification pending")');
 }
