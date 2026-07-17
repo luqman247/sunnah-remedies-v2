@@ -147,6 +147,34 @@ export async function getMorningDhikrItemsPublic(): Promise<DhikrItemPublic[]> {
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 }
 
+/**
+ * Timing labels that qualify an item for the Evening Dhikr page — deliberately
+ * NOT "morning-only" (excluded on principle, per the Evening eligibility
+ * rules: a record is never shown as Evening merely because it also appears
+ * on Morning). Mirrors MORNING_TIMING_LABELS' structure, kept as a separate
+ * constant rather than derived from it so each collection's eligibility set
+ * is independently readable and editable.
+ */
+const EVENING_TIMING_LABELS = new Set(["evening-only", "morning-and-evening"]);
+
+/**
+ * Every publicly eligible Dhikr item (from EITHER pathway) whose approved
+ * timingLabel qualifies it for the Evening Dhikr page — same additive-filter
+ * pattern as getMorningDhikrItemsPublic(), independently implemented (not a
+ * shared helper) so a future change to Morning's filter can never silently
+ * affect Evening or vice versa. An item with no timingLabel set is excluded
+ * (not assumed evening).
+ */
+export async function getEveningDhikrItemsPublic(): Promise<DhikrItemPublic[]> {
+  const [scholarlyItems, editorialItems] = await Promise.all([
+    getDhikrItemsPublic(),
+    getEditoriallyPublishedDhikrItemsPublic(),
+  ]);
+  return [...scholarlyItems, ...editorialItems]
+    .filter((item) => item.timingLabel !== undefined && EVENING_TIMING_LABELS.has(item.timingLabel))
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+}
+
 export interface DhikrCategoryPublic {
   name: string;
   nameDa?: string;

@@ -587,7 +587,49 @@
     "emptyState": {
       "heading": "Collection in preparation",
       "body": "The Evening Dhikr collection is currently being prepared and reviewed. It will be published here once the wording, sourcing and translations are ready"
-    }
+    },
+    "errorState": {
+      "heading": "Temporarily unavailable",
+      "body": "Evening Dhikr could not be loaded right now. Please try again shortly."
+    },
+    "editorialNotice": "Editorial review status: These entries have been prepared from documented sources and are awaiting independent scholarly verification. They should not be treated as a formal fatwa or definitive hadith-authentication ruling.",
+    "pendingScholarlyReviewBadge": "Pending scholarly review",
+    "recitedTextLabel": "Recited text",
+    "sourceLabel": "Source",
+    "timing": {
+      "morning-only": "Morning",
+      "evening-only": "Evening",
+      "morning-and-evening": "Morning and evening",
+      "not-time-specific": "Not time-specific"
+    },
+    "repetitionLabel": "{count, plural, one {Recite once} other {Recite # times}}",
+    "virtueLabel": "Why recite this?",
+    "progressIndicator": "{reviewed} of {total} entries editorially reviewed.",
+    "contentsLabel": "Contents",
+    "collectionIntroHeading": "Evening Dhikr Collection",
+    "collectionIntroBody": "Close the day with remembrances documented for the evening. Reviewed entries are presented separately from the wider reference collection so that their current editorial status remains clear.",
+    "sectionEditoriallyReviewedHeading": "Editorially reviewed",
+    "sectionEditoriallyReviewedDescription": "Prepared from documented sources by an editorial reviewer and awaiting independent scholarly verification.",
+    "sectionReferenceHeading": "Reference collection — scholarly and editorial review pending",
+    "referenceCollectionCount": "{count, plural, one {1 entry awaiting review} other {# entries awaiting review}}",
+    "referenceCollectionNotice": "The entries below reproduce the source collection for reference and memorisation support. Their wording, translation, attribution, timing, repetition count, and virtue statements may still require verification. They are not presented as confirmed authentic rulings or final scholarly conclusions.",
+    "reviewPendingBadge": "Review pending",
+    "sourceVerificationPending": "Source verification pending",
+    "translationUnderReview": "Translation under review.",
+    "pendingTimingLabel": "Recorded timing: {timing} — verification pending",
+    "pendingRepetitionLabel": "Source document records: {count, plural, one {# repetition} other {# repetitions}} — verification pending",
+    "filters": {
+      "all": "All",
+      "editoriallyReviewed": "Editorially reviewed",
+      "reviewPending": "Review pending",
+      "eveningOnly": "Evening only",
+      "morningAndEvening": "Morning and evening"
+    },
+    "methodologyHeading": "Source and review methodology",
+    "methodologyBody": "Entries reach this page through one of two pathways: full scholarly and editorial approval, or editorial-only publication pending independent scholarly verification. Records that have not yet completed either pathway appear in the reference collection below, clearly marked as pending, with their protected Arabic wording shown exactly as transcribed from the source document.",
+    "relatedCollectionsHeading": "Related Duʿa & Dhikr collections",
+    "relatedCollectionsMorningLabel": "Morning Dhikr",
+    "relatedCollectionsHubLabel": "All Daily Dhikr collections"
   },
   "consultations": {
     "title": "Clinical Consultations",
@@ -803,7 +845,7 @@
     },
     "dhikrEvening": {
       "title": "Evening Dhikr | Sunnah Remedies",
-      "description": "Evening remembrance from the Sunnah. This collection is being prepared and reviewed and will be published once wording, sourcing and translations are ready."
+      "description": "Read the Sunnah Remedies Evening Dhikr collection with Arabic, translations, sources and transparent editorial review status."
     },
     "exhibitions": {
       "title": "Exhibitions",

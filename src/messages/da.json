@@ -587,7 +587,49 @@
     "emptyState": {
       "heading": "Samling under forberedelse",
       "body": "Samlingen af aften-dhikr er under udarbejdelse og gennemgang. Den offentliggøres her, når ordlyd, kilder og oversættelser er klar"
-    }
+    },
+    "errorState": {
+      "heading": "Midlertidigt utilgængelig",
+      "body": "Aften-dhikr kunne ikke indlæses lige nu. Prøv venligst igen om lidt."
+    },
+    "editorialNotice": "Redaktionel gennemgangsstatus: Disse tekster er udarbejdet fra dokumenterede kilder og afventer uafhængig faglig verifikation. De bør ikke betragtes som en formel fatwa eller en endelig autentificering af hadith.",
+    "pendingScholarlyReviewBadge": "Afventer faglig gennemgang",
+    "recitedTextLabel": "Reciteret tekst",
+    "sourceLabel": "Kilde",
+    "timing": {
+      "morning-only": "Morgen",
+      "evening-only": "Aften",
+      "morning-and-evening": "Morgen og aften",
+      "not-time-specific": "Ikke tidsbestemt"
+    },
+    "repetitionLabel": "{count, plural, one {Recitér én gang} other {Recitér # gange}}",
+    "virtueLabel": "Hvorfor recitere dette?",
+    "progressIndicator": "{reviewed} af {total} tekster redaktionelt gennemgået.",
+    "contentsLabel": "Indhold",
+    "collectionIntroHeading": "Aften-dhikr-samling",
+    "collectionIntroBody": "Afslut dagen med dhikr dokumenteret til aftenen. Gennemgåede tekster vises adskilt fra den bredere referencesamling, så deres nuværende redaktionelle status forbliver tydelig.",
+    "sectionEditoriallyReviewedHeading": "Redaktionelt gennemgået",
+    "sectionEditoriallyReviewedDescription": "Udarbejdet fra dokumenterede kilder af en redaktionel gennemgår og afventer uafhængig faglig verifikation.",
+    "sectionReferenceHeading": "Referencesamling — faglig og redaktionel gennemgang afventes",
+    "referenceCollectionCount": "{count, plural, one {1 tekst afventer gennemgang} other {# tekster afventer gennemgang}}",
+    "referenceCollectionNotice": "Teksterne nedenfor gengiver kildesamlingen til reference og udenadslæring. Deres ordlyd, oversættelse, kildeangivelse, tidspunkt, gentagelsesantal og dydsudsagn kan stadig kræve verifikation. De præsenteres ikke som bekræftet autentiske afgørelser eller endelige faglige konklusioner.",
+    "reviewPendingBadge": "Afventer gennemgang",
+    "sourceVerificationPending": "Kildeverifikation afventes",
+    "translationUnderReview": "Oversættelse under gennemgang.",
+    "pendingTimingLabel": "Registreret tidspunkt: {timing} — verifikation afventes",
+    "pendingRepetitionLabel": "Kildedokumentet angiver: {count, plural, one {# gentagelse} other {# gentagelser}} — verifikation afventes",
+    "filters": {
+      "all": "Alle",
+      "editoriallyReviewed": "Redaktionelt gennemgået",
+      "reviewPending": "Afventer gennemgang",
+      "eveningOnly": "Kun aften",
+      "morningAndEvening": "Morgen og aften"
+    },
+    "methodologyHeading": "Kilde- og gennemgangsmetode",
+    "methodologyBody": "Tekster når denne side gennem en af to spor: fuld faglig og redaktionel godkendelse, eller redaktionel offentliggørelse alene i afventning af uafhængig faglig verifikation. Tekster, der endnu ikke har gennemført et af sporene, vises i referencesamlingen nedenfor, tydeligt markeret som afventende, med deres beskyttede arabiske ordlyd vist præcis som transskriberet fra kildedokumentet.",
+    "relatedCollectionsHeading": "Relaterede Duʿa & Dhikr-samlinger",
+    "relatedCollectionsMorningLabel": "Morgen-dhikr",
+    "relatedCollectionsHubLabel": "Alle samlinger af daglig dhikr"
   },
   "consultations": {
     "title": "Kliniske Konsultationer",
@@ -803,7 +845,7 @@
     },
     "dhikrEvening": {
       "title": "Aften-dhikr | Sunnah Remedies",
-      "description": "Aften-dhikr fra Sunnah. Denne samling er under udarbejdelse og gennemgang og offentliggøres, når ordlyd, kilder og oversættelser er klar."
+      "description": "Læs Sunnah Remedies' samling af aften-dhikr med arabisk, oversættelser, kilder og gennemsigtig redaktionel gennemgangsstatus."
     },
     "exhibitions": {
       "title": "Udstillinger",
