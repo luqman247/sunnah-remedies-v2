@@ -11,6 +11,15 @@ const DESTINATIONS: Record<DhikrTime, string> = {
 
 interface DhikrTimeNavigationProps {
   activeTime?: DhikrTime;
+  /**
+   * Set true only when embedding this component inside a page that
+   * already renders its own <h1> (e.g. the Duʿa & Dhikr landing hero) —
+   * otherwise the page would have two <h1> elements, which is invalid
+   * heading structure. Morning/Evening Dhikr (this component's original
+   * callers) never set this, so their existing <h1> behaviour is
+   * completely unchanged.
+   */
+  suppressOwnHeading?: boolean;
 }
 
 /**
@@ -19,15 +28,16 @@ interface DhikrTimeNavigationProps {
  * Server Component — locale-aware Link destinations, no client state.
  * Active destination follows DepartmentNav: remains a Link with aria-current.
  */
-export async function DhikrTimeNavigation({ activeTime }: DhikrTimeNavigationProps) {
+export async function DhikrTimeNavigation({ activeTime, suppressOwnHeading }: DhikrTimeNavigationProps) {
   const t = await getTranslations("dhikr.timeNavigation");
   const pageTitle =
     activeTime === "morning" ? t("morning") : activeTime === "evening" ? t("evening") : t("eyebrow");
+  const HeadingTag = suppressOwnHeading ? "span" : "h1";
 
   return (
     <div className="dhikr-time-nav">
       <p className="dhikr-time-nav__eyebrow type-eyebrow">{t("eyebrow")}</p>
-      <h1 className="sr-only">{pageTitle}</h1>
+      <HeadingTag className="sr-only">{pageTitle}</HeadingTag>
       <nav className="dhikr-time-nav__nav" aria-label={t("ariaLabel")}>
         <ul className="dhikr-time-nav__list">
           <li className="dhikr-time-nav__item">

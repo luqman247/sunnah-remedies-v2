@@ -9,7 +9,62 @@
  * @see docs/dua-dhikr/CONTENT_IMPORT_TEMPLATE.md
  */
 
-import { CANONICAL_COLLECTION_SLUGS, resolveCollectionSlug } from "@/lib/dua-dhikr/taxonomy";
+import { CANONICAL_COLLECTION_SLUGS, resolveCollectionSlug, getCanonicalCollection } from "@/lib/dua-dhikr/taxonomy";
+
+/**
+ * The only external hostnames this project accepts as a source reference —
+ * see docs/dua-dhikr/SOURCE_POLICY.md. Subdomains are permitted (e.g.
+ * "api.quran.com") but arbitrary lookalike or unrelated domains are not.
+ * This is a structural check only — it confirms a reference points at an
+ * approved host, never that the content there has been read or that a
+ * hadith is authentic. Structural validation and scholarly verification
+ * are deliberately kept separate; see docs/dua-dhikr/PREFLIGHT_VALIDATION.md.
+ */
+export const ALLOWED_SOURCE_HOSTNAMES = ["quran.com", "sunnah.com", "usul.ai"] as const;
+
+export function isAllowedSourceHostname(url: string): boolean {
+  let hostname: string;
+  try {
+    hostname = new URL(url).hostname.toLowerCase();
+  } catch {
+    return false;
+  }
+  return ALLOWED_SOURCE_HOSTNAMES.some((allowed) => hostname === allowed || hostname.endsWith(`.${allowed}`));
+}
+
+/**
+ * Rows carrying fixture/placeholder markers must never be treated as real,
+ * importable content — this is the backstop that stops
+ * docs/dua-dhikr/sample-import.json (or any similarly-marked row) from
+ * ever being written by an operator running the wrong file, live, by
+ * mistake. Deliberately broad (case-insensitive substring match) rather
+ * than an exact marker format, since the goal is to fail closed on
+ * anything that looks like placeholder content.
+ */
+const FIXTURE_MARKER_PATTERN = /fixture|not for publication/i;
+
+export function containsFixtureMarker(row: Record<string, unknown>): string | undefined {
+  const fieldsToCheck: (keyof typeof row)[] = [
+    "titleEn",
+    "titleDa",
+    "whatItIsFor",
+    "arabicText",
+    "transliteration",
+    "translationEn",
+    "translationDa",
+    "instruction",
+    "virtue",
+    "explanation",
+    "authenticationNote",
+  ];
+  for (const field of fieldsToCheck) {
+    const value = row[field];
+    if (typeof value === "string" && FIXTURE_MARKER_PATTERN.test(value)) {
+      return String(field);
+    }
+  }
+  return undefined;
+}
 
 export interface DuaDhikrImportSourceReference {
   type: "hadith" | "quran" | "research" | "book" | "other";
@@ -54,6 +109,8 @@ export interface ImportRowIssue {
 export interface ImportRowResult {
   value?: DuaDhikrImportRow;
   issues: ImportRowIssue[];
+  /** Non-blocking notices — the row may still import, but a human should look at these before publication. */
+  warnings: ImportRowIssue[];
 }
 
 function isNonEmptyString(value: unknown): value is string {
@@ -62,34 +119,66 @@ function isNonEmptyString(value: unknown): value is string {
 
 /**
  * Validates one raw row from the imported content document. Returns the
- * typed row (only) when there are zero issues — callers must never write a
- * row that produced any issue, since a partially-valid row could otherwise
- * silently ship with a missing Arabic text or an unresolvable collection.
+ * typed row (only) when there are zero blocking issues — callers must
+ * never write a row that produced any issue, since a partially-valid row
+ * could otherwise silently ship with a missing Arabic text or an
+ * unresolvable collection. `warnings` never block import but are surfaced
+ * so a human reviewer sees them before publication (see
+ * src/lib/dua-dhikr/import/preflight.ts).
  */
 export function validateImportRow(raw: unknown, rowIndex: number): ImportRowResult {
   const issues: ImportRowIssue[] = [];
+  const warnings: ImportRowIssue[] = [];
   const row = (raw ?? {}) as Record<string, unknown>;
   const importIdentifier = typeof row.importIdentifier === "string" ? row.importIdentifier : undefined;
 
   function fail(field: string, message: string) {
     issues.push({ row: rowIndex, importIdentifier, field, message });
   }
+  function warn(field: string, message: string) {
+    warnings.push({ row: rowIndex, importIdentifier, field, message });
+  }
+
+  const fixtureField = containsFixtureMarker(row);
+  if (fixtureField) {
+    fail(
+      fixtureField,
+      `Contains a fixture/placeholder marker ("FIXTURE" or "NOT FOR PUBLICATION") — refusing to treat this row as real content. If this is genuinely sourced content, remove the marker text.`,
+    );
+  }
 
   if (!isNonEmptyString(row.importIdentifier)) fail("importIdentifier", "Required — a stable identifier for this row.");
+  let resolvedCollectionSlug: string | undefined;
   if (!isNonEmptyString(row.collectionSlug)) {
     fail("collectionSlug", "Required.");
   } else {
-    const resolved = resolveCollectionSlug(row.collectionSlug as string) ?? (row.collectionSlug as string);
-    if (!(CANONICAL_COLLECTION_SLUGS as string[]).includes(resolved)) {
+    resolvedCollectionSlug = resolveCollectionSlug(row.collectionSlug as string) ?? (row.collectionSlug as string);
+    if (!(CANONICAL_COLLECTION_SLUGS as string[]).includes(resolvedCollectionSlug)) {
       fail(
         "collectionSlug",
         `"${row.collectionSlug}" does not resolve to a canonical collection. See docs/dua-dhikr/CATEGORY_ALIAS_MAP.md.`,
       );
+      resolvedCollectionSlug = undefined;
     }
   }
+
+  if (resolvedCollectionSlug && isNonEmptyString(row.subcategorySlug)) {
+    const collection = getCanonicalCollection(resolvedCollectionSlug);
+    const knownSubcategorySlugs = collection?.subcategories?.map((s) => s.slug) ?? [];
+    if (!knownSubcategorySlugs.includes(row.subcategorySlug as string)) {
+      fail(
+        "subcategorySlug",
+        `"${row.subcategorySlug}" is not a known subcategory of "${resolvedCollectionSlug}" (known: ${knownSubcategorySlugs.join(", ") || "none"}).`,
+      );
+    }
+  }
+
   if (!isNonEmptyString(row.titleEn)) fail("titleEn", "Required.");
+  if (!isNonEmptyString(row.whatItIsFor)) warn("whatItIsFor", "No plain-language purpose given — recommended so readers immediately know when to use this entry.");
   if (!isNonEmptyString(row.arabicText)) fail("arabicText", "Required — the authoritative Arabic source text.");
   if (!isNonEmptyString(row.translationEn)) fail("translationEn", "Required.");
+  if (!isNonEmptyString(row.translationDa)) warn("translationDa", "No Danish translation supplied yet — the site will fall back to English until one is added.");
+  if (!isNonEmptyString(row.transliteration)) warn("transliteration", "No transliteration supplied — confirm this omission is intentional, not an oversight.");
 
   const references = Array.isArray(row.references) ? row.references : [];
   if (references.length === 0) {
@@ -99,6 +188,24 @@ export function validateImportRow(raw: unknown, rowIndex: number): ImportRowResu
       const r = (ref ?? {}) as Record<string, unknown>;
       if (!isNonEmptyString(r.citation)) fail(`references[${refIndex}].citation`, "Required.");
       if (!isNonEmptyString(r.type)) fail(`references[${refIndex}].type`, "Required.");
+      if (r.type === "hadith") {
+        if (!isNonEmptyString(r.hadithCollection)) fail(`references[${refIndex}].hadithCollection`, "Required for hadith references.");
+        if (!isNonEmptyString(r.hadithNumber)) fail(`references[${refIndex}].hadithNumber`, "Required for hadith references.");
+        if (!isNonEmptyString(r.hadithGrading)) warn(`references[${refIndex}].hadithGrading`, "No grading supplied for a hadith reference — required before scholarly review can proceed.");
+      }
+      if (r.type === "quran") {
+        if (!isNonEmptyString(r.surah)) fail(`references[${refIndex}].surah`, "Required for Qurʾān references.");
+        if (!isNonEmptyString(r.ayah)) fail(`references[${refIndex}].ayah`, "Required for Qurʾān references.");
+      }
+      if (isNonEmptyString(r.sourceUrl) && !isAllowedSourceHostname(r.sourceUrl)) {
+        fail(
+          `references[${refIndex}].sourceUrl`,
+          `"${r.sourceUrl}" is not on an approved source domain (${ALLOWED_SOURCE_HOSTNAMES.join(", ")}) — see docs/dua-dhikr/SOURCE_POLICY.md. A structurally valid URL is not scholarly verification; only these domains are accepted as citation evidence for this project.`,
+        );
+      }
+      if (r.verifiedStatus !== "verified") {
+        warn(`references[${refIndex}].verifiedStatus`, "Source reference is not marked verified — required before publication, not before staging.");
+      }
     });
   }
 
@@ -106,15 +213,16 @@ export function validateImportRow(raw: unknown, rowIndex: number): ImportRowResu
     fail("repetitionCount", "Must be a number if present — never a guessed value.");
   }
 
-  if (issues.length > 0) return { issues };
-
-  const resolvedCollectionSlug = resolveCollectionSlug(row.collectionSlug as string) ?? (row.collectionSlug as string);
+  if (issues.length > 0) return { issues, warnings };
 
   return {
     issues: [],
+    warnings,
     value: {
       importIdentifier: row.importIdentifier as string,
-      collectionSlug: resolvedCollectionSlug,
+      // Safe: any undefined resolvedCollectionSlug would have added a
+      // blocking issue above, causing the early `issues.length > 0` return.
+      collectionSlug: resolvedCollectionSlug as string,
       subcategorySlug: typeof row.subcategorySlug === "string" ? row.subcategorySlug : undefined,
       whatItIsFor: typeof row.whatItIsFor === "string" ? row.whatItIsFor : undefined,
       titleEn: row.titleEn as string,

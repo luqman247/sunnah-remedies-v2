@@ -197,7 +197,7 @@ export const CANONICAL_COLLECTIONS: CanonicalCollection[] = [
     titleEn: "Lavatory & Wuḍūʾ",
     descriptionEn: "Remembrance for the lavatory and for ablution.",
     iconKey: "water-droplet",
-    aliases: ["wudu", "wudhu", "ablution", "toilet", "lavatory"],
+    aliases: ["wudu", "wudhu", "ablution", "toilet", "lavatory", "lavatory & wudu", "lavatory and wudu"],
     subcategories: [
       { slug: "before-wudu", titleEn: "Before Wuḍūʾ", aliases: ["before wudu", "before wudhu"] },
       { slug: "after-wudu", titleEn: "After Wuḍūʾ", aliases: ["after wudu", "after wudhu"] },
