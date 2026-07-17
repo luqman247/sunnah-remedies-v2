@@ -1131,6 +1131,16 @@ a {
   margin-top: var(--s4);
 }
 
+/* On narrow screens, put the page intro/hero before the department nav
+   so primary actions (e.g. Morning/Evening Dhikr) remain above chrome overlays. */
+.section-page__intro {
+  order: 1;
+}
+
+.section-page__nav {
+  order: 2;
+}
+
 @media (min-width: 900px) {
   .section-page__layout {
     grid-template-columns: 12rem 1fr;
@@ -1138,8 +1148,13 @@ a {
   }
 
   .section-page__nav {
+    order: 0;
     position: sticky;
     top: var(--s6);
+  }
+
+  .section-page__intro {
+    order: 0;
   }
 }
 

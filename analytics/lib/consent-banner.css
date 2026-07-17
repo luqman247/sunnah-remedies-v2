@@ -1,0 +1,88 @@
+/* Cookie consent — compact on mobile so primary page actions stay reachable. */
+
+.consent-banner {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 9999;
+  padding: var(--s3) var(--s4);
+  padding-bottom: max(var(--s3), env(safe-area-inset-bottom));
+  background: var(--sage-deep, #1a1a2e);
+  color: var(--paper, #f6f3ee);
+  border-top: 1px solid var(--brass, #c7a25a);
+  font-family: var(--font-body), Georgia, serif;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.consent-banner__inner {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.consent-banner__copy {
+  margin: 0 0 var(--s3);
+}
+
+.consent-banner__details {
+  margin-bottom: var(--s3);
+}
+
+.consent-banner__option {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.consent-banner__option--muted {
+  opacity: 0.6;
+}
+
+.consent-banner__option input {
+  margin-right: 0.5rem;
+}
+
+.consent-banner__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.consent-banner__btn {
+  padding: 0.55rem 1.1rem;
+  min-height: 44px;
+  font-size: 0.75rem;
+  font-family: var(--font-utility), system-ui, sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid var(--brass, #c7a25a);
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.consent-banner__btn--solid {
+  background: var(--brass, #c7a25a);
+  color: var(--sage-deep, #1a1a2e);
+}
+
+.consent-banner__btn--outline {
+  background: transparent;
+  color: var(--paper, #f6f3ee);
+}
+
+@media (min-width: 720px) {
+  .consent-banner {
+    padding: 1.5rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .consent-banner__copy {
+    margin-bottom: 1rem;
+  }
+
+  .consent-banner__btn {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.8125rem;
+  }
+}
