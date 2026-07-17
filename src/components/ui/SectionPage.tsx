@@ -7,7 +7,8 @@ import type { Department } from "@/lib/navigation/site-structure";
 interface SectionPageProps {
   department: Department;
   folio: string;
-  title: string;
+  /** When omitted, `intro` supplies the hero (e.g. dual route navigation). */
+  title?: string;
   lede?: string;
   currentHref: string;
   breadcrumb: { label: string; href?: string }[];

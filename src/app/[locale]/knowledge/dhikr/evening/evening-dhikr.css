@@ -1,0 +1,58 @@
+/* Evening Dhikr — honest empty shell while the collection is prepared. */
+
+.evening-dhikr-review-notice {
+  margin: 0 0 var(--s6);
+  padding: var(--s4) 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  max-width: var(--measure-reading);
+}
+
+.evening-dhikr-review-notice .section-label {
+  margin: 0 0 var(--s3);
+  color: var(--brass);
+}
+
+.evening-dhikr-review-notice .type-body {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.evening-dhikr-empty-state {
+  margin: 0;
+  padding: var(--s6) 0;
+  max-width: var(--measure-reading);
+}
+
+.evening-dhikr-empty-state__heading {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+  line-height: 1.25;
+  color: var(--sage-deep);
+  margin: 0 0 var(--s4);
+}
+
+.evening-dhikr-empty-state .type-body {
+  margin: 0;
+  color: var(--muted);
+}
+
+.evening-dhikr-skeleton {
+  padding: var(--s6) 0;
+  max-width: var(--measure-reading);
+}
+
+.evening-dhikr-skeleton__line {
+  height: 1.25rem;
+  width: 100%;
+  max-width: 36rem;
+  background: var(--paper-deep);
+  margin-bottom: var(--s3);
+}
+
+.evening-dhikr-skeleton__line--short {
+  width: 12rem;
+  max-width: 40%;
+}
+
