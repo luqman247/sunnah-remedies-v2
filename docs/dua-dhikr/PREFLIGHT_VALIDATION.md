@@ -57,7 +57,7 @@ guessed.
 ## 6. Alias handling
 
 `resolveCollectionSlug()` resolves any of the alternate terms in
-[CATEGORY_ALIAS_MAP.md](CATEGORY_ALIAS_MAP.md) (e.g. "eating" → 
+[CATEGORY_ALIAS_MAP.md](CATEGORY_ALIAS_MAP.md) (e.g. "eating" →
 `food-and-drink`, "before wudu" → `lavatory-and-wudu`) to its one
 canonical collection before validation runs — you do not need to look up
 the canonical slug yourself before preparing your document, but the

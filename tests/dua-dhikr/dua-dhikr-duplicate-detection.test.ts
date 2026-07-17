@@ -18,7 +18,7 @@ function fixtureRow(overrides: Partial<DuaDhikrImportRow>): DuaDhikrImportRow {
     importIdentifier: "FIXTURE-BASE",
     collectionSlug: "food-and-drink",
     titleEn: "[FIXTURE] Base entry",
-    arabicText: "[ARABIC FIXTURE — NOT RELIGIOUS CONTENT] بِسْمِ اللَّهِ",
+    arabicText: "[ARABIC FIXTURE — NOT RELIGIOUS CONTENT] تَجْرِبَة أَسَاسِيَّة",
     translationEn: "[TRANSLATION FIXTURE]",
     references: [{ type: "other", citation: "[SOURCE FIXTURE] Reference A" }],
     ...overrides,
@@ -26,9 +26,9 @@ function fixtureRow(overrides: Partial<DuaDhikrImportRow>): DuaDhikrImportRow {
 }
 
 function testNormalizeStripsTashkilAndWhitespace() {
-  const withTashkil = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ";
-  const withoutTashkil = "بسم الله الرحمن الرحيم";
-  const extraWhitespace = "بسم   الله  الرحمن الرحيم  ";
+  const withTashkil = "تَجْرِبَة س";
+  const withoutTashkil = "تجربة س";
+  const extraWhitespace = "تجربة   س";
   assert(
     normalizeArabicForComparison(withTashkil) === normalizeArabicForComparison(withoutTashkil),
     "normalizeArabicForComparison must treat identical text with/without tashkīl as equal",
@@ -42,8 +42,8 @@ function testNormalizeStripsTashkilAndWhitespace() {
 
 function testSameArabicDifferentWhitespaceIsDuplicate() {
   const rows = [
-    fixtureRow({ importIdentifier: "FIXTURE-A", arabicText: "بسم الله الرحمن الرحيم" }),
-    fixtureRow({ importIdentifier: "FIXTURE-B", arabicText: "بسم  الله   الرحمن الرحيم" }),
+    fixtureRow({ importIdentifier: "FIXTURE-A", arabicText: "تجربة نموذج مكرر" }),
+    fixtureRow({ importIdentifier: "FIXTURE-B", arabicText: "تجربة  نموذج   مكرر" }),
   ];
   const groups = findDuplicateCandidates(rows);
   assert(
@@ -55,8 +55,8 @@ function testSameArabicDifferentWhitespaceIsDuplicate() {
 
 function testSameArabicDifferentTashkilIsDuplicate() {
   const rows = [
-    fixtureRow({ importIdentifier: "FIXTURE-A", arabicText: "بِسْمِ اللَّهِ" }),
-    fixtureRow({ importIdentifier: "FIXTURE-B", arabicText: "بسم الله" }),
+    fixtureRow({ importIdentifier: "FIXTURE-A", arabicText: "تَجْرِبَة" }),
+    fixtureRow({ importIdentifier: "FIXTURE-B", arabicText: "تجربة" }),
   ];
   const groups = findDuplicateCandidates(rows);
   assert(
@@ -68,8 +68,8 @@ function testSameArabicDifferentTashkilIsDuplicate() {
 
 function testSameEntryInTwoCollectionsIsAdvisoryNotError() {
   const rows = [
-    fixtureRow({ importIdentifier: "FIXTURE-A", collectionSlug: "after-salah", arabicText: "بسم الله الرحمن الرحيم" }),
-    fixtureRow({ importIdentifier: "FIXTURE-B", collectionSlug: "before-sleep", arabicText: "بسم الله الرحمن الرحيم" }),
+    fixtureRow({ importIdentifier: "FIXTURE-A", collectionSlug: "after-salah", arabicText: "تجربة معاد استخدامها" }),
+    fixtureRow({ importIdentifier: "FIXTURE-B", collectionSlug: "before-sleep", arabicText: "تجربة معاد استخدامها" }),
   ];
   const groups = findDuplicateCandidates(rows);
   const group = groups.find((g) => g.reason === "same-arabic-reused-in-other-collection");
@@ -131,8 +131,8 @@ function testDifferentDuasSimilarEnglishPurposeNotFlagged() {
 
 function testExactSameArabicSameCollectionIsHardDuplicateNotAdvisory() {
   const rows = [
-    fixtureRow({ importIdentifier: "FIXTURE-A", collectionSlug: "istighfar", arabicText: "استغفر الله" }),
-    fixtureRow({ importIdentifier: "FIXTURE-B", collectionSlug: "istighfar", arabicText: "استغفر الله" }),
+    fixtureRow({ importIdentifier: "FIXTURE-A", collectionSlug: "istighfar", arabicText: "تجربة مطابقة تمامًا" }),
+    fixtureRow({ importIdentifier: "FIXTURE-B", collectionSlug: "istighfar", arabicText: "تجربة مطابقة تمامًا" }),
   ];
   const groups = findDuplicateCandidates(rows);
   assert(
