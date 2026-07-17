@@ -549,7 +549,28 @@
       "not-time-specific": "Not time-specific"
     },
     "repetitionLabel": "{count, plural, one {Recite once} other {Recite # times}}",
-    "virtueLabel": "Virtue"
+    "virtueLabel": "Virtue",
+    "progressIndicator": "{reviewed} of {total} entries editorially reviewed.",
+    "contentsLabel": "Contents",
+    "collectionIntroHeading": "Morning Dhikr Collection",
+    "collectionIntroBody": "This collection contains 30 entries from the Sunnah Remedies source register. Two entries have completed editorial review and are published pending independent scholarly verification. The remaining entries are provided as a clearly marked reference collection while their wording, translation and sourcing continue to be reviewed.",
+    "sectionEditoriallyReviewedHeading": "Editorially reviewed",
+    "sectionEditoriallyReviewedDescription": "Prepared from documented sources by an editorial reviewer and awaiting independent scholarly verification.",
+    "sectionReferenceHeading": "Reference collection — scholarly and editorial review pending",
+    "referenceCollectionCount": "{count, plural, one {1 entry awaiting review} other {# entries awaiting review}}",
+    "referenceCollectionNotice": "The entries below reproduce the source collection for reference and memorisation support. Their wording, translation, attribution, timing, repetition count, and virtue statements may still require verification. They are not presented as confirmed authentic rulings or final scholarly conclusions.",
+    "reviewPendingBadge": "Review pending",
+    "sourceVerificationPending": "Source verification pending",
+    "translationUnderReview": "Translation under review.",
+    "pendingTimingLabel": "Recorded timing: {timing} — verification pending",
+    "pendingRepetitionLabel": "Source document records: {count, plural, one {# repetition} other {# repetitions}} — verification pending",
+    "filters": {
+      "all": "All",
+      "editoriallyReviewed": "Editorially reviewed",
+      "reviewPending": "Review pending",
+      "morningOnly": "Morning only",
+      "morningAndEvening": "Morning and evening"
+    }
   },
   "consultations": {
     "title": "Clinical Consultations",

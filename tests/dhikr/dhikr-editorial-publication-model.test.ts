@@ -141,8 +141,11 @@ function testAllLiveDisputedAndCompositeRecordsCurrentlyBlocked() {
 /* ── 3. The public notice is visible ─────────────────────────────────── */
 
 function testPublicNoticeRenderedWhenEditorialItemsPresent() {
+  // The Editorially-reviewed section's rendering (including this notice)
+  // lives in MorningDhikrCollection.tsx, a client component rendered by
+  // page.tsx — see that file's module docblock for why.
   const pageSource = fs.readFileSync(
-    path.join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/morning/page.tsx"),
+    path.join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/morning/MorningDhikrCollection.tsx"),
     "utf8",
   );
   assert(
@@ -199,7 +202,7 @@ function testSupportedVirtueClaimDoesNotBlock() {
 
 function testPublicPageOmitsVirtueTextUnlessPresent() {
   const pageSource = fs.readFileSync(
-    path.join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/morning/page.tsx"),
+    path.join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/morning/MorningDhikrCollection.tsx"),
     "utf8",
   );
   assert(pageSource.includes("{item.virtueText &&"), "The public page must only render virtue text when item.virtueText is actually present");
@@ -210,7 +213,7 @@ function testPublicPageOmitsVirtueTextUnlessPresent() {
 
 function testPendingScholarlyReviewBadgeShownForEditorialItems() {
   const pageSource = fs.readFileSync(
-    path.join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/morning/page.tsx"),
+    path.join(REPO_ROOT, "src/app/[locale]/knowledge/dhikr/morning/MorningDhikrCollection.tsx"),
     "utf8",
   );
   assert(

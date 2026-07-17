@@ -2,6 +2,238 @@
    Scoped to this route only; reuses the site's existing design tokens
    (see src/app/globals.css) rather than inventing a new palette. */
 
+.morning-dhikr-collection-intro {
+  margin-bottom: var(--s5, 2.5rem);
+  padding-bottom: var(--s4, 1.5rem);
+  border-bottom: 1px solid var(--rule, #d6ccb5);
+}
+
+.morning-dhikr-collection-intro__heading {
+  font-family: var(--font-display, serif);
+  font-size: 1.1rem;
+  color: var(--ink, #201d16);
+  margin: 0 0 var(--s2, 0.75rem);
+}
+
+.morning-dhikr-collection-intro p {
+  color: var(--ink-soft, #4a4638);
+  max-width: 62ch;
+}
+
+.morning-dhikr-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s5, 2.5rem);
+}
+
+@media (min-width: 1024px) {
+  .morning-dhikr-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    align-items: start;
+    gap: var(--s6, 3rem);
+  }
+}
+
+.morning-dhikr-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4, 1.5rem);
+}
+
+@media (min-width: 1024px) {
+  .morning-dhikr-sidebar {
+    position: sticky;
+    top: var(--s5, 2.5rem);
+  }
+}
+
+.morning-dhikr-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s6, 3rem);
+  min-width: 0;
+}
+
+.morning-dhikr-progress {
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--muted, #6e6656);
+  margin: 0;
+}
+
+.morning-dhikr-filterbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2, 0.75rem);
+}
+
+@media (min-width: 1024px) {
+  .morning-dhikr-filterbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.morning-dhikr-filter-button {
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--rule, #d6ccb5);
+  background: var(--paper, #ece6d8);
+  color: var(--ink-soft, #4a4638);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.morning-dhikr-filter-button[aria-pressed="true"] {
+  background: var(--sage-deep, #232a1e);
+  border-color: var(--sage-deep, #232a1e);
+  color: var(--paper, #ece6d8);
+}
+
+.morning-dhikr-contents {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .morning-dhikr-contents {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    padding-top: var(--s3, 1rem);
+    border-top: 1px solid var(--rule, #d6ccb5);
+  }
+
+  .morning-dhikr-contents a {
+    color: var(--brass, #9a7b4f);
+    text-decoration: none;
+  }
+
+  .morning-dhikr-contents a:hover {
+    text-decoration: underline;
+  }
+}
+
+.morning-dhikr-section__heading {
+  font-family: var(--font-display, serif);
+  font-size: 1.35rem;
+  color: var(--ink, #201d16);
+  margin: 0 0 var(--s2, 0.75rem);
+}
+
+.morning-dhikr-section__description {
+  color: var(--muted, #6e6656);
+  font-size: 0.9rem;
+  margin: 0 0 var(--s3, 1rem);
+}
+
+.morning-dhikr-reference-count {
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted, #6e6656);
+  margin: 0 0 var(--s3, 1rem);
+}
+
+.morning-dhikr-reference-notice {
+  background: var(--paper, #ece6d8);
+  border: 1px solid var(--brass, #9a7b4f);
+  border-left-width: 4px;
+  border-radius: 0.5rem;
+  padding: var(--s3, 1rem) var(--s4, 1.5rem);
+  margin-bottom: var(--s4, 1.5rem);
+}
+
+.morning-dhikr-reference-notice p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft, #4a4638);
+}
+
+/* Pending reference cards use a deliberately quieter, archival treatment —
+   visually unmistakable from the premium editorially-reviewed cards above,
+   so nothing here can read as endorsed content. */
+.morning-dhikr-reference-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.morning-dhikr-reference-card {
+  background: color-mix(in srgb, var(--paper, #ece6d8) 55%, transparent);
+  border: 1px dashed var(--rule, #d6ccb5);
+  border-radius: 0.5rem;
+  padding: 0.75rem var(--s3, 1rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.morning-dhikr-reference-card .morning-dhikr-card__arabic {
+  font-size: 1.15rem;
+  line-height: 1.9;
+  color: var(--ink-soft, #4a4638);
+}
+
+@media (min-width: 640px) {
+  .morning-dhikr-reference-card .morning-dhikr-card__arabic {
+    font-size: 1.35rem;
+    line-height: 2;
+  }
+}
+
+.morning-dhikr-reference-card__badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted, #6e6656);
+  background: transparent;
+  border: 1px solid var(--rule, #d6ccb5);
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+}
+
+.morning-dhikr-reference-card__translation-pending {
+  font-style: italic;
+  color: var(--muted-light, #9a9081);
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.morning-dhikr-reference-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.morning-dhikr-reference-card__meta-line {
+  font-size: 0.75rem;
+  color: var(--muted, #6e6656);
+  margin: 0;
+}
+
+.morning-dhikr-reference-card__source {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.75rem;
+  color: var(--muted, #6e6656);
+}
+
 .morning-dhikr-editorial-notice {
   background: var(--paper, #ece6d8);
   border: 1px solid var(--oxblood, #8a4b3b);
