@@ -1,45 +1,258 @@
-/* Evening Dhikr — honest empty shell while the collection is prepared. */
+/* Evening Dhikr — Arabic-first premium presentation, a companion to
+   Morning Dhikr with its own restrained dusk identity: deeper emerald
+   accents, a fine horizon/crescent motif, and a slightly cooler tonal
+   register than Morning's warmer brass-forward treatment. Page-level
+   layout, sidebar, sections, and progress/contents chrome only — card,
+   filter-button, and notice-box styling lives in the shared
+   src/components/dhikr/dhikr-collection.css (used by Morning too). Reuses
+   the site's existing design tokens (see src/app/globals.css); no new
+   colours are introduced. */
+
+.evening-dhikr-collection-intro {
+  position: relative;
+  margin-bottom: var(--s5, 2.5rem);
+  padding-bottom: var(--s4, 1.5rem);
+  border-bottom: 1px solid var(--rule, #d6ccb5);
+}
+
+.evening-dhikr-collection-intro__heading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display, serif);
+  font-size: 1.1rem;
+  color: var(--sage-deep, #232a1e);
+  margin: 0 0 var(--s2, 0.75rem);
+}
+
+.evening-dhikr-collection-intro__heading .dhikr-timing-icon {
+  width: 0.9em;
+  height: 0.9em;
+}
+
+.evening-dhikr-collection-intro p {
+  color: var(--ink-soft, #4a4638);
+  max-width: 62ch;
+}
+
+/* A fine horizon line with three restrained stars — the page's one piece of
+   celestial geometry, deliberately small and quiet (no cartoon moon, no
+   star field). Purely decorative. */
+.evening-dhikr-horizon {
+  display: block;
+  width: 100%;
+  max-width: 22rem;
+  height: 1.1rem;
+  margin: 0 0 var(--s4, 1.5rem);
+  color: var(--brass, #9a7b4f);
+  opacity: 0.8;
+}
+
+.evening-dhikr-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s5, 2.5rem);
+}
+
+@media (min-width: 1024px) {
+  .evening-dhikr-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    align-items: start;
+    gap: var(--s6, 3rem);
+  }
+}
+
+.evening-dhikr-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4, 1.5rem);
+}
+
+@media (min-width: 1024px) {
+  .evening-dhikr-sidebar {
+    position: sticky;
+    top: var(--s5, 2.5rem);
+  }
+}
+
+.evening-dhikr-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s6, 3rem);
+  min-width: 0;
+}
+
+.evening-dhikr-progress {
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--muted, #6e6656);
+  margin: 0;
+}
+
+.evening-dhikr-contents {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .evening-dhikr-contents {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    padding-top: var(--s3, 1rem);
+    border-top: 1px solid var(--rule, #d6ccb5);
+  }
+
+  .evening-dhikr-contents a {
+    color: var(--sage-deep, #232a1e);
+    text-decoration: none;
+  }
+
+  .evening-dhikr-contents a:hover {
+    text-decoration: underline;
+  }
+}
+
+.evening-dhikr-section__heading {
+  font-family: var(--font-display, serif);
+  font-size: 1.35rem;
+  color: var(--ink, #201d16);
+  margin: 0 0 var(--s2, 0.75rem);
+}
+
+.evening-dhikr-section__description {
+  color: var(--muted, #6e6656);
+  font-size: 0.9rem;
+  margin: 0 0 var(--s3, 1rem);
+}
+
+.evening-dhikr-reference-count {
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted, #6e6656);
+  margin: 0 0 var(--s3, 1rem);
+}
+
+/* Methodology note — a restrained expandable disclosure, not a separate
+   page. Uses the native <details>/<summary> pattern for zero-JS
+   accessibility. */
+.evening-dhikr-methodology {
+  margin: 0 0 var(--s5, 2.5rem);
+  border-top: 1px solid var(--rule, #d6ccb5);
+  padding-top: var(--s3, 1rem);
+}
+
+.evening-dhikr-methodology summary {
+  cursor: pointer;
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sage-deep, #232a1e);
+}
+
+.evening-dhikr-methodology summary:focus-visible {
+  outline: 2px solid var(--brass, #9a7b4f);
+  outline-offset: 2px;
+}
+
+.evening-dhikr-methodology p {
+  margin: var(--s3, 1rem) 0 0;
+  color: var(--ink-soft, #4a4638);
+  max-width: 62ch;
+  font-size: 0.9rem;
+}
+
+/* Related collections — a quiet closing links block, not a duplicate of
+   the hero Morning/Evening selector. */
+.evening-dhikr-related {
+  margin-top: var(--s6, 3rem);
+  padding-top: var(--s4, 1.5rem);
+  border-top: 1px solid var(--rule, #d6ccb5);
+}
+
+.evening-dhikr-related__heading {
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted, #6e6656);
+  margin: 0 0 var(--s3, 1rem);
+}
+
+.evening-dhikr-related__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s4, 1.5rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.evening-dhikr-related__list a {
+  color: var(--sage-deep, #232a1e);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule, #d6ccb5);
+  padding-bottom: 0.15rem;
+}
+
+.evening-dhikr-related__list a:hover,
+.evening-dhikr-related__list a:focus-visible {
+  border-color: var(--brass, #9a7b4f);
+}
+
+.evening-dhikr-related__list a:focus-visible {
+  outline: 2px solid var(--brass, #9a7b4f);
+  outline-offset: 4px;
+}
 
 .evening-dhikr-review-notice {
-  margin: 0 0 var(--s6);
-  padding: var(--s4) 0;
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
+  margin: 0 0 var(--s6, 3rem);
+  padding: var(--s4, 1.5rem) 0;
+  border-top: 1px solid var(--rule, #d6ccb5);
+  border-bottom: 1px solid var(--rule, #d6ccb5);
   max-width: var(--measure-reading);
 }
 
 .evening-dhikr-review-notice .section-label {
-  margin: 0 0 var(--s3);
-  color: var(--brass);
+  margin: 0 0 var(--s3, 1rem);
+  color: var(--sage-deep, #232a1e);
 }
 
 .evening-dhikr-review-notice .type-body {
   margin: 0;
-  color: var(--ink-soft);
+  color: var(--ink-soft, #4a4638);
 }
 
-.evening-dhikr-empty-state {
+.evening-dhikr-empty-state,
+.evening-dhikr-error-state {
   margin: 0;
-  padding: var(--s6) 0;
+  padding: var(--s6, 3rem) 0;
   max-width: var(--measure-reading);
 }
 
-.evening-dhikr-empty-state__heading {
+.evening-dhikr-empty-state__heading,
+.evening-dhikr-error-state__heading {
   font-family: var(--font-display), Georgia, serif;
   font-weight: 300;
   font-size: clamp(1.4rem, 2.5vw, 1.85rem);
   line-height: 1.25;
-  color: var(--sage-deep);
-  margin: 0 0 var(--s4);
+  color: var(--sage-deep, #232a1e);
+  margin: 0 0 var(--s4, 1.5rem);
 }
 
-.evening-dhikr-empty-state .type-body {
+.evening-dhikr-empty-state .type-body,
+.evening-dhikr-error-state .type-body {
   margin: 0;
-  color: var(--muted);
+  color: var(--muted, #6e6656);
 }
 
 .evening-dhikr-skeleton {
-  padding: var(--s6) 0;
+  padding: var(--s6, 3rem) 0;
   max-width: var(--measure-reading);
 }
 
@@ -47,12 +260,11 @@
   height: 1.25rem;
   width: 100%;
   max-width: 36rem;
-  background: var(--paper-deep);
-  margin-bottom: var(--s3);
+  background: var(--paper-deep, #e3dbc9);
+  margin-bottom: var(--s3, 1rem);
 }
 
 .evening-dhikr-skeleton__line--short {
   width: 12rem;
   max-width: 40%;
 }
-

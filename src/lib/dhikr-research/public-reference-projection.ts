@@ -90,3 +90,55 @@ export function getPendingReferenceCollection(
 export function getSourceRegisterTotalCount(): number {
   return MORNING_DHIKR_SOURCE_REGISTER.length;
 }
+
+/**
+ * Documented timing values that qualify a record for the Evening Dhikr page.
+ * Deliberately excludes "morning-only" and "uncertain" — a record is never
+ * treated as Evening-eligible merely because it also appears on Morning, and
+ * never because its timing is unresolved. Mirrors EVENING_TIMING_LABELS in
+ * src/sanity/lib/dhikr-public-fetch.ts (the Sanity-side equivalent for
+ * already-reviewed items) but is independently defined so a change to one
+ * can never silently change the other.
+ */
+const EVENING_ELIGIBLE_TIMINGS: Exclude<MorningSpecificStatus, "uncertain">[] = [
+  "evening-only",
+  "morning-and-evening",
+];
+
+/**
+ * Whether a record's documented morningSpecificStatus supports Evening
+ * eligibility. The single source of truth for "is this record Evening
+ * Dhikr" on the pending/register side — see getPendingEveningReferenceCollection
+ * and tests/dhikr/dhikr-evening-eligibility.test.ts.
+ */
+export function isEveningEligibleTiming(status: MorningSpecificStatus): boolean {
+  return (EVENING_ELIGIBLE_TIMINGS as MorningSpecificStatus[]).includes(status);
+}
+
+/**
+ * Every source-register record NOT among the given publicly-published IDs
+ * AND documented as Evening-eligible (morningSpecificStatus is "evening-only"
+ * or "morning-and-evening") — a strict subset of getPendingReferenceCollection,
+ * reusing its exact same public-safe field projection and evidence gating.
+ * "morning-only" and "uncertain" records are never returned here, regardless
+ * of whether they appear in Morning's (deliberately broader) reference
+ * collection.
+ */
+export function getPendingEveningReferenceCollection(
+  publiclyPublishedIds: readonly string[],
+): DhikrReferenceCollectionEntry[] {
+  return getPendingReferenceCollection(publiclyPublishedIds).filter(
+    (entry) => entry.knownTiming !== undefined && isEveningEligibleTiming(entry.knownTiming),
+  );
+}
+
+/**
+ * Total number of source-register records that are Evening-eligible
+ * (published + pending) — the denominator for the Evening progress
+ * indicator. Deliberately NOT the same as getSourceRegisterTotalCount():
+ * Evening's collection is a documented subset of the full 30-record
+ * register, not the whole thing.
+ */
+export function getEveningEligibleTotalCount(): number {
+  return MORNING_DHIKR_SOURCE_REGISTER.filter((record) => isEveningEligibleTiming(record.morningSpecificStatus)).length;
+}

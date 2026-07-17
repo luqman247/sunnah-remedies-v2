@@ -137,12 +137,17 @@ function testLocalePrefixConvention() {
 function testEveningPageDoesNotFabricateContent() {
   const evening = readFileSync(EVENING_PAGE, "utf-8");
   assert(!evening.includes("getMorningDhikrItemsPublic"), "Evening page must not load Morning items");
-  assert(!evening.includes("getPendingReferenceCollection"), "Evening page must not project Morning register entries");
+  assert(!evening.includes("getPendingReferenceCollection("), "Evening page must not call Morning's unfiltered pending projection directly");
   assert(!evening.includes("morning-dhikr-register"), "Evening page must not import the Morning research register");
-  assert(!evening.includes("dhikr-fetch"), "Evening page must not import staff dhikr-fetch");
+  assert(!evening.includes("dhikr-fetch\""), "Evening page must not import the staff-only internal Sanity read module");
   assert(evening.includes("DhikrTimeNavigation"), "Evening shell must include shared navigation");
-  assert(evening.includes("emptyState"), "Evening shell must render an empty state");
-  console.log("✓ Evening page is an honest shell — no fabricated or copied Morning content");
+  assert(evening.includes("emptyState"), "Evening page must still render an empty state for the genuine zero-eligible/fetch-failure case");
+  // Positive checks: Evening now has real content, sourced through its OWN
+  // independently-defined, Evening-specific data functions.
+  assert(evening.includes("getEveningDhikrItemsPublic"), "Evening page must load reviewed items via its own getEveningDhikrItemsPublic");
+  assert(evening.includes("getPendingEveningReferenceCollection"), "Evening page must load pending entries via its own getPendingEveningReferenceCollection");
+  assert(evening.includes("getEveningEligibleTotalCount"), "Evening page's progress indicator must use the Evening-specific eligible total, not the full 30-record register total");
+  console.log("✓ Evening page is now a real, honest collection — sourced only through its own Evening-specific data functions, never Morning's");
 }
 
 function testCssAvoidsGenericButtonStyling() {
