@@ -52,7 +52,11 @@ const DUA_DHIKR_DYNAMIC_TYPES = new Set(["duaDhikrCollection", "duaDhikrEntry"])
 export async function POST(request: NextRequest) {
   const secret = request.headers.get("x-revalidation-secret");
 
-  if (REVALIDATION_SECRET && secret !== REVALIDATION_SECRET) {
+  // Fail closed: if REVALIDATION_SECRET isn't configured, every request is
+  // rejected — this endpoint must never accept revalidation calls simply
+  // because the environment variable happens to be unset (that previously
+  // let ANY request through unauthenticated).
+  if (!REVALIDATION_SECRET || secret !== REVALIDATION_SECRET) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

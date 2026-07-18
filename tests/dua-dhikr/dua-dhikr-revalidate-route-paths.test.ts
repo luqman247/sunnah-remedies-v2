@@ -15,6 +15,16 @@ function assert(condition: boolean, message: string) {
   if (!condition) throw new Error(message);
 }
 
+// The module reads process.env.REVALIDATION_SECRET into a top-level const
+// exactly once, at require time — set a known test value before requiring
+// it below so these behavioural tests exercise the AUTHENTICATED path
+// (fail-closed-when-unset is covered separately, in its own process, by
+// dua-dhikr-revalidate-fail-closed.test.ts — Node's module cache means a
+// single process can't re-observe a changed env var for an already-loaded
+// module-level const).
+const TEST_SECRET = "test-secret-do-not-use-in-production";
+process.env.REVALIDATION_SECRET = TEST_SECRET;
+
 // --- install the next/cache mock BEFORE the route module is required ---
 const revalidatePathCalls: { path: string; type?: string }[] = [];
 const originalLoad = (Module as any)._load;
@@ -50,8 +60,24 @@ function fakeRequest(body: unknown, secretHeader?: string) {
 
 async function callAndCapture(_type: string, slug?: string) {
   revalidatePathCalls.length = 0;
-  await POST(fakeRequest({ _type, _id: "test-id", slug }) as any);
+  await POST(fakeRequest({ _type, _id: "test-id", slug }, TEST_SECRET) as any);
   return revalidatePathCalls.map((c) => c.path);
+}
+
+async function testWrongSecretIsRejected() {
+  revalidatePathCalls.length = 0;
+  const response = await POST(fakeRequest({ _type: "duaDhikrEntry" }, "wrong-secret") as any);
+  assert(response.status === 401, `a wrong secret must be rejected with 401, got ${response.status}`);
+  assert(revalidatePathCalls.length === 0, "revalidatePath must never be called when the secret is wrong");
+  console.log("✓ a wrong secret is rejected with 401 and calls nothing");
+}
+
+async function testMissingSecretHeaderIsRejected() {
+  revalidatePathCalls.length = 0;
+  const response = await POST(fakeRequest({ _type: "duaDhikrEntry" }, undefined) as any);
+  assert(response.status === 401, `a missing secret header must be rejected with 401, got ${response.status}`);
+  assert(revalidatePathCalls.length === 0, "revalidatePath must never be called when the secret header is missing");
+  console.log("✓ a missing secret header is rejected with 401 and calls nothing");
 }
 
 async function testDuaDhikrEntryRevalidatesTheDynamicCollectionPattern() {
@@ -86,6 +112,8 @@ async function testDuaDhikrCollectionRevalidatesTheDynamicCollectionPattern() {
 async function runAll() {
   await testDuaDhikrEntryRevalidatesTheDynamicCollectionPattern();
   await testDuaDhikrCollectionRevalidatesTheDynamicCollectionPattern();
+  await testWrongSecretIsRejected();
+  await testMissingSecretHeaderIsRejected();
   console.log("\nAll Duʿa & Dhikr revalidate-route-path tests passed.");
 }
 
