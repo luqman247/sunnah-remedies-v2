@@ -1,5 +1,8 @@
 import { groq } from "next-sanity";
-import { DHIKR_ELIGIBILITY_GROQ, DHIKR_EDITORIAL_ELIGIBILITY_GROQ } from "./dhikr-publication-gate";
+import {
+  DHIKR_ELIGIBILITY_GROQ,
+  DHIKR_EDITORIAL_ELIGIBILITY_GROQ,
+} from "./dhikr-publication-gate";
 import {
   DUA_DHIKR_ELIGIBILITY_GROQ,
   DUA_DHIKR_EDITORIAL_ELIGIBILITY_GROQ,
@@ -815,5 +818,56 @@ export const duaDhikrCollectionsQuery = groq`
     "relatedCollections": relatedCollections[]->{ "slug": slug.current, titleEn, titleDa, iconKey },
     reviewStatus,
     editorialPublicationStatus
+  }
+`;
+
+/**
+ * Homepage “Latest additions” — published, language-scoped highlights only.
+ * Eligibility (enabled, display window, completeness) is enforced in
+ * selectHomepageHighlights after fetch; GROQ excludes drafts here.
+ */
+export const homepageHighlightsQuery = groq`
+  *[_type == "homepageHighlight"
+    && language == $language
+    && !(_id in path("drafts.**"))
+  ] {
+    _id,
+    enabled,
+    eyebrow,
+    title,
+    summary,
+    image {
+      ...,
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    },
+    imageAlt,
+    contentArea,
+    contentAreaLabel,
+    destinationType,
+    pathname,
+    "resolvedPathname": select(
+      destinationType == "pathname" => pathname,
+      destinationType == "reference" && destinationReference->_type == "duaDhikrCollection" => "/knowledge-library/dua-dhikr/" + destinationReference->slug.current,
+      destinationType == "reference" && destinationReference->_type == "article" => "/knowledge-library/" + destinationReference->slug.current,
+      destinationType == "reference" && destinationReference->_type == "product" => "/the-apothecary/" + destinationReference->slug.current,
+      destinationType == "reference" && destinationReference->_type == "programme" => "/the-academy/" + destinationReference->slug.current,
+      destinationType == "reference" && destinationReference->_type == "journey" => "/sacred-journeys/" + destinationReference->slug.current,
+      pathname
+    ),
+    publishedAt,
+    displayFrom,
+    displayUntil,
+    pinned,
+    priority,
+    ctaLabel,
+    showNewMarker,
+    visualTheme
   }
 `;

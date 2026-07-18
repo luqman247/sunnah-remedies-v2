@@ -1,7 +1,11 @@
 // ── Objects ──
 import { seo } from "./objects/seo";
 import { relationship } from "./objects/relationship";
-import { institutionalImage, institutionalVideo, downloadFile } from "./objects/media";
+import {
+  institutionalImage,
+  institutionalVideo,
+  downloadFile,
+} from "./objects/media";
 import { editorialWorkflow } from "./objects/editorial-workflow";
 import { propheticReference } from "./objects/prophetic-reference";
 import { boardApproval } from "./objects/board-approval";
@@ -84,7 +88,13 @@ import { charter } from "./documents/institution/charter";
 
 // ── Documents: Knowledge Graph (Phase 5 SEO) ──
 import { condition, bodySystem } from "./documents/knowledge-entities";
-import { hadith, quranReferenceDoc, researchPaper, scholar, citation } from "./documents/reference-entities";
+import {
+  hadith,
+  quranReferenceDoc,
+  researchPaper,
+  scholar,
+  citation,
+} from "./documents/reference-entities";
 
 // ── Documents: Operations (Phase 4) ──
 import {
@@ -97,6 +107,7 @@ import {
 
 // ── Documents: Pages ──
 import { homepage } from "./documents/pages/homepage";
+import { homepageHighlight } from "./documents/pages/homepage-highlight";
 
 export const schemaTypes = [
   // Objects
@@ -199,4 +210,5 @@ export const schemaTypes = [
 
   // Pages
   homepage,
+  homepageHighlight,
 ];

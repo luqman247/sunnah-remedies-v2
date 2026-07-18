@@ -17,8 +17,16 @@ test("locale-routing.smoke.ts", () => {
   const source = readFileSync(configPath, "utf8");
 
   assert.match(source, /source:\s*"\/dk"/, "Danish homepage rewrite missing");
-  assert.match(source, /destination:\s*"\/da"/, "Danish homepage destination missing");
-  assert.match(source, /source:\s*"\/dk\/:path\*"/, "Danish path rewrite missing");
+  assert.match(
+    source,
+    /destination:\s*"\/da"/,
+    "Danish homepage destination missing",
+  );
+  assert.match(
+    source,
+    /source:\s*"\/dk\/:path\*"/,
+    "Danish path rewrite missing",
+  );
   assert.match(
     source,
     /destination:\s*"\/en\/:path"/,
@@ -53,11 +61,11 @@ test("locale-routing.smoke.ts", () => {
   );
 
   // localeUrl must emit public prefixes, never internal /da.
-  assert.equal(localeUrl("en", "/"), "https://www.sunnahremedies.com/");
-  assert.equal(localeUrl("da", "/"), "https://www.sunnahremedies.com/dk");
+  assert.equal(localeUrl("en", "/"), "https://www.sunnahremedies.co.uk/");
+  assert.equal(localeUrl("da", "/"), "https://www.sunnahremedies.co.uk/dk");
   assert.equal(
     localeUrl("da", "/the-academy"),
-    "https://www.sunnahremedies.com/dk/the-academy",
+    "https://www.sunnahremedies.co.uk/dk/the-academy",
   );
   assert.doesNotMatch(localeUrl("da", "/consultations"), /\/da(\/|$)/);
   assert.match(localeUrl("da", "/consultations"), /\/dk\/consultations$/);

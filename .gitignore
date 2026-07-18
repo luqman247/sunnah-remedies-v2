@@ -36,3 +36,13 @@ yarn-error.log*
 next-env.d.ts
 .vercel
 .env*
+
+# Local QA visual packs for homepage Latest Additions — never commit
+.qa-homepage-latest-additions/
+
+# Local photography binaries for one-off CMS attach scripts
+scripts/assets/
+homepageHighlight-dua-dhikr.webp
+
+# Temporary ESLint config copies
+_eslint-temp.config.mjs

@@ -1,11 +1,7 @@
 import type { StructureBuilder } from "sanity/structure";
 import DhikrReadinessPanel from "@/sanity/components/dhikr/DhikrReadinessPanel";
 
-function languageGroupedList(
-  S: StructureBuilder,
-  title: string,
-  type: string,
-) {
+function languageGroupedList(S: StructureBuilder, title: string, type: string) {
   return S.listItem()
     .title(title)
     .child(
@@ -67,9 +63,22 @@ export const structure = (S: StructureBuilder) =>
               S.listItem()
                 .title("Homepage")
                 .child(
-                  S.document()
-                    .schemaType("homepage")
-                    .documentId("homepage"),
+                  S.list()
+                    .title("Homepage")
+                    .items([
+                      S.listItem()
+                        .title("Homepage document")
+                        .child(
+                          S.document()
+                            .schemaType("homepage")
+                            .documentId("homepage"),
+                        ),
+                      languageGroupedList(
+                        S,
+                        "Latest additions",
+                        "homepageHighlight",
+                      ),
+                    ]),
                 ),
               S.listItem()
                 .title("Navigation")
@@ -82,9 +91,7 @@ export const structure = (S: StructureBuilder) =>
               languageGroupedList(S, "Department Cards", "departmentCard"),
               S.listItem()
                 .title("Media Assets")
-                .child(
-                  S.documentTypeList("mediaAsset").title("Media Assets"),
-                ),
+                .child(S.documentTypeList("mediaAsset").title("Media Assets")),
             ]),
         ),
 
@@ -179,13 +186,16 @@ export const structure = (S: StructureBuilder) =>
               S.listItem()
                 .title("Collections")
                 .child(
-                  S.documentTypeList("duaDhikrCollection")
-                    .title("Duʿa & Dhikr Collections"),
+                  S.documentTypeList("duaDhikrCollection").title(
+                    "Duʿa & Dhikr Collections",
+                  ),
                 ),
               S.listItem()
                 .title("Entries")
                 .child(
-                  S.documentTypeList("duaDhikrEntry").title("Duʿa & Dhikr Entries"),
+                  S.documentTypeList("duaDhikrEntry").title(
+                    "Duʿa & Dhikr Entries",
+                  ),
                 ),
             ]),
         ),
@@ -212,9 +222,7 @@ export const structure = (S: StructureBuilder) =>
               S.listItem()
                 .title("Founding Charter")
                 .child(
-                  S.document()
-                    .schemaType("charter")
-                    .documentId("charter"),
+                  S.document().schemaType("charter").documentId("charter"),
                 ),
               S.listItem()
                 .title("Institution Settings")
@@ -233,9 +241,7 @@ export const structure = (S: StructureBuilder) =>
               S.listItem()
                 .title("Global SEO")
                 .child(
-                  S.document()
-                    .schemaType("globalSeo")
-                    .documentId("globalSeo"),
+                  S.document().schemaType("globalSeo").documentId("globalSeo"),
                 ),
             ]),
         ),
@@ -269,12 +275,16 @@ export const structure = (S: StructureBuilder) =>
               S.listItem()
                 .title("Operational Logs")
                 .child(
-                  S.documentTypeList("operationalLog").title("Operational Logs"),
+                  S.documentTypeList("operationalLog").title(
+                    "Operational Logs",
+                  ),
                 ),
               S.listItem()
                 .title("Compliance Register")
                 .child(
-                  S.documentTypeList("complianceEntry").title("Compliance Register"),
+                  S.documentTypeList("complianceEntry").title(
+                    "Compliance Register",
+                  ),
                 ),
               S.listItem()
                 .title("Decision Log")

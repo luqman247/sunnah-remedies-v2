@@ -8,7 +8,8 @@ import { structure } from "./src/sanity/structure";
 import { OperationsOverview } from "./src/sanity/tools/operations-overview";
 import { dhikrItemBadgesResolver } from "./src/sanity/badges/dhikr-item-badges";
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "your-project-id";
+const projectId =
+  process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "your-project-id";
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 
 const SUPPORTED_LANGUAGES = [
@@ -32,6 +33,7 @@ const TRANSLATABLE_TYPES = [
   "faq",
   "departmentCard",
   "announcement",
+  "homepageHighlight",
   "navigation",
   "footerSettings",
   "institutionSettings",
