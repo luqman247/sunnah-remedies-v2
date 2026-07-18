@@ -31,6 +31,17 @@ import "./dua-dhikr-landing.css";
  * cards appear once in “Begin here” and are excluded from Browse by occasion.
  */
 
+/**
+ * Bounded ISR window so newly published/updated duaDhikrEntry and
+ * duaDhikrCollection documents never remain invisible indefinitely — this
+ * page has no explicit revalidate config otherwise, so Next.js would cache
+ * whatever it first rendered until the next deployment. Mirrors the
+ * dynamic/revalidate convention already used for other Sanity-driven static
+ * routes (see src/app/llms.txt/route.ts, src/app/feeds/rss.xml/route.ts).
+ */
+export const dynamic = "force-static";
+export const revalidate = 60;
+
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata("duaDhikr", "/knowledge-library/dua-dhikr");
 }

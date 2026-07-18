@@ -32,6 +32,14 @@ interface PageProps {
  * copy and robots noindex,nofollow — never fabricated religious content.
  * Morning/Evening slugs redirect to their Dhikr routes.
  */
+/**
+ * Bounded ISR window — see src/app/[locale]/knowledge-library/dua-dhikr/page.tsx
+ * for why this is needed (statically generated at build time via
+ * generateStaticParams below, and otherwise never revalidated).
+ */
+export const dynamic = "force-static";
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   return CANONICAL_COLLECTIONS.filter((c) => !c.externalHref).map((c) => ({ collectionSlug: c.slug }));
 }

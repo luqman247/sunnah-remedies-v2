@@ -9,7 +9,14 @@ import { isDuaDhikrCollectionPublished } from "@/lib/dua-dhikr/publication-statu
 /**
  * Sitemap index — references child sitemaps per content type.
  * Accurate lastmod from document _updatedAt.
+ *
+ * Bounded ISR window: without this, Next.js caches whatever this route
+ * first rendered (build time, or first request) indefinitely — newly
+ * published Sanity content (e.g. a duaDhikrCollection that just became
+ * populated) would never appear until the next deployment.
  */
+export const revalidate = 60;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPaths = [
     "/",

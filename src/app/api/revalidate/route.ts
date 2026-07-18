@@ -27,7 +27,21 @@ const TYPE_ROUTE_MAP: Record<string, string[]> = {
   scholar: ["/knowledge/scholar"],
   faculty: ["/the-academy/faculty"],
   reference: ["/knowledge/citations"],
+  duaDhikrCollection: ["/knowledge-library/dua-dhikr"],
+  // Entries render inline within their collection page, not a route of
+  // their own — revalidating the landing page alone doesn't touch the
+  // per-collection dynamic pages, so those are revalidated separately below.
+  duaDhikrEntry: ["/knowledge-library/dua-dhikr"],
 };
+
+/**
+ * Types whose content can appear on ANY /knowledge-library/dua-dhikr/[slug]
+ * page (collection counts, entry lists) — revalidated as a dynamic-route
+ * pattern in addition to the fixed paths above, since a single entry or
+ * collection change can't otherwise be mapped to the one affected slug
+ * without extra webhook payload data.
+ */
+const DUA_DHIKR_DYNAMIC_TYPES = new Set(["duaDhikrCollection", "duaDhikrEntry"]);
 
 export async function POST(request: NextRequest) {
   const secret = request.headers.get("x-revalidation-secret");
@@ -58,6 +72,17 @@ export async function POST(request: NextRequest) {
         revalidatePath(entityPath);
         revalidated.push(entityPath);
       }
+    }
+
+    // A duaDhikrEntry/duaDhikrCollection change can affect any populated
+    // collection page's entry list/count, not just one slug — revalidate
+    // the whole dynamic-route pattern rather than guessing a single slug.
+    if (DUA_DHIKR_DYNAMIC_TYPES.has(_type)) {
+      // Matches the [collectionSlug] dynamic segment convention already
+      // used by the rest of this map (public path, no [locale] segment).
+      const pattern = "/knowledge-library/dua-dhikr/[collectionSlug]";
+      revalidatePath(pattern, "page");
+      revalidated.push(pattern);
     }
 
     // Always revalidate sitemap and llms.txt on content changes

@@ -7,7 +7,7 @@
 
 export const seoConfig = {
   siteName: "Sunnah Remedies",
-  siteUrl: "https://www.sunnahremedies.com",
+  siteUrl: "https://www.sunnahremedies.co.uk",
   titleTemplate: "%s · Sunnah Remedies",
   defaultTitle: "Sunnah Remedies — Institute of Prophetic Medicine",
   defaultDescription:
