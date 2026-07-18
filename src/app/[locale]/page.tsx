@@ -4,12 +4,10 @@ import { pageMetadata } from "@/lib/i18n/page-metadata";
 import { Link } from "@/i18n/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildHomepageFallback } from "@/lib/i18n/homepage-fallback";
-import { isPlaceholderEstablishmentCopy } from "@/lib/i18n/chrome-labels";
 import { getHomepage } from "@/sanity/lib/fetch";
 import { getCurrentSeason, getHijriDate } from "@/lib/calendar/seasons";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
 import { SectionStamp } from "@/components/arrival/SectionStamp";
-import { Eyebrow } from "@/components/arrival/Eyebrow";
 import { ArrivalPullQuote } from "@/components/arrival/ArrivalPullQuote";
 import { AuthorityBand } from "@/components/arrival/AuthorityBand";
 import { DepartmentCard } from "@/components/arrival/DepartmentCard";
@@ -76,15 +74,6 @@ export default async function ArrivalPage({
       ? seasonal(`seasons.${season}.greeting` as "seasons.ramadan.greeting")
       : undefined;
 
-  const eyebrow =
-    cms?.eyebrow && !isPlaceholderEstablishmentCopy(cms.eyebrow)
-      ? cms.eyebrow
-      : fallback.eyebrow;
-  const arrivalArabic = cms?.arrivalArabic || fallback.arrivalArabic;
-  const arrivalEnglish = cms?.arrivalEnglish || fallback.arrivalEnglish;
-  const standfirst = cms?.standfirst || fallback.standfirst;
-  const enterLabel = cms?.enterLabel || fallback.enterLabel;
-  const enterHref = cms?.enterHref || fallback.enterHref;
   const tradition = cms?.tradition || fallback.tradition;
   const rawDepartments = cms?.departmentCards?.length
     ? cms.departmentCards.map((card) => ({
@@ -155,126 +144,19 @@ export default async function ArrivalPage({
         {ui("skipToContent")}
       </a>
 
-      {/* ═══ § 1 · ARRIVAL / HERO (Ch. 9.2) ═══ */}
-      <section
-        className="arrival-section arrival-hero"
-        aria-labelledby="arrival-heading"
-        id="main-content"
-      >
-        <div className="arrival-container">
-          <div className="arrival-grid">
-            <div className="arrival-rail">
-              <SectionStamp numeral="I" />
-            </div>
-            <div>
-              {/* Inline stamp for mobile */}
-              <div
-                className="section-stamp-mobile"
-                style={{ marginBlockEnd: "var(--space-6)" }}
-              >
-                <SectionStamp numeral="I" />
-              </div>
-
-              <div className="choreo-eyebrow">
-                <Eyebrow>{eyebrow}</Eyebrow>
-              </div>
-
-              <h1 id="arrival-heading" style={{ margin: 0 }}>
-                <span className="sr-only">{arrivalEnglish}</span>
-
-                <span
-                  className="choreo-arabic"
-                  aria-hidden="true"
-                  style={{
-                    display: "block",
-                    marginBlockStart: "var(--space-8)",
-                  }}
-                >
-                  <span
-                    className="type-arabic-hero"
-                    lang="ar"
-                    dir="rtl"
-                    style={{ display: "block" }}
-                  >
-                    {arrivalArabic}
-                  </span>
-                </span>
-
-                <IsnadRule variant="arrival" nodePosition={0.5} animated />
-
-                <span
-                  className="type-hero choreo-english"
-                  aria-hidden="true"
-                  style={{ display: "block" }}
-                >
-                  {arrivalEnglish}
-                </span>
-              </h1>
-
-              <p
-                className="type-standfirst choreo-standfirst"
-                style={{
-                  marginBlockStart: "var(--space-6)",
-                  maxInlineSize: "60ch",
-                }}
-              >
-                {standfirst}
-              </p>
-
-              <div className="arrival-hero-actions choreo-standfirst">
-                <Link href="/consultations" className="solid-action">
-                  {ui("bookConsultation")}
-                </Link>
-                <Link href={enterHref} className="arrival-enter">
-                  {enterLabel}{" "}
-                  <span className="arrow" aria-hidden="true">
-                    ⟶
-                  </span>
-                </Link>
-              </div>
-
-              <ul className="arrival-support-links choreo-standfirst">
-                <li>
-                  <Link href="/the-apothecary" className="quiet-link">
-                    {ui("exploreRemedies")}
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/the-academy" className="quiet-link">
-                    {ui("exploreProgrammes")}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/knowledge-library/dua-dhikr"
-                    className="quiet-link"
-                  >
-                    {ui("findDuaDhikr")}
-                  </Link>
-                </li>
-              </ul>
-
-              <p className="type-small-v2 arrival-trust-line choreo-standfirst">
-                {ui("trustLine")}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ LATEST ADDITIONS — early editorial cue before threshold ═══ */}
-      <Reveal>
-        <HomepageLatestAdditions locale={locale} />
-      </Reveal>
-
-      {/* ═══ § 2 · THRESHOLD CINEMATIC HERO ═══ */}
+      {/* ═══ § 1 · THRESHOLD CINEMATIC HERO ═══ */}
       <CinematicHero
+        id="main-content"
         src="/photography/institution-hero.jpg"
         alt={ui("thresholdAlt")}
         statement={ui("thresholdStatement")}
         qualifier={ui("thresholdQualifier")}
-        statementAs="h2"
       />
+
+      {/* ═══ LATEST ADDITIONS — early editorial cue after threshold ═══ */}
+      <Reveal>
+        <HomepageLatestAdditions locale={locale} />
+      </Reveal>
 
       {/* ═══ SEASONAL AWARENESS — appears only during sacred seasons ═══ */}
       {season !== "standard" && (

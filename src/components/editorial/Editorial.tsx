@@ -12,8 +12,9 @@ interface CinematicHeroProps {
   alt: string;
   statement: string;
   qualifier?: string;
-  /** Use h2 when this hero sits below an existing page h1 (e.g. homepage arrival) */
+  /** Use h2 when this hero sits below an existing page h1 */
   statementAs?: "h1" | "h2";
+  id?: string;
   children?: ReactNode;
 }
 
@@ -23,12 +24,13 @@ export function CinematicHero({
   statement,
   qualifier,
   statementAs = "h1",
+  id,
   children,
 }: CinematicHeroProps) {
   const StatementTag = statementAs;
 
   return (
-    <section className="cinematic-hero">
+    <section className="cinematic-hero" id={id}>
       <div className="cinematic-hero__image">
         <Image
           src={src}
