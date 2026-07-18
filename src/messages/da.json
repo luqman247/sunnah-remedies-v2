@@ -1359,6 +1359,46 @@
         "action": "Udforsk Hellige Rejser"
       }
     },
+    "foundingCovenant": {
+      "eyebrow": "STIFTELSESPAGTEN",
+      "heading": "Principperne bag alt, hvad vi gør",
+      "introHeading": "En pagt om tillid",
+      "intro0": "Sunnah Remedies blev ikke oprettet blot for at levere behandlinger, sælge produkter eller udbyde kurser",
+      "intro1": "Det blev oprettet for at bevare og ansvarligt formidle traditionen for Profetisk Medicin gennem forskning, klinisk omsorg, professionel uddannelse og omhyggeligt udvalgte naturlige midler",
+      "introLead": "Vores arbejde styres af en stiftelsespagt:",
+      "triad0": "Viden før produkter",
+      "triad1": "Tjeneste før profit",
+      "triad2": "Tillid før vækst",
+      "missionLabel": "MISSION",
+      "mission": "At gøre autentisk Profetisk Medicin tilgængelig gennem ansvarlig forskning, medfølende klinisk omsorg, professionel uddannelse og omhyggeligt styrede naturlige midler — leveret med integritet, klarhed og respekt for ethvert menneske",
+      "visionLabel": "VISION",
+      "vision": "At blive en betroet international institution for Profetisk Medicin: bevare dens autentiske tradition, hæve praksisstandarder og opbygge et varigt grundlag af klinisk omsorg, uddannelse og viden, der kan tjene generationer",
+      "commitmentsLabel": "CHARTERETS FORPLIGTELSER",
+      "commitments": {
+        "healing": {
+          "title": "Helbredelse tilhører Allah",
+          "body": "Vi anerkender, at helbredelse kommer fra Allah alene. Behandlinger, behandlere og midler er redskaber og præsenteres aldrig som garantier"
+        },
+        "foundation": {
+          "title": "Intet uden et sporbart grundlag",
+          "body": "Påstande om Qur’anen, Sunnah eller Profetisk Medicin skal understøttes af identificerbare og ansvarligt fremlagte kilder"
+        },
+        "fear": {
+          "title": "Vi handler ikke med frygt",
+          "body": "Vi vil aldrig overdrive sygdom, udnytte sårbarhed eller presse mennesker til at købe behandlinger, produkter eller kurser"
+        },
+        "person": {
+          "title": "Mennesket kommer før protokollen",
+          "body": "Ethvert menneske mødes med værdighed, lyttes til omhyggeligt og støttes ud fra sine omstændigheder — aldrig reduceret til en transaktion"
+        },
+        "trust": {
+          "title": "Tillid før vækst",
+          "body": "Vi vil ikke kompromittere sikkerhed, autenticitet eller professionelle standarder for hurtigere ekspansion eller større kommerciel succes"
+        }
+      },
+      "closing": "Dette er ikke blot en hensigtserklæring. Det er den standard, institutionen beder om at blive bedømt efter",
+      "cta": "Læs det fulde Stiftelsescharter"
+    },
     "traditionStamp": "OM TRADITIONEN",
     "traditionStandfirst": "Hvad er denne disciplin, og hvorfor kræver den en institution?",
     "traditionBody0": "Profetisk Medicin er ikke folkemedicin, ikke alternativ wellness, ikke en brandmulighed. Det er en modtaget videnskab — overleveret gennem autentificerede kæder, afprøvet mod observerbar evidens og begrænset af de grænser dens egne kilder angiver",
