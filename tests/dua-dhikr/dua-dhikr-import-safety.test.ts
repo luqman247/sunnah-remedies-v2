@@ -122,6 +122,21 @@ function testKnownSubcategoryAccepted() {
   console.log("✓ a known subcategory slug is accepted");
 }
 
+function testDuringSalahRejectsArbitrarySubcategory() {
+  const result = validateImportRow({ ...validRow, collectionSlug: "during-salah", subcategorySlug: "made-up-subcategory" }, 0);
+  assert(result.issues.some((i) => i.field === "subcategorySlug"), "an arbitrary subcategory not in During Salah's approved list must be rejected");
+  console.log("✓ an arbitrary subcategory is rejected for the new During Salah collection");
+}
+
+function testDuringSalahAcceptsEachApprovedSubcategory() {
+  const approved = ["opening-supplications", "before-quran-recitation", "ruku", "rising-from-ruku", "sujud", "between-the-two-prostrations", "tashahhud-and-salawat", "before-salam", "qunut"];
+  for (const subcategorySlug of approved) {
+    const result = validateImportRow({ ...validRow, collectionSlug: "during-salah", subcategorySlug }, 0);
+    assert(result.issues.length === 0, `During Salah subcategory "${subcategorySlug}" must be accepted, got issues: ${JSON.stringify(result.issues)}`);
+  }
+  console.log(`✓ all ${approved.length} approved During Salah subcategories are accepted`);
+}
+
 /* ── Fail-closed batch behaviour ──────────────────────────────────────── */
 
 // The two tests below are the only ones in this file that call
@@ -203,6 +218,8 @@ async function runAll() {
   testFixtureBatchWouldNeverReachAWriteCall();
   testUnknownSubcategoryRejected();
   testKnownSubcategoryAccepted();
+  testDuringSalahRejectsArbitrarySubcategory();
+  testDuringSalahAcceptsEachApprovedSubcategory();
   await testPartialBatchFailureBlocksAllWritesByDefault();
   await testDryRunNeverAbortsOrWrites();
   testCliRefusesLiveWithoutConfirmWrite();

@@ -27,7 +27,8 @@ home.
 |---|---|---|---|
 | `morning-dhikr` | daily-foundations | — | morning, morning adhkar, morning remembrance *(defers to `/knowledge/dhikr/morning`)* |
 | `evening-dhikr` | daily-foundations | — | evening, evening adhkar, evening remembrance *(defers to `/knowledge/dhikr/evening`)* |
-| `after-salah` | daily-foundations | — | after prayer, post-salah, after salaah, after salat *(the two "After Salah" mentions in the brief collapse to this one entry)* |
+| `during-salah` | daily-foundations | `opening-supplications`, `before-quran-recitation`, `ruku`, `rising-from-ruku`, `sujud`, `between-the-two-prostrations`, `tashahhud-and-salawat`, `before-salam`, `qunut` | during prayer, in salah, in prayer, salah positions, **salah** *(content-intake category "Salah" resolves here — not to After Salah; a broad canonical "Salah" collection was deliberately not created)* |
+| `after-salah` | daily-foundations | — | after prayer, post-salah, after salaah, after salat *(the two "After Salah" mentions in the brief collapse to this one entry; distinct from During Salah — After Salah is post-prayer adhkār only)* |
 | `before-sleep` | daily-foundations | — | going to sleep, bedtime, night duas |
 | `waking-up` | daily-foundations | — | **after sleep**, on waking, upon waking |
 | `tahajjud` | daily-foundations | — | night prayer, qiyam al-layl |
@@ -47,15 +48,15 @@ home.
 | `newborn` | family-and-relationships | — | new baby, birth |
 | `marriage` | family-and-relationships | — | wedding, spouse |
 | `ruqyah-and-illness` | faith-protection-and-healing | — | ruqya, sickness, healing, illness |
-| `protection-of-iman` | faith-protection-and-healing | — | faith protection, steadfastness |
+| `protection-of-iman` | faith-protection-and-healing | — | faith protection, steadfastness, protection of iman |
 | `nightmares` | faith-protection-and-healing | — | bad dreams |
 | `difficulties-and-happiness` | faith-protection-and-healing | — | hardship, anxiety, worry, gratitude, distress |
 | `istighfar` | faith-protection-and-healing | — | seeking forgiveness, repentance |
 | `praises-of-allah` | faith-protection-and-healing | — | tasbih, glorification, dhikr of praise |
 | `salawat` | faith-protection-and-healing | — | blessings on the prophet, durood |
 | `names-of-allah` | faith-protection-and-healing | — | asma ul husna, the beautiful names |
-| `quranic-duas` | quran-and-sunnah-collections | — | duas from the quran, quran duas |
-| `sunnah-duas` | quran-and-sunnah-collections | — | prophetic duas, hadith duas |
+| `quranic-duas` | quran-and-sunnah-collections | — | duas from the quran, quran duas, quranic duas, qur'anic duas |
+| `sunnah-duas` | quran-and-sunnah-collections | — | prophetic duas, hadith duas, sunnah dua, sunnah duas |
 | `rain` | nature-and-life-events | — | rainfall, thunder |
 | `wind` | nature-and-life-events | — | strong wind, storm |
 | `nature` | nature-and-life-events | — | the natural world, creation |
@@ -75,6 +76,8 @@ home.
 - **"Hajj"/"Umrah"/"Hajj & Umrah" → one parent-child structure.** All resolve to `hajj-and-umrah`, with `hajj` and `umrah` as its subcategories.
 - **"Children", "Parents", "Marriage", "Newborn" stay directly discoverable** as their own collections, while `marriage-and-children` is a separate umbrella collection whose `relatedGroupSlugs` links to all four (see `duaDhikrCollection.relatedCollections` in Sanity, and the "Related collections" section rendered on each of their pages) — never a duplicate copy of their content.
 - **The repeated "After Salah" item** in the brief collapses to the single `after-salah` collection — no duplicate is created.
+- **"Salah" (content-intake category, 52 entries recited within the physical sequence of the prayer) → During Salah.** Approved via the content-intake Audit v2/v3 taxonomy decision: a new `during-salah` collection, distinct from `after-salah` (post-prayer only), `tahajjud`, and `istikharah` — no broad canonical "Salah" collection was created. `during-salah` carries nine subcategories for the specific prayer positions (Rukūʿ, Sujūd, Tashahhud & Ṣalawāt, etc.).
+- **"Sunnah Duas"/"Qur'anic Duas"/"Protection of Iman" (content-intake categories) → existing collections.** These are plain-ASCII spellings of collections that already existed under diacritic-bearing titles (`sunnah-duas`, `quranic-duas`, `protection-of-iman`) — approved as alias additions, not new collections.
 
 ## How this is enforced, not just documented
 

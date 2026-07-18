@@ -38,10 +38,15 @@ and bedding shape, a plate and cup, a doorway, a water droplet, wind lines,
 a Kaʿbah-inspired outline, etc.) — **no** depiction of Prophets,
 Companions, angels, or sacred personalities, and no stock icon pack.
 
-35 keys are defined (`src/lib/dua-dhikr/taxonomy.ts`, `ICON_KEYS`), one per
+36 keys are defined (`src/lib/dua-dhikr/taxonomy.ts`, `ICON_KEYS`), one per
 canonical collection plus a `leaf` fallback. Swapping or refining an
 individual icon is a one-line change to the `PATHS` map — no consumer
 needs to change.
+
+`prayer-sequence` (During Salah) reuses the same restrained arch motif as
+`minaret`/`prayer-mat`, paired with three horizontal bars of decreasing
+width to abstractly suggest the standing → bowing → prostrating sequence
+of the prayer — no figure, no depiction of a person praying.
 
 ### Icon-selection principles (for adding future icons)
 

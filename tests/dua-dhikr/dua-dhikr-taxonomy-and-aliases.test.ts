@@ -50,6 +50,18 @@ const WORKED_EXAMPLES: [string, string][] = [
   ["hajj", "hajj-and-umrah"],
   ["umrah", "hajj-and-umrah"],
   ["hajj & umrah", "hajj-and-umrah"],
+  // Approved taxonomy decision (content-intake Audit v2/v3): three ASCII
+  // alias fixes plus the new During Salah collection.
+  ["sunnah duas", "sunnah-duas"],
+  ["sunnah dua", "sunnah-duas"],
+  ["qur'anic duas", "quranic-duas"],
+  ["qur’anic duas", "quranic-duas"],
+  ["quranic duas", "quranic-duas"],
+  ["protection of iman", "protection-of-iman"],
+  ["salah", "during-salah"],
+  ["after salah", "after-salah"],
+  ["tahajjud", "tahajjud"],
+  ["istikharah", "istikharah"],
 ];
 
 function testWorkedAliasExamplesResolveCorrectly() {
@@ -110,6 +122,68 @@ function testHajjAndUmrahHasParentChildSubcategories() {
   console.log("✓ Hajj & Umrah uses one coherent parent-child structure");
 }
 
+const DURING_SALAH_SUBCATEGORY_SLUGS = [
+  "opening-supplications",
+  "before-quran-recitation",
+  "ruku",
+  "rising-from-ruku",
+  "sujud",
+  "between-the-two-prostrations",
+  "tashahhud-and-salawat",
+  "before-salam",
+  "qunut",
+];
+
+function testDuringSalahExistsWithNineApprovedSubcategories() {
+  const collection = getCanonicalCollection("during-salah");
+  assert(!!collection, "during-salah must exist as its own canonical collection");
+  assert(collection!.titleEn === "During Salah", `during-salah titleEn must be "During Salah", got "${collection!.titleEn}"`);
+  const subSlugs = collection!.subcategories?.map((s) => s.slug) ?? [];
+  assert(subSlugs.length === 9, `during-salah must have exactly 9 subcategories, found ${subSlugs.length}`);
+  for (const expected of DURING_SALAH_SUBCATEGORY_SLUGS) {
+    assert(subSlugs.includes(expected), `during-salah is missing approved subcategory "${expected}"`);
+  }
+  console.log("✓ During Salah exists with exactly the 9 approved subcategories");
+}
+
+function testDuringSalahAndAfterSalahAreDistinctNotMerged() {
+  const during = getCanonicalCollection("during-salah");
+  const after = getCanonicalCollection("after-salah");
+  assert(!!during && !!after, "both during-salah and after-salah must exist");
+  assert(during!.slug !== after!.slug, "During Salah and After Salah must be distinct collections, never merged");
+  assert(during!.titleEn !== after!.titleEn, "During Salah and After Salah must have distinct titles");
+  console.log("✓ During Salah and After Salah remain fully distinct canonical collections");
+}
+
+function testNoBroadCanonicalSalahCollectionWasCreated() {
+  const matches = CANONICAL_COLLECTIONS.filter((c) => c.titleEn.trim().toLowerCase() === "salah");
+  assert(matches.length === 0, 'a broad canonical collection literally titled "Salah" must not exist — only During Salah, After Salah, Tahajjud, and Istikharah');
+  console.log('✓ no broad canonical "Salah" collection was created — Salah remains an alias into During Salah only');
+}
+
+function testTahajjudAndIstikharahRemainUntouchedByDuringSalah() {
+  const tahajjud = getCanonicalCollection("tahajjud");
+  const istikharah = getCanonicalCollection("istikharah");
+  assert(!!tahajjud && !!istikharah, "tahajjud and istikharah must both still exist");
+  assert(tahajjud!.slug !== "during-salah" && istikharah!.slug !== "during-salah", "tahajjud/istikharah must not have been collapsed into during-salah");
+  console.log("✓ Tahajjud and Istikharah remain separate, untouched canonical collections");
+}
+
+function testInvalidArbitrarySubcategoryIsRejected() {
+  const collection = getCanonicalCollection("during-salah");
+  const subSlugs = collection!.subcategories?.map((s) => s.slug) ?? [];
+  assert(!subSlugs.includes("made-up-subcategory"), "an arbitrary, unapproved subcategory must not be present");
+  console.log("✓ an arbitrary subcategory slug is correctly absent from During Salah's approved list");
+}
+
+function testMorningAndEveningDhikrSlugsUnchanged() {
+  const morning = getCanonicalCollection("morning-dhikr");
+  const evening = getCanonicalCollection("evening-dhikr");
+  assert(!!morning && morning.slug === "morning-dhikr" && morning.externalHref === "/knowledge/dhikr/morning", "morning-dhikr slug/externalHref must be unchanged");
+  assert(!!evening && evening.slug === "evening-dhikr" && evening.externalHref === "/knowledge/dhikr/evening", "evening-dhikr slug/externalHref must be unchanged");
+  console.log("✓ Morning Dhikr and Evening Dhikr slugs/routes are unchanged by this taxonomy addition");
+}
+
 function runAll() {
   testEverySlugIsUnique();
   testEveryCollectionHasAValidParentGroup();
@@ -118,6 +192,12 @@ function runAll() {
   testMarriageAndChildrenUmbrellaDoesNotDuplicateItsMembers();
   testAfterSalahIsNotDuplicated();
   testHajjAndUmrahHasParentChildSubcategories();
+  testDuringSalahExistsWithNineApprovedSubcategories();
+  testDuringSalahAndAfterSalahAreDistinctNotMerged();
+  testNoBroadCanonicalSalahCollectionWasCreated();
+  testTahajjudAndIstikharahRemainUntouchedByDuringSalah();
+  testInvalidArbitrarySubcategoryIsRejected();
+  testMorningAndEveningDhikrSlugsUnchanged();
   console.log("\nAll Duʿa & Dhikr taxonomy/alias tests passed.");
 }
 

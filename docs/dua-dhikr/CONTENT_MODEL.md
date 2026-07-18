@@ -140,6 +140,12 @@ off on genuinely written collection copy before it goes public.
 | Content provenance | `contentProvenance` (reused `provenanceNote` object) |
 | Last modified date | `lastReviewedAt` + Sanity's own `_updatedAt` |
 
+### Danish translation is a hard publication requirement, not an editorial preference
+
+`src/sanity/lib/dua-dhikr-publication-gate.ts` requires `translationDa` to be present and non-empty for **both** publication pathways (`isDuaDhikrEntryPubliclyEligible` and the temporary editorial-only bypass `isDuaDhikrEntryEditoriallyPubliclyEligible`). This is deliberate and unchanged: an entry may be extracted, validated, staged as an unpublished draft, and pass editorial/scholarly review while `translationDa` is still empty — it simply cannot become publicly visible until a genuine Danish translation is present and approved. English text must never be copied into `translationDa` as a placeholder; doing so would silently defeat this gate, since the gate only checks presence, not that the value is authentically Danish.
+
+`explanationText` remains optional at every stage (import, staging, editorial review, and publication) — omitting it is a normal, expected state, not a defect. The public entry card (`DuaDhikrEntryCard.tsx`) already renders the explanation section conditionally (`{entry.explanationText && (...)}`), so an entry with no explanation shows nothing in that section rather than a placeholder sentence; source documents that display placeholder text like "Explanation coming soon…" must never have that literal sentence imported into `explanationText`.
+
 ## Typed GROQ projections
 
 `src/sanity/lib/queries.ts` — `duaDhikrEntriesPublicEligibleQuery`,

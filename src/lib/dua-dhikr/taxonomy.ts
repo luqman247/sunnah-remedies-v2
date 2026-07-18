@@ -63,6 +63,7 @@ export const ICON_KEYS = [
   "mountain-path",
   "kaaba-outline",
   "leaf",
+  "prayer-sequence",
 ] as const;
 
 export type IconKey = (typeof ICON_KEYS)[number];
@@ -112,6 +113,25 @@ export const CANONICAL_COLLECTIONS: CanonicalCollection[] = [
     iconKey: "moon-bedding",
     aliases: ["evening", "evening adhkar", "evening remembrance"],
     externalHref: "/knowledge/dhikr/evening",
+  },
+  {
+    slug: "during-salah",
+    parentGroup: "daily-foundations",
+    titleEn: "During Salah",
+    descriptionEn: "Remembrance and duʿa recited within the physical sequence of the prayer itself — from the opening supplication through to salām.",
+    iconKey: "prayer-sequence",
+    aliases: ["during prayer", "in salah", "in prayer", "salah positions", "salah"],
+    subcategories: [
+      { slug: "opening-supplications", titleEn: "Opening Supplications", aliases: ["istiftah"] },
+      { slug: "before-quran-recitation", titleEn: "Before Qurʾān Recitation", aliases: ["istiadhah", "basmalah"] },
+      { slug: "ruku", titleEn: "Rukūʿ", aliases: ["ruku", "bowing"] },
+      { slug: "rising-from-ruku", titleEn: "Rising from Rukūʿ", aliases: ["itidal"] },
+      { slug: "sujud", titleEn: "Sujūd", aliases: ["sujud", "prostration"] },
+      { slug: "between-the-two-prostrations", titleEn: "Between the Two Prostrations", aliases: ["between prostrations", "between sajdahs"] },
+      { slug: "tashahhud-and-salawat", titleEn: "Tashahhud & Ṣalawāt", aliases: ["tashahhud"] },
+      { slug: "before-salam", titleEn: "Before Salām", aliases: ["salam", "taslim"] },
+      { slug: "qunut", titleEn: "Qunūt", aliases: ["qunut", "witr"] },
+    ],
   },
   {
     slug: "after-salah",
@@ -299,7 +319,7 @@ export const CANONICAL_COLLECTIONS: CanonicalCollection[] = [
     titleEn: "Protection of Īmān",
     descriptionEn: "Remembrance for the protection and strengthening of faith.",
     iconKey: "shield",
-    aliases: ["faith protection", "steadfastness"],
+    aliases: ["faith protection", "steadfastness", "protection of iman"],
   },
   {
     slug: "nightmares",
@@ -357,7 +377,7 @@ export const CANONICAL_COLLECTIONS: CanonicalCollection[] = [
     titleEn: "Qurʾānic Duʿas",
     descriptionEn: "Duʿas drawn directly from the Qurʾān.",
     iconKey: "open-quran",
-    aliases: ["duas from the quran", "quran duas"],
+    aliases: ["duas from the quran", "quran duas", "quranic duas", "qur'anic duas", "qur’anic duas"],
   },
   {
     slug: "sunnah-duas",
@@ -365,7 +385,7 @@ export const CANONICAL_COLLECTIONS: CanonicalCollection[] = [
     titleEn: "Sunnah Duʿas",
     descriptionEn: "Duʿas taught by the Prophet ﷺ in the authentic Sunnah.",
     iconKey: "open-quran",
-    aliases: ["prophetic duas", "hadith duas"],
+    aliases: ["prophetic duas", "hadith duas", "sunnah dua", "sunnah duas"],
   },
 
   // F. Nature & Life Events

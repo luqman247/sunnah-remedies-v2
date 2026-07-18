@@ -116,6 +116,33 @@ function testSearchNeverClaimsToSearchEntryContent() {
   console.log("✓ the landing search structurally cannot search entry content — it operates on collection metadata only");
 }
 
+/**
+ * Approved taxonomy decision (Audit v2/v3): the new During Salah collection
+ * and its subcategories must be findable both by their proper transliterated
+ * spelling (with diacritics) and by the plain-ASCII spelling a user is
+ * likely to type — visible labels keep the approved spelling regardless of
+ * which form was searched.
+ */
+const DURING_SALAH_SEARCH_TERMS = ["Salah", "During Salah", "Ruku", "Rukūʿ", "Sujud", "Sujūd", "Tashahhud", "Qunut", "Qunūt"];
+
+function testDuringSalahAndItsPositionsAreFindableThroughSearch() {
+  for (const term of DURING_SALAH_SEARCH_TERMS) {
+    const results = searchDuaDhikrCollections(CANONICAL_COLLECTIONS, term);
+    assert(
+      results.some((c) => c.slug === "during-salah"),
+      `searching "${term}" must surface the During Salah collection`,
+    );
+  }
+  console.log(`✓ all ${DURING_SALAH_SEARCH_TERMS.length} During Salah / prayer-position terms are findable through search`);
+}
+
+function testDuringSalahDoesNotResolveToAfterSalah() {
+  const resolved = resolveCollectionSlug("Salah");
+  assert(resolved === "during-salah", `"Salah" must resolve to "during-salah", got "${resolved}"`);
+  assert(resolved !== "after-salah", '"Salah" must never resolve to "after-salah" — they are distinct collections');
+  console.log('✓ "Salah" resolves to During Salah, never to After Salah');
+}
+
 function testEmptyQueryReturnsNoResultsNotEverything() {
   assert(searchDuaDhikrCollections(CANONICAL_COLLECTIONS, "").length === 0, "an empty query must return zero results, not the full collection list");
   assert(searchDuaDhikrCollections(CANONICAL_COLLECTIONS, "   ").length === 0, "a whitespace-only query must return zero results");
@@ -130,6 +157,8 @@ function runAll() {
   testNormalizeSearchTextHandlesAmpersandsAndApostrophes();
   testDuaAndDuaWithAynFindRelevantResultsWithoutRenamingSections();
   testSearchNeverClaimsToSearchEntryContent();
+  testDuringSalahAndItsPositionsAreFindableThroughSearch();
+  testDuringSalahDoesNotResolveToAfterSalah();
   testEmptyQueryReturnsNoResultsNotEverything();
   console.log("\nAll Duʿa & Dhikr search/alias/discovery tests passed.");
 }
