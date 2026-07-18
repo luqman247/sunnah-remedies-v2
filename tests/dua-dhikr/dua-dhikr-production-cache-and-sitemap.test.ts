@@ -79,8 +79,8 @@ function testRevalidateWebhookCoversDuaDhikrTypes() {
   assert(revalidateRouteSource.includes("duaDhikrCollection"), "the revalidation webhook must map duaDhikrCollection to its public route(s)");
   assert(revalidateRouteSource.includes("duaDhikrEntry"), "the revalidation webhook must map duaDhikrEntry to its public route(s)");
   assert(
-    revalidateRouteSource.includes("/knowledge-library/dua-dhikr/[collectionSlug]"),
-    "the revalidation webhook must invalidate the dynamic collection-page pattern, not just the landing page, since a single entry change can affect any populated collection",
+    revalidateRouteSource.includes("/[locale]/knowledge-library/dua-dhikr/[collectionSlug]"),
+    "the revalidation webhook must invalidate the [locale]-prefixed dynamic collection-page pattern (matching the real physical route under src/app/[locale]/...), not just the landing page, since a single entry change can affect any populated collection",
   );
   console.log("✓ the on-demand revalidation webhook covers both Duʿa & Dhikr Sanity types");
 }
