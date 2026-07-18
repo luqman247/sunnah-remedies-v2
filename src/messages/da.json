@@ -1372,6 +1372,8 @@
     "thresholdLighting": "Sen eftermiddag, retningsbestemt varme",
     "thresholdMood": "Gravitet",
     "thresholdAlt": "Lærde hænder der gennemgår et illumineret manuskript om Profetisk medicin ved glaskar med ravolie og sort frø",
+    "thresholdStatement": "Instituttet",
+    "thresholdQualifier": "Modtaget forskning, klinisk praksis og gennemsigtig oprindelse",
     "authorityYears": "Praksisår",
     "authorityStudents": "Uddannede studerende",
     "authorityCountries": "Lande betjent",
@@ -1391,7 +1393,7 @@
     "deptApothecaryStandfirst": "Et skab af præparater, hver dokumenteret til kilde før udlevering",
     "deptApothecaryPlatePurpose": "Udleveringsskabe med ravkar",
     "deptApothecaryPlateAlt": "Et apoteksudleveringsskab med ravglas kar af honning og olier på patinerede træhylder",
-    "deptJourneysStandfirst": "Uddannelsespilgrimsrejse til de hellige lande — forberedelse går forud for afrejse, formål før rejseplan",
+    "deptJourneysStandfirst": "Uddannelsespilgrimsrejse til de hellige lande - formål, forberedelse og afrejse",
     "deptJourneysPlatePurpose": "Masjid an-Nabawi i gylden time — stille gårdsplads og grøn kuppel",
     "deptJourneysPlateAlt": "Masjid an-Nabawi i gylden time — varm marmorgårdsplads, grøn kuppel og fjerne pilgrimme i stille refleksion",
     "jsonLdDescription": "Et institut for Profetisk Medicin med forskning, klinisk behandling og naturlig terapi"

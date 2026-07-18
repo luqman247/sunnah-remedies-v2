@@ -1372,6 +1372,8 @@
     "thresholdLighting": "Late afternoon, directional warmth",
     "thresholdMood": "Gravitas",
     "thresholdAlt": "Scholarly hands examining an illuminated manuscript of Prophetic medicine beside glass vessels of amber oil and black seed",
+    "thresholdStatement": "The Institute",
+    "thresholdQualifier": "Received scholarship, clinical practice, and transparent provenance",
     "authorityYears": "Years of practice",
     "authorityStudents": "Students trained",
     "authorityCountries": "Countries served",
@@ -1391,7 +1393,7 @@
     "deptApothecaryStandfirst": "A cabinet of preparations, each documented to source before dispensation",
     "deptApothecaryPlatePurpose": "Dispensary shelves with amber vessels",
     "deptApothecaryPlateAlt": "An apothecary dispensary with amber glass vessels of honey and oils arranged on aged wooden shelving",
-    "deptJourneysStandfirst": "Educational pilgrimage to the Holy Lands — preparation precedes departure, purpose before itinerary",
+    "deptJourneysStandfirst": "Educational pilgrimage to the Holy Lands - purpose, preparation & departure",
     "deptJourneysPlatePurpose": "Masjid an-Nabawi at golden hour — quiet courtyard and green dome",
     "deptJourneysPlateAlt": "Masjid an-Nabawi at golden hour — warm marble courtyard, green dome, and distant pilgrims in quiet reflection",
     "jsonLdDescription": "An institute of Prophetic Medicine for scholarship, clinical care, and natural therapeutics"
