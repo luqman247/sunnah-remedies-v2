@@ -165,3 +165,128 @@ export function isDuaDhikrEntryEditoriallyPubliclyEligible(
 ): boolean {
   return getDuaDhikrEditorialEligibilityConditions(doc).every((condition) => condition.met);
 }
+
+/**
+ * Owner-approved English-first pathway — a THIRD, separate, additive
+ * eligibility rule, alongside (never replacing or weakening) the canonical
+ * scholarly pathway above and the editorial-review-pending bypass. Exists
+ * for content the content owner has explicitly approved and stated was
+ * accepted as pre-verified from the supplied source document, with
+ * independent re-verification explicitly waived by the owner — see
+ * content-intake-workspace/OWNER_PREVERIFICATION_DECISION.md (local,
+ * git-excluded) for the full record of that decision. This pathway
+ * deliberately never checks translationDa: an English-first launch must
+ * never be blocked by, and must never imply, Danish readiness.
+ *
+ * `editorialPublicationStatus == "owner-approved-english-first"` reuses
+ * the existing field (the same one the editorial bypass already uses) — no
+ * new field was added; the value itself is the recorded decision, exactly
+ * as "editorial-only-scholarly-review-pending" already is for the existing
+ * bypass. This pathway NEVER claims scholarly review, NEVER sets a board
+ * approval, and any UI surfacing content eligible only through this
+ * pathway must show a neutral "content-owner approved, not yet
+ * independently scholarly reviewed" note — never a claim of scholarly
+ * approval or authentication.
+ */
+export interface DuaDhikrEntryOwnerApprovedEnglishEligibilityInput {
+  editorialPublicationStatus?: string;
+  importIdentifier?: string;
+  arabicText?: string;
+  translationEn?: string;
+  collections?: unknown[];
+  boardApprovals?: DuaDhikrBoardApprovalLike[];
+}
+
+export const DUA_DHIKR_OWNER_APPROVED_ENGLISH_ELIGIBILITY_GROQ = `
+  editorialPublicationStatus == "owner-approved-english-first"
+  && defined(importIdentifier) && importIdentifier != ""
+  && defined(arabicText) && arabicText != ""
+  && defined(translationEn) && translationEn != ""
+  && count(collections) > 0
+`.trim();
+
+export interface DuaDhikrOwnerApprovedEnglishEligibilityCondition {
+  key:
+    | "owner-approved-english-first-status-set"
+    | "import-identifier-present"
+    | "arabic-present"
+    | "english-translation-present"
+    | "collection-reference-present"
+    | "no-fabricated-scholarly-approval";
+  label: string;
+  met: boolean;
+}
+
+export function getDuaDhikrOwnerApprovedEnglishEligibilityConditions(
+  doc: DuaDhikrEntryOwnerApprovedEnglishEligibilityInput,
+): DuaDhikrOwnerApprovedEnglishEligibilityCondition[] {
+  return [
+    {
+      key: "owner-approved-english-first-status-set",
+      label: 'editorialPublicationStatus is "owner-approved-english-first"',
+      met: doc.editorialPublicationStatus === "owner-approved-english-first",
+    },
+    { key: "import-identifier-present", label: "Import identifier is present", met: !!doc.importIdentifier },
+    { key: "arabic-present", label: "Arabic text is present", met: !!doc.arabicText },
+    { key: "english-translation-present", label: "English translation is present", met: !!doc.translationEn },
+    {
+      key: "collection-reference-present",
+      label: "At least one canonical collection reference is present",
+      met: Array.isArray(doc.collections) && doc.collections.length > 0,
+    },
+    {
+      key: "no-fabricated-scholarly-approval",
+      label: "No scholarly board approval is claimed via this pathway",
+      met: !hasApprovedDuaDhikrBoard(doc.boardApprovals, "scholarly"),
+    },
+  ];
+}
+
+export function isDuaDhikrEntryOwnerApprovedEnglishEligible(
+  doc: DuaDhikrEntryOwnerApprovedEnglishEligibilityInput,
+): boolean {
+  return getDuaDhikrOwnerApprovedEnglishEligibilityConditions(doc).every((condition) => condition.met);
+}
+
+/**
+ * Combined input covering every field any of the three pathways reads.
+ * The locale-aware functions below are the ones public fetch code should
+ * call — never the three per-pathway functions individually, so a future
+ * fourth pathway only needs to be added in one place.
+ */
+export interface DuaDhikrEntryLocaleEligibilityInput
+  extends DuaDhikrEntryEligibilityInput,
+    DuaDhikrEntryEditorialEligibilityInput,
+    DuaDhikrEntryOwnerApprovedEnglishEligibilityInput {}
+
+export type DuaDhikrLocale = "en" | "da";
+
+/**
+ * English eligibility = canonical scholarly pathway OR editorial bypass OR
+ * owner-approved-English-first — any one is sufficient. Missing
+ * translationDa never blocks this: only the canonical/editorial pathways
+ * check it, and the owner-approved pathway never does.
+ */
+export function isDuaDhikrEntryEnglishPubliclyEligible(doc: DuaDhikrEntryLocaleEligibilityInput): boolean {
+  return (
+    isDuaDhikrEntryPubliclyEligible(doc) ||
+    isDuaDhikrEntryEditoriallyPubliclyEligible(doc) ||
+    isDuaDhikrEntryOwnerApprovedEnglishEligible(doc)
+  );
+}
+
+/**
+ * Danish eligibility = canonical scholarly pathway OR editorial bypass —
+ * both already hard-require translationDa. The owner-approved-English-first
+ * pathway is deliberately excluded here: it never satisfies Danish
+ * eligibility under any circumstance, so an English-first launch can never
+ * accidentally surface as Danish content.
+ */
+export function isDuaDhikrEntryDanishPubliclyEligible(doc: DuaDhikrEntryLocaleEligibilityInput): boolean {
+  return isDuaDhikrEntryPubliclyEligible(doc) || isDuaDhikrEntryEditoriallyPubliclyEligible(doc);
+}
+
+/** Convenience single entry point matching the `(entry, locale)` shape — delegates to the two functions above; never introduces an ambiguous fallback locale. */
+export function isDuaDhikrEntryPubliclyEligibleForLocale(doc: DuaDhikrEntryLocaleEligibilityInput, locale: DuaDhikrLocale): boolean {
+  return locale === "en" ? isDuaDhikrEntryEnglishPubliclyEligible(doc) : isDuaDhikrEntryDanishPubliclyEligible(doc);
+}

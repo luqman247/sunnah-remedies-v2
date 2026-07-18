@@ -44,8 +44,15 @@ export function DuaDhikrEntryCard({ entry, locale }: DuaDhikrEntryCardProps) {
     setLearningState(getMemoriseState(entry._id));
   }, [entry._id]);
 
+  // Never falls back to English on a Danish route in practice: the Danish
+  // public fetch only ever returns entries whose gate already required
+  // translationDa (see dua-dhikr-publication-gate.ts) — an
+  // owner-approved-english-first entry is never fetched for locale "da" at
+  // all, so entry.translationDa is guaranteed present whenever locale is
+  // actually "da" here.
   const translation = locale === "da" && entry.translationDa ? entry.translationDa : entry.translationEn;
   const pendingScholarlyReview = entry.publicationPathway === "editorial-pending-scholarly-review";
+  const ownerApprovedEnglishFirst = entry.publicationPathway === "owner-approved-english-first";
   const timingKey = isKnownTimingKey(entry.timingLabel) ? entry.timingLabel : undefined;
 
   function toggleMemoriseMode() {
@@ -80,6 +87,12 @@ export function DuaDhikrEntryCard({ entry, locale }: DuaDhikrEntryCardProps) {
       {pendingScholarlyReview && (
         <span className="dua-dhikr-pending-badge" role="note">
           {t("pendingScholarlyReviewBadge")}
+        </span>
+      )}
+
+      {ownerApprovedEnglishFirst && (
+        <span className="dua-dhikr-pending-badge" role="note">
+          {t("ownerApprovedBadge")}
         </span>
       )}
 

@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const canonical = getCanonicalCollection(collectionSlug);
   if (!canonical) return {};
 
-  const collection = await getDuaDhikrCollectionPublic(collectionSlug);
+  const collection = await getDuaDhikrCollectionPublic(collectionSlug, locale);
   const title = locale === "da" && canonical.titleDa ? canonical.titleDa : canonical.titleEn;
   const published = collection ? isDuaDhikrCollectionPublished(collection) : false;
   const base = buildStaticMetadata(
@@ -74,9 +74,9 @@ export default async function DuaDhikrCollectionPage({ params }: PageProps) {
   const tNav = await getTranslations("nav");
 
   const [collection, entries, allCollections] = await Promise.all([
-    getDuaDhikrCollectionPublic(collectionSlug),
-    getDuaDhikrEntriesForCollection(collectionSlug),
-    getDuaDhikrCollectionsPublic(),
+    getDuaDhikrCollectionPublic(collectionSlug, locale),
+    getDuaDhikrEntriesForCollection(collectionSlug, locale),
+    getDuaDhikrCollectionsPublic(locale),
   ]);
 
   const resolved =

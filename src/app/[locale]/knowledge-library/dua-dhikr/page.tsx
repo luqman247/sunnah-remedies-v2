@@ -48,7 +48,7 @@ export default async function DuaDhikrLandingPage({
   const tNav = await getTranslations("nav");
 
   const [collections, articles] = await Promise.all([
-    getDuaDhikrCollectionsPublic(),
+    getDuaDhikrCollectionsPublic(locale),
     getAllArticles(locale),
   ]);
 
