@@ -28,3 +28,10 @@
 | 2026-07-18 | Slight mobile-only hero type/spacing reduction | Leave CTA below fold at 390 | First viewport must expose primary action | Clinical clarity |
 | 2026-07-18 | Desktop ≥1024: Navigation trigger CSS-hidden; inline masthead-nav only | Also show Navigation drawer on desktop | No duplicate access; breakpoint intentional from Phase 2A tablet fix | Aesop restraint |
 | 2026-07-18 | Permanent `/da` → `/dk` redirect; `localeUrl` uses `/dk` prefix | Leave `/da` publicly reachable as internal segment | `/da` is next-intl id only; public canonical is `/dk` | Mayo: one truth; no duplicate indexation |
+| 2026-07-18 | Rebase six UX commits onto `origin/main` (dua-dhikr PR); backup `backup/sr-ux-pre-main-sync` | Merge commit to avoid conflict inspection | Branch never pushed; rebase preferred; zero conflicts | Process |
+| 2026-07-18 | Phase 2C: five-step booking chrome on single route (not multi-page wizard) | Separate URLs per step | Preserve mock data model; avoid health data in URLs | Mayo clarity; Aesop restraint |
+| 2026-07-18 | sessionStorage draft without optional health notes | Persist full patient object; URL state | Refresh intentional; no sensitive URL; limit health persistence | Mayo dignity |
+| 2026-07-18 | Mock Monday empty / Tuesday first-fail / `+stale@` / `+fail@` | Live Cal.com in local verification | Safe testing without real bookings/payment/email | Process honesty |
+| 2026-07-18 | Combined date+time step; gender before clinic | Spec’s illustrative service→practitioner order | Existing model requires gender then clinic then slots | Do not invent safer-looking wrong order |
+| 2026-07-18 | Remove framer-motion from practitioner radios | Keep whileTap scale | Reduced motion + fewer client motion dependencies on this step | 20-year / a11y |
+| 2026-07-18 | Production submit = contact fallback; mock only via `ENABLE_MOCK_BOOKING_FLOW` (blocked in production); `TEST-SR-` labels | Fake `SR-` success in production | No real booking persistence/email path; must not appear confirmed | Mayo: state limits plainly |

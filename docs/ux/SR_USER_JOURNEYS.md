@@ -16,17 +16,21 @@ Verified paths for principal visitors. English uses unprefixed URLs; **canonical
 
 1. Land on `/`  
 2. Choose **Book a consultation** (hero primary, masthead accent, mobile primary, or pathway “I want to book Hijāma”)  
-3. `/consultations` — read hero (qualified practitioners, separate clinics)  
-4. Select practitioner gender  
-5. Select clinic — summary updates (location, price, duration)  
-6. Select date — if none, correspondence fallback  
-7. Select time — if none, correspondence fallback  
-8. Enter patient details (autocomplete fields); optional medical notes stay local to form only  
-9. Consent → **Book my appointment**  
-10. Success: reference id + email expectation  
+3. `/consultations` — hero + **progress** (5 steps) + refresh note  
+4. **Practitioner** — choose male or female pathway → Continue  
+5. **Clinic** — choose available clinic (Riyadh disabled / coming soon) → Continue; summary updates  
+6. **Date and time** — pick date; times load; unavailable slots labelled + disabled; Monday empty → correspondence; Tuesday first load may error → Retry  
+7. **Your details** — name, email, telephone (autocomplete); optional reason/medical; consent; error summary if invalid → Review appointment  
+8. **Review** — check live summary (preferred date/time, indicative fee, payment only if later confirmed) → **Submit consultation request**  
+9. **Production outcome:** correspondence fallback — no booking reference; preferences only; clinic confirms via correspondence  
+10. **Local mock only** (`ENABLE_MOCK_BOOKING_FLOW=true`, never in production): test confirmation with `TEST-SR-…` labelled as test data  
+
+**Back** returns to the previous step with selections retained. Draft restores on refresh within the session (optional health notes are not stored). Nothing sensitive is placed in the URL.
+
+**Safety:** Public path does **not** create a real appointment, take payment, or send customer email. Mock confirmation is local-only and blocked when `NODE_ENV === "production"`.
 
 **Analytics (anonymous):** `consultation_view`, `booking_start` — never medical field values.  
-**Phase 2B note:** Booking *flow* UI unchanged; only discovery/entry clarity improved.
+**Phase 2C:** Journey chrome, availability honesty, validation, submit resilience, and production-safe request wording.
 
 ## 2. Purchase a remedy
 

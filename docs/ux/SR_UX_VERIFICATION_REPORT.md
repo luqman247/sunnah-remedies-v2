@@ -173,6 +173,66 @@ See `SR_HOMEPAGE_TASK_CLARITY_PHASE_REPORT.md` and `SR_USER_JOURNEYS.md`.
 
 No booking-flow redesign, Academy restructuring, commerce redesign, Sacred Journeys registration redesign, broad DA CMS translation, analytics, or visual rebrand.
 
+## Phase 2C — Consultation booking journey (18 July 2026)
+
+**Commit / push / deploy:** none (awaiting approval). Working tree holds Phase 2C changes uncommitted.
+
+### Quality checks
+
+| Check | Result |
+|-------|--------|
+| `npx tsc --noEmit` | Pass |
+| UX + Duʿa tests + `booking-journey.smoke.ts` | Pass — 34/34 |
+| Locale-routing + catalogue-guard smokes | Pass (included in UX suite) |
+| Production `npm run build` | Pass |
+| Changed-file ESLint (temp `_eslint-temp.config.mjs` from Desktop) | Pass — 0 errors |
+| Full-repo lint | Known debt (~170 errors / 172 warnings) — not claimed fixed |
+
+### Browser interaction sequence (safe mock on `:3011`)
+
+1. `/dk/consultations` — progress **Trin 1 af 5: Behandler**; Fortsæt disabled until selection  
+2. Kvindelig behandler → Fortsæt  
+3. London (Riyadh disabled / Kommer snart) → Fortsæt; summary updates  
+4. Mandag → empty availability + Korrespondance fallback  
+5. Tirsdag → availability error + Prøv igen → retry recovers slots  
+6. Onsdag → times with **Ikke ledig** text on disabled slots → 10:30 → Fortsæt  
+7. Details → Review (URL remains `/dk/consultations` — no health/query data)  
+8. Submit mock → success **Tak**, reference `SR-…`, payment/cancellation copy present  
+9. `/consultations` EN — Step 1 of 5 / Continue / View appointment summary  
+10. Homepage `/dk` — **Book en konsultation** primary intact  
+
+### HTTP smokes
+
+| Route | Result |
+|-------|--------|
+| `/`, `/dk`, consultations EN/DA, dua-dhikr EN/DA, catalogue | 200 |
+| Unknown route | Soft 200 institutional 404 (known ADR-017) |
+| `/da` | **308** → `/dk` |
+| `/brand/wordmark-emerald.svg` | 200 |
+
+### Viewports / a11y
+
+| Check | Result |
+|-------|--------|
+| 390 / 768 / 1440 | Progress wraps; summary jump on small screens; sticky CTA only on review |
+| Keyboard | Radios, dates, times, Back/Continue operable |
+| Reduced motion | Emulated; spinner CSS respects `prefers-reduced-motion` |
+| Console / hydration | No unexpected app errors observed on booking path |
+| Overflow | No required horizontal overflow on booking shell at verified widths |
+
+### Safe-testing limitation
+
+Default / production: **contact fallback** only — no fabricated booking reference.  
+Local mock confirmation (`TEST-SR-…`) only when `ENABLE_MOCK_BOOKING_FLOW=true` and not production. Hooks: Monday empty, Tuesday first-fail, `+stale@`, `+fail@`.
+
+### Production-safety correction
+
+Verified: production-mode submit cannot invent a live `SR-` reference; EN/DA request wording; mock gate blocked in production; focused tests include `booking-production-safety.smoke.ts`.
+
+### Scope boundary (Phase 2C)
+
+No Academy, Apothecary/checkout, Sacred Journeys registration, analytics, broad CMS translation, or visual rebrand.
+
 ## Prior retained work
 
 Phase 2A commits intact:
@@ -187,3 +247,7 @@ Verification-product containment, asset-routing, Duʿa publication-state, Danish
 ## Approval boundary
 
 No commit, push, merge, deploy, or pull request for Phase 2B. Stop for approval.
+
+## Approval boundary (Phase 2C)
+
+No commit, push, merge, deploy, or pull request for Phase 2C. Stop for approval.
