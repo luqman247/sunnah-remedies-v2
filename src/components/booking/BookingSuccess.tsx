@@ -1,73 +1,131 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { SolidAction } from "@/components/ui/Links";
+import type { PractitionerGender } from "@/lib/booking/types";
 
 interface BookingSuccessProps {
+  /** Only set for local mock confirmations (TEST-SR-…). Never invent live references. */
   referenceId?: string;
+  isMockConfirmation?: boolean;
+  practitioner: PractitionerGender | null;
+  clinicName: string | null;
+  clinicCountry: string | null;
+  date: Date | null;
+  time: string | null;
+  duration: string;
+  price: string;
   onBookAnother: () => void;
 }
 
-export function BookingSuccess({ referenceId, onBookAnother }: BookingSuccessProps) {
+export function BookingSuccess({
+  referenceId,
+  isMockConfirmation = false,
+  practitioner,
+  clinicName,
+  clinicCountry,
+  date,
+  time,
+  duration,
+  price,
+  onBookAnother,
+}: BookingSuccessProps) {
+  const locale = useLocale();
   const t = useTranslations("booking.success");
+  const tSummary = useTranslations("booking.summary");
+
+  const formatDate = (d: Date | null): string => {
+    if (!d) return "—";
+    return d.toLocaleDateString(locale, {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  };
+
+  const gender =
+    practitioner === "male"
+      ? tSummary("male")
+      : practitioner === "female"
+        ? tSummary("female")
+        : "—";
 
   return (
-    <motion.section
-      className="booking-success"
-      initial={{ opacity: 0, scale: 0.96 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-    >
-      <motion.div
-        className="booking-success__icon"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-      >
+    <section className="booking-success" aria-labelledby="booking-success-title">
+      <div className="booking-success__icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M5 12l5 5L20 7" />
         </svg>
-      </motion.div>
+      </div>
 
-      <motion.h1
-        className="booking-success__title"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.35 }}
-      >
+      <h1 id="booking-success-title" className="booking-success__title">
         {t("title")}
-      </motion.h1>
+      </h1>
 
-      <motion.p
-        className="booking-success__message"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.45 }}
-      >
-        {t("message")}
-      </motion.p>
+      <p className="booking-success__message">{t("message")}</p>
+      <p className="booking-success__note" role="status">
+        {t("notConfirmed")}
+      </p>
+      <p className="booking-success__note">{t("clinicWillContact")}</p>
 
-      {referenceId && (
-        <motion.p
-          className="booking-success__reference"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.55 }}
-        >
-          {t("reference", { id: referenceId })}
-        </motion.p>
-      )}
+      {isMockConfirmation ? (
+        <p className="booking-success__test-banner" role="status">
+          {t("testBanner")}
+        </p>
+      ) : null}
 
-      <motion.div
-        className="booking-success__actions"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.6 }}
-      >
+      {isMockConfirmation && referenceId ? (
+        <p className="booking-success__reference">
+          {t("testReference", { id: referenceId })}
+        </p>
+      ) : null}
+
+      <dl className="booking-success__details">
+        <div>
+          <dt>{tSummary("practitioner")}</dt>
+          <dd>{gender}</dd>
+        </div>
+        <div>
+          <dt>{tSummary("clinic")}</dt>
+          <dd>{clinicName || "—"}</dd>
+        </div>
+        <div>
+          <dt>{tSummary("location")}</dt>
+          <dd>{clinicCountry || "—"}</dd>
+        </div>
+        <div>
+          <dt>{tSummary("date")}</dt>
+          <dd>{formatDate(date)}</dd>
+        </div>
+        <div>
+          <dt>{tSummary("time")}</dt>
+          <dd>{time || "—"}</dd>
+        </div>
+        <div>
+          <dt>{tSummary("duration")}</dt>
+          <dd>{duration}</dd>
+        </div>
+        <div>
+          <dt>{tSummary("price")}</dt>
+          <dd>{price}</dd>
+        </div>
+      </dl>
+
+      <p className="booking-success__note">{t("preferencesOnly")}</p>
+      <p className="booking-success__note">{t("noEmailClaim")}</p>
+      <p className="booking-success__note">
+        {t("cancellation")}{" "}
+        <Link href="/correspondence" className="quiet-link">
+          {t("contact")}
+        </Link>
+      </p>
+
+      <div className="booking-success__actions">
         <SolidAction href="/">{t("returnHome")}</SolidAction>
         <SolidAction onClick={onBookAnother}>{t("bookAnother")}</SolidAction>
-      </motion.div>
-    </motion.section>
+      </div>
+    </section>
   );
 }

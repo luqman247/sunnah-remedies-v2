@@ -186,6 +186,27 @@
   border-color: var(--brass);
 }
 
+.dua-dhikr-collection-card--preparing {
+  cursor: default;
+  opacity: 0.72;
+  background: color-mix(in srgb, var(--paper) 88%, var(--ink) 4%);
+}
+
+.dua-dhikr-collection-card--preparing:hover {
+  border-color: var(--hairline, color-mix(in srgb, var(--ink) 16%, transparent));
+  transform: none;
+}
+
+.dua-dhikr-collection-grid--preparing {
+  opacity: 0.95;
+}
+
+.dua-dhikr-preparing-note {
+  margin-block-end: var(--space-5);
+  max-inline-size: 40rem;
+  color: var(--muted);
+}
+
 .dua-dhikr-collection-card:focus-visible {
   outline: 2px solid var(--brass);
   outline-offset: 3px;

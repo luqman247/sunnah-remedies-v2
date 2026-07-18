@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import type { PractitionerGender } from "@/lib/booking/types";
 
@@ -11,20 +10,24 @@ interface PractitionerSelectorProps {
 
 export function PractitionerSelector({ value, onChange }: PractitionerSelectorProps) {
   const t = useTranslations("booking.steps");
+  const tProgress = useTranslations("booking.progress.steps");
 
   return (
     <div className="booking-step">
-      <p className="booking-step__label">{t("step1")}</p>
+      <p className="booking-step__label">{tProgress("practitioner")}</p>
       <h2 className="booking-step__title">{t("choosePractitioner")}</h2>
 
-      <div className="selection-grid selection-grid--two" role="radiogroup" aria-label={t("practitionerGenderAria")}>
-        <motion.button
+      <div
+        className="selection-grid selection-grid--two"
+        role="radiogroup"
+        aria-label={t("practitionerGenderAria")}
+      >
+        <button
           type="button"
           className={`selection-card ${value === "male" ? "selection-card--selected" : ""}`}
           onClick={() => onChange("male")}
           role="radio"
           aria-checked={value === "male"}
-          whileTap={{ scale: 0.98 }}
         >
           <span className="selection-card__radio" aria-hidden="true" />
           <span className="selection-card__icon">
@@ -34,15 +37,14 @@ export function PractitionerSelector({ value, onChange }: PractitionerSelectorPr
             </svg>
           </span>
           <span className="selection-card__name">{t("malePractitioner")}</span>
-        </motion.button>
+        </button>
 
-        <motion.button
+        <button
           type="button"
           className={`selection-card ${value === "female" ? "selection-card--selected" : ""}`}
           onClick={() => onChange("female")}
           role="radio"
           aria-checked={value === "female"}
-          whileTap={{ scale: 0.98 }}
         >
           <span className="selection-card__radio" aria-hidden="true" />
           <span className="selection-card__icon">
@@ -53,7 +55,7 @@ export function PractitionerSelector({ value, onChange }: PractitionerSelectorPr
             </svg>
           </span>
           <span className="selection-card__name">{t("femalePractitioner")}</span>
-        </motion.button>
+        </button>
       </div>
     </div>
   );

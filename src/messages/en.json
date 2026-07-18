@@ -5,14 +5,22 @@
     "theAcademy": "The Academy",
     "sacredJourneys": "Sacred Journeys",
     "knowledgeLibrary": "Knowledge Library",
+    "theInstitute": "The Institute",
     "consultations": "Clinical Consultations",
+    "bookConsultation": "Book a consultation",
+    "duaDhikr": "Duʿa & Dhikr",
     "charter": "Charter",
     "correspondence": "Correspondence",
     "navigation": "Navigation",
     "closeNavigation": "Close navigation",
     "ariaMenu": "Main navigation",
     "ariaLanguage": "Change language",
-    "ariaPrimary": "Primary"
+    "ariaPrimary": "Primary",
+    "ariaInstitutional": "Departments",
+    "ariaTasks": "Common tasks",
+    "tasksHeading": "Common tasks",
+    "switchTo": "Switch to {language}",
+    "skipToContent": "Skip to content"
   },
   "footer": {
     "tagline": "Institute of Prophetic Medicine",
@@ -21,7 +29,22 @@
     "colophon": "Sunnah Remedies · Est. MMXXV · Healing is from Allah · the remedy is a means",
     "requestConsultation": "Request a consultation",
     "dailyReflectionAria": "Daily reflection",
-    "preFooterImageAlt": "Research table — manuscripts, instruments, and natural specimens arranged for scholarly study"
+    "preFooterImageAlt": "Research table — manuscripts, instruments, and natural specimens arranged for scholarly study",
+    "columnPillars": "The Pillars",
+    "columnInstitution": "Institution",
+    "columnConnect": "Connect",
+    "columnLegal": "Legal",
+    "linkInstitute": "The Institute",
+    "linkCharter": "Founding Charter",
+    "linkCalendar": "The Institutional Year",
+    "linkExhibitions": "Exhibitions",
+    "linkResearch": "Research",
+    "linkPress": "The Press",
+    "linkAcademyEnrolment": "Academy Enrolment",
+    "linkJourneyRegistration": "Journey Registration",
+    "linkPrivacy": "Privacy",
+    "linkTerms": "Terms",
+    "linkAccessibility": "Accessibility"
   },
   "theme": {
     "nightMode": "Night mode",
@@ -44,7 +67,23 @@
     "loading": "Loading",
     "error": "Something went wrong",
     "notFound": "Not found",
-    "tableOfContents": "Table of contents"
+    "tableOfContents": "Table of contents",
+    "retry": "Try again",
+    "goBack": "Go back",
+    "returnHome": "Return home",
+    "unavailable": "Unavailable",
+    "empty": "Nothing to show here yet",
+    "search": "Search",
+    "noResults": "No results",
+    "submitting": "Submitting…",
+    "successConfirmation": "Complete",
+    "sessionExpired": "Your session has ended. Sign in again to continue",
+    "signInPrompt": "Sign in to continue",
+    "maintenance": "This section is temporarily unavailable",
+    "preparing": "This section is being prepared",
+    "errorTitle": "Something went wrong",
+    "errorBody": "Please try again shortly",
+    "loadingStatus": "Loading"
   },
   "notFound": {
     "heading": "THE CORRIDOR DOES NOT CONTINUE HERE",
@@ -379,7 +418,10 @@
       "facultyPortraitSenior": "Faculty member — senior practitioner and scholar",
       "facultyPortraitClinical": "Faculty member — clinical practitioner",
       "clinicalPracticeAlt": "A clinical practitioner preparing sterile cupping equipment in a professional treatment room"
-    }
+    },
+    "questions": "Questions",
+    "learningOutcomes": "Learning outcomes",
+    "hijamaDiploma": "Hijāma Diploma"
   },
   "journeys": {
     "title": "Sacred Journeys",
@@ -482,7 +524,17 @@
         "experience": "Describe your prior study and relevant travel experience",
         "acknowledge": "Confirmation is required before submission"
       }
-    }
+    },
+    "umrah": "Umrah",
+    "reading": "Reading list",
+    "packing": "Packing guide",
+    "flightGuidance": "Flight guidance",
+    "accommodation": "Accommodation",
+    "educationalSessions": "Educational sessions",
+    "reflectionJournals": "Reflection journals",
+    "companionship": "Companionship",
+    "healthGuidance": "Health guidance",
+    "policies": "Policies"
   },
   "knowledge": {
     "title": "Knowledge Library",
@@ -636,14 +688,8 @@
     "bookAppointment": "Book an appointment"
   },
   "booking": {
-    "firstName": "First name",
-    "lastName": "Last name",
-    "dateOfBirth": "Date of birth",
-    "selectDate": "Select a date",
-    "selectTime": "Select a time",
-    "confirm": "Confirm booking",
-    "returning": "Returning patient",
-    "new": "New patient",
+    "refreshNote": "Your selections are kept in this browser session while you move between steps. Refreshing restores them here — they are never placed in the page address. Optional health notes are not stored across refresh",
+    "viewSummary": "View appointment summary",
     "hero": {
       "title": "Book Your Hijama Session",
       "subtitle": "Experience Prophetic medicine in a calm, professional environment. Choose your practitioner, preferred clinic and appointment time",
@@ -651,52 +697,134 @@
       "badgeSeparate": "Separate Male & Female Clinics",
       "badgeSunnah": "Sunnah-Based Care"
     },
+    "progress": {
+      "ariaLabel": "Booking progress",
+      "status": "Step {current} of {total}: {name}",
+      "steps": {
+        "practitioner": "Practitioner",
+        "clinic": "Clinic",
+        "schedule": "Date and time",
+        "details": "Your details",
+        "review": "Review"
+      }
+    },
+    "nav": {
+      "back": "Back",
+      "continue": "Continue",
+      "review": "Review appointment"
+    },
+    "review": {
+      "title": "Review your request",
+      "lede": "Check your preferences, then submit a consultation request. This does not reserve a time or confirm an appointment. The clinic will contact you to confirm availability"
+    },
+    "clinicAvailability": {
+      "london": "Available this week",
+      "aarhus": "Available next week",
+      "riyadh": "Coming soon"
+    },
+    "availability": {
+      "loading": "Checking availability…",
+      "empty": "No appointment times are open on this date",
+      "noDates": "No bookable dates are currently listed for this clinic",
+      "error": "Availability could not be loaded",
+      "retry": "Try again",
+      "fallback": "You may request assistance through correspondence",
+      "contact": "Contact the clinic",
+      "unavailable": "Unavailable",
+      "slotUnavailable": "This time is not available"
+    },
+    "validation": {
+      "firstName": "Enter your first name",
+      "surname": "Enter your surname",
+      "email": "Enter a valid email address",
+      "telephone": "Enter a telephone number",
+      "consent": "Confirm that you agree to the consultation process"
+    },
+    "errors": {
+      "network": "The request could not be completed. Your details are still here — please try again",
+      "staleSlot": "That time is no longer available. Please choose another time",
+      "server": "Something went wrong on our side. Please try again or contact the clinic",
+      "validation": "Please complete the required fields before submitting"
+    },
     "success": {
-      "title": "Thank you",
-      "message": "Your booking request has been received. We will confirm your appointment shortly via email",
+      "title": "Your request has been received",
+      "message": "Local mock confirmation only. Nothing was booked, charged, or emailed to a patient",
+      "notConfirmed": "This is not yet a confirmed appointment",
+      "clinicWillContact": "The clinic will contact you to confirm availability",
+      "preferencesOnly": "The date and time above are preferences only — the selected slot is not reserved",
+      "noEmailClaim": "No confirmation email was sent",
+      "testBanner": "Test confirmation — not a real appointment, payment, or email",
+      "testReference": "Test reference (not a live booking): {id}",
       "reference": "Reference: {id}",
+      "emailExpectation": "No automatic confirmation email is claimed by this interface",
+      "preparation": "If an appointment is later confirmed, the clinic will advise any preparation",
+      "cancellation": "To change preferences or ask a question, write through",
+      "contact": "correspondence",
       "returnHome": "Return Home",
-      "bookAnother": "Book Another Session"
+      "bookAnother": "Start another request"
+    },
+    "contactFallback": {
+      "title": "Continue through correspondence",
+      "message": "Online appointment confirmation is not available on this site. No booking reference has been created, and no slot has been reserved",
+      "notConfirmed": "This is not a confirmed appointment",
+      "clinicWillContact": "Please write through correspondence so the clinic can confirm availability with you",
+      "preferencesOnly": "The details below are preferences only — include them in your message to the clinic",
+      "contactCta": "Open correspondence",
+      "startAgain": "Start again",
+      "returnHome": "Return home"
     },
     "patientForm": {
-      "stepLabel": "Step 5",
-      "title": "Patient Information",
-      "firstName": "First Name",
+      "stepLabel": "Your details",
+      "title": "Patient information",
+      "firstName": "First name",
       "surname": "Surname",
       "email": "Email",
       "telephone": "Telephone",
       "reason": "Reason for appointment",
       "medicalConditions": "Any medical conditions?",
+      "medicalHint": "Optional. Shared only with the clinic for this request — never placed in the page address",
       "optional": "optional",
+      "required": "required",
+      "errorSummary": "Please correct the following",
       "consentText": "I understand Hijama may not be suitable for everyone and agree to the consultation process"
     },
     "steps": {
-      "step1": "Step 1",
-      "step2": "Step 2",
-      "step3": "Step 3",
-      "step4": "Step 4",
-      "choosePractitioner": "Choose Practitioner",
-      "chooseClinic": "Choose Clinic",
-      "chooseDate": "Choose Date",
-      "chooseTime": "Choose Time",
+      "step1": "Practitioner",
+      "step2": "Clinic",
+      "step3": "Date",
+      "step4": "Time",
+      "choosePractitioner": "Choose practitioner",
+      "chooseClinic": "Choose clinic",
+      "chooseSchedule": "Choose date and time",
+      "chooseDate": "Choose date",
+      "chooseTime": "Choose time",
       "practitionerGenderAria": "Practitioner gender",
       "clinicLocationAria": "Clinic location",
       "availableDatesAria": "Available dates",
       "availableTimesAria": "Available times",
-      "malePractitioner": "Male Practitioner",
-      "femalePractitioner": "Female Practitioner"
+      "malePractitioner": "Male practitioner",
+      "femalePractitioner": "Female practitioner"
     },
     "summary": {
       "ariaLabel": "Appointment summary",
-      "label": "Appointment Summary",
+      "label": "Appointment summary",
       "practitioner": "Practitioner",
+      "male": "Male practitioner",
+      "female": "Female practitioner",
       "clinic": "Clinic",
-      "date": "Date",
-      "time": "Time",
+      "location": "Location",
+      "date": "Preferred date",
+      "time": "Preferred time",
       "duration": "Duration",
-      "price": "Price",
-      "submitAria": "Book my appointment",
-      "submit": "Book My Appointment"
+      "durationValue": "45 minutes",
+      "price": "Indicative fee",
+      "paymentTiming": "Payment",
+      "paymentTimingValue": "Payable at the clinic only if an appointment is later confirmed — this form takes no payment",
+      "cancellation": "Changes",
+      "cancellationValue": "Write via correspondence — no online reservation is held",
+      "submitAria": "Submit consultation request",
+      "submit": "Submit consultation request",
+      "submitting": "Submitting…"
     }
   },
   "seasonal": {
@@ -1166,11 +1294,52 @@
     "about": "About",
     "contact": "Contact",
     "footerColophon": "Sunnah Remedies · Institute of Prophetic Medicine",
-    "eyebrow": "EST. ——— · INSTITUTE OF PROPHETIC MEDICINE",
+    "eyebrow": "EST. MMXXV · INSTITUTE OF PROPHETIC MEDICINE",
     "arrivalEnglish": "The medicine of the prophetic tradition, kept living",
     "standfirst": "An institution for the preservation and responsible transmission of prophetic medicine — grounded in primary-source scholarship, laboratory verification, clinical accountability, and plain limits",
     "enterLabel": "Enter the institution",
     "enterHref": "#departments",
+    "bookConsultation": "Book a consultation",
+    "exploreRemedies": "Browse remedies",
+    "exploreProgrammes": "Explore programmes",
+    "findDuaDhikr": "Find Duʿa & Dhikr",
+    "trustLine": "Primary-source scholarship, laboratory verification, clinical accountability, and plain limits — before commerce",
+    "tasks": {
+      "ariaLabel": "What brings you here",
+      "stamp": "BEGIN HERE",
+      "heading": "What brings you here",
+      "lede": "Choose by intention. Department names follow when you are ready for the institution’s full structure",
+      "book": {
+        "label": "I want to book Hijāma",
+        "description": "Request a clinical consultation with a qualified practitioner",
+        "action": "Book a consultation"
+      },
+      "remedies": {
+        "label": "I am looking for a remedy",
+        "description": "Read monographs and request dispensation from the Apothecary",
+        "action": "Browse remedies"
+      },
+      "programmes": {
+        "label": "I want to study",
+        "description": "See clinical education structured by faculty, assessment, and isnād",
+        "action": "Explore programmes"
+      },
+      "duaDhikr": {
+        "label": "I need Duʿa or Dhikr",
+        "description": "Open verified remembrance organised by the moments of daily life",
+        "action": "Open Duʿa & Dhikr"
+      },
+      "institute": {
+        "label": "I want to understand the Institute",
+        "description": "Read the house’s purpose, charter, and standards of practice",
+        "action": "Explore the Institute"
+      },
+      "journeys": {
+        "label": "I am considering a Sacred Journey",
+        "description": "See educational pilgrimage with preparation before departure",
+        "action": "Explore Sacred Journeys"
+      }
+    },
     "traditionStamp": "ON THE TRADITION",
     "traditionStandfirst": "What is this discipline, and why does it require an institution?",
     "traditionBody0": "Prophetic Medicine is not folk remedy, not alternative wellness, not a brand opportunity. It is a received body of knowledge — transmitted through authenticated chains, tested against observable evidence, and constrained by the limits its own sources declare",
@@ -1243,7 +1412,11 @@
       "searchPlaceholder": "Search by occasion, topic, or name…",
       "searchNoResults": "No collections match \"{query}\".",
       "entryCount": "{count, plural, one {1 entry} other {# entries}}",
-      "noEntriesYet": "Preparing for publication"
+      "noEntriesYet": "Preparing for publication",
+      "inPreparationHeading": "In preparation",
+      "inPreparationLede": "These collections are part of the planned library structure. They are not yet available to read. Verified entries will appear once scholarly and editorial review is complete.",
+      "inPreparationStatus": "In preparation",
+      "noPublishedCollections": "No collections have completed public review yet. Verified entries will appear here once scholarly and editorial publication requirements are met."
     },
     "collection": {
       "entriesHeading": "Entries",
@@ -1285,5 +1458,38 @@
       "markedMemorised": "Memorised",
       "share": "Share"
     }
+  },
+  "consent": {
+    "bannerHeading": "Cookie preferences",
+    "bannerBody": "This institution uses cookies to measure how our knowledge, education, and services are used — so we can improve them. We never track personal health or student information through analytics. You may accept, reject, or customise your preferences",
+    "accept": "Accept analytics",
+    "reject": "Reject all",
+    "managePreferences": "Customise",
+    "hidePreferences": "Hide preferences",
+    "savePreferences": "Save preferences",
+    "closePreferences": "Close preferences",
+    "preferencesTitle": "Manage cookie preferences",
+    "strictlyNecessary": "Strictly necessary",
+    "strictlyNecessaryDesc": "Required for the site to function",
+    "alwaysActive": "Always active",
+    "analytics": "Analytics",
+    "analyticsDesc": "Understand how content and services are used",
+    "marketing": "Marketing",
+    "marketingDesc": "Measure the effectiveness of outreach",
+    "privacyPolicy": "Privacy policy",
+    "ariaBanner": "Cookie consent",
+    "ariaPreferences": "Cookie preference panel",
+    "ariaClose": "Close preference panel",
+    "saved": "Your preferences have been saved",
+    "error": "Unable to save preferences. Please try again"
+  },
+  "institutionNav": {
+    "threshold": "The Threshold",
+    "theInstitute": "The Institute",
+    "foundingCharter": "The Founding Charter",
+    "institutionalYear": "The Institutional Year",
+    "consultations": "Consultations",
+    "correspondence": "Correspondence",
+    "theRegister": "The Register"
   }
 }

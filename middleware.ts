@@ -20,20 +20,16 @@ export default function middleware(req: NextRequest) {
   const url = req.nextUrl.clone();
   let shouldRedirect = false;
 
-  // ── URL Normalisation (§3.3) ────────────────────────────────────
-  // Lowercase paths
   if (pathname !== pathname.toLowerCase()) {
     url.pathname = pathname.toLowerCase();
     shouldRedirect = true;
   }
 
-  // Strip trailing slash (except root)
   if (url.pathname.length > 1 && url.pathname.endsWith("/")) {
     url.pathname = url.pathname.slice(0, -1);
     shouldRedirect = true;
   }
 
-  // Strip tracking parameters
   if (search) {
     let paramsChanged = false;
     for (const key of [...url.searchParams.keys()]) {
@@ -49,14 +45,6 @@ export default function middleware(req: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
-  // ── Auth-protected routes (+ /sign-in itself) ───────────────────
-  // /sign-in must be routed through authMiddleware too, not because it
-  // requires auth, but so it never falls through to intlMiddleware below:
-  // /sign-in is a (staff) route, outside the [locale] tree, and
-  // intlMiddleware would otherwise rewrite it to a non-existent
-  // /en/sign-in (404). withAuth's own pages.signIn exemption (it checks
-  // `pathname === options.pages.signIn` and passes the request through
-  // untouched) already handles this correctly once routed here.
   if (
     pathname.startsWith("/handbook") ||
     pathname.startsWith("/ops") ||
@@ -72,5 +60,8 @@ export default function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next|_vercel|studio|.*\\..*).*)"],
+  matcher: [
+    "/",
+    "/((?!api|_next|_vercel|studio|.*\\..*).*)",
+  ],
 };

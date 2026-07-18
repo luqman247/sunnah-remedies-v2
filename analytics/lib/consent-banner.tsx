@@ -4,6 +4,9 @@
  * Granular categories: strictly-necessary (always on), analytics,
  * functional, marketing. No pre-ticked boxes; reject is as easy as accept.
  *
+ * Copy is localised via next-intl. Consent storage (`sr_consent_v1`) is
+ * language-agnostic — switching locale must not reset a prior choice.
+ *
  * On small viewports the banner must not cover primary page actions:
  * body padding tracks the banner height so links remain reachable by scroll,
  * and mobile padding/copy stay compact so the first viewport stays usable.
@@ -11,7 +14,9 @@
 
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import {
   grantAllConsent,
   denyAllConsent,
@@ -23,9 +28,31 @@ import "./consent-banner.css";
 
 const CONSENT_STORAGE_KEY = "sr_consent_v1";
 
+function subscribeConsentStorage(onStoreChange: () => void) {
+  if (typeof window === "undefined") return () => {};
+  window.addEventListener("storage", onStoreChange);
+  return () => window.removeEventListener("storage", onStoreChange);
+}
+
+function readNeedsConsent(): boolean {
+  try {
+    return localStorage.getItem(CONSENT_STORAGE_KEY) === null;
+  } catch {
+    return true;
+  }
+}
+
 export function ConsentBanner() {
-  const [visible, setVisible] = useState(false);
+  const t = useTranslations("consent");
+  const needsConsent = useSyncExternalStore(
+    subscribeConsentStorage,
+    readNeedsConsent,
+    () => false,
+  );
+  const [dismissed, setDismissed] = useState(false);
+  const visible = needsConsent && !dismissed;
   const [showDetails, setShowDetails] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
   const [preferences, setPreferences] = useState<ConsentConfig>({
     analytics_storage: "denied",
     ad_storage: "denied",
@@ -33,17 +60,11 @@ export function ConsentBanner() {
     ad_personalization: "denied",
   });
   const bannerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem(CONSENT_STORAGE_KEY);
-      if (!stored) {
-        setVisible(true);
-      }
-    } catch {
-      setVisible(true);
-    }
-  }, []);
+  const detailsRef = useRef<HTMLDivElement>(null);
+  const manageButtonRef = useRef<HTMLButtonElement>(null);
+  const previousOverflow = useRef<string>("");
+  const titleId = useId();
+  const prefsTitleId = useId();
 
   useEffect(() => {
     if (!visible) {
@@ -68,25 +89,81 @@ export function ConsentBanner() {
     };
   }, [visible, showDetails]);
 
+  const closePreferences = useCallback(() => {
+    setShowDetails(false);
+    queueMicrotask(() => manageButtonRef.current?.focus());
+  }, []);
+
+  useEffect(() => {
+    if (!showDetails) {
+      if (previousOverflow.current !== "") {
+        document.body.style.overflow = previousOverflow.current;
+        previousOverflow.current = "";
+      } else {
+        document.body.style.removeProperty("overflow");
+      }
+      return;
+    }
+
+    previousOverflow.current = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const panel = detailsRef.current;
+    const focusable = panel?.querySelector<HTMLElement>(
+      'input:not([disabled]), button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])',
+    );
+    focusable?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closePreferences();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow.current || "";
+      if (!previousOverflow.current) {
+        document.body.style.removeProperty("overflow");
+      }
+    };
+  }, [showDetails, closePreferences]);
+
   if (!visible) return null;
 
   const handleAcceptAll = () => {
-    grantAllConsent();
-    requestIdleCallbackSafe(() => initClarity());
-    setVisible(false);
+    try {
+      grantAllConsent();
+      requestIdleCallbackSafe(() => initClarity());
+      setStatusMessage(t("saved"));
+      setDismissed(true);
+    } catch {
+      setStatusMessage(t("error"));
+    }
   };
 
   const handleRejectAll = () => {
-    denyAllConsent();
-    setVisible(false);
+    try {
+      denyAllConsent();
+      setStatusMessage(t("saved"));
+      setDismissed(true);
+    } catch {
+      setStatusMessage(t("error"));
+    }
   };
 
   const handleSavePreferences = () => {
-    updateConsent(preferences);
-    if (preferences.analytics_storage === "granted") {
-      requestIdleCallbackSafe(() => initClarity());
+    try {
+      updateConsent(preferences);
+      if (preferences.analytics_storage === "granted") {
+        requestIdleCallbackSafe(() => initClarity());
+      }
+      setStatusMessage(t("saved"));
+      setDismissed(true);
+    } catch {
+      setStatusMessage(t("error"));
     }
-    setVisible(false);
   };
 
   const togglePreference = (key: keyof ConsentConfig) => {
@@ -100,64 +177,132 @@ export function ConsentBanner() {
     <div
       ref={bannerRef}
       role="dialog"
-      aria-label="Cookie consent"
-      aria-modal="false"
-      className="consent-banner"
+      aria-modal={showDetails ? "true" : "false"}
+      aria-labelledby={showDetails ? prefsTitleId : titleId}
+      aria-label={showDetails ? t("ariaPreferences") : t("ariaBanner")}
+      className={`consent-banner${showDetails ? " consent-banner--preferences-open" : ""}`}
     >
       <div className="consent-banner__inner">
+        <h2 id={titleId} className="consent-banner__heading">
+          {t("bannerHeading")}
+        </h2>
         <p className="consent-banner__copy">
-          This institution uses cookies to measure how our knowledge, education,
-          and services are used — so we can improve them. We never track personal
-          health or student information through analytics. You may accept, reject,
-          or customise your preferences
+          {t("bannerBody")}{" "}
+          <Link href="/charter" className="consent-banner__privacy">
+            {t("privacyPolicy")}
+          </Link>
         </p>
 
         {showDetails && (
-          <div className="consent-banner__details">
+          <div
+            ref={detailsRef}
+            className="consent-banner__details"
+            role="region"
+            aria-labelledby={prefsTitleId}
+          >
+            <div className="consent-banner__details-header">
+              <h3 id={prefsTitleId} className="consent-banner__prefs-title">
+                {t("preferencesTitle")}
+              </h3>
+              <button
+                type="button"
+                className="consent-banner__close"
+                onClick={closePreferences}
+                aria-label={t("ariaClose")}
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
             <label className="consent-banner__option consent-banner__option--muted">
-              <input type="checkbox" checked disabled />
-              Strictly necessary (always active)
+              <input type="checkbox" checked disabled aria-describedby={`${prefsTitleId}-necessary`} />
+              <span>
+                <span className="consent-banner__option-name">{t("strictlyNecessary")}</span>
+                <span id={`${prefsTitleId}-necessary`} className="consent-banner__option-desc">
+                  {t("strictlyNecessaryDesc")} — {t("alwaysActive")}
+                </span>
+              </span>
             </label>
             <label className="consent-banner__option">
               <input
                 type="checkbox"
                 checked={preferences.analytics_storage === "granted"}
                 onChange={() => togglePreference("analytics_storage")}
+                aria-describedby={`${prefsTitleId}-analytics`}
               />
-              Analytics — understand how content and services are used
+              <span>
+                <span className="consent-banner__option-name">{t("analytics")}</span>
+                <span id={`${prefsTitleId}-analytics`} className="consent-banner__option-desc">
+                  {t("analyticsDesc")}
+                </span>
+              </span>
             </label>
             <label className="consent-banner__option">
               <input
                 type="checkbox"
                 checked={preferences.ad_storage === "granted"}
-                onChange={() => togglePreference("ad_storage")}
+                onChange={() => {
+                  setPreferences((prev) => {
+                    const next =
+                      prev.ad_storage === "granted" ? "denied" : "granted";
+                    return {
+                      ...prev,
+                      ad_storage: next,
+                      ad_user_data: next,
+                      ad_personalization: next,
+                    };
+                  });
+                }}
+                aria-describedby={`${prefsTitleId}-marketing`}
               />
-              Marketing — measure the effectiveness of outreach
+              <span>
+                <span className="consent-banner__option-name">{t("marketing")}</span>
+                <span id={`${prefsTitleId}-marketing`} className="consent-banner__option-desc">
+                  {t("marketingDesc")}
+                </span>
+              </span>
             </label>
           </div>
         )}
 
         <div className="consent-banner__actions">
-          <button type="button" onClick={handleRejectAll} className="consent-banner__btn consent-banner__btn--outline">
-            Reject all
-          </button>
           <button
             type="button"
-            onClick={() => setShowDetails(!showDetails)}
+            onClick={handleRejectAll}
             className="consent-banner__btn consent-banner__btn--outline"
           >
-            {showDetails ? "Hide preferences" : "Customise"}
+            {t("reject")}
+          </button>
+          <button
+            ref={manageButtonRef}
+            type="button"
+            onClick={() => setShowDetails((open) => !open)}
+            className="consent-banner__btn consent-banner__btn--outline"
+            aria-expanded={showDetails}
+            aria-controls={showDetails ? prefsTitleId : undefined}
+          >
+            {showDetails ? t("hidePreferences") : t("managePreferences")}
           </button>
           {showDetails ? (
-            <button type="button" onClick={handleSavePreferences} className="consent-banner__btn consent-banner__btn--solid">
-              Save preferences
+            <button
+              type="button"
+              onClick={handleSavePreferences}
+              className="consent-banner__btn consent-banner__btn--solid"
+            >
+              {t("savePreferences")}
             </button>
           ) : (
-            <button type="button" onClick={handleAcceptAll} className="consent-banner__btn consent-banner__btn--solid">
-              Accept analytics
+            <button
+              type="button"
+              onClick={handleAcceptAll}
+              className="consent-banner__btn consent-banner__btn--solid"
+            >
+              {t("accept")}
             </button>
           )}
         </div>
+      </div>
+      <div className="sr-only" role="status" aria-live="polite">
+        {statusMessage}
       </div>
     </div>
   );

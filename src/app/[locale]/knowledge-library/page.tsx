@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import type { AppLocale } from "@/i18n/locales";
 import { pageMetadata } from "@/lib/i18n/page-metadata";
 import { Link } from "@/i18n/navigation";
-import { setRequestLocale } from "next-intl/server";
-import { knowledgeLibrary, getAllArticles, knowledgeTopics } from "@/sanity/lib/fetch";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { knowledgeLibrary, getAllArticles } from "@/sanity/lib/fetch";
 import { DepartmentHero } from "@/components/department/DepartmentHero";
 import { DepartmentStatement } from "@/components/department/DepartmentStatement";
 import { DepartmentSection } from "@/components/department/DepartmentSection";
@@ -33,7 +33,9 @@ export default async function KnowledgeLibraryPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const tNav = await getTranslations({ locale, namespace: "nav" });
   const articles = await getAllArticles(locale);
+  const departmentName = tNav("knowledgeLibrary");
   return (
     <div className="department-v2">
       <a href="#main-content" className="sr-only" style={{
@@ -47,16 +49,16 @@ export default async function KnowledgeLibraryPage({
         fontSize: "0.75rem",
         zIndex: 9999,
       }}>
-        Skip to content
+        {tNav("skipToContent")}
       </a>
 
       {/* ═══ § I · DEPARTMENT HERO ═══ */}
       <div id="main-content">
         <DepartmentHero
           numeral="I"
-          eyebrow="DEPARTMENT I · KNOWLEDGE LIBRARY"
+          eyebrow={`DEPARTMENT I · ${departmentName.toUpperCase()}`}
           nameAr="مكتبة العلم"
-          nameEn="Knowledge Library"
+          nameEn={departmentName}
           standfirst="The institution's publishing programme — monographs, research notes, and patient guides on Prophetic Medicine, published with citation, grading, and clear limits. Knowledge before commerce"
         />
       </div>

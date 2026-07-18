@@ -13,6 +13,9 @@
   font-family: var(--font-body), Georgia, serif;
   font-size: 0.8125rem;
   line-height: 1.5;
+  max-width: 100vw;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .consent-banner__inner {
@@ -20,17 +23,88 @@
   margin: 0 auto;
 }
 
+.consent-banner__heading {
+  margin: 0 0 var(--s2);
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brass, #c7a25a);
+}
+
 .consent-banner__copy {
   margin: 0 0 var(--s3);
 }
 
+.consent-banner__privacy {
+  color: var(--brass, #c7a25a);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.consent-banner__privacy:focus-visible {
+  outline: 2px solid var(--brass, #c7a25a);
+  outline-offset: 2px;
+}
+
 .consent-banner__details {
+  margin-bottom: var(--s3);
+  padding: var(--s3);
+  border: 1px solid color-mix(in srgb, var(--brass, #c7a25a) 45%, transparent);
+}
+
+.consent-banner__details-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s3);
   margin-bottom: var(--s3);
 }
 
+.consent-banner__prefs-title {
+  margin: 0;
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.consent-banner__close {
+  flex-shrink: 0;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid var(--brass, #c7a25a);
+  background: transparent;
+  color: var(--paper, #f6f3ee);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.consent-banner__close:focus-visible {
+  outline: 2px solid var(--brass, #c7a25a);
+  outline-offset: 2px;
+}
+
 .consent-banner__option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.consent-banner__option-name {
   display: block;
-  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.consent-banner__option-desc {
+  display: block;
+  opacity: 0.85;
+  font-size: 0.875em;
 }
 
 .consent-banner__option--muted {
@@ -38,7 +112,8 @@
 }
 
 .consent-banner__option input {
-  margin-right: 0.5rem;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
 }
 
 .consent-banner__actions {

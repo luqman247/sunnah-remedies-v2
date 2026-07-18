@@ -95,7 +95,7 @@ export function Footer({ columns, closingStatement, colophon, tagline, foundingS
               <p className="type-eyebrow footer__column-label">{col.title}</p>
               <ul className="footer__links">
                 {col.links.map((link) => (
-                  <li key={link.href}>
+                  <li key={`${col.title}-${link.href}-${link.label}`}>
                     <Link href={link.href} className="quiet-link quiet-link--dark">
                       {link.label}
                     </Link>

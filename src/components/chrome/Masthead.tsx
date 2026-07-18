@@ -18,11 +18,19 @@ interface MastheadProps {
   navItems?: NavItem[];
 }
 
+const TASK_SHORTCUTS = [
+  { href: "/consultations", labelKey: "bookConsultation" as const },
+  { href: "/the-apothecary", labelKey: "theApothecary" as const },
+  { href: "/the-academy", labelKey: "theAcademy" as const },
+  { href: "/knowledge-library/dua-dhikr", labelKey: "duaDhikr" as const },
+  { href: "/institute", labelKey: "theInstitute" as const },
+] as const;
+
 export function Masthead({ navItems }: MastheadProps) {
   const t = useTranslations("nav");
   const pathname = usePathname();
-  const departments = (navItems || []).filter(i => !i.highlighted);
-  const highlighted = (navItems || []).find(i => i.highlighted);
+  const departments = (navItems || []).filter((i) => !i.highlighted);
+  const highlighted = (navItems || []).find((i) => i.highlighted);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -30,17 +38,38 @@ export function Masthead({ navItems }: MastheadProps) {
   useEffect(() => {
     if (!menuOpen) return;
 
+    const panel = panelRef.current;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setMenuOpen(false);
         menuButtonRef.current?.focus();
+        return;
+      }
+
+      if (e.key !== "Tab" || !panel) return;
+
+      const focusable = panel.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled])',
+      );
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
     document.body.style.overflow = "hidden";
 
-    const firstLink = panelRef.current?.querySelector("a") as HTMLElement | null;
+    const firstLink = panel?.querySelector("a, button") as HTMLElement | null;
     firstLink?.focus();
 
     return () => {
@@ -53,6 +82,14 @@ export function Masthead({ navItems }: MastheadProps) {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
   }
+
+  function closeMenu() {
+    setMenuOpen(false);
+    menuButtonRef.current?.focus();
+  }
+
+  const consultationHref = highlighted?.href || "/consultations";
+  const consultationLabel = highlighted?.label || t("bookConsultation");
 
   return (
     <>
@@ -82,12 +119,12 @@ export function Masthead({ navItems }: MastheadProps) {
             ))}
             <span className="masthead-nav__divider" aria-hidden="true" />
             <Link
-              href={highlighted?.href || "/consultations"}
-              className={`nav-link nav-link--accent ${isActive(highlighted?.href || "/consultations") ? "nav-link--current" : ""}`}
-              aria-current={isActive(highlighted?.href || "/consultations") ? "page" : undefined}
+              href={consultationHref}
+              className={`nav-link nav-link--accent ${isActive(consultationHref) ? "nav-link--current" : ""}`}
+              aria-current={isActive(consultationHref) ? "page" : undefined}
             >
-            {highlighted?.label || t("consultations")}
-          </Link>
+              {consultationLabel}
+            </Link>
           </nav>
 
           <div className="masthead__actions">
@@ -119,39 +156,61 @@ export function Masthead({ navItems }: MastheadProps) {
         <button
           type="button"
           className="mobile-nav-panel__close"
-          onClick={() => {
-            setMenuOpen(false);
-            menuButtonRef.current?.focus();
-          }}
+          onClick={closeMenu}
         >
           {t("closeNavigation")}
         </button>
+
         <Link
-          href="/"
-          className="quiet-link quiet-link--dark"
+          href={consultationHref}
+          className={`mobile-nav-panel__primary ${isActive(consultationHref) ? "quiet-link--current" : ""}`}
+          aria-current={isActive(consultationHref) ? "page" : undefined}
           onClick={() => setMenuOpen(false)}
         >
-          {t("home")}
+          {consultationLabel}
         </Link>
-        {departments.map((dept) => (
+
+        <p className="mobile-nav-panel__group-label" id="mobile-nav-institutional">
+          {t("ariaInstitutional")}
+        </p>
+        <nav aria-labelledby="mobile-nav-institutional">
           <Link
-            key={dept.href}
-            href={dept.href}
-            className={`quiet-link quiet-link--dark ${isActive(dept.href) ? "quiet-link--current" : ""}`}
-            aria-current={isActive(dept.href) ? "page" : undefined}
+            href="/"
+            className={`quiet-link quiet-link--dark mobile-nav-panel__link ${isActive("/") ? "quiet-link--current" : ""}`}
+            aria-current={pathname === "/" ? "page" : undefined}
             onClick={() => setMenuOpen(false)}
           >
-            {dept.label}
+            {t("home")}
           </Link>
-        ))}
-        <Link
-          href={highlighted?.href || "/consultations"}
-          className="quiet-link quiet-link--dark"
-          onClick={() => setMenuOpen(false)}
-          style={{ color: "var(--gilt-soft)" }}
-        >
-          {highlighted?.label || t("consultations")}
-        </Link>
+          {departments.map((dept) => (
+            <Link
+              key={dept.href}
+              href={dept.href}
+              className={`quiet-link quiet-link--dark mobile-nav-panel__link ${isActive(dept.href) ? "quiet-link--current" : ""}`}
+              aria-current={isActive(dept.href) ? "page" : undefined}
+              onClick={() => setMenuOpen(false)}
+            >
+              {dept.label}
+            </Link>
+          ))}
+        </nav>
+
+        <p className="mobile-nav-panel__group-label" id="mobile-nav-tasks">
+          {t("tasksHeading")}
+        </p>
+        <nav aria-labelledby="mobile-nav-tasks">
+          {TASK_SHORTCUTS.map((task) => (
+            <Link
+              key={task.href}
+              href={task.href}
+              className={`quiet-link quiet-link--dark mobile-nav-panel__link ${isActive(task.href) ? "quiet-link--current" : ""}`}
+              aria-current={isActive(task.href) ? "page" : undefined}
+              onClick={() => setMenuOpen(false)}
+            >
+              {t(task.labelKey)}
+            </Link>
+          ))}
+        </nav>
       </div>
     </>
   );

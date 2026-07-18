@@ -34,7 +34,54 @@ const nextConfig: NextConfig = {
         destination: "/knowledge-library/dua-dhikr",
         permanent: true,
       },
+      // English is unprefixed (as-needed). Collapse accidental /en URLs.
+      { source: "/en", destination: "/", permanent: false },
+      { source: "/en/:path*", destination: "/:path*", permanent: false },
+      // Public Danish is /dk. Internal App Router segment remains /da via rewrite.
+      // Collapse any direct /da request so it is not a second indexable locale.
+      { source: "/da", destination: "/dk", permanent: true },
+      { source: "/da/:path*", destination: "/dk/:path*", permanent: true },
     ];
+  },
+  /**
+   * Locale routing fallback for Next.js 16 when middleware/proxy is not
+   * invoked for unprefixed paths. Mirrors next-intl `as-needed` + `/dk` prefix:
+   * English lives at `/…`; Danish at `/dk/…`; internal segments remain `/en` and `/da`.
+   *
+   * English catch-all uses `afterFiles` so files under `public/` (brand,
+   * photography, etc.) are served from disk and never rewritten to `/en/…`.
+   * Danish and dhikr locale bridges stay in `beforeFiles` (no public-file collision).
+   */
+  async rewrites() {
+    return {
+      beforeFiles: [
+        { source: "/dk", destination: "/da" },
+        { source: "/dk/:path*", destination: "/da/:path*" },
+        // Locale-bound dhikr routes live under [locale]/knowledge/dhikr/*
+        // while entity pages remain at /knowledge/[type]/[slug] (no locale).
+        { source: "/knowledge/dhikr", destination: "/en/knowledge/dhikr" },
+        {
+          source: "/knowledge/dhikr/:path*",
+          destination: "/en/knowledge/dhikr/:path*",
+        },
+      ],
+      afterFiles: [
+        {
+          // Unprefixed English → internal /en/… (as-needed). Exclude:
+          // - platform/api/assets
+          // - explicit locale prefixes
+          // - non-locale app trees (knowledge entities, staff, feeds)
+          // Public static files are already resolved before afterFiles.
+          source:
+            "/:path((?!api|_next|_vercel|studio|en|da|dk|knowledge/|feeds|sitemaps|handbook|ops|intelligence|dhikr-review|dhikr-mdr-review|sign-in|llms\\.txt|llms-full\\.txt|robots\\.txt|sitemap\\.xml).*)",
+          destination: "/en/:path",
+        },
+        {
+          source: "/",
+          destination: "/en",
+        },
+      ],
+    };
   },
 };
 

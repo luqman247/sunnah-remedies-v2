@@ -586,7 +586,7 @@ a {
   outline-offset: 3px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .masthead-nav {
     display: flex;
   }
@@ -651,10 +651,52 @@ a {
   cursor: pointer;
   color: var(--paper);
   min-height: 44px;
+  min-width: 44px;
   font-family: var(--font-utility), system-ui, sans-serif;
   font-size: 0.72rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+}
+
+.mobile-nav-panel__primary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: var(--s3);
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gilt-soft);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--paper) 20%, transparent);
+}
+
+.mobile-nav-panel__primary:focus-visible {
+  outline: 2px solid var(--gilt);
+  outline-offset: 3px;
+}
+
+.mobile-nav-panel__group-label {
+  margin: var(--s4) 0 0;
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--paper) 55%, transparent);
+}
+
+.mobile-nav-panel__link {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav-panel {
+    transition: none;
+  }
 }
 
 /* —— Pre-footer (daily revelation) ——————————————————
@@ -2801,6 +2843,7 @@ a {
 .breadcrumb__item {
   display: flex;
   align-items: center;
+  max-width: 100%;
 }
 
 .breadcrumb__sep {
@@ -2819,6 +2862,8 @@ a {
   color: var(--muted);
   text-decoration: none;
   transition: color var(--dur) var(--ease-out);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .breadcrumb__link:hover,
@@ -2838,6 +2883,8 @@ a {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* —— Corridor Loader (hospitality loading state) —— */

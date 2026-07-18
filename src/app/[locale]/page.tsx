@@ -4,6 +4,7 @@ import { pageMetadata } from "@/lib/i18n/page-metadata";
 import { Link } from "@/i18n/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildHomepageFallback } from "@/lib/i18n/homepage-fallback";
+import { isPlaceholderEstablishmentCopy } from "@/lib/i18n/chrome-labels";
 import { getHomepage } from "@/sanity/lib/fetch";
 import { getCurrentSeason, getHijriDate } from "@/lib/calendar/seasons";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
@@ -15,6 +16,7 @@ import { AuthorityBand } from "@/components/arrival/AuthorityBand";
 import { DepartmentCard } from "@/components/arrival/DepartmentCard";
 import { CorrespondenceForm } from "@/components/arrival/CorrespondenceForm";
 import { Reveal } from "@/components/arrival/Reveal";
+import { TaskPathways } from "@/components/arrival/TaskPathways";
 import "@/components/arrival/arrival.css";
 
 export async function generateMetadata({
@@ -22,7 +24,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: AppLocale }>;
 }): Promise<Metadata> {
-  return pageMetadata("home", "/");
+  const { locale } = await params;
+  return pageMetadata("home", "/", locale);
 }
 
 function JsonLd({ description }: { description: string }) {
@@ -61,7 +64,10 @@ export default async function ArrivalPage({
   const seasonLabel = season !== "standard" ? seasonal(`seasons.${season}.label` as "seasons.ramadan.label") : "";
   const seasonGreeting = season !== "standard" ? seasonal(`seasons.${season}.greeting` as "seasons.ramadan.greeting") : undefined;
 
-  const eyebrow = cms?.eyebrow || fallback.eyebrow;
+  const eyebrow =
+    cms?.eyebrow && !isPlaceholderEstablishmentCopy(cms.eyebrow)
+      ? cms.eyebrow
+      : fallback.eyebrow;
   const arrivalArabic = cms?.arrivalArabic || fallback.arrivalArabic;
   const arrivalEnglish = cms?.arrivalEnglish || fallback.arrivalEnglish;
   const standfirst = cms?.standfirst || fallback.standfirst;
@@ -127,7 +133,7 @@ export default async function ArrivalPage({
       </a>
 
       {/* ═══ § 1 · ARRIVAL / HERO (Ch. 9.2) ═══ */}
-      <section className="arrival-section" aria-labelledby="arrival-heading" id="main-content">
+      <section className="arrival-section arrival-hero" aria-labelledby="arrival-heading" id="main-content">
         <div className="arrival-container">
           <div className="arrival-grid">
             <div className="arrival-rail">
@@ -172,11 +178,36 @@ export default async function ArrivalPage({
                 {standfirst}
               </p>
 
-              <div className="choreo-standfirst" style={{ marginBlockStart: "var(--space-6)" }}>
+              <div className="arrival-hero-actions choreo-standfirst">
+                <Link href="/consultations" className="solid-action">
+                  {ui("bookConsultation")}
+                </Link>
                 <Link href={enterHref} className="arrival-enter">
                   {enterLabel} <span className="arrow" aria-hidden="true">⟶</span>
                 </Link>
               </div>
+
+              <ul className="arrival-support-links choreo-standfirst">
+                <li>
+                  <Link href="/the-apothecary" className="quiet-link">
+                    {ui("exploreRemedies")}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/the-academy" className="quiet-link">
+                    {ui("exploreProgrammes")}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/knowledge-library/dua-dhikr" className="quiet-link">
+                    {ui("findDuaDhikr")}
+                  </Link>
+                </li>
+              </ul>
+
+              <p className="type-small-v2 arrival-trust-line choreo-standfirst">
+                {ui("trustLine")}
+              </p>
             </div>
           </div>
         </div>
@@ -272,6 +303,11 @@ export default async function ArrivalPage({
         </section>
       </Reveal>
 
+      {/* ═══ TASK PATHWAYS — intention before department architecture ═══ */}
+      <Reveal>
+        <TaskPathways locale={locale} />
+      </Reveal>
+
       {/* ═══ § 4 · THE DEPARTMENTS (Ch. 9.5) ═══ */}
       <Reveal>
         <section className="arrival-section" aria-labelledby="departments-heading" id="departments">
@@ -298,6 +334,7 @@ export default async function ArrivalPage({
                         href={dept.href}
                         plate={dept.plate}
                         size={dept.size}
+                        locale={locale}
                       />
                     </Reveal>
                   ))}
