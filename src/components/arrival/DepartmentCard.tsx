@@ -7,6 +7,7 @@
 
 import { Link } from "@/i18n/navigation";
 import { getTranslations } from "next-intl/server";
+import type { AppLocale } from "@/i18n/locales";
 import { Plate } from "./Plate";
 import { IsnadRule } from "./IsnadRule";
 
@@ -33,6 +34,7 @@ interface DepartmentCardProps {
   href: string;
   plate: DepartmentPlate;
   size: "standard" | "feature";
+  locale: AppLocale;
 }
 
 const numerals = ["I", "II", "III", "IV"];
@@ -45,8 +47,9 @@ export async function DepartmentCard({
   href,
   plate,
   size,
+  locale,
 }: DepartmentCardProps) {
-  const t = await getTranslations("arrival");
+  const t = await getTranslations({ locale, namespace: "arrival" });
   const aspect = size === "feature" ? "16/7" : "4/3";
 
   return (

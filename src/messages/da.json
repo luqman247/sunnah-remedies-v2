@@ -12,7 +12,9 @@
     "closeNavigation": "Luk navigation",
     "ariaMenu": "Hovednavigation",
     "ariaLanguage": "Skift sprog",
-    "ariaPrimary": "Primær"
+    "ariaPrimary": "Primær",
+    "switchTo": "Skift til {language}",
+    "skipToContent": "Spring til indhold"
   },
   "footer": {
     "tagline": "Institut for Profetisk Medicin",
@@ -21,7 +23,22 @@
     "colophon": "Sunnah Remedies · Grundlagt MMXXV · Helbredelse er fra Allah · midlet er et redskab",
     "requestConsultation": "Anmod om en konsultation",
     "dailyReflectionAria": "Daglig refleksion",
-    "preFooterImageAlt": "Forskningstbord — manuskripter, instrumenter og naturlige prøver arrangeret til fagligt studium"
+    "preFooterImageAlt": "Forskningstbord — manuskripter, instrumenter og naturlige prøver arrangeret til fagligt studium",
+    "columnPillars": "Søjlerne",
+    "columnInstitution": "Institution",
+    "columnConnect": "Kontakt",
+    "columnLegal": "Juridisk",
+    "linkInstitute": "Instituttet",
+    "linkCharter": "Stiftelsescharter",
+    "linkCalendar": "Det institutionelle år",
+    "linkExhibitions": "Udstillinger",
+    "linkResearch": "Forskning",
+    "linkPress": "Pressen",
+    "linkAcademyEnrolment": "Akademiindskrivning",
+    "linkJourneyRegistration": "Rejseregistrering",
+    "linkPrivacy": "Privatliv",
+    "linkTerms": "Vilkår",
+    "linkAccessibility": "Tilgængelighed"
   },
   "theme": {
     "nightMode": "Nattilstand",
@@ -44,7 +61,23 @@
     "loading": "Indlæser",
     "error": "Noget gik galt",
     "notFound": "Ikke fundet",
-    "tableOfContents": "Indholdsfortegnelse"
+    "tableOfContents": "Indholdsfortegnelse",
+    "retry": "Prøv igen",
+    "goBack": "Gå tilbage",
+    "returnHome": "Tilbage til forsiden",
+    "unavailable": "Ikke tilgængelig",
+    "empty": "Intet at vise her endnu",
+    "search": "Søg",
+    "noResults": "Ingen resultater",
+    "submitting": "Sender…",
+    "successConfirmation": "Fuldført",
+    "sessionExpired": "Din session er afsluttet. Log ind igen for at fortsætte",
+    "signInPrompt": "Log ind for at fortsætte",
+    "maintenance": "Denne sektion er midlertidigt utilgængelig",
+    "preparing": "Denne sektion forberedes",
+    "errorTitle": "Noget gik galt",
+    "errorBody": "Prøv igen om et øjeblik",
+    "loadingStatus": "Indlæser"
   },
   "notFound": {
     "heading": "KORRIDOREN FORTSÆTTER IKKE HER",
@@ -379,7 +412,10 @@
       "facultyPortraitSenior": "Fakultetsmedlem — senior behandler og lærd",
       "facultyPortraitClinical": "Fakultetsmedlem — klinisk behandler",
       "clinicalPracticeAlt": "En klinisk behandler forbereder sterilt kopningsudstyr i et professionelt behandlingsrum"
-    }
+    },
+    "questions": "Spørgsmål",
+    "learningOutcomes": "Læringsmål",
+    "hijamaDiploma": "Hijāma Diplom"
   },
   "journeys": {
     "title": "Hellige Rejser",
@@ -482,7 +518,17 @@
         "experience": "Beskriv dine tidligere studier og relevante rejseerfaringer",
         "acknowledge": "Bekræftelse er påkrævet før indsendelse"
       }
-    }
+    },
+    "umrah": "Umrah",
+    "reading": "Læseliste",
+    "packing": "Pakkeliste",
+    "flightGuidance": "Flyvejledning",
+    "accommodation": "Indkvartering",
+    "educationalSessions": "Undervisningssessioner",
+    "reflectionJournals": "Reflektionsjournaler",
+    "companionship": "Fællesskab",
+    "healthGuidance": "Sundhedsvejledning",
+    "policies": "Politikker"
   },
   "knowledge": {
     "title": "Vidensbiblioteket",
@@ -1166,7 +1212,7 @@
     "about": "Om",
     "contact": "Kontakt",
     "footerColophon": "Sunnah Remedies · Institut for Profetisk Medicin",
-    "eyebrow": "GRUNDLAGT ——— · INSTITUT FOR PROFETISK MEDICIN",
+    "eyebrow": "GRUNDLAGT MMXXV · INSTITUT FOR PROFETISK MEDICIN",
     "arrivalEnglish": "Profettraditionens medicin, holdt levende",
     "standfirst": "En institution for bevarelse og ansvarlig formidling af profetisk medicin — forankret i primærkildeforskning, laboratoriebekræftelse, klinisk ansvarlighed og tydelige grænser",
     "enterLabel": "Gå ind i institutionen",
@@ -1243,7 +1289,11 @@
       "searchPlaceholder": "Søg efter anledning, emne eller navn…",
       "searchNoResults": "Ingen samlinger matcher \"{query}\".",
       "entryCount": "{count, plural, one {1 tekst} other {# tekster}}",
-      "noEntriesYet": "Under forberedelse"
+      "noEntriesYet": "Under forberedelse",
+      "inPreparationHeading": "Under forberedelse",
+      "inPreparationLede": "Disse samlinger indgår i bibliotekets planlagte struktur. De er endnu ikke tilgængelige at læse. Verificerede tekster offentliggøres, når den lærde og redaktionelle gennemgang er afsluttet.",
+      "inPreparationStatus": "Under forberedelse",
+      "noPublishedCollections": "Ingen samlinger har endnu gennemført offentlig gennemgang. Verificerede tekster vises her, når de lærde og redaktionelle krav er opfyldt."
     },
     "collection": {
       "entriesHeading": "Tekster",
@@ -1285,5 +1335,38 @@
       "markedMemorised": "Memoreret",
       "share": "Del"
     }
+  },
+  "consent": {
+    "bannerHeading": "Cookieindstillinger",
+    "bannerBody": "Instituttet bruger cookies til at måle, hvordan vores viden, undervisning og tjenester bruges — så vi kan forbedre dem. Vi sporer aldrig personlige sundheds- eller elevoplysninger via analyse. Du kan acceptere, afvise eller tilpasse dine indstillinger",
+    "accept": "Acceptér analyse",
+    "reject": "Afvis alle",
+    "managePreferences": "Tilpas",
+    "hidePreferences": "Skjul indstillinger",
+    "savePreferences": "Gem indstillinger",
+    "closePreferences": "Luk indstillinger",
+    "preferencesTitle": "Administrer cookieindstillinger",
+    "strictlyNecessary": "Strengt nødvendige",
+    "strictlyNecessaryDesc": "Nødvendige for at webstedet fungerer",
+    "alwaysActive": "Altid aktive",
+    "analytics": "Analyse",
+    "analyticsDesc": "Forstå, hvordan indhold og tjenester bruges",
+    "marketing": "Markedsføring",
+    "marketingDesc": "Mål effekten af opsøgende kommunikation",
+    "privacyPolicy": "Privatlivspolitik",
+    "ariaBanner": "Cookiesamtykke",
+    "ariaPreferences": "Panel til cookieindstillinger",
+    "ariaClose": "Luk indstillingspanelet",
+    "saved": "Dine indstillinger er gemt",
+    "error": "Indstillingerne kunne ikke gemmes. Prøv igen"
+  },
+  "institutionNav": {
+    "threshold": "Tærsklen",
+    "theInstitute": "Instituttet",
+    "foundingCharter": "Stiftelsescharteret",
+    "institutionalYear": "Det institutionelle år",
+    "consultations": "Konsultationer",
+    "correspondence": "Korrespondance",
+    "theRegister": "Registret"
   }
 }

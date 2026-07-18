@@ -171,7 +171,9 @@ export async function getInstitutionSettings(locale: string = DEFAULT_LOCALE): P
 /* ── Homepage ───────────────────────────────────────────────────── */
 
 export async function getHomepage(locale: string = DEFAULT_LOCALE): Promise<HomepageData | null> {
-  return safeFetch<HomepageData>(homepageQuery, {}, locale);
+  // Do not fall back to English CMS copy for non-default locales — that leaks
+  // English chrome strings (e.g. establishment eyebrow) onto Danish pages.
+  return safeFetch<HomepageData>(homepageQuery, {}, locale, false);
 }
 
 /* ── Global SEO ─────────────────────────────────────────────────── */

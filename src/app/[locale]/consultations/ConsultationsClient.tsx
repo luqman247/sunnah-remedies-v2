@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "framer-motion";
 import { BookingHero } from "@/components/booking/BookingHero";
 import { PractitionerSelector } from "@/components/booking/PractitionerSelector";
@@ -41,6 +42,7 @@ const INITIAL_PATIENT: PatientDetails = {
 };
 
 export default function ConsultationsClient({ cmsData }: { cmsData: ConsultationsPageData | null }) {
+  const tBooking = useTranslations("booking");
   const [practitioner, setPractitioner] = useState<PractitionerGender | null>(null);
   const [clinic, setClinic] = useState<Clinic | null>(null);
   const [date, setDate] = useState<Date | null>(null);
@@ -239,7 +241,7 @@ export default function ConsultationsClient({ cmsData }: { cmsData: Consultation
             disabled={submitting}
             onClick={handleSubmit}
           >
-            Book My Appointment
+            {tBooking("summary.submit")}
           </button>
         </div>
       )}

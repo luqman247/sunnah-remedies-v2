@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
-import { localeById } from "@/i18n/locales";
+import { localeById, type AppLocale } from "@/i18n/locales";
 import { CounterProvider } from "@/context/CounterContext";
 import { MastheadServer } from "@/components/chrome/MastheadServer";
 import { FooterServer } from "@/components/chrome/FooterServer";
@@ -65,6 +65,8 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) notFound();
 
   setRequestLocale(locale);
+  const appLocale = locale as AppLocale;
+  const messages = await getMessages({ locale: appLocale });
 
   const cfg = localeById(locale);
   const { season } = getCurrentSeason();
@@ -102,14 +104,14 @@ export default async function LocaleLayout({
             </a>
           </div>
         )}
-        <NextIntlClientProvider>
+        <NextIntlClientProvider locale={appLocale} messages={messages}>
           <CounterProvider>
             <AnalyticsProvider />
-            <MastheadServer />
+            <MastheadServer locale={appLocale} />
             <Breadcrumb />
             <SeasonalGreeting />
             <main>{children}</main>
-            <FooterServer />
+            <FooterServer locale={appLocale} />
             <ConsentBanner />
             <Analytics />
             <SpeedInsights />

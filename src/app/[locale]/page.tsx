@@ -4,6 +4,7 @@ import { pageMetadata } from "@/lib/i18n/page-metadata";
 import { Link } from "@/i18n/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildHomepageFallback } from "@/lib/i18n/homepage-fallback";
+import { isPlaceholderEstablishmentCopy } from "@/lib/i18n/chrome-labels";
 import { getHomepage } from "@/sanity/lib/fetch";
 import { getCurrentSeason, getHijriDate } from "@/lib/calendar/seasons";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
@@ -61,7 +62,10 @@ export default async function ArrivalPage({
   const seasonLabel = season !== "standard" ? seasonal(`seasons.${season}.label` as "seasons.ramadan.label") : "";
   const seasonGreeting = season !== "standard" ? seasonal(`seasons.${season}.greeting` as "seasons.ramadan.greeting") : undefined;
 
-  const eyebrow = cms?.eyebrow || fallback.eyebrow;
+  const eyebrow =
+    cms?.eyebrow && !isPlaceholderEstablishmentCopy(cms.eyebrow)
+      ? cms.eyebrow
+      : fallback.eyebrow;
   const arrivalArabic = cms?.arrivalArabic || fallback.arrivalArabic;
   const arrivalEnglish = cms?.arrivalEnglish || fallback.arrivalEnglish;
   const standfirst = cms?.standfirst || fallback.standfirst;
@@ -298,6 +302,7 @@ export default async function ArrivalPage({
                         href={dept.href}
                         plate={dept.plate}
                         size={dept.size}
+                        locale={locale}
                       />
                     </Reveal>
                   ))}

@@ -586,7 +586,7 @@ a {
   outline-offset: 3px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .masthead-nav {
     display: flex;
   }
@@ -2801,6 +2801,7 @@ a {
 .breadcrumb__item {
   display: flex;
   align-items: center;
+  max-width: 100%;
 }
 
 .breadcrumb__sep {
@@ -2819,6 +2820,8 @@ a {
   color: var(--muted);
   text-decoration: none;
   transition: color var(--dur) var(--ease-out);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .breadcrumb__link:hover,
@@ -2838,6 +2841,8 @@ a {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* —— Corridor Loader (hospitality loading state) —— */
