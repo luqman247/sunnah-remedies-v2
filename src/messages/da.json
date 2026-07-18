@@ -1304,6 +1304,25 @@
     "exploreProgrammes": "Udforsk programmer",
     "findDuaDhikr": "Find Duʿa & dhikr",
     "trustLine": "Primærkildeforskning, laboratoriebekræftelse, klinisk ansvarlighed og tydelige grænser — før handel",
+    "latestAdditions": {
+      "stamp": "NYT FRA SUNNAH REMEDIES",
+      "heading": "Nyt fra Sunnah Remedies",
+      "lede": "Nyligt udgivne ressourcer, programmer og vejledning fra hele institutionen",
+      "previous": "Vis forrige tilføjelse",
+      "next": "Vis næste tilføjelse",
+      "newMarker": "Nyt",
+      "defaultCta": "Udforsk",
+      "contentArea": {
+        "knowledgeLibrary": "Vidensbiblioteket",
+        "academy": "Akademiet",
+        "apothecary": "Apoteket",
+        "sacredJourneys": "Hellige rejser",
+        "institution": "Instituttet",
+        "clinical": "Klinisk",
+        "programmes": "Programmer",
+        "publications": "Vejledninger og publikationer"
+      }
+    },
     "tasks": {
       "ariaLabel": "Hvad bringer dig hertil",
       "stamp": "BEGYND HER",

@@ -20,21 +20,29 @@ interface AuthorityBandProps {
 
 export async function AuthorityBand({ items }: AuthorityBandProps) {
   const t = await getTranslations("arrival");
-  const setCount = items.filter(i => i.value !== null).length;
+  const setCount = items.filter((i) => i.value !== null).length;
   if (setCount < 2) return null;
 
   return (
-    <section className="arrival-section authority-band" aria-labelledby="authority-heading">
+    <section
+      className="arrival-section authority-band"
+      aria-labelledby="authority-heading"
+    >
       <div className="arrival-container">
         <div className="arrival-grid">
           <div className="arrival-rail">
-            <SectionStamp numeral="IV" />
+            <SectionStamp numeral="V" />
           </div>
           <div>
-            <div className="section-stamp-mobile" style={{ marginBlockEnd: "var(--space-6)" }}>
-              <SectionStamp numeral="IV" label={t("authorityStamp")} />
+            <div
+              className="section-stamp-mobile"
+              style={{ marginBlockEnd: "var(--space-6)" }}
+            >
+              <SectionStamp numeral="V" label={t("authorityStamp")} />
             </div>
-            <h2 id="authority-heading" className="sr-only">{t("authorityHeading")}</h2>
+            <h2 id="authority-heading" className="sr-only">
+              {t("authorityHeading")}
+            </h2>
             <dl className="authority-dl">
               {items.map((item) => (
                 <div
@@ -42,21 +50,26 @@ export async function AuthorityBand({ items }: AuthorityBandProps) {
                   className={`authority-item ${item.value === null ? "authority-item--dormant" : ""}`}
                 >
                   <dt className="type-eyebrow-v2">{item.label}</dt>
-                  <dd
-                    className="type-section-title"
-                    style={{ margin: 0 }}
-                  >
+                  <dd className="type-section-title" style={{ margin: 0 }}>
                     {item.value !== null ? (
                       item.value
                     ) : (
-                      <span aria-hidden="true" style={{ color: "var(--ink-soft)" }}>———</span>
+                      <span
+                        aria-hidden="true"
+                        style={{ color: "var(--ink-soft)" }}
+                      >
+                        ———
+                      </span>
                     )}
                     {item.value === null && (
                       <span className="sr-only">{t("figurePending")}</span>
                     )}
                   </dd>
                   {item.note && (
-                    <span className="type-small-v2" style={{ color: "var(--ink-soft)" }}>
+                    <span
+                      className="type-small-v2"
+                      style={{ color: "var(--ink-soft)" }}
+                    >
                       {item.note}
                     </span>
                   )}

@@ -1304,6 +1304,25 @@
     "exploreProgrammes": "Explore programmes",
     "findDuaDhikr": "Find Duʿa & Dhikr",
     "trustLine": "Primary-source scholarship, laboratory verification, clinical accountability, and plain limits — before commerce",
+    "latestAdditions": {
+      "stamp": "NEW FROM SUNNAH REMEDIES",
+      "heading": "New from Sunnah Remedies",
+      "lede": "Recently published resources, programmes and guidance from across the institution",
+      "previous": "Show previous addition",
+      "next": "Show next addition",
+      "newMarker": "New",
+      "defaultCta": "Explore",
+      "contentArea": {
+        "knowledgeLibrary": "Knowledge Library",
+        "academy": "The Academy",
+        "apothecary": "The Apothecary",
+        "sacredJourneys": "Sacred Journeys",
+        "institution": "The Institute",
+        "clinical": "Clinical",
+        "programmes": "Programmes",
+        "publications": "Guides & publications"
+      }
+    },
     "tasks": {
       "ariaLabel": "What brings you here",
       "stamp": "BEGIN HERE",

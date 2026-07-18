@@ -17,6 +17,7 @@ import { DepartmentCard } from "@/components/arrival/DepartmentCard";
 import { CorrespondenceForm } from "@/components/arrival/CorrespondenceForm";
 import { Reveal } from "@/components/arrival/Reveal";
 import { TaskPathways } from "@/components/arrival/TaskPathways";
+import { HomepageLatestAdditions } from "@/components/arrival/HomepageLatestAdditions";
 import "@/components/arrival/arrival.css";
 
 export async function generateMetadata({
@@ -37,7 +38,12 @@ function JsonLd({ description }: { description: string }) {
     url: "https://www.sunnahremedies.co.uk",
     foundingDate: "2025",
     areaServed: "Worldwide",
-    knowsAbout: ["Prophetic Medicine", "Tibb al-Nabawi", "Hijama", "Islamic Medicine"],
+    knowsAbout: [
+      "Prophetic Medicine",
+      "Tibb al-Nabawi",
+      "Hijama",
+      "Islamic Medicine",
+    ],
   };
 
   return (
@@ -61,8 +67,14 @@ export default async function ArrivalPage({
   const cms = await getHomepage(locale);
   const { season } = getCurrentSeason();
   const hijriDate = getHijriDate(locale);
-  const seasonLabel = season !== "standard" ? seasonal(`seasons.${season}.label` as "seasons.ramadan.label") : "";
-  const seasonGreeting = season !== "standard" ? seasonal(`seasons.${season}.greeting` as "seasons.ramadan.greeting") : undefined;
+  const seasonLabel =
+    season !== "standard"
+      ? seasonal(`seasons.${season}.label` as "seasons.ramadan.label")
+      : "";
+  const seasonGreeting =
+    season !== "standard"
+      ? seasonal(`seasons.${season}.greeting` as "seasons.ramadan.greeting")
+      : undefined;
 
   const eyebrow =
     cms?.eyebrow && !isPlaceholderEstablishmentCopy(cms.eyebrow)
@@ -75,7 +87,7 @@ export default async function ArrivalPage({
   const enterHref = cms?.enterHref || fallback.enterHref;
   const tradition = cms?.tradition || fallback.tradition;
   const rawDepartments = cms?.departmentCards?.length
-    ? cms.departmentCards.map(card => ({
+    ? cms.departmentCards.map((card) => ({
         order: card.order,
         nameEn: card.nameEn,
         nameAr: card.nameAr,
@@ -90,10 +102,18 @@ export default async function ArrivalPage({
               lens: card.plate.lens,
               lighting: card.plate.lighting,
               mood: card.plate.mood,
-              image: card.plate.image?.asset?.url ? { url: card.plate.image.asset.url } : undefined,
+              image: card.plate.image?.asset?.url
+                ? { url: card.plate.image.asset.url }
+                : undefined,
               alt: card.plate.alt,
             }
-          : { status: "brief" as const, purpose: card.standfirst, composition: "", lighting: "", mood: "" },
+          : {
+              status: "brief" as const,
+              purpose: card.standfirst,
+              composition: "",
+              lighting: "",
+              mood: "",
+            },
       }))
     : fallback.departments;
   const homepageDepartmentOrder = [
@@ -121,9 +141,12 @@ export default async function ArrivalPage({
     })
     .filter((dept): dept is NonNullable<typeof dept> => dept !== undefined);
   const departments = homepageDepartments;
-  const authoritySignals = cms?.authoritySignals?.length ? cms.authoritySignals : fallback.authoritySignals;
+  const authoritySignals = cms?.authoritySignals?.length
+    ? cms.authoritySignals
+    : fallback.authoritySignals;
   const correspondence = cms?.correspondence || fallback.correspondence;
-  const institutionStatement = cms?.institutionStatement || fallback.institutionStatement;
+  const institutionStatement =
+    cms?.institutionStatement || fallback.institutionStatement;
 
   return (
     <div className="arrival-v2">
@@ -133,7 +156,11 @@ export default async function ArrivalPage({
       </a>
 
       {/* ═══ § 1 · ARRIVAL / HERO (Ch. 9.2) ═══ */}
-      <section className="arrival-section arrival-hero" aria-labelledby="arrival-heading" id="main-content">
+      <section
+        className="arrival-section arrival-hero"
+        aria-labelledby="arrival-heading"
+        id="main-content"
+      >
         <div className="arrival-container">
           <div className="arrival-grid">
             <div className="arrival-rail">
@@ -141,7 +168,10 @@ export default async function ArrivalPage({
             </div>
             <div>
               {/* Inline stamp for mobile */}
-              <div className="section-stamp-mobile" style={{ marginBlockEnd: "var(--space-6)" }}>
+              <div
+                className="section-stamp-mobile"
+                style={{ marginBlockEnd: "var(--space-6)" }}
+              >
                 <SectionStamp numeral="I" />
               </div>
 
@@ -152,7 +182,14 @@ export default async function ArrivalPage({
               <h1 id="arrival-heading" style={{ margin: 0 }}>
                 <span className="sr-only">{arrivalEnglish}</span>
 
-                <span className="choreo-arabic" aria-hidden="true" style={{ display: "block", marginBlockStart: "var(--space-8)" }}>
+                <span
+                  className="choreo-arabic"
+                  aria-hidden="true"
+                  style={{
+                    display: "block",
+                    marginBlockStart: "var(--space-8)",
+                  }}
+                >
                   <span
                     className="type-arabic-hero"
                     lang="ar"
@@ -174,7 +211,13 @@ export default async function ArrivalPage({
                 </span>
               </h1>
 
-              <p className="type-standfirst choreo-standfirst" style={{ marginBlockStart: "var(--space-6)", maxInlineSize: "60ch" }}>
+              <p
+                className="type-standfirst choreo-standfirst"
+                style={{
+                  marginBlockStart: "var(--space-6)",
+                  maxInlineSize: "60ch",
+                }}
+              >
                 {standfirst}
               </p>
 
@@ -183,7 +226,10 @@ export default async function ArrivalPage({
                   {ui("bookConsultation")}
                 </Link>
                 <Link href={enterHref} className="arrival-enter">
-                  {enterLabel} <span className="arrow" aria-hidden="true">⟶</span>
+                  {enterLabel}{" "}
+                  <span className="arrow" aria-hidden="true">
+                    ⟶
+                  </span>
                 </Link>
               </div>
 
@@ -199,7 +245,10 @@ export default async function ArrivalPage({
                   </Link>
                 </li>
                 <li>
-                  <Link href="/knowledge-library/dua-dhikr" className="quiet-link">
+                  <Link
+                    href="/knowledge-library/dua-dhikr"
+                    className="quiet-link"
+                  >
                     {ui("findDuaDhikr")}
                   </Link>
                 </li>
@@ -212,6 +261,11 @@ export default async function ArrivalPage({
           </div>
         </div>
       </section>
+
+      {/* ═══ LATEST ADDITIONS — early editorial cue before threshold plate ═══ */}
+      <Reveal>
+        <HomepageLatestAdditions locale={locale} />
+      </Reveal>
 
       {/* ═══ § 2 · THRESHOLD PLATE (Ch. 9.3) ═══ */}
       <Reveal>
@@ -244,16 +298,35 @@ export default async function ArrivalPage({
             style={{ paddingBlock: "var(--space-8)", textAlign: "center" }}
           >
             <div className="arrival-container">
-              <p className="type-eyebrow-v2" style={{ color: "var(--brass)", marginBlockEnd: "var(--space-4)" }}>
+              <p
+                className="type-eyebrow-v2"
+                style={{
+                  color: "var(--brass)",
+                  marginBlockEnd: "var(--space-4)",
+                }}
+              >
                 {seasonLabel}
               </p>
               {seasonGreeting && (
-                <p className="type-standfirst" style={{ maxInlineSize: "50ch", marginInline: "auto", fontStyle: "italic" }}>
+                <p
+                  className="type-standfirst"
+                  style={{
+                    maxInlineSize: "50ch",
+                    marginInline: "auto",
+                    fontStyle: "italic",
+                  }}
+                >
                   {seasonGreeting}
                 </p>
               )}
               {hijriDate && (
-                <p className="type-folio" style={{ color: "var(--muted)", marginBlockStart: "var(--space-4)" }}>
+                <p
+                  className="type-folio"
+                  style={{
+                    color: "var(--muted)",
+                    marginBlockStart: "var(--space-4)",
+                  }}
+                >
                   {hijriDate}
                 </p>
               )}
@@ -264,27 +337,47 @@ export default async function ArrivalPage({
 
       {/* ═══ § 3 · ON THE TRADITION (Ch. 9.4) ═══ */}
       <Reveal>
-        <section className="arrival-section arrival-band-deep" aria-labelledby="tradition-heading">
+        <section
+          className="arrival-section arrival-band-deep"
+          aria-labelledby="tradition-heading"
+        >
           <div className="arrival-container">
             <div className="arrival-grid">
               <div className="arrival-rail">
-                <SectionStamp numeral="II" />
+                <SectionStamp numeral="III" />
               </div>
               <div className="arrival-measure">
-                <div className="section-stamp-mobile" style={{ marginBlockEnd: "var(--space-6)" }}>
-                  <SectionStamp numeral="II" label={tradition.stamp} />
+                <div
+                  className="section-stamp-mobile"
+                  style={{ marginBlockEnd: "var(--space-6)" }}
+                >
+                  <SectionStamp numeral="III" label={tradition.stamp} />
                 </div>
 
-                <h2 id="tradition-heading" className="type-eyebrow-v2" style={{ color: "var(--paper-on-deep)", marginBlockEnd: "var(--space-8)" }}>
+                <h2
+                  id="tradition-heading"
+                  className="type-eyebrow-v2"
+                  style={{
+                    color: "var(--paper-on-deep)",
+                    marginBlockEnd: "var(--space-8)",
+                  }}
+                >
                   {tradition.stamp}
                 </h2>
 
-                <p className="type-standfirst" style={{ marginBlockEnd: "var(--space-8)" }}>
+                <p
+                  className="type-standfirst"
+                  style={{ marginBlockEnd: "var(--space-8)" }}
+                >
                   {tradition.standfirst}
                 </p>
 
                 {tradition.body.map((paragraph: string, i: number) => (
-                  <p key={i} className="type-body-v2" style={{ marginBlockEnd: "var(--space-5)" }}>
+                  <p
+                    key={i}
+                    className="type-body-v2"
+                    style={{ marginBlockEnd: "var(--space-5)" }}
+                  >
                     {paragraph}
                   </p>
                 ))}
@@ -310,18 +403,27 @@ export default async function ArrivalPage({
 
       {/* ═══ § 4 · THE DEPARTMENTS (Ch. 9.5) ═══ */}
       <Reveal>
-        <section className="arrival-section" aria-labelledby="departments-heading" id="departments">
+        <section
+          className="arrival-section"
+          aria-labelledby="departments-heading"
+          id="departments"
+        >
           <div className="arrival-container">
             <div className="arrival-grid">
               <div className="arrival-rail">
-                <SectionStamp numeral="III" />
+                <SectionStamp numeral="IV" />
               </div>
               <div>
-                <div className="section-stamp-mobile" style={{ marginBlockEnd: "var(--space-6)" }}>
-                  <SectionStamp numeral="III" label={ui("departmentsStamp")} />
+                <div
+                  className="section-stamp-mobile"
+                  style={{ marginBlockEnd: "var(--space-6)" }}
+                >
+                  <SectionStamp numeral="IV" label={ui("departmentsStamp")} />
                 </div>
 
-                <h2 id="departments-heading" className="sr-only">{ui("departmentsHeading")}</h2>
+                <h2 id="departments-heading" className="sr-only">
+                  {ui("departmentsHeading")}
+                </h2>
 
                 <div className="dept-grid">
                   {homepageDepartments.map((dept, i) => (
@@ -350,17 +452,28 @@ export default async function ArrivalPage({
 
       {/* ═══ § 6 · CORRESPONDENCE (Ch. 9.7) ═══ */}
       <Reveal>
-        <section className="arrival-section" aria-labelledby="correspondence-heading">
+        <section
+          className="arrival-section"
+          aria-labelledby="correspondence-heading"
+        >
           <div className="arrival-container">
             <div className="arrival-grid">
               <div className="arrival-rail">
-                <SectionStamp numeral="V" />
+                <SectionStamp numeral="VI" />
               </div>
               <div>
-                <div className="section-stamp-mobile" style={{ marginBlockEnd: "var(--space-6)" }}>
-                  <SectionStamp numeral="V" label={ui("correspondenceStamp")} />
+                <div
+                  className="section-stamp-mobile"
+                  style={{ marginBlockEnd: "var(--space-6)" }}
+                >
+                  <SectionStamp
+                    numeral="VI"
+                    label={ui("correspondenceStamp")}
+                  />
                 </div>
-                <h2 id="correspondence-heading" className="sr-only">{ui("correspondenceHeading")}</h2>
+                <h2 id="correspondence-heading" className="sr-only">
+                  {ui("correspondenceHeading")}
+                </h2>
                 <CorrespondenceForm content={correspondence} />
               </div>
             </div>
@@ -373,12 +486,28 @@ export default async function ArrivalPage({
         <div className="arrival-container">
           <IsnadRule variant="footer" nodePosition={0.5} />
 
-          <p className="type-body-v2" style={{ marginBlockStart: "var(--space-8)", maxInlineSize: "60ch", color: "var(--paper-on-deep)" }}>
+          <p
+            className="type-body-v2"
+            style={{
+              marginBlockStart: "var(--space-8)",
+              maxInlineSize: "60ch",
+              color: "var(--paper-on-deep)",
+            }}
+          >
             {institutionStatement}
           </p>
 
-          <nav style={{ marginBlockStart: "var(--space-10)" }} aria-label={ui("departmentsNavAria")}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-6)" }}>
+          <nav
+            style={{ marginBlockStart: "var(--space-10)" }}
+            aria-label={ui("departmentsNavAria")}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "var(--space-6)",
+              }}
+            >
               {departments.map((dept) => (
                 <Link
                   key={dept.href}
@@ -386,10 +515,16 @@ export default async function ArrivalPage({
                   className="arrival-link"
                   style={{ color: "var(--paper-on-deep)" }}
                 >
-                  <span className="type-folio-v2" style={{ color: "var(--brass)", marginInlineEnd: "0.5em" }}>
+                  <span
+                    className="type-folio-v2"
+                    style={{ color: "var(--brass)", marginInlineEnd: "0.5em" }}
+                  >
                     {["I", "II", "III", "IV"][dept.order - 1]}
                   </span>
-                  <span className="type-caption" style={{ color: "var(--paper-on-deep)" }}>
+                  <span
+                    className="type-caption"
+                    style={{ color: "var(--paper-on-deep)" }}
+                  >
                     {dept.nameEn}
                   </span>
                 </Link>
@@ -397,17 +532,43 @@ export default async function ArrivalPage({
             </div>
           </nav>
 
-          <div style={{ marginBlockStart: "var(--space-10)", display: "flex", flexWrap: "wrap", gap: "var(--space-6)" }}>
-            <Link href="/charter" className="arrival-link type-caption" style={{ color: "var(--paper-on-deep)" }}>{ui("about")}</Link>
-            <Link href="/correspondence" className="arrival-link type-caption" style={{ color: "var(--paper-on-deep)" }}>{ui("contact")}</Link>
+          <div
+            style={{
+              marginBlockStart: "var(--space-10)",
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "var(--space-6)",
+            }}
+          >
+            <Link
+              href="/charter"
+              className="arrival-link type-caption"
+              style={{ color: "var(--paper-on-deep)" }}
+            >
+              {ui("about")}
+            </Link>
+            <Link
+              href="/correspondence"
+              className="arrival-link type-caption"
+              style={{ color: "var(--paper-on-deep)" }}
+            >
+              {ui("contact")}
+            </Link>
           </div>
 
-          <p className="type-folio-v2" style={{ marginBlockStart: "var(--space-10)", color: "var(--brass)" }}>
+          <p
+            className="type-folio-v2"
+            style={{
+              marginBlockStart: "var(--space-10)",
+              color: "var(--brass)",
+            }}
+          >
             <time dateTime={new Date().toISOString().split("T")[0]}>
               {new Date().getFullYear()} CE
             </time>
             {hijriDate && <> · {hijriDate}</>}
-            {" · "}{ui("footerColophon")}
+            {" · "}
+            {ui("footerColophon")}
           </p>
         </div>
       </footer>
