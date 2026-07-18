@@ -40,6 +40,15 @@ const PATHS: Record<IconKey, React.ReactNode> = {
       <path d="M12 14a3 3 0 0 0 3 3H9a3 3 0 0 0 3-3Z" />
     </>
   ),
+  "prayer-sequence": (
+    <>
+      <path d="M8.5 7a3.5 3.5 0 0 1 7 0" />
+      <path d="M5 7h14" />
+      <path d="M7.5 12h9" />
+      <path d="M9.5 17h5" />
+      <path d="M4 21h16" />
+    </>
+  ),
   tasbih: (
     <>
       <circle cx="12" cy="5" r="1.6" />
