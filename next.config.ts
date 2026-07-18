@@ -37,6 +37,10 @@ const nextConfig: NextConfig = {
       // English is unprefixed (as-needed). Collapse accidental /en URLs.
       { source: "/en", destination: "/", permanent: false },
       { source: "/en/:path*", destination: "/:path*", permanent: false },
+      // Public Danish is /dk. Internal App Router segment remains /da via rewrite.
+      // Collapse any direct /da request so it is not a second indexable locale.
+      { source: "/da", destination: "/dk", permanent: true },
+      { source: "/da/:path*", destination: "/dk/:path*", permanent: true },
     ];
   },
   /**

@@ -8,15 +8,27 @@
  */
 
 import type { Metadata } from "next";
+import { localeById } from "@/i18n/locales";
 import { seoConfig, typeDefaults } from "./config";
 import { canonicalUrl } from "./canonical";
 
 /**
- * Build a locale-aware URL (unprefixed for default locale 'en').
+ * Build a locale-aware public URL.
+ * English is unprefixed; Danish uses the authorised `/dk` prefix — never `/da`.
+ * (`da` is the internal next-intl locale id only.)
  */
 export function localeUrl(locale: string, path: string): string {
-  const prefix = locale === "en" ? "" : `/${locale}`;
-  return `${seoConfig.siteUrl}${prefix}${path}`;
+  const cfg = localeById(locale);
+  const normalised =
+    path === "/" || path === ""
+      ? ""
+      : path.startsWith("/")
+        ? path
+        : `/${path}`;
+  if (!cfg.prefix) {
+    return canonicalUrl(path === "" ? "/" : path);
+  }
+  return `${seoConfig.siteUrl}${cfg.prefix}${normalised}`;
 }
 
 export interface SeoOverrides {

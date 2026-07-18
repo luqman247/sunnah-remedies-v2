@@ -5,7 +5,10 @@
     "theAcademy": "Akademiet",
     "sacredJourneys": "Hellige Rejser",
     "knowledgeLibrary": "Vidensbiblioteket",
+    "theInstitute": "Instituttet",
     "consultations": "Kliniske Konsultationer",
+    "bookConsultation": "Book en konsultation",
+    "duaDhikr": "Duʿa & dhikr",
     "charter": "Charter",
     "correspondence": "Korrespondance",
     "navigation": "Navigation",
@@ -13,6 +16,9 @@
     "ariaMenu": "Hovednavigation",
     "ariaLanguage": "Skift sprog",
     "ariaPrimary": "Primær",
+    "ariaInstitutional": "Afdelinger",
+    "ariaTasks": "Almindelige opgaver",
+    "tasksHeading": "Almindelige opgaver",
     "switchTo": "Skift til {language}",
     "skipToContent": "Spring til indhold"
   },
@@ -1217,6 +1223,47 @@
     "standfirst": "En institution for bevarelse og ansvarlig formidling af profetisk medicin — forankret i primærkildeforskning, laboratoriebekræftelse, klinisk ansvarlighed og tydelige grænser",
     "enterLabel": "Gå ind i institutionen",
     "enterHref": "#departments",
+    "bookConsultation": "Book en konsultation",
+    "exploreRemedies": "Gennemse midler",
+    "exploreProgrammes": "Udforsk programmer",
+    "findDuaDhikr": "Find Duʿa & dhikr",
+    "trustLine": "Primærkildeforskning, laboratoriebekræftelse, klinisk ansvarlighed og tydelige grænser — før handel",
+    "tasks": {
+      "ariaLabel": "Hvad bringer dig hertil",
+      "stamp": "BEGYND HER",
+      "heading": "Hvad bringer dig hertil",
+      "lede": "Vælg efter hensigt. Afdelingsnavne følger, når du er klar til institutionens fulde struktur",
+      "book": {
+        "label": "Jeg vil booke Hijāma",
+        "description": "Anmod om en klinisk konsultation hos en kvalificeret behandler",
+        "action": "Book en konsultation"
+      },
+      "remedies": {
+        "label": "Jeg søger et middel",
+        "description": "Læs monografier og anmod om udlevering fra Apoteket",
+        "action": "Gennemse midler"
+      },
+      "programmes": {
+        "label": "Jeg vil studere",
+        "description": "Se klinisk uddannelse struktureret efter fakultet, vurdering og isnād",
+        "action": "Udforsk programmer"
+      },
+      "duaDhikr": {
+        "label": "Jeg har brug for Duʿa eller dhikr",
+        "description": "Åbn verificeret erindring organiseret efter hverdagens øjeblikke",
+        "action": "Åbn Duʿa & dhikr"
+      },
+      "institute": {
+        "label": "Jeg vil forstå Instituttet",
+        "description": "Læs husets formål, charter og praksisstandarder",
+        "action": "Udforsk Instituttet"
+      },
+      "journeys": {
+        "label": "Jeg overvejer en Hellig Rejse",
+        "description": "Se uddannelsespilgrimsrejse med forberedelse før afrejse",
+        "action": "Udforsk Hellige Rejser"
+      }
+    },
     "traditionStamp": "OM TRADITIONEN",
     "traditionStandfirst": "Hvad er denne disciplin, og hvorfor kræver den en institution?",
     "traditionBody0": "Profetisk Medicin er ikke folkemedicin, ikke alternativ wellness, ikke en brandmulighed. Det er en modtaget videnskab — overleveret gennem autentificerede kæder, afprøvet mod observerbar evidens og begrænset af de grænser dens egne kilder angiver",

@@ -5,7 +5,10 @@
     "theAcademy": "The Academy",
     "sacredJourneys": "Sacred Journeys",
     "knowledgeLibrary": "Knowledge Library",
+    "theInstitute": "The Institute",
     "consultations": "Clinical Consultations",
+    "bookConsultation": "Book a consultation",
+    "duaDhikr": "Duʿa & Dhikr",
     "charter": "Charter",
     "correspondence": "Correspondence",
     "navigation": "Navigation",
@@ -13,6 +16,9 @@
     "ariaMenu": "Main navigation",
     "ariaLanguage": "Change language",
     "ariaPrimary": "Primary",
+    "ariaInstitutional": "Departments",
+    "ariaTasks": "Common tasks",
+    "tasksHeading": "Common tasks",
     "switchTo": "Switch to {language}",
     "skipToContent": "Skip to content"
   },
@@ -1217,6 +1223,47 @@
     "standfirst": "An institution for the preservation and responsible transmission of prophetic medicine — grounded in primary-source scholarship, laboratory verification, clinical accountability, and plain limits",
     "enterLabel": "Enter the institution",
     "enterHref": "#departments",
+    "bookConsultation": "Book a consultation",
+    "exploreRemedies": "Browse remedies",
+    "exploreProgrammes": "Explore programmes",
+    "findDuaDhikr": "Find Duʿa & Dhikr",
+    "trustLine": "Primary-source scholarship, laboratory verification, clinical accountability, and plain limits — before commerce",
+    "tasks": {
+      "ariaLabel": "What brings you here",
+      "stamp": "BEGIN HERE",
+      "heading": "What brings you here",
+      "lede": "Choose by intention. Department names follow when you are ready for the institution’s full structure",
+      "book": {
+        "label": "I want to book Hijāma",
+        "description": "Request a clinical consultation with a qualified practitioner",
+        "action": "Book a consultation"
+      },
+      "remedies": {
+        "label": "I am looking for a remedy",
+        "description": "Read monographs and request dispensation from the Apothecary",
+        "action": "Browse remedies"
+      },
+      "programmes": {
+        "label": "I want to study",
+        "description": "See clinical education structured by faculty, assessment, and isnād",
+        "action": "Explore programmes"
+      },
+      "duaDhikr": {
+        "label": "I need Duʿa or Dhikr",
+        "description": "Open verified remembrance organised by the moments of daily life",
+        "action": "Open Duʿa & Dhikr"
+      },
+      "institute": {
+        "label": "I want to understand the Institute",
+        "description": "Read the house’s purpose, charter, and standards of practice",
+        "action": "Explore the Institute"
+      },
+      "journeys": {
+        "label": "I am considering a Sacred Journey",
+        "description": "See educational pilgrimage with preparation before departure",
+        "action": "Explore Sacred Journeys"
+      }
+    },
     "traditionStamp": "ON THE TRADITION",
     "traditionStandfirst": "What is this discipline, and why does it require an institution?",
     "traditionBody0": "Prophetic Medicine is not folk remedy, not alternative wellness, not a brand opportunity. It is a received body of knowledge — transmitted through authenticated chains, tested against observable evidence, and constrained by the limits its own sources declare",

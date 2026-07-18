@@ -16,6 +16,7 @@ import { AuthorityBand } from "@/components/arrival/AuthorityBand";
 import { DepartmentCard } from "@/components/arrival/DepartmentCard";
 import { CorrespondenceForm } from "@/components/arrival/CorrespondenceForm";
 import { Reveal } from "@/components/arrival/Reveal";
+import { TaskPathways } from "@/components/arrival/TaskPathways";
 import "@/components/arrival/arrival.css";
 
 export async function generateMetadata({
@@ -23,7 +24,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: AppLocale }>;
 }): Promise<Metadata> {
-  return pageMetadata("home", "/");
+  const { locale } = await params;
+  return pageMetadata("home", "/", locale);
 }
 
 function JsonLd({ description }: { description: string }) {
@@ -131,7 +133,7 @@ export default async function ArrivalPage({
       </a>
 
       {/* ═══ § 1 · ARRIVAL / HERO (Ch. 9.2) ═══ */}
-      <section className="arrival-section" aria-labelledby="arrival-heading" id="main-content">
+      <section className="arrival-section arrival-hero" aria-labelledby="arrival-heading" id="main-content">
         <div className="arrival-container">
           <div className="arrival-grid">
             <div className="arrival-rail">
@@ -176,11 +178,36 @@ export default async function ArrivalPage({
                 {standfirst}
               </p>
 
-              <div className="choreo-standfirst" style={{ marginBlockStart: "var(--space-6)" }}>
+              <div className="arrival-hero-actions choreo-standfirst">
+                <Link href="/consultations" className="solid-action">
+                  {ui("bookConsultation")}
+                </Link>
                 <Link href={enterHref} className="arrival-enter">
                   {enterLabel} <span className="arrow" aria-hidden="true">⟶</span>
                 </Link>
               </div>
+
+              <ul className="arrival-support-links choreo-standfirst">
+                <li>
+                  <Link href="/the-apothecary" className="quiet-link">
+                    {ui("exploreRemedies")}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/the-academy" className="quiet-link">
+                    {ui("exploreProgrammes")}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/knowledge-library/dua-dhikr" className="quiet-link">
+                    {ui("findDuaDhikr")}
+                  </Link>
+                </li>
+              </ul>
+
+              <p className="type-small-v2 arrival-trust-line choreo-standfirst">
+                {ui("trustLine")}
+              </p>
             </div>
           </div>
         </div>
@@ -274,6 +301,11 @@ export default async function ArrivalPage({
             </div>
           </div>
         </section>
+      </Reveal>
+
+      {/* ═══ TASK PATHWAYS — intention before department architecture ═══ */}
+      <Reveal>
+        <TaskPathways locale={locale} />
       </Reveal>
 
       {/* ═══ § 4 · THE DEPARTMENTS (Ch. 9.5) ═══ */}

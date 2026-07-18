@@ -343,6 +343,136 @@
   transform: translateX(4px);
 }
 
+/* First viewport: keep primary action reachable on short phones without crowding the hero */
+@media (max-width: 767px) {
+  .arrival-v2 .arrival-hero.arrival-section {
+    padding-block: var(--space-10) var(--space-12);
+  }
+
+  .arrival-v2 .arrival-hero .type-arabic-hero {
+    font-size: clamp(2.25rem, 11vw, 3.25rem);
+  }
+
+  .arrival-v2 .arrival-hero .type-hero {
+    font-size: clamp(2.25rem, 9vw, 3.25rem);
+  }
+
+  .arrival-v2 .arrival-hero .section-stamp-mobile {
+    margin-block-end: var(--space-4);
+  }
+}
+
+.arrival-v2 .arrival-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+  margin-block-start: var(--space-6);
+}
+
+.arrival-v2 .arrival-support-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
+  list-style: none;
+  margin: var(--space-6) 0 0;
+  padding: 0;
+}
+
+.arrival-v2 .arrival-support-links .quiet-link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.arrival-v2 .arrival-trust-line {
+  margin-block-start: var(--space-5);
+  max-inline-size: 52ch;
+  color: var(--muted);
+}
+
+.arrival-v2 .arrival-tasks-section {
+  border-block-start: 1px solid var(--rule);
+}
+
+.arrival-v2 .arrival-tasks__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.arrival-v2 .arrival-tasks__item {
+  border-block-start: 1px solid var(--rule);
+}
+
+.arrival-v2 .arrival-tasks__item:last-child {
+  border-block-end: 1px solid var(--rule);
+}
+
+.arrival-v2 .arrival-tasks__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding-block: var(--space-5);
+  min-height: 44px;
+}
+
+.arrival-v2 .arrival-tasks__link:focus-visible {
+  outline: 2px solid var(--gilt);
+  outline-offset: 3px;
+}
+
+.arrival-v2 .arrival-tasks__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.arrival-v2 .arrival-tasks__label {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.arrival-v2 .arrival-tasks__description {
+  font-family: var(--font-body), Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--muted);
+  max-inline-size: 52ch;
+}
+
+.arrival-v2 .arrival-tasks__action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block-start: var(--space-2);
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.arrival-v2 .arrival-tasks__arrow {
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.arrival-v2 .arrival-tasks__link:hover .arrival-tasks__arrow,
+.arrival-v2 .arrival-tasks__link:focus-visible .arrival-tasks__arrow {
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrival-v2 .arrival-tasks__arrow,
+  .arrival-v2 .arrival-enter .arrow {
+    transition: none;
+  }
+}
+
 /* ── Department cards (Ch. 9.5) ─────────────────────────────── */
 
 .arrival-v2 .dept-grid {

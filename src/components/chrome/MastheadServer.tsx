@@ -9,6 +9,7 @@ const NAV_FALLBACK = [
   { href: "/the-academy", highlighted: false },
   { href: "/sacred-journeys", highlighted: false },
   { href: "/knowledge-library", highlighted: false },
+  { href: "/institute", highlighted: false },
   { href: "/consultations", highlighted: true },
 ] as const;
 
@@ -28,12 +29,28 @@ export async function MastheadServer({ locale }: { locale: AppLocale }) {
         highlighted: item.highlighted,
       }));
 
-  const items = structure.map((item) => {
+  // Ensure Institute remains reachable even when CMS omits it.
+  const hasInstitute = structure.some((item) => item.href === "/institute");
+  const withInstitute = hasInstitute
+    ? structure
+    : [
+        ...structure.filter((item) => !item.highlighted),
+        { href: "/institute", highlighted: false },
+        ...structure.filter((item) => item.highlighted),
+      ];
+
+  const items = withInstitute.map((item) => {
     const key = NAV_HREF_MESSAGE_KEYS[item.href];
+    const isConsultation = item.href === "/consultations" && item.highlighted;
     return {
       href: item.href,
       highlighted: item.highlighted,
-      label: key ? t(key as never) : item.href,
+      // Global primary action uses a direct task label, not department wording.
+      label: isConsultation
+        ? t("bookConsultation")
+        : key
+          ? t(key as never)
+          : item.href,
     };
   });
 

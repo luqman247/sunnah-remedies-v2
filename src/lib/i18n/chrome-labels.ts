@@ -7,6 +7,7 @@ export const NAV_HREF_MESSAGE_KEYS: Record<string, string> = {
   "/the-academy": "theAcademy",
   "/sacred-journeys": "sacredJourneys",
   "/knowledge-library": "knowledgeLibrary",
+  "/institute": "theInstitute",
   "/consultations": "consultations",
   "/charter": "charter",
   "/correspondence": "correspondence",
