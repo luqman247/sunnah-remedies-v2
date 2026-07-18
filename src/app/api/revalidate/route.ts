@@ -27,11 +27,17 @@ const TYPE_ROUTE_MAP: Record<string, string[]> = {
   scholar: ["/knowledge/scholar"],
   faculty: ["/the-academy/faculty"],
   reference: ["/knowledge/citations"],
-  duaDhikrCollection: ["/knowledge-library/dua-dhikr"],
+  // These two routes physically live under src/app/[locale]/..., unlike
+  // every other entry in this map — the [locale] segment MUST be included
+  // in the pattern passed to revalidatePath (Next.js matches the literal
+  // file-system route template, including every ancestor dynamic segment;
+  // omitting [locale] does not match the actual cached route for either
+  // the unprefixed English path or /da, and silently revalidates nothing).
+  duaDhikrCollection: ["/[locale]/knowledge-library/dua-dhikr"],
   // Entries render inline within their collection page, not a route of
   // their own — revalidating the landing page alone doesn't touch the
   // per-collection dynamic pages, so those are revalidated separately below.
-  duaDhikrEntry: ["/knowledge-library/dua-dhikr"],
+  duaDhikrEntry: ["/[locale]/knowledge-library/dua-dhikr"],
 };
 
 /**
@@ -66,8 +72,12 @@ export async function POST(request: NextRequest) {
       revalidatePath(route, "layout");
       revalidated.push(route);
 
-      // Revalidate specific entity page if slug available
-      if (slug) {
+      // Revalidate specific entity page if slug available — skipped for
+      // the Duʿa & Dhikr types: `${route}/${slug}` would mix the literal
+      // "[locale]" segment with a concrete slug, which matches neither a
+      // real path nor a valid template. The dynamic-pattern block below
+      // covers every locale + slug combination correctly instead.
+      if (slug && !DUA_DHIKR_DYNAMIC_TYPES.has(_type)) {
         const entityPath = `${route}/${slug}`;
         revalidatePath(entityPath);
         revalidated.push(entityPath);
@@ -76,11 +86,10 @@ export async function POST(request: NextRequest) {
 
     // A duaDhikrEntry/duaDhikrCollection change can affect any populated
     // collection page's entry list/count, not just one slug — revalidate
-    // the whole dynamic-route pattern rather than guessing a single slug.
+    // the whole dynamic-route pattern (every locale, every slug) rather
+    // than guessing a single one.
     if (DUA_DHIKR_DYNAMIC_TYPES.has(_type)) {
-      // Matches the [collectionSlug] dynamic segment convention already
-      // used by the rest of this map (public path, no [locale] segment).
-      const pattern = "/knowledge-library/dua-dhikr/[collectionSlug]";
+      const pattern = "/[locale]/knowledge-library/dua-dhikr/[collectionSlug]";
       revalidatePath(pattern, "page");
       revalidated.push(pattern);
     }
