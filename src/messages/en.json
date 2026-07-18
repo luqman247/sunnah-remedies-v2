@@ -1436,6 +1436,7 @@
     },
     "entryCard": {
       "pendingScholarlyReviewBadge": "Scholarly review pending",
+      "ownerApprovedBadge": "Content-owner approved · scholarly review pending",
       "revealTranslation": "Show translation",
       "revealTransliteration": "Show transliteration",
       "timing": {

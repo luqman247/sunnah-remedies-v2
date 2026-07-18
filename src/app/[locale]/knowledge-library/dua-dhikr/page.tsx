@@ -73,7 +73,7 @@ export default async function DuaDhikrLandingPage({
   const tRoot = await getTranslations("duaDhikr");
   const tNav = await getTranslations("nav");
 
-  const collections = await getDuaDhikrCollectionsPublic();
+  const collections = await getDuaDhikrCollectionsPublic(locale);
   const publishedCollections = collections.filter(isDuaDhikrCollectionPublished);
   const forthcomingCollections = collections.filter((c) => !isDuaDhikrCollectionPublished(c));
   const collectionBySlug = new Map(collections.map((c) => [c.slug, c]));

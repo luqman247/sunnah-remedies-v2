@@ -297,11 +297,12 @@ export const duaDhikrEntry = defineType({
       title: "Editorial Publication Status",
       type: "string",
       description:
-        "The temporary, reversible scholarly-review bypass for this Duʿa & Dhikr expansion phase only — see docs/dua-dhikr/REVIEW_BYPASS.md. A separate, additive pathway from reviewStatus/boardApprovals above; never weakens the canonical gate. Public display must always show a neutral \"scholarly review pending\" note, never a claim of scholarly approval.",
+        "Additive publication-bypass pathways, alongside (never weakening) the canonical reviewStatus/boardApprovals gate above — see docs/dua-dhikr/REVIEW_BYPASS.md. \"Editorial only\" requires an approved editorial board approval plus Danish. \"Owner-approved, English-first\" is for content the content owner has explicitly approved and stated was accepted as pre-verified, with independent re-verification waived — see src/sanity/lib/dua-dhikr-publication-gate.ts. Neither value is ever a scholarly-approval claim; public display must always show a neutral status note.",
       options: {
         list: [
           { title: "(not published via this pathway)", value: "" },
           { title: "Editorial only — scholarly review pending", value: "editorial-only-scholarly-review-pending" },
+          { title: "Owner-approved, English-first (pre-verified, scholarly review pending)", value: "owner-approved-english-first" },
         ],
       },
       initialValue: "",

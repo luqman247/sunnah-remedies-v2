@@ -1436,6 +1436,7 @@
     },
     "entryCard": {
       "pendingScholarlyReviewBadge": "Faglig gennemgang afventer",
+      "ownerApprovedBadge": "Godkendt af indholdsejer · faglig gennemgang afventer",
       "revealTranslation": "Vis oversættelse",
       "revealTransliteration": "Vis translitteration",
       "timing": {
