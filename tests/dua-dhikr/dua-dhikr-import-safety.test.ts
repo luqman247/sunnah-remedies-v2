@@ -18,10 +18,15 @@ import {
   containsFixtureMarker,
   ALLOWED_SOURCE_HOSTNAMES,
 } from "../../src/lib/dua-dhikr/import/schema";
-import { runDuaDhikrImport } from "../../src/lib/dua-dhikr/import/import-content-document";
+import { runDuaDhikrImport, canonicalCollectionIdFor, type CollectionResolution } from "../../src/lib/dua-dhikr/import/import-content-document";
 
 function assert(condition: boolean, message: string) {
   if (!condition) throw new Error(message);
+}
+
+/** Network-free fake: every slug resolves as a clean, published canonical collection. Keeps this file's "no Sanity access anywhere" guarantee intact now that collection resolution also runs during dry run. */
+async function fakeResolveAlwaysPublished(slug: string): Promise<CollectionResolution> {
+  return { slug, status: "resolved", resolvedId: canonicalCollectionIdFor(slug) };
 }
 
 const REPO_ROOT = join(__dirname, "../..");
@@ -140,17 +145,19 @@ function testDuringSalahAcceptsEachApprovedSubcategory() {
 /* ── Fail-closed batch behaviour ──────────────────────────────────────── */
 
 // The two tests below are the only ones in this file that call
-// runDuaDhikrImport with dryRun: false. This is safe and does not
-// constitute "running the importer live": there is no SANITY_API_TOKEN
-// configured in this worktree (no .env.local exists here at all), no
-// network call is made, and — provably, by the fail-closed logic itself —
-// a batch containing any invalid row aborts before the loop ever reaches
-// a writeClient call for ANY row, valid or not. This is exactly the
-// control-flow guarantee this test exists to prove.
+// runDuaDhikrImport. Both inject fakeResolveAlwaysPublished so collection
+// resolution never makes a real network call, keeping this file's "no
+// Sanity access anywhere" guarantee intact — collection resolution now
+// runs during BOTH dry run and live mode (see
+// tests/dua-dhikr/dua-dhikr-collection-reference-resolution.test.ts for the
+// dedicated tests using deliberately-unresolved fakes). With the fake
+// injected, the fail-closed batch logic itself still provably blocks the
+// writeClient call: a batch containing any invalid row aborts before the
+// loop ever reaches a write for ANY row, valid or not.
 
 async function testPartialBatchFailureBlocksAllWritesByDefault() {
   const rows = [validRow, { ...validRow, importIdentifier: "SAFETY-TEST-002", arabicText: "" /* invalid */ }];
-  const report = await runDuaDhikrImport({ rows, dryRun: false });
+  const report = await runDuaDhikrImport({ rows, dryRun: false, resolveCollectionId: fakeResolveAlwaysPublished });
   assert(report.abortedDueToPartialFailure === true, "a batch with any blocking row must be reported as aborted by default");
   assert(report.entries.every((e) => e.outcome !== "written"), "no row may be written when the batch was aborted, even the individually-valid one");
   console.log("✓ a batch containing any blocking row writes NOTHING by default (fail-closed)");
@@ -158,7 +165,7 @@ async function testPartialBatchFailureBlocksAllWritesByDefault() {
 
 async function testDryRunNeverAbortsOrWrites() {
   const rows = [validRow, { ...validRow, importIdentifier: "SAFETY-TEST-003", arabicText: "" }];
-  const report = await runDuaDhikrImport({ rows, dryRun: true });
+  const report = await runDuaDhikrImport({ rows, dryRun: true, resolveCollectionId: fakeResolveAlwaysPublished });
   assert(report.abortedDueToPartialFailure === false, "dry runs are never reported as aborted — nothing was ever going to write");
   assert(report.entries.every((e) => e.outcome !== "written"), "dry run must never report outcome \"written\"");
   console.log("✓ dry run never writes and is never marked as an aborted batch");

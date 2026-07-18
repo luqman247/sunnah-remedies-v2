@@ -5,7 +5,12 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { validateImportRow, findDuplicateImportIdentifiers } from "../../src/lib/dua-dhikr/import/schema";
-import { runDuaDhikrImport } from "../../src/lib/dua-dhikr/import/import-content-document";
+import { runDuaDhikrImport, canonicalCollectionIdFor, type CollectionResolution } from "../../src/lib/dua-dhikr/import/import-content-document";
+
+/** Network-free fake: every slug resolves as a clean, published canonical collection. */
+async function fakeResolveAlwaysPublished(slug: string): Promise<CollectionResolution> {
+  return { slug, status: "resolved", resolvedId: canonicalCollectionIdFor(slug) };
+}
 
 function assert(condition: boolean, message: string) {
   if (!condition) throw new Error(message);
@@ -77,7 +82,7 @@ function testDuplicateImportIdentifiersAreDetected() {
 
 async function testDryRunNeverWrites() {
   const rows = [validRow, { ...validRow, importIdentifier: "TEST-002" }];
-  const report = await runDuaDhikrImport({ rows, dryRun: true });
+  const report = await runDuaDhikrImport({ rows, dryRun: true, resolveCollectionId: fakeResolveAlwaysPublished });
   assert(report.dryRun === true, "dry-run report must report dryRun: true");
   assert(
     report.entries.every((e) => e.outcome !== "written"),
