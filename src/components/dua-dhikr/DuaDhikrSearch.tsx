@@ -26,7 +26,10 @@ export function DuaDhikrSearch({ collections, locale }: DuaDhikrSearchProps) {
   const t = useTranslations("duaDhikr.landing");
   const [query, setQuery] = useState("");
 
-  const results = useMemo(() => searchDuaDhikrCollections(collections, query), [collections, query]);
+  const results = useMemo(
+    () => searchDuaDhikrCollections(collections, query),
+    [collections, query],
+  );
 
   return (
     <div className="dua-dhikr-search">
@@ -46,17 +49,31 @@ export function DuaDhikrSearch({ collections, locale }: DuaDhikrSearchProps) {
       {query.trim() !== "" && (
         <div role="status" aria-live="polite">
           {results.length === 0 ? (
-            <p className="dua-dhikr-search__empty">{t("searchNoResults", { query })}</p>
+            <p className="dua-dhikr-search__empty">
+              {t("searchNoResults", { query })}
+            </p>
           ) : (
             <ul className="dua-dhikr-search__results">
               {results.map((collection) => {
-                const title = locale === "da" && collection.titleDa ? collection.titleDa : collection.titleEn;
-                const href = collection.externalHref ?? `/knowledge-library/dua-dhikr/${collection.slug}`;
+                const hasDanishTitle = Boolean(collection.titleDa?.trim());
+                const title =
+                  locale === "da" && hasDanishTitle
+                    ? collection.titleDa!
+                    : collection.titleEn;
+                const href =
+                  collection.externalHref ??
+                  `/knowledge-library/dua-dhikr/${collection.slug}`;
                 return (
                   <li key={collection.slug}>
                     <Link href={href} className="dua-dhikr-search__result">
                       <DuaDhikrIcon iconKey={collection.iconKey} size={20} />
-                      <span>{title}</span>
+                      <span
+                        lang={
+                          locale === "da" && !hasDanishTitle ? "en" : undefined
+                        }
+                      >
+                        {title}
+                      </span>
                     </Link>
                   </li>
                 );

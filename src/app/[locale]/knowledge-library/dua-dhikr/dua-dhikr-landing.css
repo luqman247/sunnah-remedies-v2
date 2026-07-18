@@ -1,18 +1,88 @@
-/* Duʿa & Dhikr landing page — hero + section spacing. Shared card/search/
-   icon styles live in src/components/dua-dhikr/dua-dhikr.css. */
+/* Duʿā & Dhikr landing hub — hero, Begin here, browse, guides, assurance.
+   Shared card/search/icon styles live in src/components/dua-dhikr/dua-dhikr.css. */
+
+.dua-dhikr-landing {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.dua-dhikr-landing__section {
+  width: 100%;
+}
 
 .dua-dhikr-hero {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
-  max-width: var(--measure-reading);
+  gap: var(--space-4);
+  max-width: min(40rem, 100%);
+}
+
+.dua-dhikr-hero__eyebrow {
+  margin: 0;
+  color: var(--brass);
+}
+
+.dua-dhikr-hero__heading {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(1.85rem, 2.4vw, 2.55rem);
+  line-height: 1.15;
+  color: var(--sage-deep);
+  max-inline-size: 16ch;
 }
 
 .dua-dhikr-hero__lede {
   margin: 0;
   font-size: 1.05rem;
-  line-height: 1.6;
+  line-height: 1.65;
+  color: var(--ink);
+  max-inline-size: 38ch;
+}
+
+.dua-dhikr-hero__supporting {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.55;
   color: var(--muted);
+  max-inline-size: 40ch;
+}
+
+.dua-dhikr-landing__note {
+  margin: 0;
+  max-inline-size: 42rem;
+  color: var(--muted);
+}
+
+.dua-dhikr-landing__assurance {
+  border-block-start: var(--hairline);
+  padding-block-start: var(--space-6);
+}
+
+.dua-dhikr-landing__assurance-text {
+  margin: 0;
+  max-inline-size: 40rem;
+  font-family: var(--font-display), Georgia, serif;
+  font-style: italic;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* Begin here: deliberate two-up pair on tablet/desktop */
+.dua-dhikr-collection-grid--begin-here {
+  grid-template-columns: 1fr;
+  max-inline-size: 44rem;
+}
+
+@media (min-width: 640px) {
+  .dua-dhikr-collection-grid--begin-here {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .dua-dhikr-parent-group {
@@ -31,26 +101,96 @@
   color: var(--brass);
 }
 
-.dua-dhikr-learning-list {
+/* Guides & Articles — wider editorial cards */
+.dua-dhikr-guides-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
-  gap: var(--space-3);
-}
-
-.dua-dhikr-prev-next {
-  display: flex;
-  justify-content: space-between;
+  grid-template-columns: 1fr;
   gap: var(--space-4);
-  flex-wrap: wrap;
 }
 
-.dua-dhikr-learning-list li {
-  padding: var(--space-3) var(--space-4);
+@media (min-width: 768px) {
+  .dua-dhikr-guides-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.dua-dhikr-guide-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: var(--space-5);
   border: var(--hairline);
   border-radius: var(--radius);
+  background: var(--paper);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 180ms ease;
+}
+
+.dua-dhikr-guide-card:hover {
+  border-color: var(--brass);
+}
+
+.dua-dhikr-guide-card:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+
+.dua-dhikr-guide-card__title {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  font-size: 1.15rem;
+  color: var(--sage-deep);
+}
+
+.dua-dhikr-guide-card__excerpt {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
   color: var(--muted);
-  font-size: 0.9rem;
+}
+
+.dua-dhikr-guide-card__meta {
+  margin-top: auto;
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Widen browse grids within the section page body */
+.section-page__body
+  .dua-dhikr-landing
+  .dua-dhikr-collection-grid:not(.dua-dhikr-collection-grid--begin-here) {
+  max-inline-size: none;
+}
+
+@media (min-width: 900px) {
+  .section-page__body
+    .dua-dhikr-landing
+    .dua-dhikr-collection-grid:not(.dua-dhikr-collection-grid--begin-here) {
+    grid-template-columns: repeat(auto-fill, minmax(16.5rem, 1fr));
+  }
+}
+
+@media (max-width: 639px) {
+  .dua-dhikr-hero__heading {
+    max-inline-size: none;
+  }
+
+  .dua-dhikr-collection-grid--begin-here .dua-dhikr-collection-card {
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dua-dhikr-guide-card {
+    transition: none;
+  }
 }

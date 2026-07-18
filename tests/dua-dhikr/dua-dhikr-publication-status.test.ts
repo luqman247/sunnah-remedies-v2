@@ -46,10 +46,22 @@ assert.match(
 );
 
 const landingSource = readFileSync(
-  join(__dirname, "../../src/app/[locale]/knowledge-library/dua-dhikr/page.tsx"),
+  join(
+    __dirname,
+    "../../src/app/[locale]/knowledge-library/dua-dhikr/page.tsx",
+  ),
   "utf-8",
 );
-assert.match(landingSource, /inPreparationHeading/, "landing must group forthcoming collections");
+assert.match(
+  landingSource,
+  /assurance/,
+  "landing must retain a restrained editorial assurance note",
+);
+assert.doesNotMatch(
+  landingSource,
+  /forthcomingCollections|forcePreparing/,
+  "landing must not expose unpublished collections as a preparation card grid",
+);
 assert.match(
   landingSource,
   /publishedCollections/,

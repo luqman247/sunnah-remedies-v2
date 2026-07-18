@@ -47,6 +47,7 @@ export function normalizeSearchText(text: string): string {
 export interface SearchableCollection
   extends Pick<CanonicalCollection, "slug" | "titleEn" | "descriptionEn" | "aliases" | "subcategories"> {
   titleDa?: string;
+  descriptionDa?: string;
 }
 
 /**
@@ -61,6 +62,7 @@ export function collectionMatchesSearchTerm(collection: SearchableCollection, te
     collection.titleEn,
     collection.titleDa ?? "",
     collection.descriptionEn,
+    collection.descriptionDa ?? "",
     ...collection.aliases,
     ...(collection.subcategories?.flatMap((s) => [s.titleEn, ...(s.aliases ?? [])]) ?? []),
   ];
