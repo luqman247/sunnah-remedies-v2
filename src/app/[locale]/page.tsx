@@ -8,7 +8,6 @@ import { isPlaceholderEstablishmentCopy } from "@/lib/i18n/chrome-labels";
 import { getHomepage } from "@/sanity/lib/fetch";
 import { getCurrentSeason, getHijriDate } from "@/lib/calendar/seasons";
 import { IsnadRule } from "@/components/arrival/IsnadRule";
-import { Plate } from "@/components/arrival/Plate";
 import { SectionStamp } from "@/components/arrival/SectionStamp";
 import { Eyebrow } from "@/components/arrival/Eyebrow";
 import { ArrivalPullQuote } from "@/components/arrival/ArrivalPullQuote";
@@ -18,6 +17,7 @@ import { CorrespondenceForm } from "@/components/arrival/CorrespondenceForm";
 import { Reveal } from "@/components/arrival/Reveal";
 import { TaskPathways } from "@/components/arrival/TaskPathways";
 import { HomepageLatestAdditions } from "@/components/arrival/HomepageLatestAdditions";
+import { CinematicHero } from "@/components/editorial/Editorial";
 import "@/components/arrival/arrival.css";
 
 export async function generateMetadata({
@@ -262,32 +262,19 @@ export default async function ArrivalPage({
         </div>
       </section>
 
-      {/* ═══ LATEST ADDITIONS — early editorial cue before threshold plate ═══ */}
+      {/* ═══ LATEST ADDITIONS — early editorial cue before threshold ═══ */}
       <Reveal>
         <HomepageLatestAdditions locale={locale} />
       </Reveal>
 
-      {/* ═══ § 2 · THRESHOLD PLATE (Ch. 9.3) ═══ */}
-      <Reveal>
-        <section className="arrival-section" style={{ paddingBlockStart: 0 }}>
-          <div className="arrival-container">
-            <Plate
-              asset={{
-                status: "final",
-                purpose: ui("thresholdPurpose"),
-                composition: ui("thresholdComposition"),
-                lens: ui("thresholdLens"),
-                lighting: ui("thresholdLighting"),
-                mood: ui("thresholdMood"),
-                image: { url: "/photography/institution-hero.jpg" },
-                alt: ui("thresholdAlt"),
-              }}
-              aspect="16/7"
-              priority
-            />
-          </div>
-        </section>
-      </Reveal>
+      {/* ═══ § 2 · THRESHOLD CINEMATIC HERO ═══ */}
+      <CinematicHero
+        src="/photography/institution-hero.jpg"
+        alt={ui("thresholdAlt")}
+        statement={ui("thresholdStatement")}
+        qualifier={ui("thresholdQualifier")}
+        statementAs="h2"
+      />
 
       {/* ═══ SEASONAL AWARENESS — appears only during sacred seasons ═══ */}
       {season !== "standard" && (
