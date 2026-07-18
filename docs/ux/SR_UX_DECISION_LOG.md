@@ -20,3 +20,11 @@
 | 2026-07-18 | Raise masthead nav breakpoint 768→1024 | Keep desktop links at tablet; truncate Danish | At 768 Danish department labels overflowed horizontally | Aesop: material honesty; usable chrome |
 | 2026-07-18 | Document soft HTTP 200 on `notFound()` under `[locale]` as known limit; ship institutional UI | Block Phase 2A until middleware 404 fixed | Pre-existing sitewide (ADR-017); out of Phase 2A chrome scope | Mayo: state limits plainly |
 | 2026-07-18 | Phase 2A closure pass only — no Phase 2B | Start homepage/booking/academy UX | User: approved in principle, not complete until closure | Process |
+| 2026-07-18 | Discard abandoned Next 16 ESLint CLI experiment from worktree; keep config outside Git | Commit eslint.config + lint script change | Full-repo lint is known debt (170/172); experiment not approved | Process honesty |
+| 2026-07-18 | Phase 2B: hero primary = Book a consultation; Enter the institution secondary | Replace hero; SaaS CTA cluster | Clarity without weakening institutional identity | Aesop / Mayo |
+| 2026-07-18 | Editorial TaskPathways list gated on public journeys | Restore quarantined card grid wholesale | Spec + design gate; no false registration | Wellcome / Mayo |
+| 2026-07-18 | Mobile masthead: primary book CTA + Departments + Common tasks | Mega-menu duplicating every link | Direct tasks without crowding | Oxford restraint |
+| 2026-07-18 | Trust as one hero line from existing standards language | New trust/stats/testimonial section | Support task completion; no invented claims | Mayo / Oxford |
+| 2026-07-18 | Slight mobile-only hero type/spacing reduction | Leave CTA below fold at 390 | First viewport must expose primary action | Clinical clarity |
+| 2026-07-18 | Desktop ≥1024: Navigation trigger CSS-hidden; inline masthead-nav only | Also show Navigation drawer on desktop | No duplicate access; breakpoint intentional from Phase 2A tablet fix | Aesop restraint |
+| 2026-07-18 | Permanent `/da` → `/dk` redirect; `localeUrl` uses `/dk` prefix | Leave `/da` publicly reachable as internal segment | `/da` is next-intl id only; public canonical is `/dk` | Mayo: one truth; no duplicate indexation |

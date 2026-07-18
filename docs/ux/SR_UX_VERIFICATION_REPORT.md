@@ -110,12 +110,80 @@ No hydration warnings observed on verified pages. Language switch and consent be
 
 - Department landing **body** still English on many `/dk` routes (D→E) — gap register
 - Sitewide soft-404 HTTP status (infrastructure)
-- Homepage task pathways / booking redesign / Academy programme UX / commerce redesign
+
+---
+
+## Phase 2B — Homepage task clarity (verification)
+
+**Status:** Implementation complete and verified in browser — **not committed**  
+**Dev server:** `:3010`  
+**External ESLint config (outside Git):** `/Users/nikmaljabarzai/Desktop/sr-eslint-next16-temp.config.mjs`  
+**Safety patch (outside Git):** `/Users/nikmaljabarzai/Desktop/sr-ux-preapproval-snapshot.patch`
+
+### Quality
+
+| Check | Result |
+|-------|--------|
+| `npx tsc --noEmit` | Pass |
+| `node --import tsx --test tests/ux/*.ts` | Pass — 7/7 |
+| Focused `homepage-task-clarity.smoke.ts` | Pass |
+| Production `npm run build` | Pass |
+| Changed-file ESLint (external temp config) | **0 errors** |
+| Full-repo lint | **Known debt** — ~170 errors / 172 warnings — do not claim pass |
+
+### Viewports × locales
+
+| Viewport | EN | DA |
+|----------|----|----|
+| 390×844 | Pass — primary CTA in first viewport; Navigation panel tasks | Pass — Book en konsultation; pathways DA |
+| 768×1024 | Pass — Navigation (panel); no H-overflow | Pass — long DA labels; no clip |
+| 1440×900 | Pass — desktop masthead with Institute + Book accent | Pass — parity |
+
+### Routes verified
+
+`/`, `/dk` (canonical Danish), `/consultations` (aria-current on Book), `/the-apothecary`, `/the-academy`, `/knowledge-library/dua-dhikr`, `/institute` — HTTP 200; no fixture/dev-preview links on homepage.
+
+**`/da` closure:** Direct `/da` and `/da/:path*` return **308 Permanent Redirect** to `/dk` (query preserved). Internal rewrite `/dk` → `/da` unchanged. Homepage on `/dk` canonical = `https://www.sunnahremedies.com/dk`; hreflang da → `/dk` (never `/da`).
+
+### Masthead breakpoint closure
+
+| Width | Mode |
+|-------|------|
+| ≤1023 | Navigation panel trigger visible; desktop nav hidden |
+| ≥1024 (incl. 1440) | Desktop institutional nav visible; Navigation trigger `display: none` |
+
+No visible dual chrome; no redesign required.
+
+### Accessibility / motion / zoom
+
+| Check | Result |
+|-------|--------|
+| Mobile Escape → focus Navigation | Pass |
+| Scroll lock while panel open | Pass |
+| Tab focus containment in panel | Present in Masthead implementation |
+| Reduced motion | Pass |
+| 200% zoom @ 768 | Pass — no required H-scroll |
+| Console / hydration | No hydration errors observed on verified surfaces; Next.js dev “N” badge only |
+
+### Interaction counts
+
+See `SR_HOMEPAGE_TASK_CLARITY_PHASE_REPORT.md` and `SR_USER_JOURNEYS.md`.
+
+### Scope boundary
+
+No booking-flow redesign, Academy restructuring, commerce redesign, Sacred Journeys registration redesign, broad DA CMS translation, analytics, or visual rebrand.
 
 ## Prior retained work
 
-Verification-product containment, asset-routing, dev-preview gate, Duʿa publication-state, Danish chrome layout fix, route/rewrite protections — retained.
+Phase 2A commits intact:
+
+1. `91fd1ed` fix: correct locale routing and static asset resolution  
+2. `9ffe377` fix: protect public fixtures and publication states  
+3. `dd1aef8` feat: localise Danish global chrome and system states  
+4. `77fb345` docs: record ux audit and phase verification  
+
+Verification-product containment, asset-routing, Duʿa publication-state, Danish chrome — retained.
 
 ## Approval boundary
 
-No commit, push, merge, or deploy. Phase 2B not started.
+No commit, push, merge, deploy, or pull request for Phase 2B. Stop for approval.
