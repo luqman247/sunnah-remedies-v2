@@ -21,11 +21,20 @@
  * @see docs/dua-dhikr/SOURCE_POLICY.md
  */
 
+/**
+ * Uses length(field) > 0 rather than defined(field) && field != "" — GROQ's
+ * filter-stage defined() is unreliable for long text fields (confirmed:
+ * consistently, reproducibly false for real, populated arabicText/
+ * translationEn values over ~1000+ characters, e.g. full Qur'anic ayat,
+ * even though the exact same field reads correctly via a projection or via
+ * length()/string() in the same filter stage). length() reads the actual
+ * document value and has shown no such failure.
+ */
 export const DUA_DHIKR_ELIGIBILITY_GROQ = `
   reviewStatus == "published"
-  && defined(arabicText) && arabicText != ""
-  && defined(translationEn) && translationEn != ""
-  && defined(translationDa) && translationDa != ""
+  && length(arabicText) > 0
+  && length(translationEn) > 0
+  && length(translationDa) > 0
   && count(sourceReferences) > 0
   && count(boardApprovals[board == "scholarly" && approved == true]) > 0
   && count(boardApprovals[board == "editorial" && approved == true]) > 0
@@ -105,11 +114,13 @@ export function isDuaDhikrEntryPubliclyEligible(doc: DuaDhikrEntryEligibilityInp
  * through this rule MUST display a neutral "scholarly review pending" note —
  * never a claim of scholarly approval or "scholarly reviewed" status.
  */
+// length(field) > 0, not defined(field) && field != "" — see the note on
+// DUA_DHIKR_ELIGIBILITY_GROQ above for why.
 export const DUA_DHIKR_EDITORIAL_ELIGIBILITY_GROQ = `
   editorialPublicationStatus == "editorial-only-scholarly-review-pending"
-  && defined(arabicText) && arabicText != ""
-  && defined(translationEn) && translationEn != ""
-  && defined(translationDa) && translationDa != ""
+  && length(arabicText) > 0
+  && length(translationEn) > 0
+  && length(translationDa) > 0
   && count(sourceReferences) > 0
   && count(boardApprovals[board == "editorial" && approved == true]) > 0
 `.trim();
@@ -197,11 +208,18 @@ export interface DuaDhikrEntryOwnerApprovedEnglishEligibilityInput {
   boardApprovals?: DuaDhikrBoardApprovalLike[];
 }
 
+// length(field) > 0, not defined(field) && field != "" — see the note on
+// DUA_DHIKR_ELIGIBILITY_GROQ above. This is the pathway that actually
+// exhibited the bug: 4 of 425 owner-approved-English entries (those with
+// arabicText/translationEn over ~1000 characters — full Qur'anic ayat
+// rather than short duas) were silently excluded from every public query
+// because defined() returned false for their long field values, even
+// though the fields were genuinely present with real content.
 export const DUA_DHIKR_OWNER_APPROVED_ENGLISH_ELIGIBILITY_GROQ = `
   editorialPublicationStatus == "owner-approved-english-first"
-  && defined(importIdentifier) && importIdentifier != ""
-  && defined(arabicText) && arabicText != ""
-  && defined(translationEn) && translationEn != ""
+  && length(importIdentifier) > 0
+  && length(arabicText) > 0
+  && length(translationEn) > 0
   && count(collections) > 0
 `.trim();
 
