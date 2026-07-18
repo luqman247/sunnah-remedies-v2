@@ -34,7 +34,7 @@ function JsonLd({ description }: { description: string }) {
     "@type": ["Organization", "EducationalOrganization"],
     name: "Sunnah Remedies",
     description,
-    url: "https://sunnahremedies.com",
+    url: "https://www.sunnahremedies.co.uk",
     foundingDate: "2025",
     areaServed: "Worldwide",
     knowsAbout: ["Prophetic Medicine", "Tibb al-Nabawi", "Hijama", "Islamic Medicine"],

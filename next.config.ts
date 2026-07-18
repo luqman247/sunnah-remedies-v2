@@ -19,6 +19,15 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Canonical host is www.sunnahremedies.co.uk (see src/lib/seo/config.ts).
+      // Collapse the apex host so canonical/OG/hreflang/sitemap URLs and the
+      // host actually served always agree.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "sunnahremedies.co.uk" }],
+        destination: "https://www.sunnahremedies.co.uk/:path*",
+        permanent: true,
+      },
       {
         source: "/the-academy/hijama",
         destination: "/the-academy/hijama-diploma",
