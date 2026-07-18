@@ -256,10 +256,8 @@ export async function getDuaDhikrCollectionsPublic(locale: AppLocale = "en"): Pr
     const entryCount = countBySlug.get(collection.slug) ?? 0;
     return {
       ...collection,
-      // descriptionDa is structural card copy (mirrors dhikrCategory.description,
-      // which has no reviewStatus gate of its own) — not subject to the
-      // introduction/whenRead copy-eligibility gate below.
-      descriptionDa: doc?.descriptionDa,
+      // Prefer CMS structural card copy when present; otherwise keep taxonomy Danish.
+      descriptionDa: doc?.descriptionDa ?? collection.descriptionDa,
       introductionEn: copyEligible ? doc?.introductionEn : undefined,
       introductionDa: copyEligible ? doc?.introductionDa : undefined,
       whenReadEn: copyEligible ? doc?.whenReadEn : undefined,

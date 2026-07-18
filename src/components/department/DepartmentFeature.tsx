@@ -1,6 +1,8 @@
-import { Link } from "@/i18n/navigation";
+import { Link, getPathname } from "@/i18n/navigation";
+import type { AppLocale } from "@/i18n/locales";
 import Image from "next/image";
 import { type ReactNode } from "react";
+import NextLink from "next/link";
 
 interface DepartmentFeatureProps {
   src: string;
@@ -45,19 +47,32 @@ export function DepartmentFeature({
 interface DepartmentFeatureLinkProps {
   href: string;
   children: ReactNode;
+  /**
+   * When provided (e.g. from an RSC department page), resolve the locale
+   * prefix with getPathname so English stays unprefixed and Danish uses /dk.
+   * Do not pass an already-prefixed href.
+   */
+  locale?: AppLocale;
 }
 
 export function DepartmentFeatureLink({
   href,
   children,
+  locale,
 }: DepartmentFeatureLinkProps) {
+  const resolvedHref = locale ? getPathname({ href, locale }) : href;
+
+  // next/link receives the fully resolved pathname so as-needed English
+  // routes stay unprefixed and Danish routes are not double-prefixed.
+  const LinkComponent = locale ? NextLink : Link;
+
   return (
-    <Link href={href} className="dept-enter">
+    <LinkComponent href={resolvedHref} className="dept-enter">
       {children}{" "}
       <span className="arrow" aria-hidden="true">
         ⟶
       </span>
-    </Link>
+    </LinkComponent>
   );
 }
 
@@ -107,9 +122,7 @@ export function DepartmentPullQuote({
         <footer className="dept-pullquote__attribution">
           {attribution && <span>{attribution}</span>}
           {attribution && source && <span> · </span>}
-          {source && (
-            <cite style={{ fontStyle: "normal" }}>{source}</cite>
-          )}
+          {source && <cite style={{ fontStyle: "normal" }}>{source}</cite>}
         </footer>
       )}
     </blockquote>

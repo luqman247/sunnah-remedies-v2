@@ -14,6 +14,10 @@ interface DuaDhikrCollectionCardProps {
    * Used by the restrained “In preparation” section.
    */
   forcePreparing?: boolean;
+  /** Intentional display title (e.g. Danish message fallback for foundational collections). */
+  titleOverride?: string;
+  /** When the visible title is English on a Danish page, mark it with lang="en". */
+  titleLang?: "en";
 }
 
 /**
@@ -25,29 +29,54 @@ export function DuaDhikrCollectionCard({
   collection,
   locale,
   forcePreparing = false,
+  titleOverride,
+  titleLang,
 }: DuaDhikrCollectionCardProps) {
   const t = useTranslations("duaDhikr.landing");
-  const title = locale === "da" && collection.titleDa ? collection.titleDa : collection.titleEn;
+  const title =
+    titleOverride ??
+    (locale === "da" && collection.titleDa
+      ? collection.titleDa
+      : collection.titleEn);
   const description =
-    locale === "da" && collection.descriptionDa ? collection.descriptionDa : collection.descriptionEn;
-  const href = collection.externalHref ?? `/knowledge-library/dua-dhikr/${collection.slug}`;
-  const published = !forcePreparing && isDuaDhikrCollectionPublished(collection);
+    locale === "da" && collection.descriptionDa
+      ? collection.descriptionDa
+      : collection.descriptionEn;
+  const href =
+    collection.externalHref ??
+    `/knowledge-library/dua-dhikr/${collection.slug}`;
+  const published =
+    !forcePreparing && isDuaDhikrCollectionPublished(collection);
+  const resolvedTitleLang =
+    titleLang ??
+    (locale === "da" && !collection.titleDa && !titleOverride
+      ? "en"
+      : undefined);
 
   const body = (
     <>
-      <DuaDhikrIcon iconKey={collection.iconKey} className="dua-dhikr-collection-card__icon" size={28} />
-      <h3 className="dua-dhikr-collection-card__title">{title}</h3>
-      {description && <p className="dua-dhikr-collection-card__description">{description}</p>}
+      <DuaDhikrIcon
+        iconKey={collection.iconKey}
+        className="dua-dhikr-collection-card__icon"
+        size={28}
+      />
+      <h3 className="dua-dhikr-collection-card__title" lang={resolvedTitleLang}>
+        {title}
+      </h3>
+      {description && (
+        <p
+          className="dua-dhikr-collection-card__description"
+          lang={locale === "da" && !collection.descriptionDa ? "en" : undefined}
+        >
+          {description}
+        </p>
+      )}
       <div className="dua-dhikr-collection-card__meta">
         {published ? (
           <span>{t("entryCount", { count: collection.entryCount })}</span>
         ) : (
           <span>{t("inPreparationStatus")}</span>
         )}
-        {published &&
-          collection.subcategories?.map((sub) => (
-            <span key={sub.slug}>{sub.titleEn}</span>
-          ))}
       </div>
     </>
   );

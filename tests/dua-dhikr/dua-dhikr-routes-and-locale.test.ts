@@ -66,10 +66,23 @@ function testMorningAndEveningRoutesAreUnchangedInSubstance() {
   console.log("✓ Morning and Evening Dhikr routes are unchanged and were not migrated or duplicated");
 }
 
-function testDhikrTimeNavigationEmbeddedInLandingHero() {
+function testLandingHeroIsEditorialNotTypographicMenu() {
   const source = readFileSync(LANDING_PAGE_PATH, "utf-8");
-  assert(source.includes("DhikrTimeNavigation"), "the Duʿa & Dhikr landing hero must embed the existing DhikrTimeNavigation component");
-  console.log("✓ the Duʿa & Dhikr landing page extends (embeds), rather than re-implements, Morning/Evening navigation");
+  assert(
+    !source.includes("DhikrTimeNavigation"),
+    "the Duʿā & Dhikr landing hub must not embed DhikrTimeNavigation as a typographic collection menu",
+  );
+  assert(
+    source.includes("beginHereHeading") && source.includes("selectBeginHereCollections"),
+    "Morning/Evening must surface once via the Begin here section",
+  );
+  assert(
+    source.includes("selectBrowseByOccasionCollections"),
+    "Browse by occasion must exclude Begin here collections to prevent duplication",
+  );
+  console.log(
+    "✓ the Duʿā & Dhikr landing hub uses Begin here cards instead of embedding DhikrTimeNavigation",
+  );
 }
 
 function testKnowledgeLibraryRedirectConfigured() {
@@ -124,7 +137,7 @@ function runAll() {
   testCollectionPageGeneratesStaticParamsFromCanonicalTaxonomy();
   testMorningAndEveningSlugsRedirectRatherThanDuplicate();
   testMorningAndEveningRoutesAreUnchangedInSubstance();
-  testDhikrTimeNavigationEmbeddedInLandingHero();
+  testLandingHeroIsEditorialNotTypographicMenu();
   testKnowledgeLibraryRedirectConfigured();
   testSidebarPointsToNewHub();
   testDuaDhikrMessageNamespaceExistsInBothLocales();
