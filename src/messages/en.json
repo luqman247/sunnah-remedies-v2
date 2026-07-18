@@ -1359,6 +1359,46 @@
         "action": "Explore Sacred Journeys"
       }
     },
+    "foundingCovenant": {
+      "eyebrow": "THE FOUNDING COVENANT",
+      "heading": "The principles behind everything we do",
+      "introHeading": "A covenant of trust",
+      "intro0": "Sunnah Remedies was not established simply to provide treatments, sell products or deliver courses",
+      "intro1": "It was established to preserve and responsibly transmit the tradition of Prophetic Medicine through scholarship, clinical care, professional education and carefully selected natural therapeutics",
+      "introLead": "Our work is governed by a founding covenant:",
+      "triad0": "Knowledge before products",
+      "triad1": "Service before profit",
+      "triad2": "Trust before growth",
+      "missionLabel": "MISSION",
+      "mission": "To make authentic Prophetic Medicine accessible through responsible scholarship, compassionate clinical care, professional education and carefully governed natural therapeutics — delivered with integrity, clarity and respect for every individual",
+      "visionLabel": "VISION",
+      "vision": "To become a trusted international institution for Prophetic Medicine: preserving its authentic tradition, raising standards of practice and building an enduring body of clinical care, education and knowledge that can serve generations",
+      "commitmentsLabel": "CHARTER COMMITMENTS",
+      "commitments": {
+        "healing": {
+          "title": "Healing belongs to Allah",
+          "body": "We recognise that healing is from Allah alone. Treatments, practitioners and remedies are means and are never presented as guarantees"
+        },
+        "foundation": {
+          "title": "Nothing without a traceable foundation",
+          "body": "Claims concerning the Qur’an, Sunnah or Prophetic Medicine must be supported by identifiable and responsibly presented sources"
+        },
+        "fear": {
+          "title": "We do not trade in fear",
+          "body": "We will never exaggerate illness, exploit vulnerability or pressure people into purchasing treatments, products or courses"
+        },
+        "person": {
+          "title": "The person comes before the protocol",
+          "body": "Every individual is treated with dignity, listened to carefully and supported according to their circumstances — never reduced to a transaction"
+        },
+        "trust": {
+          "title": "Trust before growth",
+          "body": "We will not compromise safety, authenticity or professional standards in pursuit of faster expansion or greater commercial success"
+        }
+      },
+      "closing": "This is not simply a statement of intent. It is the standard by which our institution asks to be judged",
+      "cta": "Read the complete Founding Charter"
+    },
     "traditionStamp": "ON THE TRADITION",
     "traditionStandfirst": "What is this discipline, and why does it require an institution?",
     "traditionBody0": "Prophetic Medicine is not folk remedy, not alternative wellness, not a brand opportunity. It is a received body of knowledge — transmitted through authenticated chains, tested against observable evidence, and constrained by the limits its own sources declare",

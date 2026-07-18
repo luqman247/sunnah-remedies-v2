@@ -15,6 +15,7 @@ import { CorrespondenceForm } from "@/components/arrival/CorrespondenceForm";
 import { Reveal } from "@/components/arrival/Reveal";
 import { TaskPathways } from "@/components/arrival/TaskPathways";
 import { HomepageLatestAdditions } from "@/components/arrival/HomepageLatestAdditions";
+import { FoundingCovenant } from "@/components/arrival/FoundingCovenant";
 import { CinematicHero } from "@/components/editorial/Editorial";
 import "@/components/arrival/arrival.css";
 
@@ -315,6 +316,9 @@ export default async function ArrivalPage({
           </div>
         </section>
       </Reveal>
+
+      {/* ═══ FOUNDING COVENANT — institutional philosophy before credentials ═══ */}
+      <FoundingCovenant locale={locale} />
 
       {/* ═══ § 5 · AUTHORITY SIGNALS (Ch. 9.6) ═══ */}
       <AuthorityBand items={authoritySignals} />

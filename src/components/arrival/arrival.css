@@ -858,6 +858,223 @@
   grid-column: auto;
 }
 
+/* ── Founding Covenant (homepage institutional trust) ───────── */
+
+.arrival-v2 .founding-covenant {
+  border-block-start: var(--hairline);
+  background: var(--paper);
+}
+
+.arrival-v2 .founding-covenant__inner {
+  max-inline-size: 52rem;
+}
+
+.arrival-v2 .founding-covenant__opening {
+  margin-block-end: var(--space-10);
+}
+
+.arrival-v2 .founding-covenant__eyebrow {
+  color: var(--brass);
+  margin-block-end: var(--space-4);
+}
+
+.arrival-v2 .founding-covenant__title {
+  margin: 0 0 var(--space-6);
+  max-inline-size: 18ch;
+}
+
+.arrival-v2 .founding-covenant__intro-heading {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 420;
+  font-variation-settings:
+    "opsz" 40,
+    "SOFT" 0,
+    "WONK" 0;
+  line-height: 1.2;
+  color: var(--sage);
+  margin: 0 0 var(--space-5);
+}
+
+.arrival-v2 .founding-covenant__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-inline-size: 58ch;
+}
+
+.arrival-v2 .founding-covenant__intro p {
+  margin: 0;
+}
+
+.arrival-v2 .founding-covenant__intro-lead {
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.arrival-v2 .founding-covenant__triad {
+  margin: 0 0 var(--space-12);
+  padding: var(--space-10) var(--space-8);
+  background: var(--sage-deep);
+  color: var(--paper-on-deep);
+  border: 0;
+}
+
+.arrival-v2 .founding-covenant__triad-line {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.5rem, 3.2vw, 2.35rem);
+  font-weight: 400;
+  font-variation-settings:
+    "opsz" 72,
+    "SOFT" 0,
+    "WONK" 0;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--paper-on-deep);
+  margin: 0;
+}
+
+.arrival-v2 .founding-covenant__triad-line + .founding-covenant__triad-line {
+  margin-block-start: var(--space-4);
+}
+
+.arrival-v2 .founding-covenant__mission-vision {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  margin-block-end: var(--space-12);
+  padding-block: var(--space-2) var(--space-10);
+  border-block-end: var(--hairline);
+}
+
+@media (min-width: 768px) {
+  .arrival-v2 .founding-covenant__mission-vision {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-10) var(--space-12);
+  }
+
+  .arrival-v2 .founding-covenant__column + .founding-covenant__column {
+    border-inline-start: var(--hairline);
+    padding-inline-start: var(--space-12);
+  }
+}
+
+.arrival-v2 .founding-covenant__column-label {
+  color: var(--brass);
+  margin: 0 0 var(--space-4);
+}
+
+.arrival-v2 .founding-covenant__column-body {
+  margin: 0;
+  max-inline-size: 36ch;
+  color: var(--ink);
+}
+
+.arrival-v2 .founding-covenant__commitments {
+  margin-block-end: var(--space-12);
+}
+
+.arrival-v2 .founding-covenant__commitments-label {
+  color: var(--brass);
+  margin: 0 0 var(--space-8);
+}
+
+.arrival-v2 .founding-covenant__register {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+@media (min-width: 900px) {
+  .arrival-v2 .founding-covenant__register {
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--space-12);
+  }
+}
+
+.arrival-v2 .founding-covenant__item {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: var(--space-4);
+  padding-block: var(--space-6);
+  border-block-end: var(--hairline);
+}
+
+@media (min-width: 900px) {
+  .arrival-v2 .founding-covenant__item:nth-last-child(-n + 2) {
+    border-block-end: none;
+  }
+
+  .arrival-v2 .founding-covenant__item:last-child:nth-child(odd) {
+    border-block-end: none;
+  }
+}
+
+.arrival-v2 .founding-covenant__numeral {
+  color: var(--brass);
+  padding-block-start: 0.2em;
+}
+
+.arrival-v2 .founding-covenant__item-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  font-weight: 460;
+  font-variation-settings:
+    "opsz" 28,
+    "SOFT" 0,
+    "WONK" 0;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 var(--space-3);
+}
+
+.arrival-v2 .founding-covenant__item-text {
+  margin: 0;
+  max-inline-size: 42ch;
+  color: var(--ink-soft);
+}
+
+.arrival-v2 .founding-covenant__closing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-6);
+  max-inline-size: 48ch;
+}
+
+.arrival-v2 .founding-covenant__closing-text {
+  margin: 0;
+  font-style: italic;
+  color: var(--ink);
+}
+
+.arrival-v2 .founding-covenant__cta {
+  min-block-size: 44px;
+  padding-block: var(--space-2);
+  color: var(--sage);
+  font-weight: 500;
+}
+
+.arrival-v2 .founding-covenant__cta:hover,
+.arrival-v2 .founding-covenant__cta:focus-visible {
+  color: var(--sage-deep);
+}
+
+@media (max-width: 767px) {
+  .arrival-v2 .founding-covenant__triad {
+    padding: var(--space-8) var(--space-5);
+    margin-inline: calc(-1 * 20px);
+    padding-inline: 20px;
+  }
+
+  .arrival-v2 .founding-covenant__title {
+    max-inline-size: none;
+  }
+}
+
 /* ── Authority band (Ch. 9.6) ───────────────────────────────── */
 
 .arrival-v2 .authority-band {
