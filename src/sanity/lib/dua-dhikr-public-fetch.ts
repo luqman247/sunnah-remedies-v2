@@ -28,8 +28,10 @@ import { client } from "./client";
 import {
   duaDhikrEntriesPublicEligibleQuery,
   duaDhikrEntriesEditoriallyPublicEligibleQuery,
+  duaDhikrEntriesOwnerApprovedEnglishEligibleQuery,
   duaDhikrCollectionsQuery,
 } from "./queries";
+import type { AppLocale } from "@/i18n/locales";
 import {
   CANONICAL_COLLECTIONS,
   getCanonicalCollection,
@@ -92,10 +94,15 @@ export interface DuaDhikrEntryPublic {
    * Which publication pathway made this entry publicly visible.
    * "scholarly-approved": passed the full canonical eligibility gate.
    * "editorial-pending-scholarly-review": passed only the temporary
-   * editorial bypass — NOT scholarly-verified. Any UI rendering an entry
-   * with this pathway must show a "scholarly review pending" note.
+   * editorial bypass — NOT scholarly-verified.
+   * "owner-approved-english-first": content-owner approved, accepted as
+   * pre-verified, independent re-verification waived — NOT scholarly
+   * reviewed, NEVER Danish-eligible.
+   * Any UI rendering an entry via either of the two non-canonical pathways
+   * must show a neutral "scholarly review pending" / "owner-approved,
+   * pre-verified" note — never a claim of scholarly approval.
    */
-  publicationPathway: "scholarly-approved" | "editorial-pending-scholarly-review";
+  publicationPathway: "scholarly-approved" | "editorial-pending-scholarly-review" | "owner-approved-english-first";
 }
 
 async function safeFetchList<T>(query: string): Promise<T[]> {
@@ -123,13 +130,41 @@ export async function getEditoriallyPublishedDuaDhikrEntriesPublic(): Promise<Du
   return result.map((item) => ({ ...item, publicationPathway: "editorial-pending-scholarly-review" as const }));
 }
 
-/** Every publicly eligible entry from EITHER pathway, merged and re-sorted by `order`. */
-export async function getAllPublicDuaDhikrEntries(): Promise<DuaDhikrEntryPublic[]> {
-  const [scholarly, editorial] = await Promise.all([
+/**
+ * Every publicly eligible entry via the THIRD, separate, additive
+ * owner-approved-English-first pathway — never Danish-eligible, never a
+ * scholarly-approval claim. See dua-dhikr-publication-gate.ts.
+ */
+export async function getOwnerApprovedEnglishDuaDhikrEntriesPublic(): Promise<DuaDhikrEntryPublic[]> {
+  const result = await safeFetchList<Omit<DuaDhikrEntryPublic, "publicationPathway">>(
+    duaDhikrEntriesOwnerApprovedEnglishEligibleQuery,
+  );
+  return result.map((item) => ({ ...item, publicationPathway: "owner-approved-english-first" as const }));
+}
+
+/**
+ * Every publicly eligible entry for the given locale, merged and re-sorted
+ * by `order`. English (`locale === "en"`, the default) includes all three
+ * pathways; Danish includes only the two pathways that hard-require
+ * translationDa — the owner-approved-English-first pathway can never
+ * surface as Danish content under any circumstance. There is no ambiguous
+ * fallback locale: every caller must pass one explicitly, or accept the
+ * "en" default deliberately.
+ */
+export async function getAllPublicDuaDhikrEntries(locale: AppLocale = "en"): Promise<DuaDhikrEntryPublic[]> {
+  if (locale === "da") {
+    const [scholarly, editorial] = await Promise.all([
+      getDuaDhikrEntriesPublic(),
+      getEditoriallyPublishedDuaDhikrEntriesPublic(),
+    ]);
+    return [...scholarly, ...editorial].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  }
+  const [scholarly, editorial, ownerApprovedEnglish] = await Promise.all([
     getDuaDhikrEntriesPublic(),
     getEditoriallyPublishedDuaDhikrEntriesPublic(),
+    getOwnerApprovedEnglishDuaDhikrEntriesPublic(),
   ]);
-  return [...scholarly, ...editorial].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  return [...scholarly, ...editorial, ...ownerApprovedEnglish].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 }
 
 interface DuaDhikrCollectionDoc {
@@ -195,9 +230,9 @@ export interface DuaDhikrCollectionPublic extends CanonicalCollection {
  *   - all other slugs → Duʿa & Dhikr public entry gates
  * Taxonomy structure alone never marks a collection published.
  */
-export async function getDuaDhikrCollectionsPublic(): Promise<DuaDhikrCollectionPublic[]> {
+export async function getDuaDhikrCollectionsPublic(locale: AppLocale = "en"): Promise<DuaDhikrCollectionPublic[]> {
   const [entries, docsBySlug, morningItems, eveningItems] = await Promise.all([
-    getAllPublicDuaDhikrEntries(),
+    getAllPublicDuaDhikrEntries(locale),
     getDuaDhikrCollectionDocsBySlug(),
     getMorningDhikrItemsPublic(),
     getEveningDhikrItemsPublic(),
@@ -236,14 +271,14 @@ export async function getDuaDhikrCollectionsPublic(): Promise<DuaDhikrCollection
   });
 }
 
-export async function getDuaDhikrCollectionPublic(slug: string): Promise<DuaDhikrCollectionPublic | undefined> {
-  const collections = await getDuaDhikrCollectionsPublic();
+export async function getDuaDhikrCollectionPublic(slug: string, locale: AppLocale = "en"): Promise<DuaDhikrCollectionPublic | undefined> {
+  const collections = await getDuaDhikrCollectionsPublic(locale);
   return collections.find((c) => c.slug === slug);
 }
 
-/** Every publicly eligible entry belonging to a given canonical collection slug (by collection reference, not subcategory). */
-export async function getDuaDhikrEntriesForCollection(slug: string): Promise<DuaDhikrEntryPublic[]> {
-  const entries = await getAllPublicDuaDhikrEntries();
+/** Every publicly eligible entry belonging to a given canonical collection slug (by collection reference, not subcategory), for the given locale. */
+export async function getDuaDhikrEntriesForCollection(slug: string, locale: AppLocale = "en"): Promise<DuaDhikrEntryPublic[]> {
+  const entries = await getAllPublicDuaDhikrEntries(locale);
   return entries.filter((entry) => entry.collections.some((c) => c.slug === slug));
 }
 

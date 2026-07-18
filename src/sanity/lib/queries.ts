@@ -3,6 +3,7 @@ import { DHIKR_ELIGIBILITY_GROQ, DHIKR_EDITORIAL_ELIGIBILITY_GROQ } from "./dhik
 import {
   DUA_DHIKR_ELIGIBILITY_GROQ,
   DUA_DHIKR_EDITORIAL_ELIGIBILITY_GROQ,
+  DUA_DHIKR_OWNER_APPROVED_ENGLISH_ELIGIBILITY_GROQ,
 } from "./dua-dhikr-publication-gate";
 
 /**
@@ -766,6 +767,18 @@ export const duaDhikrEntriesPublicEligibleQuery = groq`
 /** Separate, additive editorial-bypass pathway — see docs/dua-dhikr/REVIEW_BYPASS.md. */
 export const duaDhikrEntriesEditoriallyPublicEligibleQuery = groq`
   *[_type == "duaDhikrEntry" && ${DUA_DHIKR_EDITORIAL_ELIGIBILITY_GROQ}] | order(order asc) {
+    ${duaDhikrEntryPublicProjection}
+  }
+`;
+
+/**
+ * Third, separate, additive pathway: owner-approved, English-first, never
+ * gated on translationDa — see dua-dhikr-publication-gate.ts. English
+ * public fetches merge this with the two queries above; Danish public
+ * fetches must never use this query.
+ */
+export const duaDhikrEntriesOwnerApprovedEnglishEligibleQuery = groq`
+  *[_type == "duaDhikrEntry" && ${DUA_DHIKR_OWNER_APPROVED_ENGLISH_ELIGIBILITY_GROQ}] | order(order asc) {
     ${duaDhikrEntryPublicProjection}
   }
 `;
