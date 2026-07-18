@@ -12,6 +12,7 @@ import {
   getDuaDhikrEntriesForCollection,
 } from "@/sanity/lib/dua-dhikr-public-fetch";
 import { CANONICAL_COLLECTIONS, PARENT_GROUPS, getCanonicalCollection } from "@/lib/dua-dhikr/taxonomy";
+import { isDuaDhikrCollectionPublished } from "@/lib/dua-dhikr/publication-status";
 import { DuaDhikrIcon } from "@/components/dua-dhikr/icons";
 import { DuaDhikrEntryCollection } from "@/components/dua-dhikr/DuaDhikrEntryCollection";
 import { DuaDhikrCollectionCard } from "@/components/dua-dhikr/DuaDhikrCollectionCard";
@@ -24,14 +25,12 @@ interface PageProps {
 }
 
 /**
- * Duʿa & Dhikr — collection page (docs/dua-dhikr/INFORMATION_ARCHITECTURE.md).
+ * Duʿa & Dhikr — collection page.
  *
- * Every canonical collection slug (src/lib/dua-dhikr/taxonomy.ts) gets a
- * statically-generated route and renders its structural shell even with
- * zero entries (same "honest empty shell" precedent as Evening Dhikr) — no
- * placeholder Islamic content is ever substituted in. Morning/Evening
- * Dhikr slugs redirect to their existing, unchanged routes rather than
- * rendering a second, competing page for the same content.
+ * Published collections (gate-passed entries) are indexable reading pages.
+ * Empty / in-preparation collections remain reachable with honest empty-state
+ * copy and robots noindex,nofollow — never fabricated religious content.
+ * Morning/Evening slugs redirect to their Dhikr routes.
  */
 export async function generateStaticParams() {
   return CANONICAL_COLLECTIONS.filter((c) => !c.externalHref).map((c) => ({ collectionSlug: c.slug }));
@@ -41,12 +40,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { collectionSlug, locale } = await params;
   const canonical = getCanonicalCollection(collectionSlug);
   if (!canonical) return {};
+
+  const collection = await getDuaDhikrCollectionPublic(collectionSlug);
   const title = locale === "da" && canonical.titleDa ? canonical.titleDa : canonical.titleEn;
-  return buildStaticMetadata(
+  const published = collection ? isDuaDhikrCollectionPublished(collection) : false;
+  const base = buildStaticMetadata(
     `/knowledge-library/dua-dhikr/${collectionSlug}`,
     `${title} | Duʿa & Dhikr · Sunnah Remedies`,
     canonical.descriptionEn,
   );
+
+  if (!published) {
+    return {
+      ...base,
+      robots: { index: false, follow: false },
+    };
+  }
+
+  return base;
 }
 
 export default async function DuaDhikrCollectionPage({ params }: PageProps) {
@@ -73,6 +84,7 @@ export default async function DuaDhikrCollectionPage({ params }: PageProps) {
       ...canonical,
       entryCount: entries.length,
       hasPendingUnreviewedCopy: false,
+      publicationState: entries.length > 0 ? ("published" as const) : ("in-preparation" as const),
     };
 
   const title = locale === "da" && resolved.titleDa ? resolved.titleDa : resolved.titleEn;
@@ -81,9 +93,13 @@ export default async function DuaDhikrCollectionPage({ params }: PageProps) {
   const whenRead = locale === "da" && resolved.whenReadDa ? resolved.whenReadDa : resolved.whenReadEn;
   const parentGroup = PARENT_GROUPS.find((g) => g.key === resolved.parentGroup);
 
-  const related = allCollections.filter((c) => (resolved.relatedGroupSlugs ?? []).includes(c.slug));
+  const related = allCollections.filter(
+    (c) => (resolved.relatedGroupSlugs ?? []).includes(c.slug) && isDuaDhikrCollectionPublished(c),
+  );
 
-  const siblings = allCollections.filter((c) => c.parentGroup === resolved.parentGroup);
+  const siblings = allCollections.filter(
+    (c) => c.parentGroup === resolved.parentGroup && isDuaDhikrCollectionPublished(c),
+  );
   const currentIndex = siblings.findIndex((c) => c.slug === collectionSlug);
   const previous = currentIndex > 0 ? siblings[currentIndex - 1] : undefined;
   const next = currentIndex >= 0 && currentIndex < siblings.length - 1 ? siblings[currentIndex + 1] : undefined;

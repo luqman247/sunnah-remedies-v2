@@ -7,18 +7,22 @@ import { getContinueReading } from "@/lib/dua-dhikr/local-storage";
 import "./dua-dhikr.css";
 
 /**
- * Gentle "Continue reading" list, derived purely from local-storage visit
- * history (src/lib/dua-dhikr/local-storage.ts) — no streaks, scores, or
- * competitive framing, per docs/dua-dhikr/README.md. Renders nothing when
- * there is no history yet (first visit, or storage unavailable).
+ * Gentle "Continue reading" list from local visit history.
+ * Only surfaces collections that are currently publicly published —
+ * unpublished history entries are omitted, never linked.
  */
-export function ContinueReading() {
+export function ContinueReading({
+  publishedSlugs,
+}: {
+  publishedSlugs: readonly string[];
+}) {
   const t = useTranslations("duaDhikr.landing");
   const [items, setItems] = useState<ReturnType<typeof getContinueReading>>([]);
 
   useEffect(() => {
-    setItems(getContinueReading());
-  }, []);
+    const allowed = new Set(publishedSlugs);
+    setItems(getContinueReading().filter((item) => allowed.has(item.collectionSlug)));
+  }, [publishedSlugs]);
 
   if (items.length === 0) return null;
 

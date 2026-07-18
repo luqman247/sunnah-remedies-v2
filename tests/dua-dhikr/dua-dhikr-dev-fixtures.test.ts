@@ -6,7 +6,7 @@
  * production code path.
  */
 
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { DEV_STRESS_FIXTURES } from "../../src/lib/dua-dhikr/dev-fixtures";
 import { CANONICAL_COLLECTION_SLUGS } from "../../src/lib/dua-dhikr/taxonomy";
@@ -16,17 +16,26 @@ function assert(condition: boolean, message: string) {
 }
 
 const REPO_ROOT = join(__dirname, "../..");
-const devPreviewPageSource = readFileSync(
+const pageSource = readFileSync(
   join(REPO_ROOT, "src/app/[locale]/knowledge-library/dua-dhikr/dev-preview/page.tsx"),
   "utf-8",
 );
+const gateSource = readFileSync(
+  join(REPO_ROOT, "src/lib/dua-dhikr/dev-preview-gate.ts"),
+  "utf-8",
+);
+const devPreviewPageSource = pageSource;
 
 function testDevPreviewRefusesProductionEnvironment() {
   assert(
-    devPreviewPageSource.includes('process.env.NODE_ENV === "production"') && devPreviewPageSource.includes("notFound()"),
-    "the dev-preview page must call notFound() when NODE_ENV is production",
+    pageSource.includes("isDhikrDevPreviewEnabled") && pageSource.includes("notFound()"),
+    "the dev-preview page must refuse access via isDhikrDevPreviewEnabled() + notFound()",
   );
-  console.log("✓ dev-preview route refuses to render when NODE_ENV is production");
+  assert(
+    gateSource.includes('NODE_ENV === "production"') && gateSource.includes("ENABLE_DHIKR_DEV_PREVIEW"),
+    "the shared gate must reject production and require ENABLE_DHIKR_DEV_PREVIEW",
+  );
+  console.log("✓ dev-preview route refuses to render unless the local-only flag is set (never in production)");
 }
 
 function testDevPreviewIsMarkedNoindex() {
@@ -46,7 +55,6 @@ function testDevFixturesModuleIsNotImportedByAnyProductionFile() {
   const productionSourceDirs = ["src/app", "src/components", "src/sanity", "src/lib"];
   const offendingFiles: string[] = [];
   function walk(dir: string) {
-    const { readdirSync, statSync } = require("node:fs") as typeof import("node:fs");
     for (const entry of readdirSync(join(REPO_ROOT, dir))) {
       const relPath = `${dir}/${entry}`;
       const fullPath = join(REPO_ROOT, relPath);

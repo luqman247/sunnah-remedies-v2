@@ -35,6 +35,14 @@ import {
   getCanonicalCollection,
   type CanonicalCollection,
 } from "@/lib/dua-dhikr/taxonomy";
+import {
+  resolveDuaDhikrCollectionPublicationState,
+  type DuaDhikrCollectionPublicationState,
+} from "@/lib/dua-dhikr/publication-status";
+import {
+  getEveningDhikrItemsPublic,
+  getMorningDhikrItemsPublic,
+} from "./dhikr-public-fetch";
 
 export interface DuaDhikrSourceReferencePublic {
   type: string;
@@ -170,18 +178,29 @@ export interface DuaDhikrCollectionPublic extends CanonicalCollection {
   /** Whether the collection has any editorial enrichment pending review, for a neutral "pending" note. */
   hasPendingUnreviewedCopy: boolean;
   entryCount: number;
+  /**
+   * Authoritative public projection state for navigation/search/sitemaps.
+   * Derived only from gate-passed public entry counts — never from taxonomy
+   * structure or Arabic text alone. See publication-status.ts.
+   */
+  publicationState: DuaDhikrCollectionPublicationState;
 }
 
 /**
- * Every canonical collection (from src/lib/dua-dhikr/taxonomy.ts — always
- * the full fixed list, never gated by Sanity content existing) enriched
- * with entry counts and any eligible editorial copy. Safe to render
- * immediately, before any Sanity content exists.
+ * Every canonical collection (from src/lib/dua-dhikr/taxonomy.ts) enriched
+ * with entry counts, publication state, and any eligible editorial copy.
+ *
+ * Publication state is the single public navigation source of truth:
+ *   - morning-dhikr / evening-dhikr → Morning/Evening Dhikr public gates
+ *   - all other slugs → Duʿa & Dhikr public entry gates
+ * Taxonomy structure alone never marks a collection published.
  */
 export async function getDuaDhikrCollectionsPublic(): Promise<DuaDhikrCollectionPublic[]> {
-  const [entries, docsBySlug] = await Promise.all([
+  const [entries, docsBySlug, morningItems, eveningItems] = await Promise.all([
     getAllPublicDuaDhikrEntries(),
     getDuaDhikrCollectionDocsBySlug(),
+    getMorningDhikrItemsPublic(),
+    getEveningDhikrItemsPublic(),
   ]);
 
   const countBySlug = new Map<string, number>();
@@ -191,9 +210,15 @@ export async function getDuaDhikrCollectionsPublic(): Promise<DuaDhikrCollection
     }
   }
 
+  // Authoritative SoT for Morning/Evening: dhikr publication pathways, not
+  // duaDhikrEntry counts (those collections redirect to /knowledge/dhikr/*).
+  countBySlug.set("morning-dhikr", morningItems.length);
+  countBySlug.set("evening-dhikr", eveningItems.length);
+
   return CANONICAL_COLLECTIONS.map((collection) => {
     const doc = docsBySlug.get(collection.slug);
     const copyEligible = doc ? isCollectionCopyEligible(doc) : false;
+    const entryCount = countBySlug.get(collection.slug) ?? 0;
     return {
       ...collection,
       // descriptionDa is structural card copy (mirrors dhikrCategory.description,
@@ -205,7 +230,8 @@ export async function getDuaDhikrCollectionsPublic(): Promise<DuaDhikrCollection
       whenReadEn: copyEligible ? doc?.whenReadEn : undefined,
       whenReadDa: copyEligible ? doc?.whenReadDa : undefined,
       hasPendingUnreviewedCopy: !!doc?.introductionEn && !copyEligible,
-      entryCount: countBySlug.get(collection.slug) ?? 0,
+      entryCount,
+      publicationState: resolveDuaDhikrCollectionPublicationState(entryCount),
     };
   });
 }

@@ -10,6 +10,10 @@
 import { client } from "./client";
 import { DEFAULT_LOCALE } from "@/i18n/locales";
 import {
+  filterPublicCatalogueProducts,
+  isPublicCatalogueProduct,
+} from "@/lib/commerce/public-product-guard";
+import {
   homepageQuery,
   navigationQuery,
   footerQuery,
@@ -188,34 +192,62 @@ export async function getGlobalSeo(locale: string = DEFAULT_LOCALE): Promise<Glo
 
 export async function getAllProducts(locale: string = DEFAULT_LOCALE): Promise<Product[]> {
   const sanity = await safeFetch<Product[]>(allProductsQuery, {}, locale, false);
-  if (sanity?.length) return sanity;
+  if (sanity?.length) return filterPublicCatalogueProducts(sanity);
   if (locale !== DEFAULT_LOCALE) {
     const fallback = await safeFetch<Product[]>(allProductsQuery, {}, DEFAULT_LOCALE, false);
-    if (fallback?.length) return fallback;
+    if (fallback?.length) return filterPublicCatalogueProducts(fallback);
   }
-  return remedies.map(r => remedyToProduct(r));
+  return filterPublicCatalogueProducts(remedies.map(r => remedyToProduct(r)));
 }
 
 export async function getProductBySlug(slug: string, locale: string = DEFAULT_LOCALE): Promise<Product | null> {
+  if (!isPublicCatalogueProduct({ slug })) return null;
+
+  const sanitize = (product: Product): Product | null => {
+    if (!isPublicCatalogueProduct(product)) return null;
+    return {
+      ...product,
+      relatedProducts: product.relatedProducts
+        ? filterPublicCatalogueProducts(product.relatedProducts)
+        : product.relatedProducts,
+    };
+  };
+
   const sanity = await safeFetch<Product>(productBySlugQuery, { slug }, locale, false);
-  if (sanity) return sanity;
+  if (sanity) {
+    return sanitize(sanity);
+  }
   if (locale !== DEFAULT_LOCALE) {
     const fallback = await safeFetch<Product>(productBySlugQuery, { slug }, DEFAULT_LOCALE, false);
-    if (fallback) return fallback;
+    if (fallback) {
+      return sanitize(fallback);
+    }
   }
   const staticRemedy = getStaticRemedy(slug);
-  return staticRemedy ? remedyToProduct(staticRemedy) : null;
+  if (!staticRemedy) return null;
+  return sanitize(remedyToProduct(staticRemedy));
 }
 
 export async function getProductSlugs(): Promise<{ slug: string; language: string }[]> {
   const sanity = await safeFetch<{ slug: { current: string }; language: string }[]>(
-    `*[_type == "product" && !(_id in path("drafts.**"))]{ slug, language }`,
+    `*[_type == "product" && !(_id in path("drafts.**"))
+      && !(slug.current match "*verification*")
+      && !(slug.current match "*do-not-buy*")
+      && !(slug.current match "*fixture*")
+      && !(name match "*Do Not Buy*")
+    ]{ slug, language }`,
     {},
     DEFAULT_LOCALE,
     false,
   );
-  if (sanity?.length) return sanity.map(p => ({ slug: p.slug.current, language: p.language || DEFAULT_LOCALE }));
-  return getAllRemedySlugs().map(s => ({ slug: s, language: DEFAULT_LOCALE }));
+  if (sanity?.length) {
+    return sanity
+      .map(p => ({ slug: p.slug.current, language: p.language || DEFAULT_LOCALE }))
+      .filter(p => isPublicCatalogueProduct({ slug: p.slug }));
+  }
+  return getAllRemedySlugs()
+    .filter(s => isPublicCatalogueProduct({ slug: s }))
+    .map(s => ({ slug: s, language: DEFAULT_LOCALE }));
 }
 
 function remedyToProduct(r: Remedy): Product {

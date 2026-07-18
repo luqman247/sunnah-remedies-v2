@@ -183,7 +183,12 @@ export const homepageQuery = groq`
 /* ── Apothecary ─────────────────────────────────────────────────── */
 
 export const allProductsQuery = groq`
-  *[_type == "product" && language == $language && !(_id in path("drafts.**"))] | order(orderRank) {
+  *[_type == "product" && language == $language && !(_id in path("drafts.**"))
+    && !(slug.current match "*verification*")
+    && !(slug.current match "*do-not-buy*")
+    && !(slug.current match "*fixture*")
+    && !(name match "*Do Not Buy*")
+  ] | order(orderRank) {
     _id,
     slug,
     name,
@@ -202,12 +207,22 @@ export const allProductsQuery = groq`
 `;
 
 export const productBySlugQuery = groq`
-  *[_type == "product" && slug.current == $slug && language == $language][0] {
+  *[_type == "product" && slug.current == $slug && language == $language
+    && !(slug.current match "*verification*")
+    && !(slug.current match "*do-not-buy*")
+    && !(slug.current match "*fixture*")
+    && !(name match "*Do Not Buy*")
+  ][0] {
     ...,
     mainImage { ..., asset-> },
     gallery[] { ..., asset-> },
     propheticReferences[],
-    "relatedProducts": relatedProducts[]->{ _id, slug, name, nature, mainImage { ..., asset-> } },
+    "relatedProducts": relatedProducts[]->[
+      !(slug.current match "*verification*")
+      && !(slug.current match "*do-not-buy*")
+      && !(slug.current match "*fixture*")
+      && !(name match "*Do Not Buy*")
+    ]{ _id, slug, name, nature, mainImage { ..., asset-> } },
     "ingredients": ingredients[]->{ _id, slug, name, botanicalName },
     seo,
     ${translationSiblings}

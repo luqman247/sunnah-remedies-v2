@@ -2,6 +2,9 @@ import type { MetadataRoute } from "next";
 import { localeUrl } from "@/lib/seo/metadata";
 import { client } from "@/sanity/lib/client";
 import { seoConfig } from "@/lib/seo/config";
+import { isPublicCatalogueProduct } from "@/lib/commerce/public-product-guard";
+import { getDuaDhikrCollectionsPublic } from "@/sanity/lib/dua-dhikr-public-fetch";
+import { isDuaDhikrCollectionPublished } from "@/lib/dua-dhikr/publication-status";
 
 /**
  * Sitemap index — references child sitemaps per content type.
@@ -36,7 +39,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/search",
   ];
 
-  const [products, programmes, journeys, articles, entities] = await Promise.all([
+  const [products, programmes, journeys, articles, entities, duaCollections] = await Promise.all([
     client.fetch<{ slug: string; updatedAt: string }[]>(
       `*[_type == "product" && defined(slug.current)]{ "slug": slug.current, "updatedAt": _updatedAt }`,
     ).catch(() => []),
@@ -56,6 +59,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         "updatedAt": _updatedAt
       }`,
     ).catch(() => []),
+    getDuaDhikrCollectionsPublic().catch(() => []),
   ]);
 
   const entries: MetadataRoute.Sitemap = [];
@@ -70,8 +74,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  // Products
+  // Products — never include verification/fixture inventory
   for (const p of products) {
+    if (!isPublicCatalogueProduct({ slug: p.slug })) continue;
     entries.push({
       url: `${seoConfig.siteUrl}/the-apothecary/${p.slug}`,
       lastModified: p.updatedAt ? new Date(p.updatedAt) : new Date(),
@@ -127,6 +132,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${seoConfig.siteUrl}/knowledge/${typePath}/${e.slug}`,
       lastModified: e.updatedAt ? new Date(e.updatedAt) : new Date(),
       changeFrequency: "monthly",
+      priority: 0.7,
+    });
+  }
+
+  // Duʿa & Dhikr — only published collections (gate-passed entries)
+  for (const collection of duaCollections) {
+    if (!isDuaDhikrCollectionPublished(collection)) continue;
+    if (collection.externalHref) {
+      entries.push({
+        url: localeUrl("en", collection.externalHref),
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.8,
+      });
+      continue;
+    }
+    entries.push({
+      url: localeUrl("en", `/knowledge-library/dua-dhikr/${collection.slug}`),
+      lastModified: new Date(),
+      changeFrequency: "weekly",
       priority: 0.7,
     });
   }

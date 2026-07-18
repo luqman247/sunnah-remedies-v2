@@ -8,6 +8,7 @@ import { Link } from "@/i18n/navigation";
 import { knowledgeLibrary } from "@/sanity/lib/fetch";
 import { getDuaDhikrCollectionsPublic } from "@/sanity/lib/dua-dhikr-public-fetch";
 import { PARENT_GROUPS } from "@/lib/dua-dhikr/taxonomy";
+import { isDuaDhikrCollectionPublished } from "@/lib/dua-dhikr/publication-status";
 import { DuaDhikrCollectionCard } from "@/components/dua-dhikr/DuaDhikrCollectionCard";
 import { DuaDhikrSearch } from "@/components/dua-dhikr/DuaDhikrSearch";
 import { ContinueReading } from "@/components/dua-dhikr/ContinueReading";
@@ -15,19 +16,12 @@ import "@/components/dua-dhikr/dua-dhikr.css";
 import "./dua-dhikr-landing.css";
 
 /**
- * Duʿa & Dhikr — landing page (docs/dua-dhikr/INFORMATION_ARCHITECTURE.md).
+ * Duʿa & Dhikr — landing page.
  *
- * Extends, rather than duplicates, Morning/Evening Dhikr: the hero embeds
- * the existing shared DhikrTimeNavigation component unchanged, and this
- * page's own data comes exclusively from src/sanity/lib/dua-dhikr-public-
- * fetch.ts (its own eligibility gate, independent of the Dhikr gate — see
- * docs/dua-dhikr/REVIEW_BYPASS.md).
- *
- * The full canonical collection grid (src/lib/dua-dhikr/taxonomy.ts) always
- * renders — collections are structural navigation, not gated by whether
- * Sanity content exists yet. Never generates a duʿa or virtue claim; the
- * discovery/learning sections below only ever link to a fixed collection
- * route or render neutral placeholder text.
+ * Primary navigation surfaces only collections with gate-passed public entries.
+ * Forthcoming collections appear in a restrained, non-interactive
+ * “In preparation” section — never as equally prominent empty links.
+ * Morning/Evening status uses the Dhikr publication gates, not duaDhikrEntry counts.
  */
 
 const QUICK_ACCESS_FALLBACK_SLUGS = [
@@ -80,10 +74,18 @@ export default async function DuaDhikrLandingPage({
   const tNav = await getTranslations("nav");
 
   const collections = await getDuaDhikrCollectionsPublic();
+  const publishedCollections = collections.filter(isDuaDhikrCollectionPublished);
+  const forthcomingCollections = collections.filter((c) => !isDuaDhikrCollectionPublished(c));
   const collectionBySlug = new Map(collections.map((c) => [c.slug, c]));
+
   const quickAccess = QUICK_ACCESS_FALLBACK_SLUGS.map((slug) => collectionBySlug.get(slug)).filter(
-    (c): c is NonNullable<typeof c> => !!c,
+    (c): c is NonNullable<typeof c> => !!c && isDuaDhikrCollectionPublished(c),
   );
+
+  const publishedDiscovery = DISCOVERY_ITEMS.filter((item) => {
+    const target = collectionBySlug.get(item.slug);
+    return target && isDuaDhikrCollectionPublished(target);
+  });
 
   return (
     <SectionPage
@@ -100,27 +102,29 @@ export default async function DuaDhikrLandingPage({
           <h1 className="sr-only">{t("heading")}</h1>
           <p className="dua-dhikr-hero__lede">{t("lede")}</p>
           <DhikrTimeNavigation suppressOwnHeading />
-          <DuaDhikrSearch collections={collections} locale={locale} />
+          <DuaDhikrSearch collections={publishedCollections} locale={locale} />
         </div>
       }
     >
-      <section aria-labelledby="dua-dhikr-quick-access-heading" className="policy-block">
-        <h2 id="dua-dhikr-quick-access-heading" className="section-label">
-          {t("quickAccessHeading")}
-        </h2>
-        <div className="dua-dhikr-collection-grid">
-          {quickAccess.map((collection) => (
-            <DuaDhikrCollectionCard key={collection.slug} collection={collection} locale={locale} />
-          ))}
-        </div>
-      </section>
+      {quickAccess.length > 0 && (
+        <section aria-labelledby="dua-dhikr-quick-access-heading" className="policy-block">
+          <h2 id="dua-dhikr-quick-access-heading" className="section-label">
+            {t("quickAccessHeading")}
+          </h2>
+          <div className="dua-dhikr-collection-grid">
+            {quickAccess.map((collection) => (
+              <DuaDhikrCollectionCard key={collection.slug} collection={collection} locale={locale} />
+            ))}
+          </div>
+        </section>
+      )}
 
       <section aria-labelledby="dua-dhikr-browse-heading" className="policy-block">
         <h2 id="dua-dhikr-browse-heading" className="section-label">
           {t("browseHeading")}
         </h2>
         {PARENT_GROUPS.map((group) => {
-          const groupCollections = collections.filter((c) => c.parentGroup === group.key);
+          const groupCollections = publishedCollections.filter((c) => c.parentGroup === group.key);
           if (groupCollections.length === 0) return null;
           return (
             <div key={group.key} className="dua-dhikr-parent-group">
@@ -135,26 +139,50 @@ export default async function DuaDhikrLandingPage({
             </div>
           );
         })}
+        {publishedCollections.length === 0 && (
+          <p className="type-body">{t("noPublishedCollections")}</p>
+        )}
       </section>
 
-      <section aria-labelledby="dua-dhikr-discovery-heading" className="policy-block">
-        <h2 id="dua-dhikr-discovery-heading" className="section-label">
-          {t("discoveryHeading")}
-        </h2>
-        <ul className="dua-dhikr-discovery-list">
-          {DISCOVERY_ITEMS.map((item) => {
-            const target = collectionBySlug.get(item.slug);
-            const href = target?.externalHref ?? `/knowledge-library/dua-dhikr/${item.slug}`;
-            return (
-              <li key={item.key}>
-                <Link href={href} className="dua-dhikr-discovery-link">
-                  {t(`discovery.${item.key}`)}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </section>
+      {forthcomingCollections.length > 0 && (
+        <section aria-labelledby="dua-dhikr-preparing-heading" className="policy-block">
+          <h2 id="dua-dhikr-preparing-heading" className="section-label">
+            {t("inPreparationHeading")}
+          </h2>
+          <p className="type-body dua-dhikr-preparing-note">{t("inPreparationLede")}</p>
+          <div className="dua-dhikr-collection-grid dua-dhikr-collection-grid--preparing">
+            {forthcomingCollections.map((collection) => (
+              <DuaDhikrCollectionCard
+                key={collection.slug}
+                collection={collection}
+                locale={locale}
+                forcePreparing
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {publishedDiscovery.length > 0 && (
+        <section aria-labelledby="dua-dhikr-discovery-heading" className="policy-block">
+          <h2 id="dua-dhikr-discovery-heading" className="section-label">
+            {t("discoveryHeading")}
+          </h2>
+          <ul className="dua-dhikr-discovery-list">
+            {publishedDiscovery.map((item) => {
+              const target = collectionBySlug.get(item.slug)!;
+              const href = target.externalHref ?? `/knowledge-library/dua-dhikr/${item.slug}`;
+              return (
+                <li key={item.key}>
+                  <Link href={href} className="dua-dhikr-discovery-link">
+                    {t(`discovery.${item.key}`)}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
 
       <section aria-labelledby="dua-dhikr-learning-heading" className="policy-block">
         <h2 id="dua-dhikr-learning-heading" className="section-label">
@@ -169,10 +197,7 @@ export default async function DuaDhikrLandingPage({
       </section>
 
       <section aria-label={t("continueReadingHeading")} className="policy-block">
-        {/* ContinueReading renders its own heading, and nothing at all,
-            heading included, when there is no local reading history yet —
-            see src/components/dua-dhikr/ContinueReading.tsx. */}
-        <ContinueReading />
+        <ContinueReading publishedSlugs={publishedCollections.map((c) => c.slug)} />
       </section>
     </SectionPage>
   );
