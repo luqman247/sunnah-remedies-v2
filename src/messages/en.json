@@ -1379,6 +1379,15 @@
   },
   "duaDhikr": {
     "breadcrumb": "Duʿa & Dhikr",
+    "feature": {
+      "stamp": "DUʿĀ & DHIKR",
+      "eyebrow": "Daily devotion",
+      "heading": "Duʿā & Dhikr",
+      "description": "A carefully organised library of supplications and remembrances for the moments of daily life",
+      "supporting": "Read the Arabic, transliteration, translation, virtues, explanations and source references in one calm, accessible place",
+      "cta": "Explore Duʿā & Dhikr",
+      "motifCaption": "Remembrance"
+    },
     "landing": {
       "eyebrow": "Duʿa & Dhikr",
       "heading": "Duʿa & Dhikr",

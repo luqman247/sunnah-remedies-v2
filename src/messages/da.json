@@ -1379,6 +1379,15 @@
   },
   "duaDhikr": {
     "breadcrumb": "Duʿa & dhikr",
+    "feature": {
+      "stamp": "DUʿĀ OG DHIKR",
+      "eyebrow": "Daglig fordybelse",
+      "heading": "Duʿā og dhikr",
+      "description": "Et omhyggeligt ordnet bibliotek af bønner og ihukommelser til hverdagens øjeblikke",
+      "supporting": "Læs arabisk, translitteration, oversættelse, fortjenester, forklaringer og kildehenvisninger samlet ét roligt og tilgængeligt sted",
+      "cta": "Udforsk duʿā og dhikr",
+      "motifCaption": "Ihukommelse"
+    },
     "landing": {
       "eyebrow": "Duʿa & dhikr",
       "heading": "Duʿa & dhikr",
