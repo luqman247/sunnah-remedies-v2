@@ -50,16 +50,52 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug, locale } = await params;
+  const { buildMetadata } = await import("@/lib/seo/metadata");
+
   const article = await getArticleBySlug(slug, locale);
   if (article) {
-    return {
-      title: article.seo?.metaTitle || article.title,
-      description: article.seo?.metaDescription || article.excerpt,
-    };
+    const socialImage = article.seo?.ogImage?.asset?.url || undefined;
+    const fallbackImage = article.mainImage?.asset?.url || undefined;
+
+    return buildMetadata({
+      path: `/knowledge-library/${slug}`,
+      type: "article",
+      document: {
+        title: article.title,
+        description: article.excerpt,
+        image: socialImage || fallbackImage,
+        imageAlt: article.mainImage?.alt || article.title,
+        publishedAt: article.publishedAt,
+        author: article.author?.name,
+      },
+      overrides: {
+        seoTitle: article.seo?.metaTitle,
+        seoDescription: article.seo?.metaDescription,
+        ogTitle: article.seo?.ogTitle,
+        ogDescription: article.seo?.ogDescription,
+        socialImage,
+        noIndex: article.seo?.noIndex,
+      },
+    });
   }
+
   const topic = getKnowledgeTopic(slug);
-  if (!topic) return { title: "Knowledge Library" };
-  return { title: topic.title, description: topic.lede };
+  if (!topic) {
+    return buildMetadata({
+      path: `/knowledge-library/${slug}`,
+      document: { title: "Knowledge Library" },
+    });
+  }
+
+  // Topic pages inherit the institutional opengraph-image until a dedicated
+  // preview is authored. Only articles with seo.ogImage / mainImage override.
+  return buildMetadata({
+    path: `/knowledge-library/${slug}`,
+    document: {
+      title: topic.title,
+      description: topic.lede,
+    },
+  });
 }
 
 export default async function KnowledgeTopicPage({ params }: PageProps) {

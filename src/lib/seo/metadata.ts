@@ -4,7 +4,10 @@
  * Resolution: Tier 4 (editorial override) > Tier 3 (document values) >
  * Tier 2 (type defaults) > Tier 1 (institutional defaults).
  *
- * No page ever ships without a resolved title, description, canonical, and OG image.
+ * No page ever ships without a resolved title, description, and canonical.
+ * Open Graph images: page-specific socialImage / document.image override
+ * the file-based institutional opengraph-image; otherwise the file
+ * convention supplies the premium default (do not set a conflicting images array).
  */
 
 import type { Metadata } from "next";
@@ -22,6 +25,8 @@ export function localeUrl(locale: string, path: string): string {
 export interface SeoOverrides {
   seoTitle?: string;
   seoDescription?: string;
+  ogTitle?: string;
+  ogDescription?: string;
   canonicalUrl?: string;
   socialImage?: string;
   robots?: string;
@@ -106,8 +111,14 @@ export function buildMetadata(input: MetadataInput): Metadata {
     overrides?.seoDescription || computedDescription || seoConfig.defaultDescription,
     155
   );
+  const ogTitle = overrides?.ogTitle || finalTitle;
+  const ogDescription = truncate(
+    overrides?.ogDescription || finalDescription,
+    200
+  );
   const finalCanonical = overrides?.canonicalUrl || canonicalUrl(path);
-  const finalImage = overrides?.socialImage || doc?.image || seoConfig.defaultOgImage;
+  const customImage = overrides?.socialImage || doc?.image || undefined;
+  const finalImage = customImage || seoConfig.defaultOgImage;
   const finalRobots = overrides?.noIndex
     ? "noindex, follow"
     : overrides?.robots || typeConfig?.robots || "index, follow";
@@ -125,8 +136,8 @@ export function buildMetadata(input: MetadataInput): Metadata {
     },
     robots: finalRobots,
     openGraph: {
-      title: finalTitle,
-      description: finalDescription,
+      title: ogTitle,
+      description: ogDescription,
       url: finalCanonical,
       siteName: seoConfig.siteName,
       locale: seoConfig.locale,
@@ -136,14 +147,14 @@ export function buildMetadata(input: MetadataInput): Metadata {
           url: finalImage,
           width: 1200,
           height: 630,
-          alt: doc?.imageAlt || finalTitle,
+          alt: doc?.imageAlt || ogTitle,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: finalTitle,
-      description: finalDescription,
+      title: ogTitle,
+      description: ogDescription,
       images: [finalImage],
       site: seoConfig.twitterHandle,
     },
@@ -173,10 +184,12 @@ export function buildMetadata(input: MetadataInput): Metadata {
 export function buildStaticMetadata(
   path: string,
   title: string,
-  description?: string
+  description?: string,
+  overrides?: SeoOverrides
 ): Metadata {
   return buildMetadata({
     path,
     document: { title, description },
+    overrides,
   });
 }

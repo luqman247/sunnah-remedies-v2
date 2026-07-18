@@ -7,18 +7,27 @@
 
 export const seoConfig = {
   siteName: "Sunnah Remedies",
-  siteUrl: "https://www.sunnahremedies.com",
+  siteUrl: "https://www.sunnahremedies.co.uk",
   titleTemplate: "%s · Sunnah Remedies",
-  defaultTitle: "Sunnah Remedies — Institute of Prophetic Medicine",
+  defaultTitle: "Sunnah Remedies | Institute of Prophetic Medicine",
   defaultDescription:
-    "An institute of Prophetic Medicine for scholarship, clinical care, and natural therapeutics under one house — grounded in primary-source scholarship, laboratory verification, and clinical accountability.",
-  defaultOgImage: "/brand/og-default.jpg",
+    "A leading institute for Prophetic Medicine, combining authentic scholarship, clinical care, education and natural therapeutics.",
+  /**
+   * Relative path resolved against metadataBase.
+   * File-based opengraph-image.tsx is the institutional default;
+   * pages with a custom social image override via buildMetadata.
+   */
+  defaultOgImage: "/opengraph-image",
   locale: "en_GB",
   twitterHandle: "@sunnahremedies",
   organizationName: "Sunnah Remedies",
   foundingDate: "2025",
   logo: "/brand/logo-lockup-dark.svg",
   medicalSpecialty: "Prophetic Medicine (Ṭibb al-Nabawī)",
+  /** Homepage-specific social copy (distinct from document title). */
+  homeOgTitle: "Prophetic Medicine. Practised with Excellence.",
+  homeOgDescription:
+    "Discover Sunnah Remedies — scholarship, clinical care, education and natural therapeutics under one house.",
 } as const;
 
 export type RobotsDirective = "index" | "noindex" | "follow" | "nofollow";

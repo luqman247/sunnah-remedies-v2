@@ -2,7 +2,7 @@
  * Canonical URL & URL Normalisation.
  *
  * Single policy governing the entire estate:
- * - Canonical host: https://www.sunnahremedies.com
+ * - Canonical host: https://www.sunnahremedies.co.uk
  * - Lowercase paths, no trailing slash
  * - Strip tracking params (utm_*, gclid, fbclid)
  * - Self-referential canonicals by default

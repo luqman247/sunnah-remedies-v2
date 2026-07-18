@@ -301,7 +301,10 @@ export const articleBySlugQuery = groq`
     "author": author->{ name, title, biography, portrait { ..., asset-> } },
     topics[]->{ _id, slug, title },
     "relatedArticles": relatedArticles[]->{ _id, slug, title, excerpt, publishedAt },
-    seo,
+    seo {
+      ...,
+      ogImage { ..., asset-> }
+    },
     ${translationSiblings}
   }
 `;

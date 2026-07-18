@@ -52,10 +52,12 @@ export const brand = {
     png1024: "/brand/icon-app-rounded-1024.png",
   },
 
-  /* OpenGraph / social sharing — raster for platform compatibility */
+  /* OpenGraph / social sharing — institutional landscape preview */
   og: {
-    horizontal: "/brand/lockup-horizontal-primary@1024.png",
-    stacked: "/brand/lockup-stacked-primary@1024.png",
+    /** File-based ImageResponse route (1200×630). Not a logo lockup. */
+    institutional: "/opengraph-image",
+    horizontal: "/opengraph-image",
+    stacked: "/opengraph-image",
   },
 } as const;
 

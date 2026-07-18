@@ -38,7 +38,10 @@ async function getEntity(type: string, slug: string) {
     author->{ name, "slug": slug.current, jobTitle },
     reviewer->{ name, "slug": slug.current, jobTitle },
     reviewDate,
-    seo
+    seo {
+      ...,
+      ogImage { ..., asset-> }
+    }
   }`;
   return client.fetch(query).catch(() => null);
 }
@@ -59,12 +62,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: entity.shortDescription,
       definition: entity.definition,
       slug: entity.slug,
-      image: entity.mainImage?.asset?.url,
+      image: entity.seo?.ogImage?.asset?.url || entity.mainImage?.asset?.url,
+      imageAlt: entity.seo?.ogTitle || entity.title || entity.name,
     },
     overrides: entity.seo ? {
       seoTitle: entity.seo.metaTitle,
       seoDescription: entity.seo.metaDescription,
+      ogTitle: entity.seo.ogTitle,
+      ogDescription: entity.seo.ogDescription,
       canonicalUrl: entity.seo.canonicalUrl,
+      socialImage: entity.seo.ogImage?.asset?.url,
       noIndex: entity.seo.noIndex,
       keywords: entity.seo.keywords,
     } : undefined,

@@ -72,5 +72,10 @@ export default function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next|_vercel|studio|.*\\..*).*)"],
+  // Exclude Next.js file-based OG/Twitter image routes — they have no file
+  // extension, so the generic `.*\\..*` exclusion does not cover them.
+  // Without this, next-intl rewrites /opengraph-image → /en/opengraph-image (404).
+  matcher: [
+    "/((?!api|_next|_vercel|studio|opengraph-image|twitter-image|.*\\..*).*)",
+  ],
 };
