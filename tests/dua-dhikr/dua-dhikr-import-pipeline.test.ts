@@ -5,11 +5,16 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { validateImportRow, findDuplicateImportIdentifiers } from "../../src/lib/dua-dhikr/import/schema";
-import { runDuaDhikrImport, canonicalCollectionIdFor, type CollectionResolution } from "../../src/lib/dua-dhikr/import/import-content-document";
+import { runDuaDhikrImport, canonicalCollectionIdFor, type CollectionResolution, type EntryCollisionResult } from "../../src/lib/dua-dhikr/import/import-content-document";
 
 /** Network-free fake: every slug resolves as a clean, published canonical collection. */
 async function fakeResolveAlwaysPublished(slug: string): Promise<CollectionResolution> {
   return { slug, status: "resolved", resolvedId: canonicalCollectionIdFor(slug) };
+}
+
+/** Network-free fake: no entry ever collides — every importIdentifier is free to create. */
+async function fakeNoEntryCollision(importIdentifier: string): Promise<EntryCollisionResult> {
+  return { importIdentifier, status: "no-collision" };
 }
 
 function assert(condition: boolean, message: string) {
@@ -82,7 +87,7 @@ function testDuplicateImportIdentifiersAreDetected() {
 
 async function testDryRunNeverWrites() {
   const rows = [validRow, { ...validRow, importIdentifier: "TEST-002" }];
-  const report = await runDuaDhikrImport({ rows, dryRun: true, resolveCollectionId: fakeResolveAlwaysPublished });
+  const report = await runDuaDhikrImport({ rows, dryRun: true, resolveCollectionId: fakeResolveAlwaysPublished, checkEntryCollision: fakeNoEntryCollision });
   assert(report.dryRun === true, "dry-run report must report dryRun: true");
   assert(
     report.entries.every((e) => e.outcome !== "written"),

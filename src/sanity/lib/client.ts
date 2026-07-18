@@ -39,6 +39,24 @@ export const publishedReadClient = createClient({
   token: process.env.SANITY_API_TOKEN,
 });
 
+/**
+ * Authenticated, explicit-`raw`-perspective READ client. Sees documents at
+ * their literal physical `_id` — a `drafts.`-prefixed id is never
+ * canonicalized here, unlike `previewClient` (perspective: "drafts"). Used
+ * only for collision checks that must distinguish a physical draft from a
+ * physical published/root document (e.g. entry-id collision detection
+ * before writing a duaDhikrEntry — see import-content-document.ts). Every
+ * caller must use `.fetch()` only — never `.create()/.patch()/.delete()`.
+ */
+export const rawReadClient = createClient({
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn: false,
+  perspective: "raw",
+  token: process.env.SANITY_API_TOKEN,
+});
+
 export function getClient(preview = false) {
   return preview ? previewClient : client;
 }

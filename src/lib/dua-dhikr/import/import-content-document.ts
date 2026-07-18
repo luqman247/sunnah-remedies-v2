@@ -44,11 +44,21 @@
  * resolution is read-only and runs in BOTH dry-run and live mode, so a dry
  * run's report reflects exactly what a live run would do or refuse to do.
  *
+ * Entry documents themselves are ALWAYS created as Sanity drafts —
+ * `draftEntryDocumentId()` (`drafts.duaDhikrEntry-{id}`), never the
+ * canonical root id (`duaDhikrEntry-{id}`, `canonicalEntryDocumentId()`).
+ * A staging import must never produce a physical published/root entry
+ * document; only a later, separate, explicit publish action may do that.
+ * Both a collision check (against both physical id forms) and a
+ * mutation-boundary shape assertion enforce this — see
+ * `checkEntryCollision()` and `assertSafeDraftEntryShape()` below.
+ *
  * @see docs/dua-dhikr/CONTENT_IMPORT_GUIDE.md
  */
 
 import { writeClient } from "@/sanity/lib/write-client";
-import { publishedReadClient } from "@/sanity/lib/client";
+import { publishedReadClient, rawReadClient } from "@/sanity/lib/client";
+import { isDuaDhikrEntryPubliclyEligible, isDuaDhikrEntryEditoriallyPubliclyEligible, type DuaDhikrBoardApprovalLike } from "@/sanity/lib/dua-dhikr-publication-gate";
 import { validateImportRow, findDuplicateImportIdentifiers, type DuaDhikrImportRow, type ImportRowIssue } from "./schema";
 
 export interface ImportRunOptions {
@@ -69,6 +79,27 @@ export interface ImportRunOptions {
    * never override this.
    */
   resolveCollectionId?: (slug: string) => Promise<CollectionResolution>;
+  /**
+   * Injectable entry-collision checker — defaults to `checkEntryCollision`
+   * (a real, read-only Sanity fetch via `rawReadClient`, seeing literal
+   * physical documents). Tests pass a fake so the pipeline stays
+   * network-free; production code should never override this.
+   */
+  checkEntryCollision?: (importIdentifier: string) => Promise<EntryCollisionResult>;
+}
+
+export interface EntryCollisionResult {
+  importIdentifier: string;
+  /**
+   * "no-collision": neither the draft nor the root physical document exists
+   * — safe to create.
+   * "published-root-exists": a physical root (published) document already
+   * exists — never patched or overwritten by this importer.
+   * "draft-exists": a physical draft already exists — never silently
+   * treated as a successful new creation.
+   * "both-root-and-draft-exist": both physical forms already exist.
+   */
+  status: "no-collision" | "published-root-exists" | "draft-exists" | "both-root-and-draft-exist";
 }
 
 export interface CollectionResolution {
@@ -87,13 +118,24 @@ export interface CollectionResolution {
   resolvedId?: string;
 }
 
+export type ImportRunEntryAction = "would-create-draft" | "created-draft" | "would-skip" | "skipped";
+
 export interface ImportRunEntryResult {
   importIdentifier?: string;
+  /** @deprecated kept for formatImportReport backward compatibility — equals physicalDraftId once assigned. */
   documentId?: string;
+  /** The physical Sanity draft id this row would create/created — always `drafts.duaDhikrEntry-{id}`, never the root form. */
+  physicalDraftId?: string;
+  /** The future canonical root id this draft will have once a human explicitly publishes it — never itself written to during this import. */
+  canonicalDocumentId?: string;
+  /** Human/machine-readable summary of what this row did or would do. */
+  action?: ImportRunEntryAction;
   outcome: "would-write" | "written" | "skipped-invalid" | "skipped-duplicate-in-batch" | "skipped-batch-aborted";
   issues: ImportRowIssue[];
   /** Present once collection resolution has been attempted for this row (dry run or live). */
   collectionResolution?: CollectionResolution;
+  /** Present once the entry-collision check has been attempted for this row (dry run or live). */
+  entryCollision?: EntryCollisionResult;
 }
 
 export interface ImportRunReport {
@@ -107,12 +149,117 @@ export interface ImportRunReport {
   entries: ImportRunEntryResult[];
 }
 
-function documentIdFor(importIdentifier: string): string {
-  return `duaDhikrEntry-${importIdentifier.toLowerCase().replace(/[^a-z0-9-]/g, "-")}`;
+/**
+ * Normalises an importIdentifier into the id-safe fragment used by both the
+ * canonical and physical-draft entry ids. The single shared source of
+ * normalisation — never duplicated inline elsewhere.
+ */
+function normaliseImportIdentifier(importIdentifier: string): string {
+  const normalised = importIdentifier.trim().toLowerCase().replace(/[^a-z0-9-]/g, "-");
+  if (!normalised) {
+    throw new Error(`Cannot construct a document id: importIdentifier "${importIdentifier}" normalises to an empty string.`);
+  }
+  return normalised;
+}
+
+/** The future canonical root id — `duaDhikrEntry-{id}`. Never written to during a staging import; a reference and reporting value only. */
+export function canonicalEntryDocumentId(importIdentifier: string): string {
+  return `duaDhikrEntry-${normaliseImportIdentifier(importIdentifier)}`;
+}
+
+/** The physical Sanity draft id every staging-import write actually uses — always derived from, and prefixed onto, the canonical id, so it can never itself be a `versions.` id or double-prefix `drafts.`. */
+export function draftEntryDocumentId(importIdentifier: string): string {
+  return `drafts.${canonicalEntryDocumentId(importIdentifier)}`;
 }
 
 export function canonicalCollectionIdFor(slug: string): string {
   return `duaDhikrCollection-${slug}`;
+}
+
+/**
+ * Checks both physical forms of an entry id against the literal, physical
+ * documents in Sanity — via `rawReadClient` (perspective: "raw"), so a
+ * `drafts.`-prefixed id is never canonicalized away the way it would be
+ * under `previewClient`'s "drafts" perspective. Read-only. Run during BOTH
+ * dry run and live mode, so a dry run genuinely reports what a live run
+ * would refuse to do.
+ */
+async function checkEntryCollision(importIdentifier: string): Promise<EntryCollisionResult> {
+  const canonicalId = canonicalEntryDocumentId(importIdentifier);
+  const draftId = draftEntryDocumentId(importIdentifier);
+  const existing = await rawReadClient.fetch<{ _id: string }[]>(`*[_id in [$canonicalId, $draftId]]{ _id }`, { canonicalId, draftId });
+  const rootExists = existing.some((d) => d._id === canonicalId);
+  const draftExists = existing.some((d) => d._id === draftId);
+  if (rootExists && draftExists) return { importIdentifier, status: "both-root-and-draft-exist" };
+  if (rootExists) return { importIdentifier, status: "published-root-exists" };
+  if (draftExists) return { importIdentifier, status: "draft-exists" };
+  return { importIdentifier, status: "no-collision" };
+}
+
+function entryCollisionFailureMessage(collision: EntryCollisionResult): string {
+  switch (collision.status) {
+    case "published-root-exists":
+      return `A published/root duaDhikrEntry document already exists for "${collision.importIdentifier}" — refusing to patch or overwrite it.`;
+    case "draft-exists":
+      return `A draft duaDhikrEntry document already exists for "${collision.importIdentifier}" — refusing to treat re-import as a new creation.`;
+    case "both-root-and-draft-exist":
+      return `Both a draft and a published/root duaDhikrEntry document already exist for "${collision.importIdentifier}" — refusing to write.`;
+    case "no-collision":
+      return "";
+  }
+}
+
+interface DraftShapeCheckInput {
+  _id: string;
+  collections?: { _ref?: string }[];
+  reviewStatus?: string;
+  editorialPublicationStatus?: string;
+  boardApprovals?: DuaDhikrBoardApprovalLike[];
+  translationDa?: string;
+}
+
+interface DraftShapeCheckResult {
+  ok: boolean;
+  reason?: string;
+}
+
+/**
+ * The single source of truth for "is this candidate document safe to write
+ * as a staging draft" — used both to validate the dry-run report and, again,
+ * as a mutation-boundary assertion immediately before the live write
+ * (`assertSafeDraftEntryShape`). Deliberately re-derives the expected ids
+ * from `importIdentifier` rather than trusting `doc._id` was constructed
+ * correctly upstream — defence in depth beyond the id helpers alone.
+ */
+function checkDraftShape(doc: DraftShapeCheckInput, importIdentifier: string, sourceRowTranslationDa: string | undefined): DraftShapeCheckResult {
+  const canonicalId = canonicalEntryDocumentId(importIdentifier);
+  const draftId = draftEntryDocumentId(importIdentifier);
+
+  if (!doc._id.startsWith("drafts.duaDhikrEntry-")) return { ok: false, reason: `_id "${doc._id}" does not start with "drafts.duaDhikrEntry-"` };
+  if (doc._id === canonicalId) return { ok: false, reason: `_id equals the canonical root id "${canonicalId}" — must be the draft form` };
+  if (doc._id.startsWith("versions.")) return { ok: false, reason: `_id "${doc._id}" begins with "versions."` };
+  if (doc._id !== draftId) return { ok: false, reason: `_id "${doc._id}" is not exactly the expected draft id "${draftId}"` };
+
+  for (const ref of doc.collections ?? []) {
+    if (!ref._ref || !ref._ref.startsWith("duaDhikrCollection-")) return { ok: false, reason: `collection reference "${ref._ref}" does not begin with "duaDhikrCollection-"` };
+    if (ref._ref.startsWith("drafts.") || ref._ref.startsWith("versions.")) return { ok: false, reason: `collection reference "${ref._ref}" is not a stable published root id` };
+  }
+
+  if (isDuaDhikrEntryPubliclyEligible(doc) || isDuaDhikrEntryEditoriallyPubliclyEligible(doc)) {
+    return { ok: false, reason: "document would already be publicly eligible under the canonical or editorial-bypass gate — must remain publication-ineligible at import time" };
+  }
+  if (doc.reviewStatus === "published") return { ok: false, reason: `reviewStatus is "published" at import time` };
+  if (Array.isArray(doc.boardApprovals) && doc.boardApprovals.length > 0) return { ok: false, reason: "boardApprovals is non-empty — no scholarly approval may be claimed at import time" };
+  if (doc.editorialPublicationStatus) return { ok: false, reason: `editorialPublicationStatus is set ("${doc.editorialPublicationStatus}") at import time — must stay empty until a human reviews it` };
+  if (doc.translationDa && doc.translationDa !== sourceRowTranslationDa) return { ok: false, reason: "translationDa does not match the source row — no fabricated Danish translation may be introduced" };
+
+  return { ok: true };
+}
+
+/** Mutation-boundary defence in depth — throws rather than returning, so a caller cannot accidentally ignore the result right before a write. */
+function assertSafeDraftEntryShape(doc: DraftShapeCheckInput, importIdentifier: string, sourceRowTranslationDa: string | undefined): void {
+  const result = checkDraftShape(doc, importIdentifier, sourceRowTranslationDa);
+  if (!result.ok) throw new Error(`Refusing to write "${importIdentifier}": ${result.reason}.`);
 }
 
 /**
@@ -211,7 +358,13 @@ function toPreserveIfPresentFields(row: DuaDhikrImportRow) {
   };
 }
 
-export async function runDuaDhikrImport({ rows, dryRun, allowPartialBatch = false, resolveCollectionId = resolveCanonicalCollectionId }: ImportRunOptions): Promise<ImportRunReport> {
+export async function runDuaDhikrImport({
+  rows,
+  dryRun,
+  allowPartialBatch = false,
+  resolveCollectionId = resolveCanonicalCollectionId,
+  checkEntryCollision: checkEntryCollisionFn = checkEntryCollision,
+}: ImportRunOptions): Promise<ImportRunReport> {
   const validated = rows.map((row, index) => validateImportRow(row, index));
   const validRows = validated.map((r) => r.value).filter((v): v is DuaDhikrImportRow => !!v);
   const duplicates = new Set(findDuplicateImportIdentifiers(validRows));
@@ -221,6 +374,7 @@ export async function runDuaDhikrImport({ rows, dryRun, allowPartialBatch = fals
 
   const entries: ImportRunEntryResult[] = [];
   const collectionResolutionCache = new Map<string, CollectionResolution>();
+  const entryCollisionCache = new Map<string, EntryCollisionResult>();
 
   for (let i = 0; i < validated.length; i++) {
     const result = validated[i];
@@ -237,7 +391,21 @@ export async function runDuaDhikrImport({ rows, dryRun, allowPartialBatch = fals
       continue;
     }
 
-    const documentId = documentIdFor(result.value.importIdentifier);
+    const importIdentifier = result.value.importIdentifier;
+
+    let canonicalId: string;
+    let draftId: string;
+    try {
+      canonicalId = canonicalEntryDocumentId(importIdentifier);
+      draftId = draftEntryDocumentId(importIdentifier);
+    } catch (err) {
+      entries.push({
+        importIdentifier,
+        outcome: "skipped-invalid",
+        issues: [{ row: i, importIdentifier, field: "importIdentifier", message: err instanceof Error ? err.message : String(err) }],
+      });
+      continue;
+    }
 
     // Collection resolution is READ-ONLY (publishedReadClient.fetch only) and
     // runs identically in dry-run and live mode, so a dry run genuinely
@@ -249,33 +417,37 @@ export async function runDuaDhikrImport({ rows, dryRun, allowPartialBatch = fals
 
     if (collectionResolution.status !== "resolved") {
       entries.push({
-        importIdentifier: result.value.importIdentifier,
-        documentId,
+        importIdentifier,
+        documentId: draftId,
+        physicalDraftId: draftId,
+        canonicalDocumentId: canonicalId,
+        action: "would-skip",
         outcome: "skipped-invalid",
         collectionResolution,
-        issues: [{ row: i, importIdentifier: result.value.importIdentifier, field: "collectionSlug", message: collectionResolutionFailureMessage(collectionResolution) }],
+        issues: [{ row: i, importIdentifier, field: "collectionSlug", message: collectionResolutionFailureMessage(collectionResolution) }],
       });
       continue;
     }
 
-    if (dryRun) {
-      entries.push({ importIdentifier: result.value.importIdentifier, documentId, outcome: "would-write", collectionResolution, issues: [] });
-      continue;
+    // Entry-collision check is READ-ONLY (rawReadClient.fetch only, seeing
+    // literal physical documents) and, like collection resolution, runs
+    // identically in dry-run and live mode.
+    if (!entryCollisionCache.has(importIdentifier)) {
+      entryCollisionCache.set(importIdentifier, await checkEntryCollisionFn(importIdentifier));
     }
+    const entryCollision = entryCollisionCache.get(importIdentifier)!;
 
-    if (abortBatch) {
+    if (entryCollision.status !== "no-collision") {
       entries.push({
-        importIdentifier: result.value.importIdentifier,
-        documentId,
-        outcome: "skipped-batch-aborted",
+        importIdentifier,
+        documentId: draftId,
+        physicalDraftId: draftId,
+        canonicalDocumentId: canonicalId,
+        action: "would-skip",
+        outcome: "skipped-invalid",
         collectionResolution,
-        issues: [
-          {
-            row: i,
-            importIdentifier: result.value.importIdentifier,
-            message: "Batch contains other rows with blocking errors; nothing in this batch was written. Fix every error, or pass allowPartialBatch to stage only the valid rows.",
-          },
-        ],
+        entryCollision,
+        issues: [{ row: i, importIdentifier, message: entryCollisionFailureMessage(entryCollision) }],
       });
       continue;
     }
@@ -283,17 +455,87 @@ export async function runDuaDhikrImport({ rows, dryRun, allowPartialBatch = fals
     const collectionId = collectionResolution.resolvedId!;
     const alwaysSynced = toAlwaysSyncedFields(result.value, collectionId);
     const preserveIfPresent = toPreserveIfPresentFields(result.value);
-    await writeClient.createIfNotExists({
-      _id: documentId,
+    const candidateDoc = {
+      _id: draftId,
       _type: "duaDhikrEntry",
-      internalTitle: `${result.value.titleEn} (imported ${result.value.importIdentifier})`,
+      internalTitle: `${result.value.titleEn} (imported ${importIdentifier})`,
       reviewStatus: "sourced",
       editorialPublicationStatus: "",
       ...alwaysSynced,
       ...preserveIfPresent,
+    };
+
+    const shapeCheck = checkDraftShape(candidateDoc, importIdentifier, result.value.translationDa);
+    if (!shapeCheck.ok) {
+      entries.push({
+        importIdentifier,
+        documentId: draftId,
+        physicalDraftId: draftId,
+        canonicalDocumentId: canonicalId,
+        action: "would-skip",
+        outcome: "skipped-invalid",
+        collectionResolution,
+        entryCollision,
+        issues: [{ row: i, importIdentifier, message: `Draft-shape validation failed: ${shapeCheck.reason}.` }],
+      });
+      continue;
+    }
+
+    if (dryRun) {
+      entries.push({
+        importIdentifier,
+        documentId: draftId,
+        physicalDraftId: draftId,
+        canonicalDocumentId: canonicalId,
+        action: "would-create-draft",
+        outcome: "would-write",
+        collectionResolution,
+        entryCollision,
+        issues: [],
+      });
+      continue;
+    }
+
+    if (abortBatch) {
+      entries.push({
+        importIdentifier,
+        documentId: draftId,
+        physicalDraftId: draftId,
+        canonicalDocumentId: canonicalId,
+        action: "would-skip",
+        outcome: "skipped-batch-aborted",
+        collectionResolution,
+        entryCollision,
+        issues: [
+          {
+            row: i,
+            importIdentifier,
+            message: "Batch contains other rows with blocking errors; nothing in this batch was written. Fix every error, or pass allowPartialBatch to stage only the valid rows.",
+          },
+        ],
+      });
+      continue;
+    }
+
+    // Mutation-boundary assertion — defence in depth. Re-derives and
+    // re-checks everything checkDraftShape already confirmed above,
+    // immediately before the actual write, rather than trusting that
+    // nothing changed in between.
+    assertSafeDraftEntryShape(candidateDoc, importIdentifier, result.value.translationDa);
+
+    await writeClient.createIfNotExists(candidateDoc);
+    await writeClient.patch(draftId).set(alwaysSynced).setIfMissing(preserveIfPresent).commit();
+    entries.push({
+      importIdentifier,
+      documentId: draftId,
+      physicalDraftId: draftId,
+      canonicalDocumentId: canonicalId,
+      action: "created-draft",
+      outcome: "written",
+      collectionResolution,
+      entryCollision,
+      issues: [],
     });
-    await writeClient.patch(documentId).set(alwaysSynced).setIfMissing(preserveIfPresent).commit();
-    entries.push({ importIdentifier: result.value.importIdentifier, documentId, outcome: "written", collectionResolution, issues: [] });
   }
 
   return {
@@ -317,10 +559,16 @@ export function formatImportReport(report: ImportRunReport): string {
   }
   lines.push("");
   for (const entry of report.entries) {
-    lines.push(`- [${entry.outcome}] ${entry.importIdentifier ?? "(unidentified row)"}${entry.documentId ? ` → ${entry.documentId}` : ""}`);
+    lines.push(`- [${entry.outcome}]${entry.action ? ` (${entry.action})` : ""} ${entry.importIdentifier ?? "(unidentified row)"}`);
+    if (entry.physicalDraftId || entry.canonicalDocumentId) {
+      lines.push(`    physical draft id: ${entry.physicalDraftId ?? "(none)"}  ·  future canonical id: ${entry.canonicalDocumentId ?? "(none)"}`);
+    }
     if (entry.collectionResolution) {
       const r = entry.collectionResolution;
       lines.push(`    collection "${r.slug}": ${r.status}${r.resolvedId ? ` (${r.resolvedId})` : ""}`);
+    }
+    if (entry.entryCollision) {
+      lines.push(`    entry collision: ${entry.entryCollision.status}`);
     }
     for (const issue of entry.issues) {
       lines.push(`    ${issue.field ? `${issue.field}: ` : ""}${issue.message}`);
