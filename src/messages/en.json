@@ -688,14 +688,8 @@
     "bookAppointment": "Book an appointment"
   },
   "booking": {
-    "firstName": "First name",
-    "lastName": "Last name",
-    "dateOfBirth": "Date of birth",
-    "selectDate": "Select a date",
-    "selectTime": "Select a time",
-    "confirm": "Confirm booking",
-    "returning": "Returning patient",
-    "new": "New patient",
+    "refreshNote": "Your selections are kept in this browser session while you move between steps. Refreshing restores them here — they are never placed in the page address. Optional health notes are not stored across refresh",
+    "viewSummary": "View appointment summary",
     "hero": {
       "title": "Book Your Hijama Session",
       "subtitle": "Experience Prophetic medicine in a calm, professional environment. Choose your practitioner, preferred clinic and appointment time",
@@ -703,52 +697,134 @@
       "badgeSeparate": "Separate Male & Female Clinics",
       "badgeSunnah": "Sunnah-Based Care"
     },
+    "progress": {
+      "ariaLabel": "Booking progress",
+      "status": "Step {current} of {total}: {name}",
+      "steps": {
+        "practitioner": "Practitioner",
+        "clinic": "Clinic",
+        "schedule": "Date and time",
+        "details": "Your details",
+        "review": "Review"
+      }
+    },
+    "nav": {
+      "back": "Back",
+      "continue": "Continue",
+      "review": "Review appointment"
+    },
+    "review": {
+      "title": "Review your request",
+      "lede": "Check your preferences, then submit a consultation request. This does not reserve a time or confirm an appointment. The clinic will contact you to confirm availability"
+    },
+    "clinicAvailability": {
+      "london": "Available this week",
+      "aarhus": "Available next week",
+      "riyadh": "Coming soon"
+    },
+    "availability": {
+      "loading": "Checking availability…",
+      "empty": "No appointment times are open on this date",
+      "noDates": "No bookable dates are currently listed for this clinic",
+      "error": "Availability could not be loaded",
+      "retry": "Try again",
+      "fallback": "You may request assistance through correspondence",
+      "contact": "Contact the clinic",
+      "unavailable": "Unavailable",
+      "slotUnavailable": "This time is not available"
+    },
+    "validation": {
+      "firstName": "Enter your first name",
+      "surname": "Enter your surname",
+      "email": "Enter a valid email address",
+      "telephone": "Enter a telephone number",
+      "consent": "Confirm that you agree to the consultation process"
+    },
+    "errors": {
+      "network": "The request could not be completed. Your details are still here — please try again",
+      "staleSlot": "That time is no longer available. Please choose another time",
+      "server": "Something went wrong on our side. Please try again or contact the clinic",
+      "validation": "Please complete the required fields before submitting"
+    },
     "success": {
-      "title": "Thank you",
-      "message": "Your booking request has been received. We will confirm your appointment shortly via email",
+      "title": "Your request has been received",
+      "message": "Local mock confirmation only. Nothing was booked, charged, or emailed to a patient",
+      "notConfirmed": "This is not yet a confirmed appointment",
+      "clinicWillContact": "The clinic will contact you to confirm availability",
+      "preferencesOnly": "The date and time above are preferences only — the selected slot is not reserved",
+      "noEmailClaim": "No confirmation email was sent",
+      "testBanner": "Test confirmation — not a real appointment, payment, or email",
+      "testReference": "Test reference (not a live booking): {id}",
       "reference": "Reference: {id}",
+      "emailExpectation": "No automatic confirmation email is claimed by this interface",
+      "preparation": "If an appointment is later confirmed, the clinic will advise any preparation",
+      "cancellation": "To change preferences or ask a question, write through",
+      "contact": "correspondence",
       "returnHome": "Return Home",
-      "bookAnother": "Book Another Session"
+      "bookAnother": "Start another request"
+    },
+    "contactFallback": {
+      "title": "Continue through correspondence",
+      "message": "Online appointment confirmation is not available on this site. No booking reference has been created, and no slot has been reserved",
+      "notConfirmed": "This is not a confirmed appointment",
+      "clinicWillContact": "Please write through correspondence so the clinic can confirm availability with you",
+      "preferencesOnly": "The details below are preferences only — include them in your message to the clinic",
+      "contactCta": "Open correspondence",
+      "startAgain": "Start again",
+      "returnHome": "Return home"
     },
     "patientForm": {
-      "stepLabel": "Step 5",
-      "title": "Patient Information",
-      "firstName": "First Name",
+      "stepLabel": "Your details",
+      "title": "Patient information",
+      "firstName": "First name",
       "surname": "Surname",
       "email": "Email",
       "telephone": "Telephone",
       "reason": "Reason for appointment",
       "medicalConditions": "Any medical conditions?",
+      "medicalHint": "Optional. Shared only with the clinic for this request — never placed in the page address",
       "optional": "optional",
+      "required": "required",
+      "errorSummary": "Please correct the following",
       "consentText": "I understand Hijama may not be suitable for everyone and agree to the consultation process"
     },
     "steps": {
-      "step1": "Step 1",
-      "step2": "Step 2",
-      "step3": "Step 3",
-      "step4": "Step 4",
-      "choosePractitioner": "Choose Practitioner",
-      "chooseClinic": "Choose Clinic",
-      "chooseDate": "Choose Date",
-      "chooseTime": "Choose Time",
+      "step1": "Practitioner",
+      "step2": "Clinic",
+      "step3": "Date",
+      "step4": "Time",
+      "choosePractitioner": "Choose practitioner",
+      "chooseClinic": "Choose clinic",
+      "chooseSchedule": "Choose date and time",
+      "chooseDate": "Choose date",
+      "chooseTime": "Choose time",
       "practitionerGenderAria": "Practitioner gender",
       "clinicLocationAria": "Clinic location",
       "availableDatesAria": "Available dates",
       "availableTimesAria": "Available times",
-      "malePractitioner": "Male Practitioner",
-      "femalePractitioner": "Female Practitioner"
+      "malePractitioner": "Male practitioner",
+      "femalePractitioner": "Female practitioner"
     },
     "summary": {
       "ariaLabel": "Appointment summary",
-      "label": "Appointment Summary",
+      "label": "Appointment summary",
       "practitioner": "Practitioner",
+      "male": "Male practitioner",
+      "female": "Female practitioner",
       "clinic": "Clinic",
-      "date": "Date",
-      "time": "Time",
+      "location": "Location",
+      "date": "Preferred date",
+      "time": "Preferred time",
       "duration": "Duration",
-      "price": "Price",
-      "submitAria": "Book my appointment",
-      "submit": "Book My Appointment"
+      "durationValue": "45 minutes",
+      "price": "Indicative fee",
+      "paymentTiming": "Payment",
+      "paymentTimingValue": "Payable at the clinic only if an appointment is later confirmed — this form takes no payment",
+      "cancellation": "Changes",
+      "cancellationValue": "Write via correspondence — no online reservation is held",
+      "submitAria": "Submit consultation request",
+      "submit": "Submit consultation request",
+      "submitting": "Submitting…"
     }
   },
   "seasonal": {

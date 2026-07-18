@@ -688,14 +688,8 @@
     "bookAppointment": "Book en tid"
   },
   "booking": {
-    "firstName": "Fornavn",
-    "lastName": "Efternavn",
-    "dateOfBirth": "Fødselsdato",
-    "selectDate": "Vælg en dato",
-    "selectTime": "Vælg et tidspunkt",
-    "confirm": "Bekræft booking",
-    "returning": "Tilbagevendende patient",
-    "new": "Ny patient",
+    "refreshNote": "Dine valg gemmes i denne browsersession, mens du bevæger dig mellem trin. Genindlæsning genskaber dem her — de placeres aldrig i sidens adresse. Valgfrie helbredsnoter gemmes ikke ved genindlæsning",
+    "viewSummary": "Se aftaleoversigt",
     "hero": {
       "title": "Book din Hijama-session",
       "subtitle": "Oplev profetisk medicin i et roligt, professionelt miljø. Vælg din behandler, foretrukne klinik og aftaletidspunkt",
@@ -703,15 +697,84 @@
       "badgeSeparate": "Separate mande- og kvindeklinikker",
       "badgeSunnah": "Sunnah-baseret pleje"
     },
+    "progress": {
+      "ariaLabel": "Bookingforløb",
+      "status": "Trin {current} af {total}: {name}",
+      "steps": {
+        "practitioner": "Behandler",
+        "clinic": "Klinik",
+        "schedule": "Dato og tid",
+        "details": "Dine oplysninger",
+        "review": "Gennemgang"
+      }
+    },
+    "nav": {
+      "back": "Tilbage",
+      "continue": "Fortsæt",
+      "review": "Gennemgå aftale"
+    },
+    "review": {
+      "title": "Gennemgå din anmodning",
+      "lede": "Kontrollér dine præferencer, og indsend derefter en konsultationsanmodning. Dette reserverer ikke et tidspunkt og bekræfter ikke en aftale. Klinikken kontakter dig for at bekræfte ledighed"
+    },
+    "clinicAvailability": {
+      "london": "Ledig i denne uge",
+      "aarhus": "Ledig i næste uge",
+      "riyadh": "Kommer snart"
+    },
+    "availability": {
+      "loading": "Tjekker ledighed…",
+      "empty": "Ingen aftaletider er åbne på denne dato",
+      "noDates": "Der er i øjeblikket ingen bookbare datoer for denne klinik",
+      "error": "Ledighed kunne ikke hentes",
+      "retry": "Prøv igen",
+      "fallback": "Du kan anmode om hjælp via korrespondance",
+      "contact": "Kontakt klinikken",
+      "unavailable": "Ikke ledig",
+      "slotUnavailable": "Dette tidspunkt er ikke ledigt"
+    },
+    "validation": {
+      "firstName": "Angiv dit fornavn",
+      "surname": "Angiv dit efternavn",
+      "email": "Angiv en gyldig e-mailadresse",
+      "telephone": "Angiv et telefonnummer",
+      "consent": "Bekræft, at du accepterer konsultationsprocessen"
+    },
+    "errors": {
+      "network": "Anmodningen kunne ikke gennemføres. Dine oplysninger er stadig her — prøv igen",
+      "staleSlot": "Det tidspunkt er ikke længere ledigt. Vælg et andet tidspunkt",
+      "server": "Noget gik galt hos os. Prøv igen, eller kontakt klinikken",
+      "validation": "Udfyld de obligatoriske felter, før du indsender"
+    },
     "success": {
-      "title": "Tak",
-      "message": "Din bookingforespørgsel er modtaget. Vi bekræfter din aftale snarest via e-mail",
+      "title": "Din anmodning er modtaget",
+      "message": "Lokal mock-bekræftelse. Intet er booket, opkrævet eller sendt til en patient via e-mail",
+      "notConfirmed": "Dette er endnu ikke en bekræftet aftale",
+      "clinicWillContact": "Klinikken kontakter dig for at bekræfte ledighed",
+      "preferencesOnly": "Dato og tid ovenfor er kun præferencer — det valgte tidspunkt er ikke reserveret",
+      "noEmailClaim": "Der er ikke sendt nogen bekræftelsesmail",
+      "testBanner": "Testbekræftelse — ikke en rigtig aftale, betaling eller e-mail",
+      "testReference": "Testreference (ikke en live booking): {id}",
       "reference": "Reference: {id}",
+      "emailExpectation": "Denne grænseflade påstår ikke at sende en automatisk bekræftelsesmail",
+      "preparation": "Hvis en aftale senere bekræftes, oplyser klinikken eventuell forberedelse",
+      "cancellation": "For at ændre præferencer eller stille et spørgsmål, skriv via",
+      "contact": "korrespondance",
       "returnHome": "Tilbage til forsiden",
-      "bookAnother": "Book en ny session"
+      "bookAnother": "Start en ny anmodning"
+    },
+    "contactFallback": {
+      "title": "Fortsæt via korrespondance",
+      "message": "Online aftalebekræftelse er ikke tilgængelig på dette site. Der er ikke oprettet nogen bookingreference, og intet tidspunkt er reserveret",
+      "notConfirmed": "Dette er ikke en bekræftet aftale",
+      "clinicWillContact": "Skriv venligst via korrespondance, så klinikken kan bekræfte ledighed med dig",
+      "preferencesOnly": "Oplysningerne nedenfor er kun præferencer — medtag dem i din besked til klinikken",
+      "contactCta": "Åbn korrespondance",
+      "startAgain": "Start forfra",
+      "returnHome": "Tilbage til forsiden"
     },
     "patientForm": {
-      "stepLabel": "Trin 5",
+      "stepLabel": "Dine oplysninger",
       "title": "Patientoplysninger",
       "firstName": "Fornavn",
       "surname": "Efternavn",
@@ -719,16 +782,20 @@
       "telephone": "Telefon",
       "reason": "Årsag til aftale",
       "medicalConditions": "Eventuelle medicinske tilstande?",
+      "medicalHint": "Valgfrit. Deles kun med klinikken til denne anmodning — placeres aldrig i sidens adresse",
       "optional": "valgfrit",
+      "required": "påkrævet",
+      "errorSummary": "Ret venligst følgende",
       "consentText": "Jeg forstår, at Hijama muligvis ikke er egnet for alle, og accepterer konsultationsprocessen"
     },
     "steps": {
-      "step1": "Trin 1",
-      "step2": "Trin 2",
-      "step3": "Trin 3",
-      "step4": "Trin 4",
+      "step1": "Behandler",
+      "step2": "Klinik",
+      "step3": "Dato",
+      "step4": "Tid",
       "choosePractitioner": "Vælg behandler",
       "chooseClinic": "Vælg klinik",
+      "chooseSchedule": "Vælg dato og tid",
       "chooseDate": "Vælg dato",
       "chooseTime": "Vælg tidspunkt",
       "practitionerGenderAria": "Behandlerkøn",
@@ -742,13 +809,22 @@
       "ariaLabel": "Aftaleoversigt",
       "label": "Aftaleoversigt",
       "practitioner": "Behandler",
+      "male": "Mandlig behandler",
+      "female": "Kvindelig behandler",
       "clinic": "Klinik",
-      "date": "Dato",
-      "time": "Tidspunkt",
+      "location": "Sted",
+      "date": "Foretrukken dato",
+      "time": "Foretrukket tidspunkt",
       "duration": "Varighed",
-      "price": "Pris",
-      "submitAria": "Book min aftale",
-      "submit": "Book min aftale"
+      "durationValue": "45 minutter",
+      "price": "Vejledende pris",
+      "paymentTiming": "Betaling",
+      "paymentTimingValue": "Betales på klinikken kun hvis en aftale senere bekræftes — denne formular tager ingen betaling",
+      "cancellation": "Ændringer",
+      "cancellationValue": "Skriv via korrespondance — der holdes ingen online reservation",
+      "submitAria": "Indsend konsultationsanmodning",
+      "submit": "Indsend konsultationsanmodning",
+      "submitting": "Indsender…"
     }
   },
   "seasonal": {
