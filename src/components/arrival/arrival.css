@@ -185,6 +185,85 @@
   }
 }
 
+/* ── Institutional purpose (Mission & Vision) ───────────────── */
+
+.arrival-v2 .institutional-purpose {
+  border-block: var(--hairline);
+  background: color-mix(in srgb, var(--paper) 94%, var(--sage) 6%);
+}
+
+.arrival-v2 .institutional-purpose__inner {
+  max-inline-size: 60rem;
+}
+
+.arrival-v2 .institutional-purpose__stamp {
+  margin-block-end: var(--space-6);
+}
+
+.arrival-v2 .founding-covenant__mission-vision {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0;
+  padding-block: var(--space-10);
+  border-block: var(--hairline);
+}
+
+.arrival-v2 .founding-covenant__mission-vision::before {
+  content: "";
+  position: absolute;
+  inset-block-start: -1px;
+  inset-inline-start: 0;
+  inline-size: 4.5rem;
+  block-size: 2px;
+  background: var(--brass);
+}
+
+.arrival-v2 .founding-covenant__column {
+  min-inline-size: 0;
+}
+
+.arrival-v2 .founding-covenant__column + .founding-covenant__column {
+  margin-block-start: var(--space-8);
+  padding-block-start: var(--space-8);
+  border-block-start: 1px solid
+    color-mix(in srgb, var(--brass) 38%, var(--rule));
+}
+
+.arrival-v2 .founding-covenant__column-label {
+  margin: 0 0 var(--space-5);
+  color: var(--brass);
+}
+
+.arrival-v2 .founding-covenant__column-body {
+  margin: 0;
+  max-inline-size: 38ch;
+  font-size: clamp(1.0625rem, 1.35vw, 1.1875rem);
+  line-height: 1.7;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+@media (min-width: 768px) {
+  .arrival-v2 .founding-covenant__mission-vision {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    padding-block: var(--space-12);
+  }
+
+  .arrival-v2 .founding-covenant__column {
+    padding-inline-end: var(--space-10);
+  }
+
+  .arrival-v2 .founding-covenant__column + .founding-covenant__column {
+    margin-block-start: 0;
+    padding-block-start: 0;
+    padding-inline: var(--space-10) 0;
+    border-block-start: 0;
+    border-inline-start: 1px solid
+      color-mix(in srgb, var(--brass) 38%, var(--rule));
+  }
+}
+
 /* ── Inverted band (On the tradition) ───────────────────────── */
 
 .arrival-v2 .arrival-band-deep {
@@ -195,6 +274,58 @@
 .arrival-v2 .arrival-band-deep .type-body-v2,
 .arrival-v2 .arrival-band-deep .type-standfirst {
   color: var(--paper-on-deep);
+}
+
+.arrival-v2 .arrival-tradition__stamp {
+  margin-block-end: var(--space-6);
+}
+
+.arrival-v2 .arrival-tradition__heading {
+  margin: 0 0 var(--space-8);
+  color: var(--paper-on-deep);
+}
+
+.arrival-v2 .arrival-tradition__standfirst {
+  margin: 0 0 var(--space-8);
+}
+
+.arrival-v2 .arrival-tradition__paragraph {
+  margin: 0 0 var(--space-5);
+}
+
+.arrival-v2 .arrival-tradition__quote {
+  margin-block-start: var(--space-10);
+}
+
+.arrival-v2 .arrival-pullquote {
+  margin: 0;
+  padding: 0;
+  padding-inline-start: var(--space-6);
+  border-inline-start: 1px solid var(--brass);
+}
+
+.arrival-v2 .arrival-pullquote--dark {
+  border-inline-start-color: var(--paper-on-deep);
+  color: var(--paper-on-deep);
+}
+
+.arrival-v2 .arrival-pullquote__text {
+  margin: 0;
+}
+
+.arrival-v2 .arrival-pullquote__cite {
+  display: block;
+  margin-block-start: var(--space-4);
+  color: var(--ink-soft);
+  font-style: normal;
+}
+
+.arrival-v2 .arrival-pullquote--dark .arrival-pullquote__cite {
+  color: var(--paper-on-deep);
+}
+
+.arrival-v2 .arrival-pullquote__source {
+  margin-inline-start: 0.5em;
 }
 
 /* ── Measure constraint ─────────────────────────────────────── */
@@ -936,38 +1067,6 @@
 
 .arrival-v2 .founding-covenant__triad-line + .founding-covenant__triad-line {
   margin-block-start: var(--space-4);
-}
-
-.arrival-v2 .founding-covenant__mission-vision {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-10);
-  margin-block-end: var(--space-12);
-  padding-block: var(--space-2) var(--space-10);
-  border-block-end: var(--hairline);
-}
-
-@media (min-width: 768px) {
-  .arrival-v2 .founding-covenant__mission-vision {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-10) var(--space-12);
-  }
-
-  .arrival-v2 .founding-covenant__column + .founding-covenant__column {
-    border-inline-start: var(--hairline);
-    padding-inline-start: var(--space-12);
-  }
-}
-
-.arrival-v2 .founding-covenant__column-label {
-  color: var(--brass);
-  margin: 0 0 var(--space-4);
-}
-
-.arrival-v2 .founding-covenant__column-body {
-  margin: 0;
-  max-inline-size: 36ch;
-  color: var(--ink);
 }
 
 .arrival-v2 .founding-covenant__commitments {
