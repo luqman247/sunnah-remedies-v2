@@ -10,31 +10,23 @@ interface ArrivalPullQuoteProps {
   dark?: boolean;
 }
 
-export function ArrivalPullQuote({ text, attribution, source, dark }: ArrivalPullQuoteProps) {
+export function ArrivalPullQuote({
+  text,
+  attribution,
+  source,
+  dark,
+}: ArrivalPullQuoteProps) {
   return (
     <blockquote
-      className="type-pullquote"
-      style={{
-        margin: 0,
-        padding: 0,
-        borderInlineStart: `1px solid ${dark ? "var(--paper-on-deep)" : "var(--brass)"}`,
-        paddingInlineStart: "var(--space-6)",
-        color: dark ? "var(--paper-on-deep)" : undefined,
-      }}
+      className={`type-pullquote arrival-pullquote ${dark ? "arrival-pullquote--dark" : ""}`}
     >
-      <p style={{ margin: 0 }}>{text}</p>
+      <p className="arrival-pullquote__text">{text}</p>
       {attribution && (
-        <cite
-          className="type-caption"
-          style={{
-            display: "block",
-            marginBlockStart: "var(--space-4)",
-            fontStyle: "normal",
-            color: dark ? "var(--paper-on-deep)" : "var(--ink-soft)",
-          }}
-        >
+        <cite className="type-caption arrival-pullquote__cite">
           — {attribution}
-          {source && <span style={{ marginInlineStart: "0.5em" }}>({source})</span>}
+          {source && (
+            <span className="arrival-pullquote__source">({source})</span>
+          )}
         </cite>
       )}
     </blockquote>

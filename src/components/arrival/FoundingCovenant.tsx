@@ -76,39 +76,6 @@ export async function FoundingCovenant({ locale }: FoundingCovenantProps) {
               <p className="founding-covenant__triad-line">{t("triad2")}</p>
             </blockquote>
 
-            {/* ── Mission & Vision ── */}
-            <div className="founding-covenant__mission-vision">
-              <article
-                className="founding-covenant__column"
-                aria-labelledby="founding-mission-heading"
-              >
-                <h3
-                  id="founding-mission-heading"
-                  className="type-eyebrow-v2 founding-covenant__column-label"
-                >
-                  {t("missionLabel")}
-                </h3>
-                <p className="type-body-v2 founding-covenant__column-body">
-                  {t("mission")}
-                </p>
-              </article>
-
-              <article
-                className="founding-covenant__column"
-                aria-labelledby="founding-vision-heading"
-              >
-                <h3
-                  id="founding-vision-heading"
-                  className="type-eyebrow-v2 founding-covenant__column-label"
-                >
-                  {t("visionLabel")}
-                </h3>
-                <p className="type-body-v2 founding-covenant__column-body">
-                  {t("vision")}
-                </p>
-              </article>
-            </div>
-
             {/* ── Charter commitments ── */}
             <div
               className="founding-covenant__commitments"
@@ -149,7 +116,10 @@ export async function FoundingCovenant({ locale }: FoundingCovenantProps) {
               <p className="type-standfirst founding-covenant__closing-text">
                 {t("closing")}
               </p>
-              <Link href="/charter" className="arrival-enter founding-covenant__cta">
+              <Link
+                href="/charter"
+                className="arrival-enter founding-covenant__cta"
+              >
                 {t("cta")}
                 <span className="arrow" aria-hidden="true">
                   ⟶

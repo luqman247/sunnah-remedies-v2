@@ -31,14 +31,14 @@ export async function AuthorityBand({ items }: AuthorityBandProps) {
       <div className="arrival-container">
         <div className="arrival-grid">
           <div className="arrival-rail">
-            <SectionStamp numeral="V" />
+            <SectionStamp numeral="VI" />
           </div>
           <div>
             <div
               className="section-stamp-mobile"
               style={{ marginBlockEnd: "var(--space-6)" }}
             >
-              <SectionStamp numeral="V" label={t("authorityStamp")} />
+              <SectionStamp numeral="VI" label={t("authorityStamp")} />
             </div>
             <h2 id="authority-heading" className="sr-only">
               {t("authorityHeading")}

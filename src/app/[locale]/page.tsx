@@ -205,54 +205,103 @@ export default async function ArrivalPage({
         </Reveal>
       )}
 
-      {/* ═══ § 3 · ON THE TRADITION (Ch. 9.4) ═══ */}
+      {/* ═══ § 3 · MISSION & VISION ═══ */}
       <Reveal>
         <section
-          className="arrival-section arrival-band-deep"
-          aria-labelledby="tradition-heading"
+          id="institutional-purpose"
+          className="arrival-section institutional-purpose"
+          aria-labelledby="institutional-purpose-heading"
         >
           <div className="arrival-container">
             <div className="arrival-grid">
               <div className="arrival-rail">
                 <SectionStamp numeral="III" />
               </div>
+              <div className="institutional-purpose__inner">
+                <div className="section-stamp-mobile institutional-purpose__stamp">
+                  <SectionStamp numeral="III" />
+                </div>
+
+                <h2 id="institutional-purpose-heading" className="sr-only">
+                  {ui("foundingCovenant.missionLabel")}
+                  {" · "}
+                  {ui("foundingCovenant.visionLabel")}
+                </h2>
+
+                <div className="founding-covenant__mission-vision">
+                  <article
+                    className="founding-covenant__column"
+                    aria-labelledby="founding-mission-heading"
+                  >
+                    <h3
+                      id="founding-mission-heading"
+                      className="type-eyebrow-v2 founding-covenant__column-label"
+                    >
+                      {ui("foundingCovenant.missionLabel")}
+                    </h3>
+                    <p className="type-body-v2 founding-covenant__column-body">
+                      {ui("foundingCovenant.mission")}
+                    </p>
+                  </article>
+
+                  <article
+                    className="founding-covenant__column"
+                    aria-labelledby="founding-vision-heading"
+                  >
+                    <h3
+                      id="founding-vision-heading"
+                      className="type-eyebrow-v2 founding-covenant__column-label"
+                    >
+                      {ui("foundingCovenant.visionLabel")}
+                    </h3>
+                    <p className="type-body-v2 founding-covenant__column-body">
+                      {ui("foundingCovenant.vision")}
+                    </p>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* ═══ § 4 · ON THE TRADITION (Ch. 9.4) ═══ */}
+      <Reveal>
+        <section
+          className="arrival-section arrival-band-deep arrival-tradition"
+          aria-labelledby="tradition-heading"
+        >
+          <div className="arrival-container">
+            <div className="arrival-grid">
+              <div className="arrival-rail">
+                <SectionStamp numeral="IV" />
+              </div>
               <div className="arrival-measure">
-                <div
-                  className="section-stamp-mobile"
-                  style={{ marginBlockEnd: "var(--space-6)" }}
-                >
-                  <SectionStamp numeral="III" label={tradition.stamp} />
+                <div className="section-stamp-mobile arrival-tradition__stamp">
+                  <SectionStamp numeral="IV" label={tradition.stamp} />
                 </div>
 
                 <h2
                   id="tradition-heading"
-                  className="type-eyebrow-v2"
-                  style={{
-                    color: "var(--paper-on-deep)",
-                    marginBlockEnd: "var(--space-8)",
-                  }}
+                  className="type-eyebrow-v2 arrival-tradition__heading"
                 >
                   {tradition.stamp}
                 </h2>
 
-                <p
-                  className="type-standfirst"
-                  style={{ marginBlockEnd: "var(--space-8)" }}
-                >
+                <p className="type-standfirst arrival-tradition__standfirst">
                   {tradition.standfirst}
                 </p>
 
                 {tradition.body.map((paragraph: string, i: number) => (
                   <p
                     key={i}
-                    className="type-body-v2"
-                    style={{ marginBlockEnd: "var(--space-5)" }}
+                    className="type-body-v2 arrival-tradition__paragraph"
                   >
                     {paragraph}
                   </p>
                 ))}
 
-                <div style={{ marginBlockStart: "var(--space-10)" }}>
+                <div className="arrival-tradition__quote">
                   <ArrivalPullQuote
                     text={tradition.pullQuote.text}
                     attribution={tradition.pullQuote.attribution}
@@ -271,7 +320,7 @@ export default async function ArrivalPage({
         <TaskPathways locale={locale} />
       </Reveal>
 
-      {/* ═══ § 4 · THE DEPARTMENTS (Ch. 9.5) ═══ */}
+      {/* ═══ § 5 · THE DEPARTMENTS (Ch. 9.5) ═══ */}
       <Reveal>
         <section
           className="arrival-section"
@@ -281,14 +330,14 @@ export default async function ArrivalPage({
           <div className="arrival-container">
             <div className="arrival-grid">
               <div className="arrival-rail">
-                <SectionStamp numeral="IV" />
+                <SectionStamp numeral="V" />
               </div>
               <div>
                 <div
                   className="section-stamp-mobile"
                   style={{ marginBlockEnd: "var(--space-6)" }}
                 >
-                  <SectionStamp numeral="IV" label={ui("departmentsStamp")} />
+                  <SectionStamp numeral="V" label={ui("departmentsStamp")} />
                 </div>
 
                 <h2 id="departments-heading" className="sr-only">
@@ -320,10 +369,10 @@ export default async function ArrivalPage({
       {/* ═══ FOUNDING COVENANT — institutional philosophy before credentials ═══ */}
       <FoundingCovenant locale={locale} />
 
-      {/* ═══ § 5 · AUTHORITY SIGNALS (Ch. 9.6) ═══ */}
+      {/* ═══ § 6 · AUTHORITY SIGNALS (Ch. 9.6) ═══ */}
       <AuthorityBand items={authoritySignals} />
 
-      {/* ═══ § 6 · CORRESPONDENCE (Ch. 9.7) ═══ */}
+      {/* ═══ § 7 · CORRESPONDENCE (Ch. 9.7) ═══ */}
       <Reveal>
         <section
           className="arrival-section"
@@ -332,7 +381,7 @@ export default async function ArrivalPage({
           <div className="arrival-container">
             <div className="arrival-grid">
               <div className="arrival-rail">
-                <SectionStamp numeral="VI" />
+                <SectionStamp numeral="VII" />
               </div>
               <div>
                 <div
@@ -340,7 +389,7 @@ export default async function ArrivalPage({
                   style={{ marginBlockEnd: "var(--space-6)" }}
                 >
                   <SectionStamp
-                    numeral="VI"
+                    numeral="VII"
                     label={ui("correspondenceStamp")}
                   />
                 </div>
