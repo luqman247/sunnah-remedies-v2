@@ -10,6 +10,7 @@
  */
 
 import { hasApprovedDhikrBoard } from "@/sanity/lib/dhikr-publication-gate";
+import { hasApprovedFeelingBoard } from "@/sanity/lib/feeling-publication-gate";
 
 interface SlugUniquenessContext {
   document?: { _id?: string; _type?: string };
@@ -144,4 +145,98 @@ export async function isUniqueDhikrSlug(slug: string, context: SlugUniquenessCon
   const query = `!defined(*[_type == $type && !(_id in [$draft, $published]) && slug.current == $slug][0]._id)`;
   const result = await client.fetch(query, params);
   return result !== false;
+}
+
+/**
+ * Slug uniqueness check for "I am feeling…" documents (feelingFamily,
+ * feelingState). Independent of, but structurally identical to,
+ * isUniqueDhikrSlug above — kept separate deliberately, per the same
+ * per-content-type independence rule dua-dhikr-publication-gate.ts already
+ * documents.
+ *
+ * @see docs/i-am-feeling/SPEC.md
+ */
+export async function isUniqueFeelingSlug(slug: string, context: SlugUniquenessContext): Promise<boolean> {
+  const { document, getClient } = context;
+  const id = document?._id?.replace(/^drafts\./, "") ?? "";
+  const type = document?._type;
+  if (!type || !id) return true;
+
+  const client = getClient({ apiVersion: "2024-01-01" });
+  const params = {
+    draft: `drafts.${id}`,
+    published: id,
+    slug,
+    type,
+  };
+  const query = `!defined(*[_type == $type && !(_id in [$draft, $published]) && slug.current == $slug][0]._id)`;
+  const result = await client.fetch(query, params);
+  return result !== false;
+}
+
+/**
+ * Validates that a value exists when a feelingState's reviewStatus is
+ * "published". Mirrors requiredWhenDhikrPublished above but reads
+ * feelingState's own reviewStatus field — kept as a separate function so a
+ * future change to one gate never silently changes the other's behaviour.
+ *
+ * @see docs/i-am-feeling/SPEC.md §6
+ */
+export function requiredWhenFeelingPublished(message: string) {
+  return (value: unknown, context: { document?: Record<string, unknown> }) => {
+    const reviewStatus = context.document?.reviewStatus as string | undefined;
+    if (reviewStatus === "published" && !value) {
+      return message;
+    }
+    return true;
+  };
+}
+
+/**
+ * Validates that a feelingState's professionalSupportNoteEn/Da is present
+ * before publishing, but ONLY when safeguardingLevel is not "standard" — a
+ * standard-tone state is never blocked by a field it was never required to
+ * fill in.
+ *
+ * @see docs/i-am-feeling/SPEC.md §6, §8
+ */
+export function requiredFeelingProfessionalSupportNote(
+  value: unknown,
+  context: { document?: Record<string, unknown> },
+) {
+  const reviewStatus = context.document?.reviewStatus as string | undefined;
+  const safeguardingLevel = context.document?.safeguardingLevel as string | undefined;
+  if (reviewStatus !== "published") return true;
+  if (safeguardingLevel === "standard" || !safeguardingLevel) return true;
+  if (!value || (typeof value === "string" && value.trim() === "")) {
+    return "A professional-support note is required before publishing a state with elevated safeguarding.";
+  }
+  return true;
+}
+
+/**
+ * Validates that an approved "clinical" board approval is present before a
+ * feelingState with safeguardingLevel "heightened" or "crisis-adjacent" can
+ * publish. "crisis-adjacent" additionally requires an approved
+ * "standards-council" approval. Reuses hasApprovedFeelingBoard from
+ * feeling-publication-gate.ts so this Studio-side check cannot drift out of
+ * sync with the canonical public-eligibility rule.
+ *
+ * @see src/sanity/lib/feeling-publication-gate.ts
+ * @see docs/i-am-feeling/SPEC.md §6, §7.6
+ */
+export function requiredFeelingClinicalApproval(value: unknown, context: { document?: Record<string, unknown> }) {
+  const reviewStatus = context.document?.reviewStatus as string | undefined;
+  const safeguardingLevel = context.document?.safeguardingLevel as string | undefined;
+  if (reviewStatus !== "published") return true;
+  if (safeguardingLevel === "standard" || !safeguardingLevel) return true;
+
+  const approvals = Array.isArray(value) ? (value as { board?: string; approved?: boolean }[]) : [];
+  if (!hasApprovedFeelingBoard(approvals, "clinical")) {
+    return "An approved clinical board approval is required before publishing a state with elevated safeguarding.";
+  }
+  if (safeguardingLevel === "crisis-adjacent" && !hasApprovedFeelingBoard(approvals, "standards-council")) {
+    return "An approved standards-council board approval is required before publishing a crisis-adjacent state.";
+  }
+  return true;
 }

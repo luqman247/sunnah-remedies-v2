@@ -43,6 +43,31 @@ const nextConfig: NextConfig = {
         destination: "/knowledge-library/dua-dhikr",
         permanent: true,
       },
+      // "I am feeling…" is a top-level route (docs/i-am-feeling/SPEC.md §2),
+      // not nested under /knowledge-library — an earlier spec revision
+      // proposed the nested path; these are the permanent redirects from
+      // that superseded proposal, English and Danish (/dk), landing and
+      // feeling-detail routes. No page ever renders at the old path.
+      {
+        source: "/knowledge-library/i-am-feeling",
+        destination: "/i-am-feeling",
+        permanent: true,
+      },
+      {
+        source: "/knowledge-library/i-am-feeling/:feelingSlug",
+        destination: "/i-am-feeling/:feelingSlug",
+        permanent: true,
+      },
+      {
+        source: "/dk/knowledge-library/i-am-feeling",
+        destination: "/dk/i-am-feeling",
+        permanent: true,
+      },
+      {
+        source: "/dk/knowledge-library/i-am-feeling/:feelingSlug",
+        destination: "/dk/i-am-feeling/:feelingSlug",
+        permanent: true,
+      },
       // English is unprefixed (as-needed). Collapse accidental /en URLs.
       { source: "/en", destination: "/", permanent: false },
       { source: "/en/:path*", destination: "/:path*", permanent: false },
@@ -82,7 +107,7 @@ const nextConfig: NextConfig = {
           // - non-locale app trees (knowledge entities, staff, feeds)
           // Public static files are already resolved before afterFiles.
           source:
-            "/:path((?!api|_next|_vercel|studio|en|da|dk|knowledge/|feeds|sitemaps|handbook|ops|intelligence|dhikr-review|dhikr-mdr-review|sign-in|llms\\.txt|llms-full\\.txt|robots\\.txt|sitemap\\.xml).*)",
+            "/:path((?!api|_next|_vercel|studio|en|da|dk|knowledge/|feeds|sitemaps|handbook|ops|intelligence|dhikr-review|dhikr-mdr-review|scholar-review|sign-in|llms\\.txt|llms-full\\.txt|robots\\.txt|sitemap\\.xml).*)",
           destination: "/en/:path",
         },
         {

@@ -72,6 +72,17 @@ import { dhikrMdrReviewDraft } from "./documents/dhikr-review/dhikr-mdr-review-d
 import { duaDhikrCollection } from "./documents/dua-dhikr/dua-dhikr-collection";
 import { duaDhikrEntry } from "./documents/dua-dhikr/dua-dhikr-entry";
 
+// ── Documents: "I am feeling…" (curates Duʿa & Dhikr — see docs/i-am-feeling/) ──
+import { feelingFamily } from "./documents/feeling/feeling-family";
+import { feelingState } from "./documents/feeling/feeling-state";
+
+// ── Objects & Documents: Scholar Review (STAGING-ONLY — see /scholar-review) ──
+import { reviewerIdentity } from "./objects/reviewer-identity";
+import { scholarlyReviewSession } from "./documents/scholar-review/scholarly-review-session";
+import { duaDhikrEntryScholarlyReview } from "./documents/scholar-review/dua-dhikr-entry-scholarly-review";
+import { duaDhikrCollectionScholarlyReview } from "./documents/scholar-review/dua-dhikr-collection-scholarly-review";
+import { feelingStateScholarlyReview } from "./documents/scholar-review/feeling-state-scholarly-review";
+
 // ── Documents: Knowledge Library ──
 import { article } from "./documents/knowledge/article";
 import { author } from "./documents/knowledge/author";
@@ -177,6 +188,17 @@ export const schemaTypes = [
   // Duʿa & Dhikr (extends the Dhikr prototype — see docs/dua-dhikr/)
   duaDhikrCollection,
   duaDhikrEntry,
+
+  // "I am feeling…" (curates Duʿa & Dhikr — see docs/i-am-feeling/)
+  feelingFamily,
+  feelingState,
+
+  // Scholar Review (STAGING-ONLY — see /scholar-review)
+  reviewerIdentity,
+  scholarlyReviewSession,
+  duaDhikrEntryScholarlyReview,
+  duaDhikrCollectionScholarlyReview,
+  feelingStateScholarlyReview,
 
   // Knowledge Library
   article,

@@ -1,0 +1,173 @@
+/* "I am feeling…" — shared card/search styles.
+   Mirrors src/components/dua-dhikr/dua-dhikr.css's card/search treatment
+   exactly (same tokens, same radius, same hover/focus behaviour) so this
+   feature reads as one system with the rest of the Knowledge Library
+   rather than a disconnected mini-site (docs/i-am-feeling/SPEC.md §10). */
+
+.feeling-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+  gap: var(--space-5);
+}
+
+.feeling-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border: var(--hairline);
+  border-radius: var(--radius);
+  background: var(--paper);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.feeling-card:hover {
+  border-color: var(--brass);
+}
+
+.feeling-card:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .feeling-card:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.feeling-card--preparing {
+  cursor: default;
+  opacity: 0.72;
+  background: color-mix(in srgb, var(--paper) 88%, var(--ink) 4%);
+}
+
+.feeling-card--preparing:hover {
+  border-color: var(--hairline, color-mix(in srgb, var(--ink) 16%, transparent));
+  transform: none;
+}
+
+.feeling-card--compact {
+  padding: var(--space-4);
+}
+
+.feeling-card__title {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: var(--sage-deep);
+}
+
+.feeling-card__description {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.feeling-card__meta {
+  margin-top: auto;
+  font-family: var(--font-utility), system-ui, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── Search ─────────────────────────────────────────────────────────── */
+
+.feeling-search {
+  position: relative;
+  max-inline-size: 30rem;
+}
+
+.feeling-search__input {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-4);
+  border: var(--hairline);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.feeling-search__input:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}
+
+.feeling-search__results {
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  border: var(--hairline);
+  border-radius: var(--radius);
+  background: var(--paper);
+  overflow: hidden;
+}
+
+.feeling-search__result {
+  display: block;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-4);
+  text-decoration: none;
+  color: inherit;
+  border-block-start: var(--hairline);
+}
+
+.feeling-search__result:first-child {
+  border-block-start: none;
+}
+
+.feeling-search__result:hover,
+.feeling-search__result:focus-visible {
+  background: color-mix(in srgb, var(--paper) 85%, var(--brass) 8%);
+}
+
+.feeling-search__result-label {
+  display: block;
+  font-family: var(--font-display), Georgia, serif;
+  color: var(--sage-deep);
+}
+
+.feeling-search__result-note {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.feeling-search__empty {
+  margin: var(--space-2) 0 0;
+  color: var(--muted);
+  max-inline-size: 34rem;
+}
+
+.feeling-search__crisis {
+  margin: var(--space-2) 0 0;
+  padding: var(--space-4);
+  border: var(--hairline);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.feeling-search__crisis-text {
+  margin: 0 0 var(--space-2);
+  color: var(--ink);
+}
+
+.feeling-search__crisis-link {
+  color: var(--sage-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feeling-card {
+    transition: none;
+  }
+}

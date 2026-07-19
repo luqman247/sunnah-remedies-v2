@@ -1282,6 +1282,10 @@
     "duaDhikr": {
       "title": "Duʿa & Dhikr | Sunnah Remedies Knowledge Library",
       "description": "Verified duʿa and dhikr from the Sunnah, organised by the moments of daily life — Arabic as the authoritative source, with reviewed English and Danish translations."
+    },
+    "iAmFeeling": {
+      "title": "I am feeling… | Sunnah Remedies Knowledge Library",
+      "description": "Find remembrance, reflection, and a practical next step — gathered from the sourced Duʿā & Dhikr library by how you feel, not just by occasion."
     }
   },
   "homepage": {
@@ -1471,7 +1475,9 @@
       "entryCount": "{count, plural, one {1 entry} other {# entries}}",
       "noEntriesYet": "Preparing for publication",
       "inPreparationStatus": "In preparation",
-      "noPublishedCollections": "No collections have completed public review yet. Verified entries will appear here once scholarly and editorial publication requirements are met."
+      "noPublishedCollections": "No collections have completed public review yet. Verified entries will appear here once scholarly and editorial publication requirements are met.",
+      "feelingCrossLinkIntro": "Prefer to start from how you feel instead?",
+      "feelingCrossLinkCta": "Try “I am feeling…”"
     },
     "collection": {
       "entriesHeading": "Entries",
@@ -1547,5 +1553,63 @@
     "consultations": "Consultations",
     "correspondence": "Correspondence",
     "theRegister": "The Register"
+  },
+  "feeling": {
+    "breadcrumb": "I am feeling…",
+    "landing": {
+      "eyebrow": "Knowledge Library · Guided discovery",
+      "heading": "How are you feeling?",
+      "lede": "You may not know which duʿā you need. You may only know how you feel. Begin there.",
+      "supporting": "A short path from what you're carrying to a remembrance that meets it — drawn from the same sourced Duʿā & Dhikr library, gathered by feeling rather than by ritual.",
+      "searchLabel": "Search by feeling",
+      "searchPlaceholder": "Try “anxious”, “grateful”, “facing a decision”…",
+      "searchNoResults": "We don't have a match for that yet — try a simpler word, or browse by feeling below.",
+      "searchCrisisNotice": "If you are in immediate danger or thinking about harming yourself, please see urgent support rather than continuing to search.",
+      "searchCrisisLinkLabel": "See urgent support",
+      "searchDeferredRedirectNotice": "We're still developing dedicated guidance for this — here's a related starting point.",
+      "featuredHeading": "Where visitors begin",
+      "familiesHeading": "Browse by what you're carrying",
+      "explanationHeading": "How to use this",
+      "explanationBody": "This is not a diagnosis, and it does not replace medical or mental-health care. Each entry gathers a duʿā, a reflection, and a small next step drawn from the same sourced Duʿā & Dhikr library used across the Knowledge Library — every Arabic text, translation, and reference carries the same authenticity standard you'll find there. If what you're carrying feels heavier than a page can hold, the Knowledge Library is not the right place to carry it alone — see below.",
+      "libraryLinkIntro": "Prefer to browse by occasion instead?",
+      "libraryLinkCta": "Visit the Duʿā & Dhikr library",
+      "safetyNoticeBody": "If you are struggling with your mental health, a duʿā is a companion to care, not a substitute for it. Speak to a doctor, a trusted person, or a qualified professional. If you or someone you know is in immediate danger,",
+      "safetyNoticeUrgentLink": "see urgent support",
+      "safetyNoticeSuffix": "or contact emergency services.",
+      "inPreparationStatus": "In preparation",
+      "noStatesYet": "This resource is being prepared. Verified feeling pages will appear here once scholarly and editorial review is complete.",
+      "safetyHeading": "Safety and professional support"
+    },
+    "detail": {
+      "eyebrow": "I am feeling…",
+      "groundingMomentHeading": "A moment to begin",
+      "featuredHeading": "A duʿā for this",
+      "reflectionHeading": "Reflection",
+      "nextStepHeading": "A practical next step",
+      "relatedFeelingsHeading": "Related feelings",
+      "relatedCollectionsHeading": "Explore the full collection",
+      "relatedCollectionsCta": "Explore the full {collection} collection",
+      "professionalSupportHeading": "A note on professional support"
+    },
+    "urgentSupport": {
+      "breadcrumbLabel": "Urgent Support",
+      "heading": "If you need support right now",
+      "intro": "This page is not a substitute for emergency help. If you or someone else is in immediate danger, contact emergency services now.",
+      "cannotHelpNotice": "Sunnah Remedies is a knowledge and remembrance resource. It cannot provide emergency assistance.",
+      "emergencyHeading": "Immediate danger",
+      "emergencyBody": "In the United Kingdom, call 999 if there is immediate danger to life. For urgent but non-emergency mental health support, call NHS 111 and select the mental health option.",
+      "crisisLinesHeading": "If you need to talk to someone now",
+      "samaritansLabel": "Samaritans",
+      "samaritansBody": "116 123 — free, 24 hours a day, about anything.",
+      "shoutLabel": "Shout",
+      "shoutBody": "Text SHOUT to 85258 — free, 24 hours a day.",
+      "crisisLinesUnavailableNotice": "Specific crisis-line details for this page are pending routine re-verification. Please call 999 in an emergency, or NHS 111 for urgent non-emergency support.",
+      "trustedPersonHeading": "If things feel heavy, but you are not in immediate danger",
+      "trustedPersonBody": "Telling someone you trust — a friend, family member, an imam, or a doctor — is a strong and encouraged step, not a weakness.",
+      "nonReplacementNotice": "Duʿā, dhikr, and reflection can be a source of real comfort, but they are not a substitute for medical or mental-health treatment. Please use both.",
+      "outsideUkHeading": "Outside the United Kingdom",
+      "outsideUkBody": "Please contact your local emergency number or a local crisis line.",
+      "outsideUkLinkLabel": "Find a helpline outside the UK"
+    }
   }
 }

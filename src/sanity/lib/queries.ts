@@ -8,6 +8,10 @@ import {
   DUA_DHIKR_EDITORIAL_ELIGIBILITY_GROQ,
   DUA_DHIKR_OWNER_APPROVED_ENGLISH_ELIGIBILITY_GROQ,
 } from "./dua-dhikr-publication-gate";
+import {
+  FEELING_STATE_ENGLISH_ELIGIBILITY_GROQ,
+  FEELING_STATE_DANISH_ELIGIBILITY_GROQ,
+} from "./feeling-publication-gate";
 
 /**
  * Translation siblings projection — reusable fragment for hreflang.
@@ -818,6 +822,92 @@ export const duaDhikrCollectionsQuery = groq`
     "relatedCollections": relatedCollections[]->{ "slug": slug.current, titleEn, titleDa, iconKey },
     reviewStatus,
     editorialPublicationStatus
+  }
+`;
+
+/* ── "I am feeling…" (curates Duʿa & Dhikr — see docs/i-am-feeling/) ──
+ *
+ * feelingFamiliesQuery/feelingStatesEnglishEligibleQuery/
+ * feelingStatesDanishEligibleQuery apply the feelingState document's OWN
+ * eligibility gate inside the query filter (mirroring the Duʿa & Dhikr
+ * discipline above). The featuredEntries dereference below is deliberately
+ * NOT gated inside this GROQ query — it fetches every field the three
+ * existing duaDhikrEntry eligibility pathways need, unconditionally, and
+ * src/sanity/lib/feeling-public-fetch.ts filters each one in application
+ * code using the exact same isDuaDhikrEntryPubliclyEligibleForLocale
+ * function the rest of the site uses. This is a deliberate choice: a
+ * nested nested-reference nested-eligibility GROQ filter cannot be
+ * verified against a live dataset in this repository's test environment,
+ * while the TypeScript gate function already is (see
+ * tests/dua-dhikr/dua-dhikr-english-first-publication.test.ts) — reusing it
+ * here is the same correctness guarantee with lower risk than duplicating
+ * three-pathway eligibility logic a second time in GROQ syntax.
+ */
+
+const feelingFeaturedEntryWithGateFieldsProjection = groq`
+  ${duaDhikrEntryPublicProjection},
+  reviewStatus,
+  editorialPublicationStatus,
+  importIdentifier,
+  "collections": collections[]->{ "slug": slug.current },
+  "boardApprovals": boardApprovals[]{ board, approved }
+`;
+
+export const feelingFamiliesQuery = groq`
+  *[_type == "feelingFamily"] | order(order asc) {
+    _id,
+    "slug": slug.current,
+    titleEn,
+    titleDa,
+    descriptionEn,
+    descriptionDa,
+    order
+  }
+`;
+
+const feelingStateProjection = groq`
+  _id,
+  "slug": slug.current,
+  labelEn,
+  labelDa,
+  "family": family->slug.current,
+  oneLineDescriptionEn,
+  oneLineDescriptionDa,
+  tone,
+  launchStatus,
+  safeguardingLevel,
+  featuredOrder,
+  introductionEn,
+  introductionDa,
+  groundingMomentEn,
+  groundingMomentDa,
+  practicalNextStepEn,
+  practicalNextStepDa,
+  professionalSupportNoteEn,
+  professionalSupportNoteDa,
+  "relatedFeelingStates": relatedFeelingStates[]->{ "slug": slug.current, labelEn, labelDa },
+  "relatedCollectionsOverride": relatedCollectionsOverride[]->{ "slug": slug.current, titleEn, titleDa },
+  "featuredEntries": featuredEntries[]{
+    reflectionEn,
+    reflectionDa,
+    "entry": entry->{
+      ${feelingFeaturedEntryWithGateFieldsProjection}
+    }
+  },
+  seo
+`;
+
+/** Only feelingState documents whose OWN curatorial gate (English) is satisfied — never Danish fallback. */
+export const feelingStatesEnglishEligibleQuery = groq`
+  *[_type == "feelingState" && ${FEELING_STATE_ENGLISH_ELIGIBILITY_GROQ}] {
+    ${feelingStateProjection}
+  }
+`;
+
+/** Only feelingState documents whose OWN curatorial gate (Danish) is satisfied — never English fallback. */
+export const feelingStatesDanishEligibleQuery = groq`
+  *[_type == "feelingState" && ${FEELING_STATE_DANISH_ELIGIBILITY_GROQ}] {
+    ${feelingStateProjection}
   }
 `;
 

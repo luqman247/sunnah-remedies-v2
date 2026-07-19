@@ -17,6 +17,19 @@ const STRIP_PARAMS = new Set([
 
 export default function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
+
+  // "Scholar Review" portal — checked FIRST, before any canonicalization.
+  // Its detail routes embed raw, case-sensitive Sanity document ids
+  // (e.g. /scholar-review/dua-dhikr/duaDhikrEntry-lwa-001) as URL segments.
+  // The lowercase-canonicalization redirect below exists for public SEO
+  // hygiene and would silently 404 every one of those routes by rewriting
+  // them to all-lowercase. This portal is private, noindexed, and never
+  // canonicalized, so it must never pass through that logic at all — see
+  // src/app/scholar-review/layout.tsx for the actual access gate.
+  if (pathname.startsWith("/scholar-review")) {
+    return NextResponse.next();
+  }
+
   const url = req.nextUrl.clone();
   let shouldRedirect = false;
 

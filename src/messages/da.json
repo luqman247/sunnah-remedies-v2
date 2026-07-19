@@ -1282,6 +1282,10 @@
     "duaDhikr": {
       "title": "Duʿa & dhikr | Sunnah Remedies Vidensbibliotek",
       "description": "Verificeret duʿa og dhikr fra Sunnah, organiseret efter hverdagens øjeblikke — arabisk som den autoritative kildetekst, med gennemgåede engelske og danske oversættelser."
+    },
+    "iAmFeeling": {
+      "title": "Jeg føler… | Sunnah Remedies Videnbibliotek",
+      "description": "Find ihukommelse, refleksion og et praktisk næste skridt — hentet fra det kildebelagte Duʿā & Dhikr-bibliotek efter, hvordan du har det, ikke kun efter lejlighed."
     }
   },
   "homepage": {
@@ -1471,7 +1475,9 @@
       "entryCount": "{count, plural, one {1 tekst} other {# tekster}}",
       "noEntriesYet": "Under forberedelse",
       "inPreparationStatus": "Under forberedelse",
-      "noPublishedCollections": "Ingen samlinger har endnu gennemført offentlig gennemgang. Verificerede tekster vises her, når de lærde og redaktionelle krav er opfyldt."
+      "noPublishedCollections": "Ingen samlinger har endnu gennemført offentlig gennemgang. Verificerede tekster vises her, når de lærde og redaktionelle krav er opfyldt.",
+      "feelingCrossLinkIntro": "Foretrækker du at starte ud fra, hvordan du har det?",
+      "feelingCrossLinkCta": "Prøv “Jeg føler…”"
     },
     "collection": {
       "entriesHeading": "Tekster",
@@ -1547,5 +1553,63 @@
     "consultations": "Konsultationer",
     "correspondence": "Korrespondance",
     "theRegister": "Registret"
+  },
+  "feeling": {
+    "breadcrumb": "Jeg føler…",
+    "landing": {
+      "eyebrow": "Videnbibliotek · Guidet opdagelse",
+      "heading": "Hvordan har du det?",
+      "lede": "Du ved måske ikke, hvilken duʿā du har brug for. Du ved måske kun, hvordan du har det. Begynd der.",
+      "supporting": "En kort vej fra det, du bærer på, til en ihukommelse der møder det — hentet fra det samme kildebelagte Duʿā & Dhikr-bibliotek, samlet efter følelse frem for ritual.",
+      "searchLabel": "Søg efter følelse",
+      "searchPlaceholder": "Prøv “angst”, “taknemmelig”, “en svær beslutning”…",
+      "searchNoResults": "Vi har ikke et match til det endnu — prøv et enklere ord, eller gennemse efter følelse nedenfor.",
+      "searchCrisisNotice": "Hvis du er i overhængende fare eller tænker på at skade dig selv, så se venligst akut støtte frem for at fortsætte søgningen.",
+      "searchCrisisLinkLabel": "Se akut støtte",
+      "searchDeferredRedirectNotice": "Vi arbejder stadig på dedikeret vejledning til dette — her er et relateret udgangspunkt.",
+      "featuredHeading": "Hvor besøgende begynder",
+      "familiesHeading": "Gennemse efter det, du bærer på",
+      "explanationHeading": "Sådan bruger du dette",
+      "explanationBody": "Dette er ikke en diagnose, og det erstatter ikke læge- eller psykisk sundhedshjælp. Hvert opslag samler en duʿā, en refleksion og et lille næste skridt hentet fra det samme kildebelagte Duʿā & Dhikr-bibliotek som resten af Videnbiblioteket — al arabisk tekst, oversættelse og kildehenvisning har samme autenticitetsstandard, som du finder der. Hvis det, du bærer på, føles tungere end en side kan rumme, er Videnbiblioteket ikke det rette sted at bære det alene — se nedenfor.",
+      "libraryLinkIntro": "Foretrækker du at gennemse efter lejlighed i stedet?",
+      "libraryLinkCta": "Besøg Duʿā & Dhikr-biblioteket",
+      "safetyNoticeBody": "Hvis du kæmper med din psykiske sundhed, er en duʿā en følgesvend til hjælp, ikke en erstatning for den. Tal med en læge, en person du stoler på, eller en kvalificeret fagperson. Hvis du eller nogen, du kender, er i overhængende fare,",
+      "safetyNoticeUrgentLink": "se akut støtte",
+      "safetyNoticeSuffix": "eller kontakt alarmtjenesten.",
+      "inPreparationStatus": "Under forberedelse",
+      "noStatesYet": "Denne ressource er under forberedelse. Verificerede følelsessider vises her, når videnskabelig og redaktionel gennemgang er afsluttet.",
+      "safetyHeading": "Sikkerhed og faglig støtte"
+    },
+    "detail": {
+      "eyebrow": "Jeg føler…",
+      "groundingMomentHeading": "Et øjeblik at begynde med",
+      "featuredHeading": "En duʿā til dette",
+      "reflectionHeading": "Refleksion",
+      "nextStepHeading": "Et praktisk næste skridt",
+      "relatedFeelingsHeading": "Relaterede følelser",
+      "relatedCollectionsHeading": "Udforsk hele samlingen",
+      "relatedCollectionsCta": "Udforsk hele {collection}-samlingen",
+      "professionalSupportHeading": "En note om faglig støtte"
+    },
+    "urgentSupport": {
+      "breadcrumbLabel": "Akut støtte",
+      "heading": "Hvis du har brug for støtte lige nu",
+      "intro": "Denne side erstatter ikke akut hjælp. Hvis du eller en anden er i overhængende fare, så kontakt alarmtjenesten nu.",
+      "cannotHelpNotice": "Sunnah Remedies er en videns- og ihukommelsesressource. Den kan ikke yde akut bistand.",
+      "emergencyHeading": "Overhængende fare",
+      "emergencyBody": "I Storbritannien, ring 999 ved overhængende livsfare. For akut, men ikke livstruende, psykisk støtte, ring til NHS 111 og vælg muligheden for psykisk sundhed.",
+      "crisisLinesHeading": "Hvis du har brug for at tale med nogen nu",
+      "samaritansLabel": "Samaritans",
+      "samaritansBody": "116 123 — gratis, døgnet rundt, om hvad som helst.",
+      "shoutLabel": "Shout",
+      "shoutBody": "Send SHOUT til 85258 — gratis, døgnet rundt.",
+      "crisisLinesUnavailableNotice": "Specifikke krisetelefon-oplysninger på denne side afventer rutinemæssig genverificering. Ring venligst 999 i en nødsituation, eller NHS 111 for akut, ikke-livstruende støtte.",
+      "trustedPersonHeading": "Hvis tingene føles tunge, men du ikke er i overhængende fare",
+      "trustedPersonBody": "At fortælle nogen, du stoler på — en ven, et familiemedlem, en imam eller en læge — er et stærkt og opmuntret skridt, ikke en svaghed.",
+      "nonReplacementNotice": "Duʿā, dhikr og refleksion kan være en kilde til reel trøst, men de erstatter ikke læge- eller psykisk sundhedsbehandling. Brug venligst begge dele.",
+      "outsideUkHeading": "Uden for Storbritannien",
+      "outsideUkBody": "Kontakt venligst dit lokale alarmnummer eller en lokal krisetelefon.",
+      "outsideUkLinkLabel": "Find en hjælpelinje uden for Storbritannien"
+    }
   }
 }

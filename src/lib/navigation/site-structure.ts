@@ -291,6 +291,11 @@ export const knowledgeLibrary: Department = {
       href: "/knowledge-library/dua-dhikr",
       description: "Morning and evening remembrance, and the wider Sunnah collections of duʿa and dhikr.",
     },
+    {
+      label: "I am feeling…",
+      href: "/i-am-feeling",
+      description: "Find remembrance and reflection that meets you where you are.",
+    },
   ],
 };
 
@@ -309,7 +314,13 @@ export function getDepartmentByPath(path: string): Department | undefined {
   if (path.startsWith("/the-apothecary")) return apothecary;
   if (path.startsWith("/the-academy")) return academy;
   if (path.startsWith("/sacred-journeys")) return sacredJourneys;
-  if (path.startsWith("/knowledge-library") || path.startsWith("/knowledge/dhikr")) {
+  if (
+    path.startsWith("/knowledge-library") ||
+    path.startsWith("/knowledge/dhikr") ||
+    // "I am feeling…" is a top-level route conceptually nested under the
+    // Knowledge Library — see docs/i-am-feeling/SPEC.md §2.
+    path.startsWith("/i-am-feeling")
+  ) {
     return knowledgeLibrary;
   }
   if (path.startsWith("/institute")) return institution;

@@ -9,7 +9,9 @@
     "lint": "next lint",
     "seed:danish-cms": "npx tsx scripts/seed-danish-cms.ts",
     "seed:homepage-highlights": "npx tsx --env-file=.env.local scripts/seed-homepage-highlights.ts",
-    "seed:homepage-highlights:dry-run": "npx tsx --env-file=.env.local scripts/seed-homepage-highlights.ts --dry-run"
+    "seed:homepage-highlights:dry-run": "npx tsx --env-file=.env.local scripts/seed-homepage-highlights.ts --dry-run",
+    "seed:i-am-feeling": "npx tsx --env-file=.env.local scripts/seed-i-am-feeling-content.ts",
+    "seed:i-am-feeling:dry-run": "npx tsx --env-file=.env.local scripts/seed-i-am-feeling-content.ts --dry-run"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",

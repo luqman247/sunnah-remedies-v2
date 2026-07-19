@@ -82,6 +82,29 @@ export default async function KnowledgeLibraryPage({
         publishedCollections={publishedDuaDhikrCollections}
       />
 
+      {/* Restrained cross-link into "I am feeling…" (docs/i-am-feeling/SPEC.md
+          §2) — a second way into the Duʿā & Dhikr library, by feeling
+          instead of occasion. Deliberately not a new numbered department
+          section, to avoid touching allocateKnowledgeLibraryNumerals. */}
+      <p
+        className="type-body-v2"
+        style={{
+          maxInlineSize: "60ch",
+          margin: "0 auto",
+          padding: "0 var(--margin-mobile) var(--space-8)",
+          textAlign: "center",
+          color: "var(--muted)",
+        }}
+      >
+        Prefer to begin with how you feel, rather than an occasion?{" "}
+        <NextLink
+          href={getPathname({ locale, href: "/i-am-feeling" })}
+          style={{ color: "var(--sage-deep)" }}
+        >
+          Try &ldquo;I am feeling…&rdquo;
+        </NextLink>
+      </p>
+
       {/* ═══ § III · ON THE OPEN SHELF ═══ */}
       <DepartmentStatement
         numeral={section.openShelf}

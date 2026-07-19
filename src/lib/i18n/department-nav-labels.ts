@@ -14,6 +14,7 @@ export type DepartmentSectionMessageRef = {
     | "academy"
     | "journeys"
     | "duaDhikr"
+    | "feeling"
     | "institutionNav"
     | "nav"
     | "consultations";
@@ -109,6 +110,8 @@ export const DEPARTMENT_SECTION_MESSAGE_KEYS: Record<
 
   /* Knowledge Library — Duʿa & Dhikr retained */
   "/knowledge-library/dua-dhikr": { namespace: "duaDhikr", key: "breadcrumb" },
+  /* "I am feeling…" — top-level route, conceptually Knowledge Library (docs/i-am-feeling/SPEC.md §2) */
+  "/i-am-feeling": { namespace: "feeling", key: "breadcrumb" },
 
   /* Institution */
   "/": { namespace: "institutionNav", key: "threshold" },

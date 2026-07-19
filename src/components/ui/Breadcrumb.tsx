@@ -18,6 +18,7 @@ export function Breadcrumb() {
   const tAcademy = useTranslations("academy");
   const tJourneys = useTranslations("journeys");
   const tDua = useTranslations("duaDhikr");
+  const tFeeling = useTranslations("feeling");
   const tInstitution = useTranslations("institutionNav");
   const pathname = usePathname();
   const normalised = stripLocalePrefixFromPath(pathname);
@@ -47,6 +48,8 @@ export function Breadcrumb() {
           return tJourneys(mapped.key as never);
         case "duaDhikr":
           return tDua(mapped.key as never);
+        case "feeling":
+          return tFeeling(mapped.key as never);
         case "institutionNav":
           return tInstitution(mapped.key as never);
         case "nav":
@@ -59,7 +62,7 @@ export function Breadcrumb() {
     }
   };
 
-  const segments = buildSegments(normalised, departmentLabel, resolveHrefLabel);
+  const segments = buildSegments(normalised, departmentLabel, department?.href, resolveHrefLabel);
 
   if (segments.length === 0) return null;
 
@@ -103,6 +106,7 @@ interface Segment {
 function buildSegments(
   pathname: string,
   departmentLabel: string | undefined,
+  departmentHrefOverride: string | undefined,
   resolveHrefLabel: (href: string, fallback: string) => string,
 ): Segment[] {
   const parts = pathname
@@ -120,23 +124,32 @@ function buildSegments(
     !isPublicCatalogueProduct({ slug: leaf });
 
   if (departmentLabel && parts.length >= 1) {
-    const departmentHref = `/${parts[0]}`;
+    // Prefer the department's real href (site-structure.ts) over deriving
+    // it from the URL's first segment. For every department today the two
+    // already coincide — except "I am feeling…" (docs/i-am-feeling/SPEC.md
+    // §2), a top-level route conceptually nested under Knowledge Library,
+    // where parts[0] is "i-am-feeling" but the department link must still
+    // point at /knowledge-library.
+    const departmentHref = departmentHrefOverride ?? `/${parts[0]}`;
     segments.push({
       label: departmentLabel,
       href: departmentHref,
     });
 
-    if (parts.length >= 2 && !leafIsNonPublicProduct) {
-      const leafHref = `/${parts.slice(0, parts.length).join("/")}`;
-      const mappedLabel = resolveHrefLabel(leafHref, formatSlug(leaf));
-      // Avoid redundant self-link: current page is rendered as text by caller.
-      // Also skip if leaf equals department (should not happen for depth ≥ 2).
-      if (leafHref !== departmentHref) {
-        segments.push({
-          label: mappedLabel,
-          href: leafHref,
-        });
-      }
+    const fullLeafHref = `/${parts.join("/")}`;
+    const hasSpecificLeafMapping =
+      fullLeafHref !== departmentHref && !!DEPARTMENT_SECTION_MESSAGE_KEYS[fullLeafHref];
+
+    // Depth ≥ 2 always gets a second segment (existing behaviour); depth 1
+    // also gets one when a specific mapping exists for the full path itself
+    // — the "I am feeling…" landing page case, where URL depth (1) is
+    // shallower than conceptual depth (2: Knowledge Library → I am feeling…).
+    if ((parts.length >= 2 || hasSpecificLeafMapping) && !leafIsNonPublicProduct && fullLeafHref !== departmentHref) {
+      const mappedLabel = resolveHrefLabel(fullLeafHref, formatSlug(leaf));
+      segments.push({
+        label: mappedLabel,
+        href: fullLeafHref,
+      });
     }
   } else if (!leafIsNonPublicProduct) {
     const leafHref = `/${parts.join("/")}`;

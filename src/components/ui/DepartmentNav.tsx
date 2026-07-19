@@ -21,6 +21,7 @@ export function DepartmentNav({ department, currentHref }: DepartmentNavProps) {
   const tAcademy = useTranslations("academy");
   const tJourneys = useTranslations("journeys");
   const tDua = useTranslations("duaDhikr");
+  const tFeeling = useTranslations("feeling");
   const tInstitution = useTranslations("institutionNav");
   const tConsultations = useTranslations("consultations");
 
@@ -37,6 +38,8 @@ export function DepartmentNav({ department, currentHref }: DepartmentNavProps) {
         return tJourneys(ref.key as never);
       case "duaDhikr":
         return tDua(ref.key as never);
+      case "feeling":
+        return tFeeling(ref.key as never);
       case "institutionNav":
         return tInstitution(ref.key as never);
       case "nav":

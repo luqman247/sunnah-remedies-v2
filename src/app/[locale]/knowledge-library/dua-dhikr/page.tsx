@@ -216,6 +216,16 @@ export default async function DuaDhikrLandingPage({
         )}
 
         <section
+          aria-label={t("feelingCrossLinkCta")}
+          className="policy-block dua-dhikr-landing__section"
+        >
+          <p className="dua-dhikr-landing__note">
+            {t("feelingCrossLinkIntro")}{" "}
+            <Link href="/i-am-feeling">{t("feelingCrossLinkCta")}</Link>
+          </p>
+        </section>
+
+        <section
           aria-labelledby="dua-dhikr-assurance-heading"
           className="policy-block dua-dhikr-landing__section dua-dhikr-landing__assurance"
         >

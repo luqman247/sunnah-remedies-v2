@@ -200,6 +200,30 @@ export const structure = (S: StructureBuilder) =>
             ]),
         ),
 
+      // ── "I am feeling…" (curates Duʿa & Dhikr — see docs/i-am-feeling/) ──
+      S.listItem()
+        .title("I am feeling…")
+        .child(
+          S.list()
+            .title("I am feeling…")
+            .items([
+              S.listItem()
+                .title("Families")
+                .child(
+                  S.documentTypeList("feelingFamily").title(
+                    "I am feeling… Families",
+                  ),
+                ),
+              S.listItem()
+                .title("Feeling States")
+                .child(
+                  S.documentTypeList("feelingState").title(
+                    "I am feeling… Feeling States",
+                  ),
+                ),
+            ]),
+        ),
+
       // ── Clinical ──
       S.listItem()
         .title("Clinical")
