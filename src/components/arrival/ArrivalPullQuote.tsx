@@ -10,7 +10,12 @@ interface ArrivalPullQuoteProps {
   dark?: boolean;
 }
 
-export function ArrivalPullQuote({ text, attribution, source, dark }: ArrivalPullQuoteProps) {
+export function ArrivalPullQuote({
+  text,
+  attribution,
+  source,
+  dark,
+}: ArrivalPullQuoteProps) {
   return (
     <blockquote
       className={`type-pullquote arrival-pullquote ${dark ? "arrival-pullquote--dark" : ""}`}

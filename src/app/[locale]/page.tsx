@@ -208,6 +208,7 @@ export default async function ArrivalPage({
       {/* ═══ § 3 · MISSION & VISION ═══ */}
       <Reveal>
         <section
+          id="institutional-purpose"
           className="arrival-section institutional-purpose"
           aria-labelledby="institutional-purpose-heading"
         >
@@ -221,10 +222,7 @@ export default async function ArrivalPage({
                   <SectionStamp numeral="III" />
                 </div>
 
-                <h2
-                  id="institutional-purpose-heading"
-                  className="sr-only"
-                >
+                <h2 id="institutional-purpose-heading" className="sr-only">
                   {ui("foundingCovenant.missionLabel")}
                   {" · "}
                   {ui("foundingCovenant.visionLabel")}

@@ -116,7 +116,10 @@ export async function FoundingCovenant({ locale }: FoundingCovenantProps) {
               <p className="type-standfirst founding-covenant__closing-text">
                 {t("closing")}
               </p>
-              <Link href="/charter" className="arrival-enter founding-covenant__cta">
+              <Link
+                href="/charter"
+                className="arrival-enter founding-covenant__cta"
+              >
                 {t("cta")}
                 <span className="arrow" aria-hidden="true">
                   ⟶

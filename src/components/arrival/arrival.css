@@ -244,7 +244,7 @@
   text-wrap: pretty;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .arrival-v2 .founding-covenant__mission-vision {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     padding-block: var(--space-12);
@@ -278,6 +278,10 @@
 
 .arrival-v2 .arrival-tradition__stamp {
   margin-block-end: var(--space-6);
+}
+
+.arrival-v2 .arrival-tradition__stamp .type-eyebrow-v2 {
+  color: var(--paper-on-deep);
 }
 
 .arrival-v2 .arrival-tradition__heading {

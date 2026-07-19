@@ -11,21 +11,21 @@ import da from "../../src/messages/da.json";
 
 describe("founding covenant homepage content", () => {
   it("exposes five charter commitments in stable order", () => {
-    assert.deepEqual([...FOUNDING_COVENANT_COMMITMENT_IDS], [
-      "healing",
-      "foundation",
-      "fear",
-      "person",
-      "trust",
-    ]);
+    assert.deepEqual(
+      [...FOUNDING_COVENANT_COMMITMENT_IDS],
+      ["healing", "foundation", "fear", "person", "trust"],
+    );
   });
 
   it("keeps the institutional triad wording", () => {
-    assert.deepEqual([...FOUNDING_COVENANT_TRIAD], [
-      "Knowledge before products",
-      "Service before profit",
-      "Trust before growth",
-    ]);
+    assert.deepEqual(
+      [...FOUNDING_COVENANT_TRIAD],
+      [
+        "Knowledge before products",
+        "Service before profit",
+        "Trust before growth",
+      ],
+    );
   });
 
   it("keeps the approved Mission and Vision wording unchanged", () => {
@@ -40,10 +40,7 @@ describe("founding covenant homepage content", () => {
   });
 
   it("places Mission and Vision before Tradition without duplicating either block", () => {
-    const page = readFileSync(
-      resolve("src/app/[locale]/page.tsx"),
-      "utf8",
-    );
+    const page = readFileSync(resolve("src/app/[locale]/page.tsx"), "utf8");
     const covenant = readFileSync(
       resolve("src/components/arrival/FoundingCovenant.tsx"),
       "utf8",
@@ -69,10 +66,7 @@ describe("founding covenant homepage content", () => {
     assert.ok(enC.mission.includes("Prophetic Medicine"));
     assert.ok(enC.vision.includes("trusted international institution"));
     assert.equal(enC.commitments.healing.title, "Healing belongs to Allah");
-    assert.equal(
-      enC.commitments.fear.title,
-      "We do not trade in fear",
-    );
+    assert.equal(enC.commitments.fear.title, "We do not trade in fear");
 
     for (const id of FOUNDING_COVENANT_COMMITMENT_IDS) {
       assert.ok(enC.commitments[id].title.length > 0);
